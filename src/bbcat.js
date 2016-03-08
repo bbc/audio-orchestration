@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 
-(function helloWorld() {
-  console.log('Hello, world!');
-})();
+import core from './core/index';
+
+export default {
+  core
+}
