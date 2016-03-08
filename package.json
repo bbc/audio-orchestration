@@ -1,0 +1,23 @@
+{
+  "name": "bbcat-js",
+  "version": "0.0.1",
+  "description": "BBC Audio Team Javascript Libraries.",
+  "scripts": {
+    "build": "webpack --optimize-minimize ",
+    "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://git0.rd.bbc.co.uk/javascript-audio-libraries/bbcat-js.git"
+  },
+  "author": "",
+  "license": "unknown",
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "babel-preset-es2015": "^6.5.0",
+    "path": "^0.12.7",
+    "rimraf": "^2.5.2",
+    "webpack": "^1.12.14"
+  }
+}
