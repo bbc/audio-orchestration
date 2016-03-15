@@ -1,9 +1,9 @@
 import 'babel-polyfill';
 
-import core from './core/index';
-import dash from './dash/index';
+import * as core from './core/_index';
+import * as dash from './dash/_index';
 
-export default {
+export {
   core,
   dash
 }

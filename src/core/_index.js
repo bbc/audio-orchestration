@@ -3,7 +3,7 @@ import CompoundNode from './compound-node';
 
 import Loader from './loaders/loader';
 
-export default {
+export {
   EventTarget,
   CompoundNode,
   Loader
