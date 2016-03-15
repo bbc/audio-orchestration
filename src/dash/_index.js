@@ -1,7 +1,7 @@
-import SegmentLoader from './loaders/segment-loader';
+import AudioLoader from './loaders/audio-loader';
 import ManifestLoader from './loaders/manifest-loader';
 
 export {
-  SegmentLoader,
+  AudioLoader,
   ManifestLoader
 }

@@ -1,14 +1,14 @@
 import Loader from '../../core/loaders/loader';
 
-export default class SegmentLoader extends Loader {
+export default class AudioLoader extends Loader {
   constructor(context) {
     super('arraybuffer');
     this.context = context;
   }
 
   __loadOne(url) {
-    return super.__loadOne(url).then((text) => {
-      return this.__decode(text);
+    return super.__loadOne(url).then((data) => {
+      return this.__decode(data);
     });
   }
 
