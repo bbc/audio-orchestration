@@ -1,5 +1,5 @@
 import {
-  EventTarget
+  EventTarget,
 } from '../../core/_index';
 
 export default class DashSegmentStream extends EventTarget {
@@ -14,7 +14,7 @@ export default class DashSegmentStream extends EventTarget {
     this.id = definition.id;
     this.streamStart = definition.start;
     this.streamDuration = definition.duration;
-    //this.streamEnd = this.streamStart + this.streamDuration;
+    // this.streamEnd = this.streamStart + this.streamDuration;
     this.segmentStart = definition.segmentStart;
     this.segmentDuration = definition.segmentDuration;
     this.segmentEnd = this.segmentStart +
@@ -32,7 +32,7 @@ export default class DashSegmentStream extends EventTarget {
 
     // Prime the buffer with segments ready to start playing from playbackTime
     // seconds into the presentation duration.
-    var promises = [];
+    const promises = [];
     for (let i = 0; i < this.bufferSize; i++) {
       const time = this.playbackTime + (this.segmentDuration * i);
       const number = this.getSegmentNumberForTime(time);
@@ -83,14 +83,14 @@ export default class DashSegmentStream extends EventTarget {
 
       if (currSegment >= this.segmentStart && currSegment <= this.segmentEnd) {
         const url = this.getURLForSegmentNumber(currSegment);
-        this.loader.load(url).then((data) => {
-          this.addToBuffer(currSegment, data, false);
-        });
+        this.loader.load(url).then((data) =>
+          this.addToBuffer(currSegment, data, false)
+        );
       }
     }
   }
 
-  addToBuffer(number, segment, isPriming) {
+  addToBuffer(number, segment) {
     // A negative position indicates a segment that has arrived too late for
     // playback. A position greater that the buffer size indicates a segment
     // that has arrived too early to fit in the buffer. Late packets may occur
@@ -119,14 +119,14 @@ export default class DashSegmentStream extends EventTarget {
   }
 
   getURLForSegmentNumber(number) {
-    return this.templateUrl.replace("$Number", number);
+    return this.templateUrl.replace('$Number', number);
   }
 
   dispatchBufferedSegment(segment) {
     this.dispatchEvent({
       type: 'bufferedsegment',
       src: this,
-      segment
+      segment,
     });
   }
 }

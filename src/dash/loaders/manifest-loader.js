@@ -5,13 +5,11 @@ export default class ManifestLoader extends Loader {
     super('text');
   }
 
-  __loadOne(url) {
-    return super.__loadOne(url).then((text) => {
-      return this.__parse(text);
-    });
+  _loadOne(url) {
+    return super._loadOne(url).then(this._parse);
   }
 
-  __parse(string) {
+  _parse(string) {
     // TODO consider moving parser to constructor?
     const parser = new DOMParser();
     const xml = parser.parseFromString(string, 'text/xml', 0);

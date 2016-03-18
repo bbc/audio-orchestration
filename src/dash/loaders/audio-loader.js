@@ -6,17 +6,13 @@ export default class AudioLoader extends Loader {
     this.context = context;
   }
 
-  __loadOne(url) {
-    return super.__loadOne(url).then((data) => {
-      return this.__decode(data);
-    });
+  _loadOne(url) {
+    return super._loadOne(url).then((data) => this._decode(data));
   }
 
-  __decode(data) {
-    return new Promise(
-      (resolve, reject) => {
-        this.context.decodeAudioData(data, resolve, reject);
-      }
-    );
+  _decode(data) {
+    return new Promise((resolve, reject) => {
+      this.context.decodeAudioData(data, resolve, reject);
+    });
   }
 }

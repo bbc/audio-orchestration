@@ -7,5 +7,5 @@ export {
   AudioLoader,
   ManifestLoader,
   ManifestParser,
-  DashSourceNode
-}
+  DashSourceNode,
+};

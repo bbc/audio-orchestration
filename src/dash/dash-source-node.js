@@ -1,5 +1,5 @@
 import {
-  CompoundNode
+  CompoundNode,
 } from '../core/_index';
 
 import AudioSegmentStream from './streams/audio-segment-stream';
@@ -44,8 +44,8 @@ export default class DashSourceNode extends CompoundNode {
           segmentDuration: Math.floor(template.duration / template.timescale),
           channelCount: adaptationSet.value,
           templateUrl: baseURL + template.media,
-          bufferTime: bufferTime
-        }
+          bufferTime,
+        };
 
         if (adaptationSet.mimeType.indexOf('json') > -1) {
           // If type is JSON then create a metadata stream.
@@ -86,14 +86,12 @@ export default class DashSourceNode extends CompoundNode {
     this.outputs[0] = merger;
 
     let input = 0;
-    for (let i = 0; i < this.audioStreams.length; i++) {
-      const stream = this.audioStreams[i];
-
+    this.audioStreams.forEach((stream) => {
       for (let output = 0; output < stream.output.numberOfOutputs; output++) {
         stream.output.connect(merger, output, input);
         input++;
       }
-    }
+    });
   }
 
   start(playbackStart = 0) {
@@ -104,14 +102,14 @@ export default class DashSourceNode extends CompoundNode {
 
     // playbackStart must be non-nagative and less than duration.
     if (playbackStart < 0 || playbackStart >= this.playbackDuration) {
-      throw "Invalid playbackStart";
+      throw new Error('Invalid playbackStart');
     }
 
     this.setState('priming');
     this.playbackStart = playbackStart;
 
     // Prime and then start (syncing to a common context time) all streams.
-    var promises = [];
+    const promises = [];
     for (let i = 0; i < this.allStreams.length; i++) {
       promises.push(this.allStreams[i].prime(this.playbackStart));
     }
@@ -165,7 +163,7 @@ export default class DashSourceNode extends CompoundNode {
     this.dispatchEvent({
       src: this,
       type: 'metadataevent',
-      metadata: event.segment
+      metadata: event.segment,
     });
   }
 
@@ -173,14 +171,14 @@ export default class DashSourceNode extends CompoundNode {
     this.dispatchEvent({
       src: this,
       type: 'statechange',
-      state
+      state,
     });
   }
 
   dispatchEndedEvent() {
     this.dispatchEvent({
       src: this,
-      type: 'ended'
+      type: 'ended',
     });
   }
 }

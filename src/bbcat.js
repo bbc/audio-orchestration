@@ -5,5 +5,5 @@ import * as dash from './dash/_index';
 
 export {
   core,
-  dash
-}
+  dash,
+};

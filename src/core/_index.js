@@ -7,5 +7,5 @@ export {
   EventTarget,
   CompoundNode,
   DocumentParser,
-  Loader
-}
+  Loader,
+};

@@ -4,33 +4,33 @@ const MPD = {
   attributes: [{
     name: 'type',
     type: 'string',
-    default: 'static'
+    default: 'static',
   }, {
     name: 'minBufferTime',
-    type: 'period'
+    type: 'period',
   }, {
     name: 'mediaPresentationDuration',
-    type: 'period'
+    type: 'period',
   }, {
     name: 'maxSegmentDuration',
-    type: 'period'
+    type: 'period',
   }],
   nodes: [{
     name: 'programInformation',
     node: 'ProgramInformation',
     type: 'ProgramInformation',
-    mapping: 'one'
+    mapping: 'one',
   }, {
     name: 'baseURL',
     node: 'BaseURL',
     type: 'string',
-    mapping: 'many'
+    mapping: 'many',
   }, {
     name: 'periods',
     node: 'Period',
     type: 'Period',
-    mapping: 'many'
-  }]
+    mapping: 'many',
+  }],
 };
 
 const ProgramInformation = {
@@ -45,105 +45,105 @@ const ProgramInformation = {
     name: 'title',
     node: 'Title',
     type: 'string',
-    mapping: 'one'
+    mapping: 'one',
   }, {
     name: 'source',
     node: 'Source',
     type: 'string',
-    mapping: 'one'
+    mapping: 'one',
   }, {
     name: 'copyright',
     node: 'Copyright',
     type: 'string',
-    mapping: 'one'
-  }]
+    mapping: 'one',
+  }],
 };
 
 const Period = {
   attributes: [{
     name: 'id',
     type: 'integer',
-    default: 0
+    default: 0,
   }, {
     name: 'duration',
     type: 'period',
-    default: 0
+    default: 0,
   }, {
     name: 'start',
     type: 'integer',
-    default: 0
+    default: 0,
   }],
   nodes: [{
     name: 'baseUrl',
     node: 'BaseUrl',
     type: 'string',
-    mapping: 'one'
+    mapping: 'one',
   }, {
     name: 'adaptationSets',
     node: 'AdaptationSet',
     type: 'AdaptationSet',
-    mapping: 'many'
-  }]
+    mapping: 'many',
+  }],
 };
 
 const AdaptationSet = {
   attributes: [{
     name: 'id',
-    type: 'string'
+    type: 'string',
   }, {
     name: 'mimeType',
-    type: 'string'
+    type: 'string',
   }, {
     // TODO: Sort this out.
     name: 'value',
-    type: 'integer'
+    type: 'integer',
   }],
   nodes: [{
     name: 'segmentTemplate',
     node: 'SegmentTemplate',
     type: 'SegmentTemplate',
-    mapping: 'one'
+    mapping: 'one',
   }, {
     name: 'representations',
     node: 'Representation',
     type: 'Representation',
-    mapping: 'many'
-  }]
+    mapping: 'many',
+  }],
 };
 
 const SegmentTemplate = {
   attributes: [{
     name: 'duration',
     type: 'integer',
-    default: 0
+    default: 0,
   }, {
     name: 'timescale',
     type: 'integer',
     // TODO: Set this.
-    default: 0
+    default: 0,
   }, {
     name: 'startNumber',
     type: 'integer',
-    default: 1
+    default: 1,
   }, {
     name: 'presentationTimeOffset',
     type: 'integer',
-    default: 0
+    default: 0,
   }, {
     name: 'media',
-    type: 'string'
-  }]
+    type: 'string',
+  }],
 };
 
 const Representation = {
   attributes: [{
     name: 'id',
     type: 'integer',
-    default: 0
+    default: 0,
   }, {
     name: 'bandwidth',
-    type: 'integer'
-  }]
+    type: 'integer',
+  }],
 };
 
 export default {
@@ -152,5 +152,5 @@ export default {
   Period,
   AdaptationSet,
   SegmentTemplate,
-  Representation
-}
+  Representation,
+};

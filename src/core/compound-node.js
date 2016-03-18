@@ -8,17 +8,18 @@ export default class CompoundNode extends EventTarget {
   constructor(context) {
     super();
 
-    Object.defineProperty(this, "context", {
+    Object.defineProperty(this, 'context', {
       value: context,
       writable: false,
       enumerable: false,
-      configurable: true
+      configurable: true,
     });
 
     this.inputs = [];
     this.outputs = [];
   }
 
+  // TODO: Remove proxies due to lack of browser support.
   get context() {
     return this.context;
   }
@@ -31,10 +32,7 @@ export default class CompoundNode extends EventTarget {
     return this.outputs.length;
   }
 
-  connect(destination, output, input) {
-    output || (output = 0);
-    input || (input = 0);
-
+  connect(destination, output = 0, input = 0) {
     if (destination instanceof CompoundNode) {
       this.outputs[output].connect(destination.inputs[input]);
     } else {
@@ -45,11 +43,7 @@ export default class CompoundNode extends EventTarget {
   }
 
   // TODO: check connection structure.
-  // disconnect(destination, output = 0, input = 0) {
-  disconnect(destination, output, input) {
-    output || (output = 0);
-    input || (input = 0);
-
+  disconnect(destination, output = 0, input = 0) {
     if (destination instanceof CompoundNode) {
       this.outputs[output].disconnect(destination.inputs[input]);
     } else {

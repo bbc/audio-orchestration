@@ -2,7 +2,7 @@ class EventTarget {
   // TODO: Consider adding more argument checking to the addEventListener,
   // removeEventListener and dispatchEvent methods.
   constructor() {
-    this.listeners = {}
+    this.listeners = {};
   }
 
   addEventListener(type, listener) {

@@ -1,5 +1,5 @@
 import {
-  Loader
+  Loader,
 } from '../../core/_index';
 import SegmentStream from './segment-stream';
 

@@ -1,5 +1,5 @@
 import {
-  AudioLoader
+  AudioLoader,
 } from '../_index';
 import SegmentStream from './segment-stream';
 
@@ -18,7 +18,7 @@ export default class AudioSegmentLoader extends SegmentStream {
 
     // Schedule each audio segment in the buffer to be played.
     for (let i = 0; i < this.bufferSize; i++) {
-      if(this.buffer[i]) {
+      if (this.buffer[i]) {
         this.startSegment(this.buffer[i]);
       }
     }
@@ -47,7 +47,7 @@ export default class AudioSegmentLoader extends SegmentStream {
 
     // Stop all audio sources and empty the audio buffer.
     for (let i = 0; i < this.bufferSize; i++) {
-      if(this.buffer[i]) {
+      if (this.buffer[i]) {
         this.buffer[i].bufferSource.stop();
         this.buffer[i] = null;
       }
@@ -56,7 +56,8 @@ export default class AudioSegmentLoader extends SegmentStream {
 
   addToBuffer(number, audioBuffer, isPriming) {
     // Rather than adding the raw audio to the buffer, use to instantiate a
-    // bufferSourceNode and precalculate the desired start time for the segment.
+    // bufferSourceNode and precalculate the desired start time for the segment
+    // and instead store these in the buffer.
     const bufferSource = this.context.createBufferSource();
     bufferSource.buffer = audioBuffer;
     bufferSource.connect(this.output);
@@ -66,13 +67,13 @@ export default class AudioSegmentLoader extends SegmentStream {
 
     const segment = {
       bufferSource,
-      startTime
+      startTime,
     };
 
     // If the stream is not priming then schedule the segment for playback
     // before continuing to add to the segment buffer.
-    if(!isPriming) {
-        this.startSegment(segment);
+    if (!isPriming) {
+      this.startSegment(segment);
     }
 
     super.addToBuffer(number, segment);

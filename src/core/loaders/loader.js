@@ -1,34 +1,30 @@
 export default class Loader {
   constructor(responseType) {
-    this.__responseType = responseType || 'arraybuffer';
+    this._responseType = responseType || 'arraybuffer';
   }
 
   load(urls) {
-    if (urls instanceof Array) {
-      return this.__loadAll(urls);
-    } else {
-      return this.__loadOne(urls);
-    }
+    return urls instanceof Array ?
+      this._loadAll(urls) :
+      this._loadOne(urls);
   }
 
-  __loadOne(url) {
-    return this.__request(url);
+  _loadOne(url) {
+    return this._request(url);
   }
 
-  __loadAll(urls) {
-    return Promise.all(urls.map((url) => {
-      return this.__loadOne(url);
-    }));
+  _loadAll(urls) {
+    return Promise.all(urls.map(this._loadOne));
   }
 
-  __request(urls) {
+  _request(urls) {
     return new Promise(
       (resolve, reject) => {
-        var request = new XMLHttpRequest();
+        const request = new XMLHttpRequest();
         request.open('GET', urls, true);
-        request.responseType = this.__responseType;
+        request.responseType = this._responseType;
 
-        request.addEventListener('load', function() {
+        request.addEventListener('load', function onLoadEvent() {
           // Any correct response will enter this method including 403
           // (Forbidden), 404 (Not Found) etc. The only responses that
           // indicate true success are 200 (OK) and 304 (Not Modified).
@@ -39,9 +35,9 @@ export default class Loader {
           }
         });
 
-        request.addEventListener('error', function() {
+        request.addEventListener('error', () => {
           // Transport error has occured.
-          reject(new Error('Transport Error'));
+          reject(new Error('Transport error has occured.'));
         });
 
         request.send();
