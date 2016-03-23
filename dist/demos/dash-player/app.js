@@ -3,14 +3,13 @@
 
 function setupPlayer(blob) {
   // Configure audio graph for player.
-  var context = new window.AudioContext();
+  var AudioContext = window.AudioContext || window.webkitAudioContext;
+  var context = new AudioContext();
   var manifest = new bbcat.dash.ManifestParser().parse(blob);
   var dashSource = new bbcat.dash.DashSourceNode(context, manifest);
 
-  var splitter = context.createChannelSplitter(dashSource.totalChannels);
-  dashSource.outputs[0].connect(splitter);
-  for (var i = 0; i < splitter.numberOfOutputs; i++) {
-    splitter.connect(context.destination, i);
+  for (var i = 0; i < dashSource.numberOfOutputs; i++) {
+    dashSource.connect(context.destination, i);
   }
 
   // Initialise app defaults and get required DOM elements.
@@ -38,10 +37,10 @@ function setupPlayer(blob) {
   label.innerHTML = playTime;
 
   // Add listeners for events on dashSourceNode and inputs.
-  dashSource.addEventListener('ended', () => {
+  dashSource.addEventListener('ended', function () {
     console.log('Playback ended.');
   });
-  dashSource.addEventListener('statechange', (e) => {
+  dashSource.addEventListener('statechange', function (e) {
     console.log(`Player is now ${e.state}.`);
   });
 

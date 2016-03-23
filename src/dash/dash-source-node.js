@@ -78,17 +78,14 @@ export default class DashSourceNode extends CompoundNode {
   }
 
   initAudioGraph() {
-    // Create and connect a ChannelMergerNode to merge all output channels from
-    // each audio stream into a single output. NOTE: Chrome and firefox have
-    // arbitrary limits to the number of channels that can be merged (currently
-    // 32). This limit will be relaxed in the future.
-    const merger = this.context.createChannelMerger(this.totalChannels);
-    this.outputs[0] = merger;
-
+    // The DashSourceNode is single-channel, muliple-output. Create and connect
+    // a gain node for each channel in each audio stream.
     let input = 0;
     this.audioStreams.forEach((stream) => {
       for (let output = 0; output < stream.output.numberOfOutputs; output++) {
-        stream.output.connect(merger, output, input);
+        const gain = this.context.createGain();
+        stream.output.connect(gain, output);
+        this._outputs[input] = gain;
         input++;
       }
     });
