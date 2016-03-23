@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --optimize-minimize ",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "doc": "esdoc -c esdoc.json"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
     "babel-loader": "^6.2.3",
     "babel-polyfill": "^6.7.2",
     "babel-preset-es2015": "^6.5.0",
+    "esdoc": "^0.4.6",
+    "esdoc-es7-plugin": "0.0.3",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
     "path": "^0.12.7",
