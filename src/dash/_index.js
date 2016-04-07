@@ -1,10 +1,8 @@
-import AudioLoader from './loaders/audio-loader';
-import ManifestLoader from './loaders/manifest-loader';
-import ManifestParser from './parsers/manifest-parser';
-import DashSourceNode from './dash-source-node';
+import ManifestLoader from './manifest-loader/manifest-loader';
+import ManifestParser from './manifest-parser/manifest-parser';
+import DashSourceNode from './dash-source-node/dash-source-node';
 
 export {
-  AudioLoader,
   ManifestLoader,
   ManifestParser,
   DashSourceNode,

@@ -1,4 +1,4 @@
-import { Loader } from '../../core/_index';
+import { Loader } from '../../../core/_index';
 import SegmentStream from './segment-stream';
 
 export default class MetadataSegmentStream extends SegmentStream {

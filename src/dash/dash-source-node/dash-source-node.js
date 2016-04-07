@@ -1,4 +1,4 @@
-import { CompoundNode } from '../core/_index';
+import { CompoundNode } from '../../core/_index';
 import AudioSegmentStream from './streams/audio-segment-stream';
 import MetadataSegmentStream from './streams/metadata-segment-stream';
 

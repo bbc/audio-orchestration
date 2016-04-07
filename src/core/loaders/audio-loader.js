@@ -1,4 +1,4 @@
-import Loader from '../../core/loaders/loader';
+import Loader from './loader';
 
 export default class AudioLoader extends Loader {
   constructor(context) {

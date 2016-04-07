@@ -1,4 +1,4 @@
-import { AudioLoader } from '../_index';
+import { AudioLoader } from '../../../core/_index';
 import SegmentStream from './segment-stream';
 
 export default class AudioSegmentStream extends SegmentStream {
