@@ -1,81 +1,88 @@
-import {
-  AudioLoader,
-} from '../_index';
+import { AudioLoader } from '../_index';
 import SegmentStream from './segment-stream';
 
-export default class AudioSegmentLoader extends SegmentStream {
+export default class AudioSegmentStream extends SegmentStream {
   constructor(context, definition) {
     super(context, new AudioLoader(context), definition);
-    this.output = this.context.createChannelSplitter(this.channelCount);
+
     // The primer offset is required because AudioContext.decodeAudioData cannot
     // currently decode audio segments without fully formed headers. This will
     // not be required in a future Web Audio API update.
-    this.primerOffset = 2048 / this.context.sampleRate;
+    this._primerOffset = 2048 / this._context.sampleRate;
+    this._isStreaming = false;
+    this._output = this._context.createChannelSplitter(this.channelCount);
   }
 
-  start(contextTime) {
-    super.start(contextTime);
+  get output() {
+    return this._output;
+  }
 
-    // Schedule each audio segment in the buffer to be played.
-    for (let i = 0; i < this.bufferSize; i++) {
-      if (this.buffer[i]) {
-        this.startSegment(this.buffer[i]);
+  _start() {
+    // Set as streaming and schedule all audio in the buffer.
+    this._isStreaming = true;
+    this._buffer.segments.forEach((segment) => {
+      this._startSegment(segment);
+    });
+
+    super._start();
+  }
+
+  _stop() {
+    // Set as no longer streaming then stop all audio in the buffer.
+    this._isStreaming = false;
+    this._buffer.segments.forEach((segment) => {
+      if (segment && segment.bufferSource) {
+        segment.bufferSource.stop();
+      }
+    });
+
+    super._stop();
+  }
+
+  _startSegment(segment) {
+    if (segment && segment.bufferSource) {
+      // Adjust the parameters when, offset and duration for the context time.
+      const when = segment.when + this._contextSyncTime;
+      const offset = segment.offset + this._primerOffset;
+      const duration = segment.duration;
+
+      // Calculate any lateness in playback.
+      const playOffset = this._context.currentTime - when;
+
+      // If the segment is entirely too late for playback, play for a duration
+      // of 0 as all segments in the buffer must be played in order to avoid
+      // calling stop on a segment that has not yet been played. Currently there
+      // is no way to detect if a segment has been played already. If the
+      // segment is only slightly late then play as much as possible. Otherwise;
+      // play the entire segment.
+      if (playOffset < segment.duration) {
+        segment.bufferSource.start(
+          playOffset > 0 ? 0 : when,
+          playOffset > 0 ? offset + playOffset : offset,
+          playOffset > 0 ? duration - playOffset : duration
+        );
+      } else {
+        segment.bufferSource.start(0, 0, 0);
       }
     }
   }
 
-  startSegment(segment) {
-    // Calculate the intended context start time for the segment and offset from
-    // the current context time. If the offset is positive the segment is late
-    // and so only a portion of the segment should be played. The portion should
-    // be scheduled to start immediately.
-    const start = this.contextTime + segment.startTime - this.playbackTime;
-    const offset = this.context.currentTime - start;
+  _addDataToSegment(data, n) {
+    for (let i = 0; i < this._buffer.segments.length; i++) {
+      const segment = this._buffer.segments[i];
 
-    // Only play segment if it is not too late.
-    if (offset < this.segmentDuration) {
-      segment.bufferSource.start(
-        offset > 0 ? 0 : start,
-        offset > 0 ? this.primerOffset + offset : this.primerOffset,
-        offset > 0 ? this.segmentDuration - offset : this.segmentDuration
-      );
-    }
-  }
+      if (segment.n === n) {
+        // Use the raw audio data to instantiate a bufferSourceNode, and connect
+        // to the streams output.
+        segment.bufferSource = this._context.createBufferSource();
+        segment.bufferSource.buffer = data;
+        segment.bufferSource.connect(this._output);
 
-  stop() {
-    super.stop();
-
-    // Stop all audio sources and empty the audio buffer.
-    for (let i = 0; i < this.bufferSize; i++) {
-      if (this.buffer[i]) {
-        this.buffer[i].bufferSource.stop();
-        this.buffer[i] = null;
+        // If the stream is currently playing then schedule for playback.
+        if (this._isStreaming) {
+          this._startSegment(segment);
+        }
       }
     }
-  }
-
-  addToBuffer(number, audioBuffer, isPriming) {
-    // Rather than adding the raw audio to the buffer, use to instantiate a
-    // bufferSourceNode and precalculate the desired start time for the segment
-    // and instead store these in the buffer.
-    const bufferSource = this.context.createBufferSource();
-    bufferSource.buffer = audioBuffer;
-    bufferSource.connect(this.output);
-
-    const startTime = this.streamStart +
-      (number - this.segmentStart) * this.segmentDuration;
-
-    const segment = {
-      bufferSource,
-      startTime,
-    };
-
-    // If the stream is not priming then schedule the segment for playback
-    // before continuing to add to the segment buffer.
-    if (!isPriming) {
-      this.startSegment(segment);
-    }
-
-    super.addToBuffer(number, segment);
   }
 }

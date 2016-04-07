@@ -1,7 +1,4 @@
-import {
-  CompoundNode,
-} from '../core/_index';
-
+import { CompoundNode } from '../core/_index';
 import AudioSegmentStream from './streams/audio-segment-stream';
 import MetadataSegmentStream from './streams/metadata-segment-stream';
 
@@ -9,33 +6,124 @@ export default class DashSourceNode extends CompoundNode {
   constructor(context, manifest) {
     super(context);
 
-    // Maintain a list of the audio streams in addition to a list of all
+    // Initialise a list of the audio streams in addition to a list of all
     // streams, allowing easier iteration of the audio streams only.
-    this.allStreams = [];
-    this.audioStreams = [];
-    this.totalChannels = 0;
+    this._allStreams = [];
+    this._audioStreams = [];
+    this._totalChannels = 0;
 
-    this.initStreams(manifest);
-    this.initAudioGraph();
-    this.setState('ready');
+    // Instantiate information describing the playback region.
+    this._presentationDuration = 0;
+    this._playbackInitial = 0;
+    this._playbackOffset = 0;
+    this._playbackDuration = 0;
+    this._playbackLoop = false;
+
+    this._contextSyncTime = 0;
+    this._initStreams(manifest);
+    this._initAudioGraph();
+    this._state = 'ready';
   }
 
-  initStreams(manifest) {
+  start(initial = 0, loop = false,
+    offset = 0, duration = this._presentationDuration - offset) {
+    // Check node state and parse all input paramaters.
+    if (this.state !== 'ready') {
+      return;
+    }
+
+    if (initial < 0 || initial >= duration) {
+      throw new Error('Invalid initial. Must be a number less than ' +
+        'duration and greater than or equal to 0.');
+    }
+
+    if (!(loop === false || loop === true)) {
+      throw new Error('Invalid loop. Must be a boolean.');
+    }
+
+    if (offset < 0 || offset >= this._duration) {
+      throw new Error('Invalid offset. Must be a number less than ' +
+        'presentationDuration and greater than or equal to 0.');
+    }
+
+    if (duration <= 0 || duration > this._duration - offset) {
+      throw new Error('Invalid duration. Must be a number less than ' +
+        'presentationDuration minus offset and greater than 0.');
+    }
+
+    // Store information describing the playback region.
+    this._playbackInitial = initial;
+    this._playbackOffset = offset;
+    this._playbackDuration = duration;
+    this._playbackLoop = loop;
+    this._state = 'priming';
+
+    // Prime all streams with the same offset, duration and loop parameters.
+    const primeStreamsPromises = this._allStreams.map((stream) =>
+      stream.prime(initial, loop, offset, duration));
+
+    Promise.all(primeStreamsPromises).then(() => {
+      // When all steams are primed, latch the current audio context time and
+      // start all streams with the same context sync time.
+      this._contextSyncTime = this.context.currentTime;
+      this._state = 'playing';
+
+      const startStreamsPromises = this._allStreams.map((stream) =>
+        new Promise((resolve) => stream.start(this._contextSyncTime, resolve)));
+
+      Promise.all(startStreamsPromises).then(() => {
+        // Streams playback has been reached.
+        this._dispatchEndedEvent();
+        this._state = 'ready';
+      });
+    });
+  }
+
+  stop() {
+    if (this.state !== 'playing') {
+      return;
+    }
+
+    this._allStreams.forEach((stream) => stream.stop());
+    this._state = 'ready';
+  }
+
+  get playbackTime() {
+    return this.state === 'playing' ? (this.context.currentTime -
+      this._contextSyncTime + this._playbackInitial) %
+      this._playbackDuration + this._playbackOffset : 0;
+  }
+
+  get presentationDuration() {
+    return this._presentationDuration;
+  }
+
+  get loop() {
+    return this._playbackLoop;
+  }
+
+  get state() {
+    return this._playbackState;
+  }
+
+  set _state(state) {
+    // Sets the state and emits an event describing the state change.
+    this._playbackState = state;
+    this._dispatchStateChangeEvent(state);
+  }
+
+  _initStreams(manifest) {
     // Digests the manifest into a set of streams. Each stream manages a buffer
     // for downloaded segments and synchronises scheduling (and playback in the
     // case of audio) to the AudioContext.
-    this.playbackDuration = manifest.mediaPresentationDuration;
+    this._presentationDuration = manifest.mediaPresentationDuration;
     const bufferTime = manifest.minBufferTime;
     const baseURL = manifest.baseURL[0];
 
-    for (let i = 0; i < manifest.periods.length; i++) {
-      const period = manifest.periods[i];
-
-      for (let j = 0; j < period.adaptationSets.length; j++) {
-        const adaptationSet = period.adaptationSets[j];
+    manifest.periods.forEach((period) => {
+      period.adaptationSets.forEach((adaptationSet) => {
         const template = adaptationSet.segmentTemplate;
-
-        const templateDefinition = {
+        const definition = {
           id: `${period.id}-${adaptationSet.id}`,
           type: adaptationSet.mimeType,
           start: period.start + template.presentationTimeOffset,
@@ -49,39 +137,27 @@ export default class DashSourceNode extends CompoundNode {
 
         if (adaptationSet.mimeType.indexOf('json') > -1) {
           // If type is JSON then create a metadata stream.
-          const metadataStream = new MetadataSegmentStream(
-            this.context,
-            templateDefinition
-          );
-
-          // Bubble bufferedsegment events as metadataevent allow a listening
-          // for all metadata against the DashSourceNode.
-          metadataStream.addEventListener('bufferedsegment', (event) => {
-            this.dispatchMetadataEvent(event);
-          });
-
-          this.allStreams.push(metadataStream);
+          const stream = new MetadataSegmentStream(this.context, definition);
+          stream.metadataCallback = this._dispatchMetadataEvent.bind(this);
+          this._allStreams.push(stream);
         } else if (adaptationSet.mimeType.indexOf('audio') > -1) {
           // If type is audio then create an audio stream.
-          const audioStream = new AudioSegmentStream(
-            this.context,
-            templateDefinition
-          );
+          const stream = new AudioSegmentStream(this.context, definition);
+          this._audioStreams.push(stream);
+          this._allStreams.push(stream);
 
           // Tally up the total number of channels across all audio streams.
-          this.totalChannels += audioStream.channelCount;
-          this.audioStreams.push(audioStream);
-          this.allStreams.push(audioStream);
+          this._totalChannels += stream.channelCount;
         }
-      }
-    }
+      });
+    });
   }
 
-  initAudioGraph() {
+  _initAudioGraph() {
     // The DashSourceNode is single-channel, muliple-output. Create and connect
     // a gain node for each channel in each audio stream.
     let input = 0;
-    this.audioStreams.forEach((stream) => {
+    this._audioStreams.forEach((stream) => {
       for (let output = 0; output < stream.output.numberOfOutputs; output++) {
         const gain = this.context.createGain();
         stream.output.connect(gain, output);
@@ -91,80 +167,15 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
-  start(playbackStart = 0) {
-    // Node must be in a ready state.
-    if (this.state !== 'ready') {
-      return;
-    }
-
-    // playbackStart must be non-nagative and less than duration.
-    if (playbackStart < 0 || playbackStart >= this.playbackDuration) {
-      throw new Error('Invalid playbackStart');
-    }
-
-    this.setState('priming');
-    this.playbackStart = playbackStart;
-
-    // Prime and then start (syncing to a common context time) all streams.
-    const promises = [];
-    for (let i = 0; i < this.allStreams.length; i++) {
-      promises.push(this.allStreams[i].prime(this.playbackStart));
-    }
-
-    Promise.all(promises).then(() => {
-      this.setState('playing');
-      this.contextSyncTime = this.context.currentTime;
-      for (let i = 0; i < this.allStreams.length; i++) {
-        this.allStreams[i].start(this.contextSyncTime);
-      }
-
-      this.checkIfEndedInterval = setInterval(
-        () => this.checkIfEnded(), 100
-      );
-    });
-  }
-
-  checkIfEnded() {
-    // Stop all streams and clocks when the presentation has ended.
-    if (this.getCurrentPlaybackTime() > this.playbackDuration) {
-      this.stop();
-      this.dispatchEndedEvent();
-    }
-  }
-
-  stop() {
-    // Node must be in a playing state.
-    if (this.state !== 'playing') {
-      return;
-    }
-
-    // Stop all streams.
-    clearInterval(this.checkIfEndedInterval);
-    for (let i = 0; i < this.allStreams.length; i++) {
-      this.allStreams[i].stop();
-    }
-
-    this.setState('ready');
-  }
-
-  getCurrentPlaybackTime() {
-    return this.context.currentTime - this.contextSyncTime + this.playbackStart;
-  }
-
-  setState(state) {
-    this.state = state;
-    this.dispatchStateChangeEvent(this.state);
-  }
-
-  dispatchMetadataEvent(event) {
+  _dispatchMetadataEvent(segment) {
     this.dispatchEvent({
       src: this,
-      type: 'metadataevent',
-      metadata: event.segment,
+      type: 'metadata',
+      metadata: segment.metadata,
     });
   }
 
-  dispatchStateChangeEvent(state) {
+  _dispatchStateChangeEvent(state) {
     this.dispatchEvent({
       src: this,
       type: 'statechange',
@@ -172,7 +183,7 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
-  dispatchEndedEvent() {
+  _dispatchEndedEvent() {
     this.dispatchEvent({
       src: this,
       type: 'ended',

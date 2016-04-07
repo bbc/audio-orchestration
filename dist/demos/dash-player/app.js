@@ -14,27 +14,30 @@ function setupPlayer(blob) {
 
   // Initialise app defaults and get required DOM elements.
   var playTime = 0;
+  var loop = true;
   var updatePlayTime = true;
   var pollPlaytimeInterval = null;
   var pollPlaytime = setInterval(function() {
     if (dashSource.state === 'playing') {
-      var time = dashSource.getCurrentPlaybackTime();
-      if (time && updatePlayTime) {
-        label.innerHTML = Math.round(time);
-        range.value = time;
+      playTime = dashSource.playbackTime;
+      if (updatePlayTime) {
+        label.innerHTML = Math.round(playTime);
+        range.value = playTime;
       }
     }
   }, 200);
 
-  var playButton = document.getElementById("playButton");
-  var stopButton = document.getElementById("stopButton");
-  var range = document.getElementById("range");
+  var playButton = document.getElementById('playButton');
+  var stopButton = document.getElementById('stopButton');
+  var range = document.getElementById('range');
   range.value = playTime;
-  range.max = dashSource.playbackDuration;
+  range.max = dashSource.presentationDuration;
   range.step = 1;
   range.min = 0;
-  var label = document.getElementById("label");
+  var label = document.getElementById('label');
   label.innerHTML = playTime;
+  var loopCheckbox = document.getElementById('loop');
+  loopCheckbox.checked = loop;
 
   // Add listeners for events on dashSourceNode and inputs.
   dashSource.addEventListener('ended', function () {
@@ -44,8 +47,13 @@ function setupPlayer(blob) {
     console.log(`Player is now ${e.state}.`);
   });
 
+  // dashSource.addEventListener('metadata', function (e) {
+  //   console.log(`Metadata arrived: ${e.metadata}.`);
+  // });
+
   playButton.addEventListener('click', function() {
-    dashSource.start(playTime);
+    dashSource.start(playTime, loop);
+    //dashSource.start(0, 20, true);
   });
 
   stopButton.addEventListener('click', function() {
@@ -64,7 +72,15 @@ function setupPlayer(blob) {
     playTime = parseFloat(range.value) || 0;
     if (dashSource.state === 'playing') {
       dashSource.stop();
-      dashSource.start(playTime);
+      dashSource.start(playTime, loop);
+    }
+  });
+
+  loopCheckbox.addEventListener('click', function() {
+    loop = loopCheckbox.checked;
+    if (dashSource.state === 'playing') {
+      dashSource.stop();
+      dashSource.start(playTime, loop);
     }
   });
 }
