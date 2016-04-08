@@ -9,8 +9,8 @@ function parseInteger(value) {
 }
 
 function parsePeriod(value) {
-  // Regex to match and tokenize the period string (TODO: cite ISO spec). More
-  // human readable breakdown:
+  // Period format: ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+  // Regex to match and tokenize the period string. Human readable breakdown:
   // ^P                         // Prefixed with the identifier P (period.)
   //   (?: (\d+)Y)?             // Optional positive integer followed by Y.
   //   (?: (\d+)M)?             // Optional positive integer followed by M.

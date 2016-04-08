@@ -1,4 +1,5 @@
-// TODO: Reference the MPD spec document.
+// A set of datamodels that represent the constituent components of the
+// ISO/IEC 23009 -- Dynamic adaptive streaming over HTTP (DASH) specification.
 
 const MPD = {
   attributes: [{
