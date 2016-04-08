@@ -1,6 +1,11 @@
 import { AudioLoader } from '../../../core/_index';
 import SegmentStream from './segment-stream';
 
+/**
+ * A class to manage a single stream of audio segments, synchronised to an
+ * audio context.
+ * @ignore
+ */
 export default class AudioSegmentStream extends SegmentStream {
   constructor(context, definition) {
     super(context, new AudioLoader(context), definition);
@@ -13,10 +18,19 @@ export default class AudioSegmentStream extends SegmentStream {
     this._output = this._context.createChannelSplitter(this.channelCount);
   }
 
+  /**
+   * Gets the ouput AudioNode.
+   * @return {AudioNode}
+   *         The ouput AudioNode.
+   */
   get output() {
     return this._output;
   }
 
+  /**
+   * Schedules all audio in the buffer for playback and starts streaming of the
+   * audio region defined by prime.
+   */
   _start() {
     // Set as streaming and schedule all audio in the buffer.
     this._isStreaming = true;
@@ -27,6 +41,10 @@ export default class AudioSegmentStream extends SegmentStream {
     super._start();
   }
 
+  /**
+   * Stops all audio in the buffer and starts streaming of the audio region
+   * defined by prime.
+   */
   _stop() {
     // Set as no longer streaming then stop all audio in the buffer.
     this._isStreaming = false;
@@ -39,6 +57,12 @@ export default class AudioSegmentStream extends SegmentStream {
     super._stop();
   }
 
+
+  /**
+   * Schedules a segment for playback.
+   * @param  {!Object} segment
+   *         The segment to schedule.
+   */
   _startSegment(segment) {
     if (segment && segment.bufferSource) {
       // Adjust the parameters when, offset and duration for the context time.
@@ -67,6 +91,15 @@ export default class AudioSegmentStream extends SegmentStream {
     }
   }
 
+  /**
+   * Constructs a BufferSourceNode from the audio data and adds to a segment
+   * in the stream buffer. If the stream is currently streaming then the segment
+   * is scheduled for playback on the AudioContext.
+   * @param  {!Object} data
+   *         The data to add to the segment.
+   * @param  {!number} n
+   *         The number of the segment in the playback sequence.
+   */
   _addDataToSegment(data, n) {
     for (let i = 0; i < this._buffer.segments.length; i++) {
       const segment = this._buffer.segments[i];

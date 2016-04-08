@@ -2,7 +2,19 @@ import { CompoundNode } from '../../core/_index';
 import AudioSegmentStream from './streams/audio-segment-stream';
 import MetadataSegmentStream from './streams/metadata-segment-stream';
 
+/**
+ * An AudioNode to perform DASH playback.
+ * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ * @extends {CompoundNode}
+ */
 export default class DashSourceNode extends CompoundNode {
+  /**
+   * Constructs a new {@link DashSourceNode}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} manifest
+   *         A parsed manifest provided by {@link ManifestParser}.
+   */
   constructor(context, manifest) {
     super(context);
 
@@ -25,6 +37,17 @@ export default class DashSourceNode extends CompoundNode {
     this._state = 'ready';
   }
 
+  /**
+   * Buffers and starts playback of a DASH stream for the defined region.
+   * @param  {?number} [initial=0]
+   *         The time into the region playback should start from.
+   * @param  {?boolean} [loop=true]
+   *         True if playback of the region should loop.
+   * @param  {?number} [offset=0]
+   *         The time into the performance the region starts.
+   * @param  {?number} [duration=presentationDuration-offset]
+   *         The duration of the region to play.
+   */
   start(initial = 0, loop = false,
     offset = 0, duration = this._presentationDuration - offset) {
     // Check node state and parse all input paramaters.
@@ -79,6 +102,9 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
+  /**
+   * Stops streaming and playback.
+   */
   stop() {
     if (this.state !== 'playing') {
       return;
@@ -88,30 +114,51 @@ export default class DashSourceNode extends CompoundNode {
     this._state = 'ready';
   }
 
+  /**
+   * Get the current performance time in seconds.
+   * @type {number}
+   *       The current performance time in seconds.
+   */
   get playbackTime() {
     return this.state === 'playing' ? (this.context.currentTime -
       this._contextSyncTime + this._playbackInitial) %
       this._playbackDuration + this._playbackOffset : 0;
   }
 
+  /**
+   * Get the total performance duration in seconds.
+   * @type {number}
+   *       The total performance duration time in seconds.
+   */
   get presentationDuration() {
     return this._presentationDuration;
   }
 
-  get loop() {
-    return this._playbackLoop;
-  }
-
+  /**
+   * Gets the current state.
+   * @type {string}
+   *       The current state.
+   */
   get state() {
     return this._playbackState;
   }
 
+  /**
+   * Sets the current state and emits a statechange event.
+   * @type {string}
+   *       The state.
+   */
   set _state(state) {
     // Sets the state and emits an event describing the state change.
     this._playbackState = state;
     this._dispatchStateChangeEvent(state);
   }
 
+  /**
+   * Digests the manifest into a set of streams.
+   * @param  {!Object} manifest
+   *         The DASH Manifest.
+   */
   _initStreams(manifest) {
     // Digests the manifest into a set of streams. Each stream manages a buffer
     // for downloaded segments and synchronises scheduling (and playback in the
@@ -153,6 +200,9 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
+  /**
+   * Initialises the required AudioNodes.
+   */
   _initAudioGraph() {
     // The DashSourceNode is single-channel, muliple-output. Create and connect
     // a gain node for each channel in each audio stream.
@@ -167,6 +217,12 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
+  /**
+   * Dispatches an event of type metadata.
+   * @emits {metadata}
+   * @param  {!Object} metadata
+   *         The segment containing metadata.
+   */
   _dispatchMetadataEvent(segment) {
     this.dispatchEvent({
       src: this,
@@ -175,6 +231,12 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
+  /**
+   * Dispatches an event of type statechange.
+   * @emits {statechange}
+   * @param  {!Object} state
+   *         The new state.
+   */
   _dispatchStateChangeEvent(state) {
     this.dispatchEvent({
       src: this,
@@ -183,6 +245,10 @@ export default class DashSourceNode extends CompoundNode {
     });
   }
 
+  /**
+   * Dispatches an event of type ended.
+   * @emits {ended}
+   */
   _dispatchEndedEvent() {
     this.dispatchEvent({
       src: this,

@@ -1,18 +1,56 @@
 import Loader from '../../core/loaders/loader';
 
+/**
+ * A class that provides Promise-based, asynchronous DASH Manifest loading.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+ * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ */
 export default class ManifestLoader extends Loader {
+  /**
+   * Constructs a new {@link ManifestLoader}.
+   */
   constructor() {
     super('text');
+    this._parser = new DOMParser();
   }
 
+  /**
+   * Loads one or more manifest files asynchronously and converts them to
+   * documents.
+   * @override
+   * @param  {!(string|string[])} urls
+   *         A single url or list of urls of manifest files to load and convert.
+   * @return {Promise}
+   *         A Promise that resolves when all manifest files have been loaded
+   *         and converted to documents.
+   */
+  load(urls) {
+    super.load(urls);
+  }
+
+  /**
+   * Loads and converts one manifest file asynchronously.
+   * @private
+   * @param  {!string} url
+   *         A single url of a manifest file to load and decoded.
+   * @return {Promise}
+   *         A Promise that resolves when the manifest has been loaded.
+   */
   _loadOne(url) {
     return super._loadOne(url).then(this._parse);
   }
 
+  /**
+   * Converts one manifest blob to a document.
+   * @private
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+   * @param  {!string} string
+   *         A string blob containing the manifest to be converted.
+   * @return {Promise}
+   *         A Promise that resolves when the manifest blob has been converted.
+   */
   _parse(string) {
-    // TODO consider moving parser to constructor?
-    const parser = new DOMParser();
-    const xml = parser.parseFromString(string, 'text/xml', 0);
+    const xml = this._parser.parseFromString(string, 'text/xml', 0);
     return Promise.resolve(xml);
   }
 }

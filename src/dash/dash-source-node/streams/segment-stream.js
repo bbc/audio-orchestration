@@ -1,4 +1,18 @@
+/**
+ * A class to manage a single stream of segments, synchronised to an audio
+ * context.
+ * @ignore
+ */
 export default class SegmentStream {
+  /**
+   * Constructs a new {@link SegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Loader} loader
+   *         The loader that will be used to download segment data.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
   constructor(context, loader, definition) {
     this._context = context;
     this._contextSyncTime = 0;
@@ -32,6 +46,19 @@ export default class SegmentStream {
     this._play.endedCallback = null;
   }
 
+  /**
+   * Primes the stream to play the region defined by the parameters.
+   * @param  {?number} [initial=0]
+   *         The time into the region playback should start from.
+   * @param  {?boolean} [loop=true]
+   *         True if playback of the region should loop.
+   * @param  {?number} [offset=0]
+   *         The time into the performance the region starts.
+   * @param  {?number} [duration=definition.duration-offset]
+   *         The duration of the region to play.
+   * @return {Promise}
+   *         A Promise that resolves when the stream is primed.
+   */
   prime(initial = 0, loop = true,
     offset = 0, duration = this._stream.duration - offset) {
     // Store information describing the playback region.
@@ -86,6 +113,13 @@ export default class SegmentStream {
     return Promise.all(promises);
   }
 
+  /**
+   * Starts streaming of the region defined by prime.
+   * @param  {?number} [contextSyncTime=0]
+   *         The context time to which the stream start should be synchronised.
+   * @param  {?function()}
+   *         A function that is called when stream playback has naturally ended.
+   */
   start(contextSyncTime = 0, endedCallback) {
     this._contextSyncTime = contextSyncTime;
     this._play.endedCallback = endedCallback;
@@ -93,14 +127,25 @@ export default class SegmentStream {
     this._start();
   }
 
+  /**
+   * Stops streaming of the region defined by prime.
+   */
   stop() {
     this._stop();
   }
 
+  /**
+   * Returns the number of channels in the stream.
+   * @return {AudioContext}
+   *         The associated {@link AudioContext}.
+   */
   get channelCount() {
     return this._stream.channelCount;
   }
 
+  /**
+   * Checks if a new segment can be downloaded. If so; attempts to download it.
+   */
   _manageBuffer() {
     // Get the front segment and check to see if it has finished playing.
     const currentSegment = this._buffer.segments[this._buffer.frontIndex];
@@ -131,10 +176,25 @@ export default class SegmentStream {
     }
   }
 
+  /**
+   * Returns the number of seconds past since the sync point.
+   * @return {number}
+   *         The number of seconds past since the sync point.
+   */
   _getCurrentSyncTime() {
     return this._context.currentTime - this._contextSyncTime;
   }
 
+  /**
+   * Returns a template for a segment. The template constitutes the number in
+   * the playback sequence, the segment sequence number, tand he period covered
+   * by the segment relative to playback start (defined as segment start time,
+   * duration and offset.)
+   * @param  {!number} n
+   *         The nuber of the segment in the layback sequence requested.
+   * @return {Object}
+   *         The segment template.
+   */
   _getTemplateForNthSegment(n) {
     // Calculate the loop position and number of the nth segment.
     const nOffset = n + this._play.initialSegment - this._play.startSegment;
@@ -181,6 +241,14 @@ export default class SegmentStream {
     return { n, number, url, when, offset, duration };
   }
 
+  /**
+   * Adds a data payload to a segment in the stream buffer. This may be
+   * overridden by subclasses needing to act on downloaded segment data.
+   * @param  {!any} data
+   *         The data to add to the segment.
+   * @param  {!number} n
+   *         The number of the segment in the playback sequence.
+   */
   _addDataToSegment(data, n) {
     for (let i = 0; i < this._buffer.segments.length; i++) {
       const segment = this._buffer.segments[i];
@@ -191,6 +259,10 @@ export default class SegmentStream {
     }
   }
 
+  /**
+   * Starts streaming of the region defined by prime. This may be overridden by
+   * subclasses needing to act before streaming is started.
+   */
   _start() {
     // Continually maintain the buffer. Checks if a new segment can be
     // downloaded with a frequency relative to the streams segment duration.
@@ -200,11 +272,19 @@ export default class SegmentStream {
     );
   }
 
+  /**
+   * Stops streaming of the region defined by prime. This may be overridden by
+   * subclasses needing to act before streaming is stopped.
+   */
   _stop() {
     // Stop maintaining the buffer.
     clearInterval(this.manageBufferInterval);
   }
 
+  /**
+   * Ends streaming of the region defined by prime. This may be
+   * overridden by subclasses needing to act when streaming ends naturally.
+   */
   _end() {
     this._stop();
     if (this._play.endedCallback) {
