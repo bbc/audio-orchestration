@@ -25,7 +25,7 @@ export default class ManifestLoader extends Loader {
    *         and converted to documents.
    */
   load(urls) {
-    super.load(urls);
+    return super.load(urls);
   }
 
   /**
@@ -37,7 +37,7 @@ export default class ManifestLoader extends Loader {
    *         A Promise that resolves when the manifest has been loaded.
    */
   _loadOne(url) {
-    return super._loadOne(url).then(this._parse);
+    return super._loadOne(url).then((string) => this._parse(string));
   }
 
   /**

@@ -27,7 +27,7 @@ export default class AudioLoader extends Loader {
    *         decoded.
    */
   load(urls) {
-    super.load(urls);
+    return super.load(urls);
   }
 
    /**
