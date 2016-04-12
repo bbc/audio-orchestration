@@ -1,6 +1,6 @@
 import 'jasmine-ajax';
 import mockHttpResponses from './../../helpers/mock-http-responses';
-import { core as bbcatCore } from './../../../src/bbcat';
+import Loader from './../../../src/core/loaders/loader';
 
 describe('Loader', function() {
   beforeAll(function() {
@@ -18,17 +18,17 @@ describe('Loader', function() {
   });
 
   it('should construct without responseType', function() {
-    const loader = new bbcatCore.Loader();
+    const loader = new Loader();
     expect(loader).toBeDefined();
   });
 
   it('should construct with responseType', function() {
-    const loader = new bbcatCore.Loader('json');
+    const loader = new Loader('json');
     expect(loader).toBeDefined();
   });
 
   it('should load a single file', function(done) {
-    const loader = new bbcatCore.Loader('json');
+    const loader = new Loader('json');
     const mockResponse = mockHttpResponses[0];
 
     loader.load(mockResponse.url)
@@ -42,7 +42,7 @@ describe('Loader', function() {
   });
 
   it('should load multiple files', function(done) {
-    const loader = new bbcatCore.Loader('json');
+    const loader = new Loader('json');
     const mockResponses = mockHttpResponses.slice(0, 3);
     const mockResponsesUrls = mockResponses.map((mock) => mock.url);
 
@@ -59,7 +59,7 @@ describe('Loader', function() {
   });
 
   it('should reject when file is not found', function(done) {
-    const loader = new bbcatCore.Loader('json');
+    const loader = new Loader('json');
     const mockResponse = mockHttpResponses[3];
 
     loader.load(mockResponse.url)
@@ -73,7 +73,7 @@ describe('Loader', function() {
   });
 
   it('should reject when transport errors', function(done) {
-    const loader = new bbcatCore.Loader('json');
+    const loader = new Loader('json');
 
     loader.load('error')
       .then(function(file) {
