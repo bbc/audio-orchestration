@@ -50,7 +50,7 @@ export default class Loader {
    *         A Promise that resolves when all files have been loaded.
    */
   _loadAll(urls) {
-    return Promise.all(urls.map(this._loadOne));
+    return Promise.all(urls.map((url) => this._loadOne(url)));
   }
 
   /**
