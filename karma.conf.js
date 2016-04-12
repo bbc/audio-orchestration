@@ -1,6 +1,6 @@
 module.exports = function(config) {
   config.set({
-    files: [{
+    files: ['./src/bbcat.js', {
       pattern: './test/**/*.spec.js',
       watched: false,
       included: true,
