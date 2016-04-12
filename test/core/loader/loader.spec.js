@@ -1,5 +1,4 @@
 import 'jasmine-ajax';
-import 'babel-polyfill';
 import mockHttpResponses from './../../helpers/mock-http-responses';
 import { core as bbcatCore } from './../../../src/bbcat';
 
@@ -75,7 +74,7 @@ describe('Loader', function() {
 
   it('should reject when transport errors', function(done) {
     const loader = new bbcatCore.Loader('json');
-    
+
     loader.load('error')
       .then(function(file) {
         done.fail('Should have thrown an error.');
