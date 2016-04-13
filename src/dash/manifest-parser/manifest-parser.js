@@ -1,7 +1,7 @@
 import { DocumentParser } from '../../core/_index';
 
-import models from './data-models/mpd-models';
-import parsers from './data-models/mpd-parsers';
+import models from './mpd-models';
+import parsers from './mpd-parsers';
 
 /**
  * A class to parse DASH Manifest documents, returning a Javascript object

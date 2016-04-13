@@ -30,7 +30,7 @@ function parsePeriod(value) {
       parseInt(match[3] || 0, 10) * SECONDS_IN_DAY +
       parseInt(match[4] || 0, 10) * SECONDS_IN_HOUR +
       parseInt(match[5] || 0, 10) * SECONDS_IN_MINUTE +
-      parseFloat(match[6] || 0, 10);
+      parseFloat(match[6] || 0);
   }
 
   return seconds;
