@@ -17,13 +17,7 @@ export default class CompoundNode extends EventTarget {
   constructor(context) {
     super();
 
-    Object.defineProperty(this, 'context', {
-      value: context,
-      writable: false,
-      enumerable: false,
-      configurable: true,
-    });
-
+    this._context = context;
     this._inputs = [];
     this._outputs = [];
   }
@@ -34,7 +28,7 @@ export default class CompoundNode extends EventTarget {
    *         The associated {@link AudioContext}.
    */
   get context() {
-    return this.context;
+    return this._context;
   }
 
   /**
@@ -71,7 +65,7 @@ export default class CompoundNode extends EventTarget {
    */
   connect(destination, output = 0, input = 0) {
     if (destination instanceof CompoundNode) {
-      this._outputs[output].connect(destination.inputs[input]);
+      this._outputs[output].connect(destination._inputs[input]);
     } else {
       this._outputs[output].connect(destination, 0, input);
     }
@@ -95,7 +89,7 @@ export default class CompoundNode extends EventTarget {
    */
   disconnect(destination, output = 0, input = 0) {
     if (destination instanceof CompoundNode) {
-      this._outputs[output].disconnect(destination.inputs[input]);
+      this._outputs[output].disconnect(destination._inputs[input]);
     } else {
       this._outputs[output].disconnect(destination, 0, input);
     }
