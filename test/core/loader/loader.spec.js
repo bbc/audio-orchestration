@@ -1,5 +1,5 @@
 import 'jasmine-ajax';
-import mockHttpResponses from './../../helpers/mock-http-responses';
+import mockHttpResponses from './../../_mocks/mock-json-http-responses';
 import Loader from './../../../src/core/loaders/loader';
 
 describe('Loader', function() {
