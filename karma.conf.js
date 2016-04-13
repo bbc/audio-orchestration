@@ -17,7 +17,7 @@ module.exports = function(config) {
     reporters: ['dots', 'coverage'],
     coverageReporter: {
       type: 'html',
-      dir: 'test/coverage/'
+      dir: 'test/_coverage/'
     },
     frameworks: ['jasmine'],
     webpack: {
