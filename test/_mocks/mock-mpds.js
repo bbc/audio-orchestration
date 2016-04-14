@@ -92,7 +92,7 @@ const mpd1 = {
 const mpd2 = {
   text:
     `<?xml version="1.0"?>
-    <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" minBufferTime="PT16.00S" mediaPresentationDuration="PT2M" maxSegmentDuration="PT4S" profiles="urn:mpeg:dash:profile:full:2011">
+    <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" minBufferTime="PT16.00S" mediaPresentationDuration="PT2M" maxSegmentDuration="errPT4S" profiles="urn:mpeg:dash:profile:full:2011">
     <ProgramInformation moreInformationURL="http://example.org/">
       <Title>Example MPD 2</Title>
     </ProgramInformation>
@@ -108,7 +108,7 @@ const mpd2 = {
     type: 'static',
     minBufferTime: 16,
     mediaPresentationDuration: 120,
-    maxSegmentDuration: 4,
+    maxSegmentDuration: null,
     programInformation: {
       moreInformationURL: 'http://example.org/',
       lang: undefined,
