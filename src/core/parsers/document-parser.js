@@ -12,14 +12,12 @@
  * //
  * // The result will contain the object:
  * // {
- * //   ParentTemplate: {
- * //     id: 0,
- * //     childTemplates: [{
- * //       test: 'HelloWorld!',
- * //     }, {
- * //       test: 'Default string.',
- * //     }],
- * //   },
+ * //   id: 0,
+ * //   childTemplates: [{
+ * //     text: 'HelloWorld!',
+ * //   }, {
+ * //     text: 'Default string.',
+ * //   }],
  * // }
  *
  * const models = {
@@ -54,16 +52,16 @@
 export default class DocumentParser {
   /**
    * Constructs a new {@link DocumentParser}.
-   * @param  {!Object} models
+   * @param  {!Object[]} models
    *         A set of data models that represent nodes within the documents to
    *         be parsed. See {@link DocumentParser} example for model structure.
-   * @param  {!Object} parsers
+   * @param  {?Object[]} parsers
    *         A set of parsers that convert strings to a desired type. See
    *         {@link DocumentParser} example for parser structure.
    */
-  constructor(models, parsers) {
-    this._models = models || [];
-    this._parsers = parsers || [];
+  constructor(models, parsers = []) {
+    this._models = models;
+    this._parsers = parsers;
   }
 
 
