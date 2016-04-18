@@ -1,3 +1,9 @@
+// Exports manifests for testing.
+// mpd.text
+//   - Raw MPD in text form.
+// mpd.json
+//   - Hand-transcribed MPD to corresponding Javascript-object format. 
+
 const mpd1 = {
   text:
     `<?xml version="1.0"?>

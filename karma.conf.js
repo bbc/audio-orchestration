@@ -26,7 +26,7 @@ module.exports = function(config) {
           test: /\.js$/,
           loader: 'babel',
           query: {
-            cacheDirectory: true,
+            cacheDirectory: false,
             presets: ['es2015'],
             plugins: [['__coverage__', { only: 'src/' }]]
           }

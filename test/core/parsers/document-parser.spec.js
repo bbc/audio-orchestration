@@ -1,4 +1,4 @@
-import mockDocuments from './../../_mocks/mock-documents';
+import mockDocuments from './_mock-documents';
 import DocumentParser from './../../../src/core/parsers/document-parser';
 
 describe('DocumentParser', function() {
@@ -15,7 +15,7 @@ describe('DocumentParser', function() {
     const documentParser = new DocumentParser(
       mockDocument.models, mockDocument.parsers);
     const docJson = documentParser.parse(mockDocument.document);
-    
+
     expect(docJson).toEqual(mockDocument.json);
   });
 });

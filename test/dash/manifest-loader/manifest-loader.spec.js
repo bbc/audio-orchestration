@@ -1,5 +1,5 @@
 import 'jasmine-ajax';
-import mockHttpResponses from './../../_mocks/mock-mpd-http-responses';
+import mockHttpResponses from './_mock-mpd-http-responses';
 import ManifestLoader from './../../../src/dash/manifest-loader/manifest-loader';
 
 describe('ManifestLoader', function() {

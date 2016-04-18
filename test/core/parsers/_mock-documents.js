@@ -1,3 +1,16 @@
+// Exports a document and corresponding models, parsers and javascript object.
+// document.models
+//   - A set of models correspnding to the document contents.
+// document.parsers
+//   - A set of parsers correspnding to the document contents.
+// document.document
+//   - A string versions of a document.
+// document.json
+//   - Hand-transcribed Javascript-object representing document.
+// document.jsonWithoutParsers
+//   - Hand-transcribed Javascript-object representing document without
+//     coverting any of the attribute values to formats other than string.
+
 const parser = new DOMParser();
 
 const document1 = {

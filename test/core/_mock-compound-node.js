@@ -1,5 +1,7 @@
 import CompoundNode from './../../src/core/compound-node';
 
+// A super-simple minimum implementation of the CompoundNode interface.
+
 export default class MockCompoundNode extends CompoundNode {
   constructor(context, inputs, outputs) {
     super(context);
