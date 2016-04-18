@@ -14,11 +14,11 @@ export default class AudioSegmentStream extends SegmentStream {
     // currently decode audio segments without fully formed headers. This will
     // not be required in a future Web Audio API update.
     // this._primerOffset = 2048 / this._context.sampleRate;
-    // HACK - to be resolved defaulting sample rate to 48000 to calculate the primer offset, needs to be resolved
-    // this._primerOffset = 2048 / this._context.sampleRate;
+    // HACK - to be resolved defaulting sample rate to 48000 to calculate the
+    // primer offset, needs to be resolved.
     this._primerOffset = 2048 / 48000;
-    
     this._isStreaming = false;
+    this._stream.channelCount = definition.channelCount;
     this._output = this._context.createChannelSplitter(this.channelCount);
   }
 
@@ -29,6 +29,15 @@ export default class AudioSegmentStream extends SegmentStream {
    */
   get output() {
     return this._output;
+  }
+
+  /**
+   * Returns the number of channels in the stream.
+   * @return {Number}
+   *         The number of channels in the stream.
+   */
+  get channelCount() {
+    return this._stream.channelCount;
   }
 
   /**

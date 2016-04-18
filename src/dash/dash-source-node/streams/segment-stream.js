@@ -2,6 +2,8 @@
  * A class to manage a single stream of segments, synchronised to an audio
  * context.
  * @ignore
+ * @private
+ * @abstract
  */
 export default class SegmentStream {
   /**
@@ -27,7 +29,6 @@ export default class SegmentStream {
     this._stream.segmentStart = definition.segmentStart;
     this._stream.segmentEnd = definition.segmentStart - 1 +
       Math.ceil(definition.duration / definition.segmentDuration);
-    this._stream.channelCount = definition.channelCount;
     this._stream.templateUrl = definition.templateUrl;
 
     // Instantiate a circular buffer for segments .
@@ -50,7 +51,7 @@ export default class SegmentStream {
    * Primes the stream to play the region defined by the parameters.
    * @param  {?number} [initial=0]
    *         The time into the region playback should start from.
-   * @param  {?boolean} [loop=true]
+   * @param  {?boolean} [loop=false]
    *         True if playback of the region should loop.
    * @param  {?number} [offset=0]
    *         The time into the performance the region starts.
@@ -59,7 +60,7 @@ export default class SegmentStream {
    * @return {Promise}
    *         A Promise that resolves when the stream is primed.
    */
-  prime(initial = 0, loop = true,
+  prime(initial = 0, loop = false,
     offset = 0, duration = this._stream.duration - offset) {
     // Store information describing the playback region.
     this._play.initial = initial;
@@ -79,8 +80,9 @@ export default class SegmentStream {
     this._play.endOverlap = (this._stream.segmentDuration -
       ((this._play.startOverlap + this._play.duration) %
       this._stream.segmentDuration)) % this._stream.segmentDuration;
-    this._play.initialOverlap = (this._play.initial %
-        this._stream.segmentDuration) % this._stream.segmentDuration;
+    this._play.initialOverlap = (this._stream.segmentDuration -
+      ((this._play.initial + this._stream.start - this._play.offset) %
+      this._stream.segmentDuration)) % this._stream.segmentDuration;
 
     this._play.startSegment = this._stream.segmentStart +
       Math.floor((this._play.offset - this._stream.start) /
@@ -117,10 +119,10 @@ export default class SegmentStream {
    * Starts streaming of the region defined by prime.
    * @param  {?number} [contextSyncTime=0]
    *         The context time to which the stream start should be synchronised.
-   * @param  {?function()}
+   * @param  {?function()} [endedCallback=null]
    *         A function that is called when stream playback has naturally ended.
    */
-  start(contextSyncTime = 0, endedCallback) {
+  start(contextSyncTime = 0, endedCallback = () => {}) {
     this._contextSyncTime = contextSyncTime;
     this._play.endedCallback = endedCallback;
 
@@ -135,15 +137,6 @@ export default class SegmentStream {
   }
 
   /**
-   * Returns the number of channels in the stream.
-   * @return {AudioContext}
-   *         The associated {@link AudioContext}.
-   */
-  get channelCount() {
-    return this._stream.channelCount;
-  }
-
-  /**
    * Checks if a new segment can be downloaded. If so; attempts to download it.
    */
   _manageBuffer() {
@@ -152,7 +145,7 @@ export default class SegmentStream {
     const currentSegmentEnd = currentSegment.when + currentSegment.duration;
     const currentTime = this._getCurrentSyncTime();
 
-    if (currentTime > currentSegmentEnd) {
+    if (currentTime >= currentSegmentEnd) {
       if (!this._play.loop && currentSegment.number >= this._play.endSegment) {
         // Playback has naturally ended.
         this._end();
@@ -218,15 +211,13 @@ export default class SegmentStream {
     let offset = 0;
     let duration = this._stream.segmentDuration;
 
-    // Trim the start of the first segment of the first loop.
+    // Trim the start of the first segment of the first loop if required.
+    // Otherwise; trim the start of the first loop segment if required.
     if (n === 0) {
       when = when + this._play.initialOverlap;
       duration = duration - this._play.initialOverlap;
       offset = offset + this._play.initialOverlap;
-    }
-
-    // Trim the start of the first loop segment if required.
-    if (number === this._play.startSegment) {
+    } else if (number === this._play.startSegment) {
       when = when + this._play.startOverlap;
       duration = duration - this._play.startOverlap;
       offset = offset + this._play.startOverlap;
@@ -242,22 +233,23 @@ export default class SegmentStream {
   }
 
   /**
-   * Adds a data payload to a segment in the stream buffer. This may be
-   * overridden by subclasses needing to act on downloaded segment data.
+   * This must be overridden by subclasses. Should add a data payload to a
+   * segment in the buffer, performing any pre- or post-processing required.
+   * @abstract
+   * @example
+   * // _addDataToSegment(data, n) {
+   * //   for (let i = 0; i < this._buffer.segments.length; i++) {
+   * //     if (this._buffer.segments[i].n === n) {
+   * //       this._buffer.segments[i].data = data;
+   * //     }
+   * //   }
+   * // }
    * @param  {!any} data
    *         The data to add to the segment.
    * @param  {!number} n
    *         The number of the segment in the playback sequence.
    */
-  _addDataToSegment(data, n) {
-    for (let i = 0; i < this._buffer.segments.length; i++) {
-      const segment = this._buffer.segments[i];
-
-      if (segment.n === n) {
-        segment.data = data;
-      }
-    }
-  }
+  _addDataToSegment() { }
 
   /**
    * Starts streaming of the region defined by prime. This may be overridden by
@@ -287,8 +279,6 @@ export default class SegmentStream {
    */
   _end() {
     this._stop();
-    if (this._play.endedCallback) {
-      this._play.endedCallback();
-    }
+    this._play.endedCallback();
   }
 }

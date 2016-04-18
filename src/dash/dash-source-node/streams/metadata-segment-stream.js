@@ -16,7 +16,7 @@ export default class MetadataSegmentStream extends SegmentStream {
    */
   constructor(context, definition) {
     super(context, new Loader('json'), definition);
-    this._metadataCallback = null;
+    this._metadataCallback = () => {};
   }
 
   /**
@@ -25,7 +25,7 @@ export default class MetadataSegmentStream extends SegmentStream {
    *         The metadata callback function.
    */
   get metadataCallback() {
-    return this._metadataCallback();
+    return this._metadataCallback;
   }
 
   /**
@@ -55,11 +55,7 @@ export default class MetadataSegmentStream extends SegmentStream {
 
       if (segment.n === n) {
         segment.metadata = data;
-
-        // Pass the segment through to the metadata callback.
-        if (this._metadataCallback) {
-          this._metadataCallback(segment);
-        }
+        this._metadataCallback(segment);
       }
     }
   }
