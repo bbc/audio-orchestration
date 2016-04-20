@@ -112,12 +112,18 @@ export default class AudioSegmentStream extends SegmentStream {
    *         The data to add to the segment.
    * @param  {!number} n
    *         The number of the segment in the playback sequence.
+   * @return {Object}
+   *         The complete segment.
    */
   _addDataToSegment(data, n) {
-    for (let i = 0; i < this._buffer.segments.length; i++) {
-      const segment = this._buffer.segments[i];
+    let segment = null;
+    let isFound = false;
+    let i = 0;
 
-      if (segment.n === n) {
+    while (!isFound && i < this._buffer.segments.length) {
+      if (this._buffer.segments[i].n === n) {
+        segment = this._buffer.segments[i];
+
         // Use the raw audio data to instantiate a bufferSourceNode, and connect
         // to the streams output.
         segment.bufferSource = this._context.createBufferSource();
@@ -128,7 +134,12 @@ export default class AudioSegmentStream extends SegmentStream {
         if (this._isStreaming) {
           this._startSegment(segment);
         }
+
+        isFound = true;
       }
+      i++;
     }
+
+    return segment;
   }
 }

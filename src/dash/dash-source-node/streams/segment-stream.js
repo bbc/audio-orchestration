@@ -238,16 +238,27 @@ export default class SegmentStream {
    * @abstract
    * @example
    * // _addDataToSegment(data, n) {
-   * //   for (let i = 0; i < this._buffer.segments.length; i++) {
+   * //   let segment = null;
+   * //   let isFound = false;
+   * //   let i = 0;
+   * //
+   * //   while (!isFound && i < this._buffer.segments.length) {
    * //     if (this._buffer.segments[i].n === n) {
-   * //       this._buffer.segments[i].data = data;
+   * //       segment = this._buffer.segments[i];
+   * //       segment.data = data;
+   * //       isFound = true;
    * //     }
+   * //     i++;
    * //   }
+   * //
+   * //   return segment;
    * // }
    * @param  {!any} data
    *         The data to add to the segment.
    * @param  {!number} n
    *         The number of the segment in the playback sequence.
+   * @return {Object}
+   *         The complete segment.
    */
   _addDataToSegment() { }
 
