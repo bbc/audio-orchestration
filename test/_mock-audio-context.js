@@ -10,6 +10,9 @@ export default class MockAudioContext {
 
     this._context = window.testAudioContext;
     this._currentTime = 0;
+
+    this.bufferSourceStartCallback = () => {};
+    this.bufferSourceStopCallback = () => {};
   }
 
   get currentTime() {
@@ -20,15 +23,28 @@ export default class MockAudioContext {
     this._currentTime = currentTime;
   }
 
+  get sampleRate() {
+    return this._context.sampleRate;
+  }
+
   createChannelSplitter(channelCount) {
     return this._context.createChannelSplitter(channelCount);
   }
 
   createBufferSource() {
     const bufferSource = this._context.createBufferSource();
-    bufferSource.start = (when, offset, duration) => {
-      // Do stuff in here with params.
-    }
+    bufferSource.start = this.bufferSourceStartCallback;
+    bufferSource.stop =  this.bufferSourceStopCallback;
     return bufferSource;
+  }
+
+
+
+  createGain() {
+    return this._context.createGain();
+  }
+
+  decodeAudioData(data, resolve, reject) {
+    return this._context.decodeAudioData(data, resolve, reject);
   }
 }

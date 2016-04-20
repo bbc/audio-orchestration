@@ -1,7 +1,7 @@
 import MetadataSegmentStream from './../../../../src/dash/dash-source-node/streams/metadata-segment-stream';
 
-import MockAudioContext from './../_mock-audio-context';
-import mockMetadataRoutines from './../_mock-metadata-stream-routines';
+import MockAudioContext from './../../../_mock-audio-context';
+import mockMetadataRoutines from './_mock-metadata-stream-routines';
 
 describe('MetadataSegmentStream', function() {
   beforeAll(function () {
