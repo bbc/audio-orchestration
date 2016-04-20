@@ -24,11 +24,15 @@ module.exports = function(config) {
       module: {
         loaders: [{
           test: /\.js$/,
+          exclude: /node_modules/,
           loader: 'babel',
           query: {
             cacheDirectory: false,
             presets: ['es2015'],
-            plugins: [['__coverage__', { only: 'src/' }]]
+            plugins: [
+              'transform-runtime',
+              ['__coverage__', { only: 'src/' }]
+            ]
           }
         }]
       },
