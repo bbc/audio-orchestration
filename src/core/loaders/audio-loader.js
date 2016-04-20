@@ -53,7 +53,8 @@ export default class AudioLoader extends Loader {
    */
   _decode(data) {
     return new Promise((resolve, reject) => {
-      this._context.decodeAudioData(data, resolve, reject);
+      // Data must be copied to avoid issue with firefox losing reference.
+      this._context.decodeAudioData(data.slice(0), resolve, reject);
     });
   }
 }
