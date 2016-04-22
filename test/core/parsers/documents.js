@@ -17,7 +17,7 @@ const document1 = {
   models: {
     ParentTemplate: {
       attributes: [{
-      name: 'id',
+        name: 'id',
         type: 'integer',
       }],
       nodes: [{
@@ -92,4 +92,4 @@ const document1 = {
   },
 };
 
-export default [ document1 ];
+export default [document1];

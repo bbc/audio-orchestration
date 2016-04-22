@@ -9,4 +9,4 @@ export {
 export default {
   core,
   dash,
-}
+};

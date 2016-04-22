@@ -1,8 +1,8 @@
 import mockDocuments from './documents';
 import DocumentParser from './../../../src/core/parsers/document-parser';
 
-describe('DocumentParser', function() {
-  it('should return without parsing values if no parsers provided', function () {
+describe('DocumentParser', () => {
+  it('should return without parsing values if no parsers provided', () => {
     const mockDocument = mockDocuments[0];
     const documentParser = new DocumentParser(mockDocument.models);
     const docJson = documentParser.parse(mockDocument.document);
@@ -10,7 +10,7 @@ describe('DocumentParser', function() {
     expect(docJson).toEqual(mockDocument.jsonWithoutParsers);
   });
 
-  it('should correctly parse documents', function () {
+  it('should correctly parse documents', () => {
     const mockDocument = mockDocuments[0];
     const documentParser = new DocumentParser(
       mockDocument.models, mockDocument.parsers);
