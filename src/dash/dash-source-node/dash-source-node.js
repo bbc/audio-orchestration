@@ -64,12 +64,12 @@ export default class DashSourceNode extends CompoundNode {
       throw new Error('Invalid loop. Must be a boolean.');
     }
 
-    if (offset < 0 || offset >= this._duration) {
+    if (offset < 0 || offset >= this._presentationDuration) {
       throw new Error('Invalid offset. Must be a number less than ' +
         'presentationDuration and greater than or equal to 0.');
     }
 
-    if (duration <= 0 || duration > this._duration - offset) {
+    if (duration <= 0 || duration > this._presentationDuration - offset) {
       throw new Error('Invalid duration. Must be a number less than ' +
         'presentationDuration minus offset and greater than 0.');
     }
@@ -89,11 +89,10 @@ export default class DashSourceNode extends CompoundNode {
       // When all steams are primed, latch the current audio context time and
       // start all streams with the same context sync time.
       this._contextSyncTime = this.context.currentTime;
-      this._state = 'playing';
-
       const startStreamsPromises = this._allStreams.map((stream) =>
         new Promise((resolve) => stream.start(this._contextSyncTime, resolve)));
 
+      this._state = 'playing';
       Promise.all(startStreamsPromises).then(() => {
         // Streams playback has been reached.
         this._dispatchEndedEvent();
@@ -227,7 +226,11 @@ export default class DashSourceNode extends CompoundNode {
     this.dispatchEvent({
       src: this,
       type: 'metadata',
+      n: segment.n,
       metadata: segment.metadata,
+      when: segment.when,
+      offset: segment.offset,
+      duration: segment.duration,
     });
   }
 
