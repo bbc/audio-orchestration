@@ -1,4 +1,4 @@
-import mockMetadata from './../../../_mock-metadata';
+import mockMetadata from './../../../metadata';
 
 // Exports routines to test a MetadataSegmentStream.
 // routine.segmentsUrlPayloadMap

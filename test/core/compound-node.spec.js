@@ -1,5 +1,5 @@
 import CompoundNode from './../../src/core/compound-node';
-import MockCompoundNode from './_mock-compound-node';
+import MockCompoundNode from './mock-compound-node';
 
 describe('CompoundNode', function() {
   beforeAll(function () {

@@ -1,4 +1,4 @@
-import mockDocuments from './_mock-documents';
+import mockDocuments from './documents';
 import DocumentParser from './../../../src/core/parsers/document-parser';
 
 describe('DocumentParser', function() {

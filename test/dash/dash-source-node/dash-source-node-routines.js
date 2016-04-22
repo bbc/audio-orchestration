@@ -1,7 +1,7 @@
-import MockAudioContext from './../../_mock-audio-context';
+import MockAudioContext from './../../mock-audio-context';
 
-import mockAudio from './../../_mock-audio';
-import mockMetadata from './../../_mock-metadata';
+import mockAudio from './../../audio';
+import mockMetadata from './../../metadata';
 
 const offsetManifest = {
   type: 'static',

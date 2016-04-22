@@ -1,7 +1,7 @@
-import MockAudioSegmentStream from './_mock-audio-segment-stream';
-import MockAudioContext from './../../../_mock-audio-context';
+import MockAudioSegmentStream from './mock-audio-segment-stream';
+import MockAudioContext from './../../../mock-audio-context';
 
-import mockAudioRoutines from './_mock-audio-stream-routines';
+import mockAudioRoutines from './audio-stream-routines';
 
 describe('AudioSegmentStream', function() {
   beforeAll(function () {

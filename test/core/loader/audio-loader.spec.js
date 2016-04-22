@@ -1,8 +1,8 @@
 import 'jasmine-ajax';
 
 import AudioLoader from './../../../src/core/loaders/audio-loader';
-import MockAudioContext from './../../_mock-audio-context';
-import mockHttpResponses from './_mock-arraybuffer-http-responses';
+import MockAudioContext from './../../mock-audio-context';
+import mockHttpResponses from './arraybuffer-http-responses';
 
 describe('AudioLoader', function() {
   beforeAll(function() {

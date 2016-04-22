@@ -1,4 +1,4 @@
-import mockAudio from './../../_mock-audio';
+import mockAudio from './../../audio';
 
 // Exports request url-to-response mappings. The responses are of responseType
 // arraybuffer where the buffer contains encoded audio.

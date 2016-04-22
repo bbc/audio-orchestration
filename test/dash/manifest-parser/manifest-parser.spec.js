@@ -1,5 +1,5 @@
 import ManifestParser from './../../../src/dash/manifest-parser/manifest-parser';
-import mockMpds from './../_mock-mpds';
+import mockMpds from './../mpds';
 
 describe('ManifestParser', function() {
   it('should correctly parse MPD files', function() {

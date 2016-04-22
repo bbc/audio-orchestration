@@ -1,7 +1,6 @@
 import DashSourceNode from './../../../src/dash/dash-source-node/dash-source-node';
-import MockAudioContext from './../../_mock-audio-context';
-import mockDashRoutines from './_mock_dash-source-node-routines';
-
+import MockAudioContext from './../../mock-audio-context';
+import mockDashRoutines from './dash-source-node-routines';
 
 describe('DashSourceNode', function() {
   beforeAll(function () {

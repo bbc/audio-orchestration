@@ -1,4 +1,4 @@
-import mockMpds from './../_mock-mpds';
+import mockMpds from './../mpds';
 
 // Exports request url-to-response mappings.
 // mapping.url
