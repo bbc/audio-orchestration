@@ -24,6 +24,7 @@
     "esdoc-es7-plugin": "0.0.3",
     "eslint": "^2.4.0",
     "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-jasmine": "^1.8.1",
     "jasmine": "^2.4.1",
     "jasmine-ajax": "^3.2.0",
     "karma": "^0.13.22",
