@@ -1,7 +1,7 @@
 import EventTarget from './../../src/core/event-target';
 
-describe('EventTarget', function() {
-  it('should add a listener', function() {
+describe('EventTarget', () => {
+  it('should add a listener', () => {
     const eventTarget = new EventTarget();
     const eventFunction = jasmine.createSpy('eventFunction');
     const testEvent = { type: 'testevent' };
@@ -12,7 +12,7 @@ describe('EventTarget', function() {
     expect(eventFunction).toHaveBeenCalledWith(testEvent);
   });
 
-  it('should remove a listener', function() {
+  it('should remove a listener', () => {
     const eventTarget = new EventTarget();
     const eventFunction = jasmine.createSpy('eventFunction');
     const testEvent = { type: 'testevent' };
@@ -24,7 +24,7 @@ describe('EventTarget', function() {
     expect(eventFunction).not.toHaveBeenCalled();
   });
 
-  it('should handle single listener multiple events', function() {
+  it('should handle single listener multiple events', () => {
     const eventTarget = new EventTarget();
     const eventFunction = jasmine.createSpy('eventFunction');
     const testEvent1 = { type: 'testevent1' };
@@ -53,7 +53,7 @@ describe('EventTarget', function() {
     expect(eventFunction).toHaveBeenCalledTimes(3);
   });
 
-  it('should handle single event multiple listeners', function() {
+  it('should handle single event multiple listeners', () => {
     const eventTarget = new EventTarget();
     const eventFunction1 = jasmine.createSpy('eventFunction1');
     const eventFunction2 = jasmine.createSpy('eventFunction2');
@@ -80,7 +80,7 @@ describe('EventTarget', function() {
     expect(eventFunction2).toHaveBeenCalledTimes(2);
   });
 
-  it('should handle duplicate registers of the same event', function() {
+  it('should handle duplicate registers of the same event', () => {
     const eventTarget = new EventTarget();
     const eventFunction = jasmine.createSpy('eventFunction');
     const testEvent = { type: 'testevent' };
@@ -95,7 +95,7 @@ describe('EventTarget', function() {
     expect(eventFunction).toHaveBeenCalledTimes(1);
   });
 
-  it('should handle attempting to remove an unregistered event', function() {
+  it('should handle removing an unregistered event', () => {
     const eventTarget = new EventTarget();
     const eventFunction = jasmine.createSpy('eventFunction');
     const testEvent = { type: 'testevent' };

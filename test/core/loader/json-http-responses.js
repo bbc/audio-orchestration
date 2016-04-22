@@ -11,7 +11,7 @@ const mappingSuccess1 = {
     contentType: 'application/json',
     response: { success: '1' },
   },
-}
+};
 
 const mappingSuccess2 = {
   url: 'json/success/2',
@@ -20,7 +20,7 @@ const mappingSuccess2 = {
     contentType: 'application/json',
     response: { success: '2' },
   },
-}
+};
 
 const mappingSuccess3 = {
   url: 'json/success/3',
@@ -29,7 +29,7 @@ const mappingSuccess3 = {
     contentType: 'application/json',
     response: { success: '3' },
   },
-}
+};
 
 const mappingError = {
   url: 'json/failure',
@@ -39,11 +39,11 @@ const mappingError = {
     response: '404 Not Found',
     statusText: '404 Not Found',
   },
-}
+};
 
 export default [
   mappingSuccess1,
   mappingSuccess2,
   mappingSuccess3,
   mappingError,
-]
+];

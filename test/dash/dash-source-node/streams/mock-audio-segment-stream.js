@@ -1,4 +1,5 @@
-import AudioSegmentStream from './../../../../src/dash/dash-source-node/streams/audio-segment-stream';
+import AudioSegmentStream from
+  './../../../../src/dash/dash-source-node/streams/audio-segment-stream';
 
 export default class MockAudioSegmentStream extends AudioSegmentStream {
   constructor(context, definition) {

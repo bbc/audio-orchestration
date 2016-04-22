@@ -13,7 +13,7 @@ const mappingSuccess1 = {
     contentType: 'text/xml; charset=iso-8859-1',
     response: mockMpds[0].text,
   },
-}
+};
 
 const mappingSuccess2 = {
   url: 'mpd/success/2',
@@ -22,7 +22,7 @@ const mappingSuccess2 = {
     contentType: 'text/xml; charset=iso-8859-1',
     response: mockMpds[1].text,
   },
-}
+};
 
 const mappingError = {
   url: 'mpd/error',
@@ -32,7 +32,7 @@ const mappingError = {
     response: '404 Not Found',
     statusText: '404 Not Found',
   },
-}
+};
 
 export default [
   mappingSuccess1,

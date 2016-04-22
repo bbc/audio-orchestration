@@ -1,13 +1,13 @@
 import CompoundNode from './../../src/core/compound-node';
 import MockCompoundNode from './mock-compound-node';
 
-describe('CompoundNode', function() {
-  beforeAll(function () {
+describe('CompoundNode', () => {
+  beforeAll(function beforeAll() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
   });
 
-  it('should expose read only context', function() {
+  it('should expose read only context', function it() {
     const compoundNode = new CompoundNode(this.context);
 
     expect(compoundNode.context).toBe(this.context);
@@ -16,7 +16,7 @@ describe('CompoundNode', function() {
     }).toThrowError(TypeError);
   });
 
-  it('should expose read only numberOfInputs', function() {
+  it('should expose read only numberOfInputs', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 3, 0);
 
     expect(mockCompoundNode.numberOfInputs).toBe(3);
@@ -25,7 +25,7 @@ describe('CompoundNode', function() {
     }).toThrowError(TypeError);
   });
 
-  it('should expose read only numberOfOutputs', function() {
+  it('should expose read only numberOfOutputs', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 3);
 
     expect(mockCompoundNode.numberOfOutputs).toBe(3);
@@ -34,7 +34,7 @@ describe('CompoundNode', function() {
     }).toThrowError(TypeError);
   });
 
-  it('should connect and disconnect with default input and output', function() {
+  it('should connect and disconnect with defaults', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 1);
     const gainNode = this.context.createGain();
 
@@ -42,7 +42,7 @@ describe('CompoundNode', function() {
     mockCompoundNode.disconnect(gainNode);
   });
 
-  it('should return destination from connect for chaining', function() {
+  it('should return destination from connect for chaining', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 1);
     const gainNode = this.context.createGain();
 
@@ -50,7 +50,7 @@ describe('CompoundNode', function() {
     expect(connectedNode).toBe(gainNode);
   });
 
-  it('should connect to an AudioNode', function() {
+  it('should connect to an AudioNode', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 4);
     const channelMerger = this.context.createChannelMerger(2);
 
@@ -61,7 +61,7 @@ describe('CompoundNode', function() {
     mockCompoundNode.connect(channelMerger, 3, 1);
   });
 
-  it('should disconnect from an AudioNode', function() {
+  it('should disconnect from an AudioNode', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 2);
     const channelMerger = this.context.createChannelMerger(2);
 
@@ -80,7 +80,7 @@ describe('CompoundNode', function() {
     // }).toThrowError(Error);
   });
 
-  it('should connect to a CompoundAudioNode', function() {
+  it('should connect to a CompoundAudioNode', function it() {
     const mockCompoundNode1 = new MockCompoundNode(this.context, 0, 4);
     const mockCompoundNode2 = new MockCompoundNode(this.context, 2, 0);
 
@@ -91,7 +91,7 @@ describe('CompoundNode', function() {
     mockCompoundNode1.connect(mockCompoundNode2, 3, 1);
   });
 
-  it('should disconnect from an AudioNode', function() {
+  it('should disconnect from a CompoundAudioNode', function it() {
     const mockCompoundNode1 = new MockCompoundNode(this.context, 0, 2);
     const mockCompoundNode2 = new MockCompoundNode(this.context, 2, 0);
 

@@ -1,10 +1,11 @@
-import MetadataSegmentStream from './../../../../src/dash/dash-source-node/streams/metadata-segment-stream';
+import MetadataSegmentStream from
+  './../../../../src/dash/dash-source-node/streams/metadata-segment-stream';
 
 import MockAudioContext from './../../../mock-audio-context';
 import mockMetadataRoutines from './metadata-stream-routines';
 
-describe('MetadataSegmentStream', function() {
-  beforeAll(function () {
+describe('MetadataSegmentStream', () => {
+  beforeAll(function beforeAll() {
     jasmine.Ajax.install();
     jasmine.clock().install();
 
@@ -38,21 +39,22 @@ describe('MetadataSegmentStream', function() {
       }
 
       return segment;
-    }
+    };
   });
 
-  afterAll(function() {
+  afterAll(() => {
     jasmine.Ajax.uninstall();
     jasmine.clock().uninstall();
   });
 
-  it('should construct', function() {
+  it('should construct', function it() {
     const context = new MockAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
+    expect(metadataStream).toBeDefined();
   });
 
-  it('should accept a metadata callback function', function() {
+  it('should accept a metadata callback function', function it() {
     const context = new MockAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
@@ -63,11 +65,15 @@ describe('MetadataSegmentStream', function() {
     expect(metadataStream.metadataCallback).toBe(metadataCallback);
 
     // Incorrectly set and confirm error is thrown.
-    expect(() => metadataStream.metadataCallback = null).toThrowError(Error);
-    expect(() => metadataStream.metadataCallback = 0).toThrowError(Error);
+    expect(() => {
+      metadataStream.metadataCallback = null;
+    }).toThrowError(Error);
+    expect(() => {
+      metadataStream.metadataCallback = 0;
+    }).toThrowError(Error);
   });
 
-  it('should prime and play with default parameters', function (done) {
+  it('should prime and play with default parameters', function it(done) {
     const context = new MockAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
@@ -80,7 +86,7 @@ describe('MetadataSegmentStream', function() {
     // Construct a callback to test segments being buffered. All segments
     // expected should arrive and with correct playback-region metadata.
     let segmentCount = 0;
-    let segmentsToTest = [];
+    const segmentsToTest = [];
     metadataStream.metadataCallback = (segment) => {
       // Buffer loaded segments as they may arrive out of sequence order.
       segmentsToTest.push(segment);
@@ -92,7 +98,7 @@ describe('MetadataSegmentStream', function() {
         this.getSegment(segmentsToTest, mockSegment.n) : null;
 
       // Attempt to advance the expected segment checks as far as possible.
-      while(mockSegment && testSegment) {
+      while (mockSegment && testSegment) {
         // Check that segment playback-region metadata is as expected.
         expect(mockSegment.n).toBe(testSegment.n);
         expect(mockSegment.number).toBe(testSegment.number);
@@ -103,13 +109,13 @@ describe('MetadataSegmentStream', function() {
 
         // If segment was all correct, increment segment number.
         segmentCount++;
-        if(segmentCount < expectedSegments.length) {
+        if (segmentCount < expectedSegments.length) {
           // Advance context and system time to trigger segment load.
           const diffTime = contextStartTime - context.currentTime +
             expectedSegments[segmentCount].when;
           context.currentTime += diffTime;
           jasmine.clock().tick(1000 * (diffTime + 4));
-        } else if(segmentCount >= expectedSegments.length) {
+        } else if (segmentCount >= expectedSegments.length) {
           // Stop stream and complete test.
           metadataStream.stop();
           done();
@@ -132,7 +138,7 @@ describe('MetadataSegmentStream', function() {
     });
   });
 
-  it('should end naturally and call endedCallback', function (done) {
+  it('should end naturally and call endedCallback', function it(done) {
     const context = new MockAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
@@ -153,11 +159,10 @@ describe('MetadataSegmentStream', function() {
     });
   });
 
-  it('should prime and play the correct segments', function (done) {
+  it('should prime and play the correct segments', function it(done) {
     // Create a promise for each test routine available.
-    const routinePromises = this.mockRoutines.map((routine) => {
-      return new Promise((resolve, reject) => {
-
+    const routinePromises = this.mockRoutines.map(
+      (routine) => new Promise((resolve) => {
         // Construct new objects for each test routine.
         const context = new MockAudioContext();
         const definition = routine.definition;
@@ -172,7 +177,7 @@ describe('MetadataSegmentStream', function() {
         // Construct a callback to test segments being buffered. All segments
         // expected should arrive and with correct playback-region metadata.
         let segmentCount = 0;
-        let segmentsToTest = [];
+        const segmentsToTest = [];
         metadataStream.metadataCallback = (segment) => {
           // Buffer loaded segments as they may arrive out of sequence order.
           segmentsToTest.push(segment);
@@ -184,7 +189,7 @@ describe('MetadataSegmentStream', function() {
             this.getSegment(segmentsToTest, mockSegment.n) : null;
 
           // Attempt to advance the expected segment checks as far as possible.
-          while(mockSegment && testSegment) {
+          while (mockSegment && testSegment) {
             // Check that segment playback-region metadata is as expected.
             expect(mockSegment.n).toBe(testSegment.n);
             expect(mockSegment.number).toBe(testSegment.number);
@@ -195,13 +200,13 @@ describe('MetadataSegmentStream', function() {
 
             // If segment was all correct, increment segment number.
             segmentCount++;
-            if(segmentCount < expectedSegments.length) {
+            if (segmentCount < expectedSegments.length) {
               // Advance context and system time to trigger segment load.
               const diffTime = contextStartTime - context.currentTime +
                 expectedSegments[segmentCount].when;
               context.currentTime += diffTime;
               jasmine.clock().tick(1000 * (diffTime + 4));
-            } else if(segmentCount >= expectedSegments.length) {
+            } else if (segmentCount >= expectedSegments.length) {
               // Stop stream and complete test.
               metadataStream.stop();
               resolve();
@@ -222,8 +227,8 @@ describe('MetadataSegmentStream', function() {
           metadataStream.start(contextStartTime);
           jasmine.clock().tick(1000 * (context.currentTime - contextStartTime));
         });
-      });
-    });
+      })
+    );
 
     // Run all test routines.
     Promise.all(routinePromises).then(done);

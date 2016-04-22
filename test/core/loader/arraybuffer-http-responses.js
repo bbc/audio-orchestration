@@ -14,7 +14,7 @@ const mappingSuccess1 = {
     contentType: 'audio/mpeg',
     response: mockAudio[0],
   },
-}
+};
 
 const mappingSuccess2 = {
   url: 'arraybuffer/success/2',
@@ -23,7 +23,7 @@ const mappingSuccess2 = {
     contentType: 'audio/mpeg',
     response: mockAudio[1],
   },
-}
+};
 
 const mappingSuccess3 = {
   url: 'arraybuffer/success/3',
@@ -32,7 +32,7 @@ const mappingSuccess3 = {
     contentType: 'audio/mpeg',
     response: mockAudio[2],
   },
-}
+};
 
 const mappingError = {
   url: 'arraybuffer/failure',
@@ -42,11 +42,11 @@ const mappingError = {
     response: '404 Not Found',
     statusText: '404 Not Found',
   },
-}
+};
 
 export default [
   mappingSuccess1,
   mappingSuccess2,
   mappingSuccess3,
   mappingError,
-]
+];

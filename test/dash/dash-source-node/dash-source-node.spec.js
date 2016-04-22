@@ -2,8 +2,8 @@ import DashSourceNode from './../../../src/dash/dash-source-node/dash-source-nod
 import MockAudioContext from './../../mock-audio-context';
 import mockDashRoutines from './dash-source-node-routines';
 
-describe('DashSourceNode', function() {
-  beforeAll(function () {
+describe('DashSourceNode', () => {
+  beforeAll(function beforeAll() {
     jasmine.Ajax.install();
     jasmine.clock().install();
 
@@ -38,7 +38,7 @@ describe('DashSourceNode', function() {
       }
 
       return segment;
-    }
+    };
 
     // The primer offset is required because AudioContext.decodeAudioData cannot
     // currently decode audio segments without fully formed headers. This will
@@ -49,12 +49,12 @@ describe('DashSourceNode', function() {
     this._primerOffset = 2048 / 48000;
   });
 
-  afterAll(function() {
+  afterAll(() => {
     jasmine.Ajax.uninstall();
     jasmine.clock().uninstall();
   });
 
-  it('should construct with correct number of inputs/outputs', function() {
+  it('should construct with correct number of inputs/outputs', function it() {
     this.mockRoutines.forEach((routine) => {
       const context = new MockAudioContext();
       const dashSourceNode = new DashSourceNode(context, routine.manifest);
@@ -64,7 +64,7 @@ describe('DashSourceNode', function() {
     });
   });
 
-  it('should expose read only presentationDuration', function() {
+  it('should expose read only presentationDuration', function it() {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
@@ -76,16 +76,16 @@ describe('DashSourceNode', function() {
     }).toThrowError(TypeError);
   });
 
-  it('should expose read only state', function() {
+  it('should expose read only state', function it() {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
 
     expect(dashSourceNode.state).toBe('ready');
-    expect(() => { dashSourceNode.state = null }).toThrowError(TypeError);
+    expect(() => { dashSourceNode.state = null; }).toThrowError(TypeError);
   });
 
-  it('should expose read only and up-to-date playbackTime', function (done) {
+  it('should expose read only and up-to-date playbackTime', function it(done) {
     const context = new MockAudioContext();
     const routine = this.loopRoutine;
     const manifest = routine.manifest;
@@ -97,7 +97,7 @@ describe('DashSourceNode', function() {
     }).toThrowError(TypeError);
 
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
-    const {initial, loop, offset, duration} = routine.primeParameters;
+    const { initial, loop, offset, duration } = routine.primeParameters;
 
     const statechangeCallback = (event) => {
       if (event.state === 'playing') {
@@ -118,23 +118,23 @@ describe('DashSourceNode', function() {
         dashSourceNode.stop();
         done();
       }
-    }
+    };
 
     dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.start(initial, loop, offset, duration);
   });
 
-  it('should emit statechange events', function(done) {
+  it('should emit statechange events', function it(done) {
     const context = new MockAudioContext();
-    const manifest = this.baseRoutine.manifest;
-    const dashSourceNode = new DashSourceNode(context, manifest);
+    const routine = this.baseRoutine;
+    const dashSourceNode = new DashSourceNode(context, routine.manifest);
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
 
     // Ensure that states are emitted and in the corrct order.
     let statechangeCount = 0;
     const statechanges = ['priming', 'playing', 'ready'];
     const statechangeCallback = (event) => {
-      expect(event.state === statechanges[statechangeCount]);
+      expect(event.state).toBe(statechanges[statechangeCount]);
       statechangeCount++;
 
       if (event.state === 'playing') {
@@ -144,21 +144,21 @@ describe('DashSourceNode', function() {
       }
     };
 
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const { initial, loop, offset, duration } = routine.primeParameters;
     dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.start(initial, loop, offset, duration);
   });
 
-  it('should emit ended event', function (done) {
+  it('should emit ended event', function it(done) {
     const context = new MockAudioContext();
-    const manifest = this.baseRoutine.manifest;
-    const dashSourceNode = new DashSourceNode(context, manifest);
+    const routine = this.baseRoutine;
+    const dashSourceNode = new DashSourceNode(context, routine.manifest);
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
 
     const statechangeCallback = (event) => {
       if (event.state === 'playing') {
-        context.currentTime += manifest.mediaPresentationDuration;
-        jasmine.clock().tick(manifest.mediaPresentationDuration * 1000);;
+        context.currentTime += routine.manifest.mediaPresentationDuration;
+        jasmine.clock().tick(routine.manifest.mediaPresentationDuration * 1000);
       }
     };
 
@@ -167,24 +167,24 @@ describe('DashSourceNode', function() {
       done();
     };
 
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const { initial, loop, offset, duration } = routine.primeParameters;
     dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.addEventListener('ended', endedCallback);
     dashSourceNode.start(initial, loop, offset, duration);
   });
 
-  it('should emit metadata events', function (done) {
-    const routine = this.loopRoutine
+  it('should emit metadata events', function it(done) {
+    const routine = this.loopRoutine;
     const expectedSegments = routine.expected.segments;
-    const {initial, loop, offset, duration, start} = routine.primeParameters;
+    const { initial, loop, offset, duration, start } = routine.primeParameters;
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
     const context = new MockAudioContext();
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
     let segmentCount = 0;
-    let segmentsToTest = [];
-    const metadataCallback  = (segment) => {
+    const segmentsToTest = [];
+    const metadataCallback = (segment) => {
       // Buffer loaded segments as they may arrive out of sequence order.
       segmentsToTest.push(segment);
 
@@ -195,7 +195,7 @@ describe('DashSourceNode', function() {
         this.getSegment(segmentsToTest, mockSegment.n) : null;
 
       // Attempt to advance the expected segment checks as far as possible.
-      while(mockSegment && testSegment) {
+      while (mockSegment && testSegment) {
         // Check that segment playback-region metadata is as expected.
         expect(mockSegment.n).toBe(testSegment.n);
         expect(mockSegment.when).toBe(testSegment.when);
@@ -205,7 +205,7 @@ describe('DashSourceNode', function() {
 
         // If segment was all correct, increment segment number.
         segmentCount++;
-        if(segmentCount >= expectedSegments.length) {
+        if (segmentCount >= expectedSegments.length) {
           // Stop stream and complete test.
           dashSourceNode.stop();
           done();
@@ -219,8 +219,8 @@ describe('DashSourceNode', function() {
 
     const statechangeCallback = (event) => {
       if (event.state === 'playing') {
-        context.currentTime += start;;
-        jasmine.clock().tick(start * 1000);;
+        context.currentTime += start;
+        jasmine.clock().tick(start * 1000);
       }
     };
 
@@ -229,28 +229,27 @@ describe('DashSourceNode', function() {
     dashSourceNode.start(initial, loop, offset, duration);
   });
 
-  it('should schedule audio correctly', function (done) {
-    const routine = this.loopRoutine
+  it('should schedule audio correctly', function it(done) {
+    const routine = this.loopRoutine;
     const expectedStartParams = routine.expected.segments;
     const expectedNumberOfSegments = routine.expected.audioStreams *
       routine.expected.segments.length;
-    const {initial, loop, offset, duration, start} = routine.primeParameters;
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
     const context = new MockAudioContext();
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
     let segmentCount = 0;
-    context.bufferSourceStartCallback = (when, offset, duration) => {
+    context.bufferSourceStartCallback = () => {
       segmentCount++;
-      if(segmentCount >= expectedNumberOfSegments) {
+      if (segmentCount >= expectedNumberOfSegments) {
         // Check that the correct number of segments have been scheduled.
         expect(context.bufferSourceStartCallback)
           .toHaveBeenCalledTimes(expectedNumberOfSegments);
 
         // Check that audio was scheduled for playback as expected.
         for (let i = 0; i < expectedStartParams.length; i++) {
-          const {when, offset, duration} = expectedStartParams[i];
+          const { when, offset, duration } = expectedStartParams[i];
           expect(context.bufferSourceStartCallback)
             .toHaveBeenCalledWith(when, offset + this._primerOffset, duration);
         }
@@ -262,17 +261,18 @@ describe('DashSourceNode', function() {
 
     const statechangeCallback = (event) => {
       if (event.state === 'playing') {
-        context.currentTime += start;;
-        jasmine.clock().tick(start * 1000);;
+        context.currentTime += routine.primeParameters.start;
+        jasmine.clock().tick(routine.primeParameters.start * 1000);
       }
     };
 
     spyOn(context, 'bufferSourceStartCallback').and.callThrough();
+    const { initial, loop, offset, duration } = routine.primeParameters;
     dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.start(initial, loop, offset, duration);
   });
 
-  it('should allow start and stop to be called out-of-order', function (done) {
+  it('should allow start/stop to be called out-of-order', function it(done) {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
@@ -294,11 +294,11 @@ describe('DashSourceNode', function() {
     dashSourceNode.start();
   });
 
-  it('should correctly validate start initial parameter', function () {
+  it('should correctly validate start initial parameter', function it() {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const { loop, offset, duration } = this.baseRoutine.primeParameters;
 
     // Test the initial parameter.
     expect(() => { dashSourceNode.start(- 1); }).toThrowError(Error);
@@ -307,22 +307,22 @@ describe('DashSourceNode', function() {
     }).toThrowError(Error);
   });
 
-  it('should correctly validate start loop parameter', function () {
+  it('should correctly validate start loop parameter', function it() {
     const context = new MockAudioContext();
-    const manifest = this.baseRoutine.manifest;
-    const dashSourceNode = new DashSourceNode(context, manifest);
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const routine = this.baseRoutine;
+    const dashSourceNode = new DashSourceNode(context, routine.manifest);
+    const initial = routine.primeParameters.initial;
 
     // Test the loop parameter.
     expect(() => { dashSourceNode.start(initial, 'str'); }).toThrowError(Error);
     expect(() => { dashSourceNode.start(initial, 0); }).toThrowError(Error);
   });
 
-  it('should correctly validate start offset parameter', function () {
+  it('should correctly validate start offset parameter', function it() {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const { initial, loop } = this.baseRoutine.primeParameters;
 
     // Test the offset parameter.
     expect(() => { dashSourceNode.start(0, loop, -1); }).toThrowError(Error);
@@ -331,11 +331,11 @@ describe('DashSourceNode', function() {
     }).toThrowError(Error);
   });
 
-  it('should correctly validate start duration parameter', function () {
+  it('should correctly validate start duration parameter', function it() {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
-    const {initial, loop, offset, duration} = this.baseRoutine.primeParameters;
+    const { initial, loop, offset } = this.baseRoutine.primeParameters;
 
     // Test the duration parameter.
     expect(() => {

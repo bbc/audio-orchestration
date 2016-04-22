@@ -14,7 +14,8 @@ import mockMetadata from './../../../metadata';
 //     the number of segments expected to prime the buffer and the segments
 //     in order of buffering with period metadata (when, offset, etc.) attached.
 
-const segmentsUrlPayloadMap = [{
+const segmentsUrlPayloadMap = [
+  {
     url: '/segment_1.json',
     payload: mockMetadata[0],
   }, {
@@ -26,7 +27,8 @@ const segmentsUrlPayloadMap = [{
   }, {
     url: '/segment_4.json',
     payload: mockMetadata[3],
-}];
+  },
+];
 
 const baseMetadataDefinition = {
   id: 0,
@@ -39,17 +41,17 @@ const baseMetadataDefinition = {
 };
 
 const offsetMetadataDefinition = {
-    id: 0,
-    start: 1,
-    duration: 8,
-    segmentDuration: 2,
-    segmentStart: 1,
-    templateUrl: '/segment_$Number.json',
-    bufferTime: 6,
+  id: 0,
+  start: 1,
+  duration: 8,
+  segmentDuration: 2,
+  segmentStart: 1,
+  templateUrl: '/segment_$Number.json',
+  bufferTime: 6,
 };
 
 const baseRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: baseMetadataDefinition,
   primeParameters: {
     initial: 0,
@@ -68,34 +70,34 @@ const baseRoutine = {
       when: 0,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 1,
       number: 2,
       when: 4,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }, {
       n: 2,
       number: 3,
       when: 8,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }, {
       n: 3,
       number: 4,
       when: 12,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[3]
+      metadata: mockMetadata[3],
     }],
   },
-}
+};
 
 const loopTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetMetadataDefinition,
   primeParameters: {
     initial: 0,
@@ -114,48 +116,48 @@ const loopTestRoutine = {
       when: 1,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 2,
       number: 2,
       when: 3,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }, {
       n: 3,
       number: 3,
       when: 5,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }, {
       n: 4,
       number: 4,
       when: 7,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[3]
+      metadata: mockMetadata[3],
     }, {
       n: 6,
       number: 1,
       when: 9,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 7,
       number: 2,
       when: 11,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }],
   },
-}
+};
 
 const offsetTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetMetadataDefinition,
   primeParameters: {
     initial: 0,
@@ -174,48 +176,48 @@ const offsetTestRoutine = {
       when: 0,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 1,
       number: 2,
       when: 1,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }, {
       n: 2,
       number: 3,
       when: 3,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }, {
       n: 3,
       number: 1,
       when: 4,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 4,
       number: 2,
       when: 5,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }, {
       n: 5,
       number: 3,
       when: 7,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }],
   },
-}
+};
 
 const initialTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetMetadataDefinition,
   primeParameters: {
     initial: 3,
@@ -234,35 +236,35 @@ const initialTestRoutine = {
       when: 0,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }, {
       n: 1,
       number: 1,
       when: 1,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0]
+      metadata: mockMetadata[0],
     }, {
       n: 2,
       number: 2,
       when: 2,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1]
+      metadata: mockMetadata[1],
     }, {
       n: 3,
       number: 3,
       when: 4,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2]
+      metadata: mockMetadata[2],
     }],
   },
-}
+};
 
 export default [
   baseRoutine,
   loopTestRoutine,
   offsetTestRoutine,
   initialTestRoutine,
-]
+];

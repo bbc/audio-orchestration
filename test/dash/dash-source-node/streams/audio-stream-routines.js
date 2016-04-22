@@ -14,7 +14,8 @@ import mockAudio from './../../../audio';
 //     the number of segments expected to prime the buffer and the segments
 //     in order of buffering with period metadata (when, offset, etc.) attached.
 
-const segmentsUrlPayloadMap = [{
+const segmentsUrlPayloadMap = [
+  {
     url: '/segment_1.m4a',
     payload: mockAudio[0],
   }, {
@@ -26,7 +27,8 @@ const segmentsUrlPayloadMap = [{
   }, {
     url: '/segment_4.m4a',
     payload: mockAudio[3],
-}];
+  },
+];
 
 const baseAudioDefinition = {
   id: 0,
@@ -40,18 +42,18 @@ const baseAudioDefinition = {
 };
 
 const offsetAudioDefinition = {
-    id: 0,
-    start: 1,
-    duration: 8,
-    segmentDuration: 2,
-    segmentStart: 1,
-    channelCount: 5,
-    templateUrl: '/segment_$Number.m4a',
-    bufferTime: 6,
+  id: 0,
+  start: 1,
+  duration: 8,
+  segmentDuration: 2,
+  segmentStart: 1,
+  channelCount: 5,
+  templateUrl: '/segment_$Number.m4a',
+  bufferTime: 6,
 };
 
 const baseRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: baseAudioDefinition,
   primeParameters: {
     initial: 0,
@@ -90,10 +92,10 @@ const baseRoutine = {
       duration: 4,
     }],
   },
-}
+};
 
 const loopTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetAudioDefinition,
   primeParameters: {
     initial: 0,
@@ -144,10 +146,10 @@ const loopTestRoutine = {
       duration: 2,
     }],
   },
-}
+};
 
 const offsetTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetAudioDefinition,
   primeParameters: {
     initial: 0,
@@ -198,10 +200,10 @@ const offsetTestRoutine = {
       duration: 1,
     }],
   },
-}
+};
 
 const initialTestRoutine = {
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   definition: offsetAudioDefinition,
   primeParameters: {
     initial: 3,
@@ -240,11 +242,11 @@ const initialTestRoutine = {
       duration: 1,
     }],
   },
-}
+};
 
 export default [
   baseRoutine,
   loopTestRoutine,
   offsetTestRoutine,
   initialTestRoutine,
-]
+];

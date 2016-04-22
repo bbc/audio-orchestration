@@ -1,8 +1,8 @@
 import ManifestParser from './../../../src/dash/manifest-parser/manifest-parser';
 import mockMpds from './../mpds';
 
-describe('ManifestParser', function() {
-  it('should correctly parse MPD files', function() {
+describe('ManifestParser', () => {
+  it('should correctly parse MPD files', () => {
     const manifestParser = new ManifestParser();
     const domParser = new DOMParser();
 

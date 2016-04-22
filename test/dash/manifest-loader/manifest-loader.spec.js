@@ -2,8 +2,8 @@ import 'jasmine-ajax';
 import mockHttpResponses from './mpd-http-responses';
 import ManifestLoader from './../../../src/dash/manifest-loader/manifest-loader';
 
-describe('ManifestLoader', function() {
-  beforeAll(function() {
+describe('ManifestLoader', () => {
+  beforeAll(() => {
     // Set up the XMLHttpRequest mocking framework. Register request URLs and
     // the response that should be returned for each.
     jasmine.Ajax.install();
@@ -15,16 +15,16 @@ describe('ManifestLoader', function() {
     });
   });
 
-  afterAll(function() {
+  afterAll(() => {
     jasmine.Ajax.uninstall();
   });
 
-  it('should load a single file', function(done) {
+  it('should load a single file', (done) => {
     const manifestLoader = new ManifestLoader();
     const mockResponse = mockHttpResponses[0];
 
     manifestLoader.load(mockResponse.url)
-      .then(function(file) {
+      .then((file) => {
         // Check that MPD data has made it into the file.
         expect(file).toBeDefined();
         expect(file.childNodes).toBeDefined();
@@ -32,18 +32,16 @@ describe('ManifestLoader', function() {
         expect(file.childNodes[0].nodeName).toBe('MPD');
         done();
       })
-      .catch(function(error) {
-        done.fail(error);
-      });
+      .catch((error) => { done.fail(error); });
   });
 
-  it('should load multiple files', function(done) {
+  it('should load multiple files', (done) => {
     const manifestLoader = new ManifestLoader();
     const mockResponses = mockHttpResponses.slice(0, 2);
     const mockResponsesUrls = mockResponses.map((mock) => mock.url);
 
     manifestLoader.load(mockResponsesUrls)
-      .then(function(files) {
+      .then((files) => {
         // Check that each file returned is an XMLDocument.
         for (let i = 0; i < mockResponses.length; i++) {
           expect(files[i]).toBeDefined();
@@ -51,33 +49,27 @@ describe('ManifestLoader', function() {
         }
         done();
       })
-      .catch(function(error) {
-        done.fail(error);
-      });
+      .catch((error) => { done.fail(error); });
   });
 
-  it('should reject when file is not found', function(done) {
+  it('should reject when file is not found', (done) => {
     const manifestLoader = new ManifestLoader();
     const mockResponse = mockHttpResponses[2];
 
     manifestLoader.load(mockResponse.url)
-      .then(function(file) {
-        done.fail('Should have rejected/thrown.');
-      })
-      .catch(function(error) {
+      .then(() => { done.fail('Should have rejected/thrown.'); })
+      .catch((error) => {
         expect(error instanceof Error).toBeTruthy();
         done();
       });
   });
 
-  it('should reject when transport errors', function(done) {
+  it('should reject when transport errors', (done) => {
     const manifestLoader = new ManifestLoader();
 
     manifestLoader.load('error')
-      .then(function(file) {
-        done.fail('Should have rejected/thrown.');
-      })
-      .catch(function(error) {
+      .then(() => { done.fail('Should have rejected/thrown.'); })
+      .catch((error) => {
         expect(error instanceof Error).toBeTruthy();
         done();
       });

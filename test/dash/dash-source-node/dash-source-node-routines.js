@@ -1,5 +1,3 @@
-import MockAudioContext from './../../mock-audio-context';
-
 import mockAudio from './../../audio';
 import mockMetadata from './../../metadata';
 
@@ -107,7 +105,8 @@ const noValidStreamsManifest = {
   }],
 };
 
-const segmentsUrlPayloadMap = [{
+const segmentsUrlPayloadMap = [
+  {
     url: 'http://example.org/some/mpd/md/dash_1.json',
     payload: mockMetadata[0],
   }, {
@@ -143,11 +142,12 @@ const segmentsUrlPayloadMap = [{
   }, {
     url: 'http://example.org/some/mpd/2/segment_4.m4a',
     payload: mockAudio[0],
-}];
+  },
+];
 
 const baseRoutine = {
   manifest: offsetManifest,
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   primeParameters: {
     initial: 1,
     loop: false,
@@ -156,12 +156,12 @@ const baseRoutine = {
   },
   expected: {
     channelCount: 10,
-  }
+  },
 };
 
 const loopRoutine = {
   manifest: offsetManifest,
-  segmentsUrlPayloadMap: segmentsUrlPayloadMap,
+  segmentsUrlPayloadMap,
   primeParameters: {
     initial: 2,
     loop: true,
@@ -173,42 +173,44 @@ const loopRoutine = {
     audioStreams: 2,
     metadataStreams: 1,
     channelCount: 10,
-    segments: [{
+    segments: [
+      {
         n: 0,
         number: 1,
         when: 0,
         offset: 1,
         duration: 1,
         metadata: mockMetadata[0],
-      },{
+      }, {
         n: 1,
         number: 2,
         when: 1,
         offset: 0,
         duration: 2,
         metadata: mockMetadata[1],
-      },{
+      }, {
         n: 2,
         number: 3,
         when: 3,
         offset: 0,
         duration: 1,
         metadata: mockMetadata[2],
-      },{
+      }, {
         n: 4,
         number: 1,
         when: 5,
         offset: 0,
         duration: 2,
         metadata: mockMetadata[0],
-      },{
+      }, {
         n: 5,
         number: 2,
         when: 7,
         offset: 0,
         duration: 2,
         metadata: mockMetadata[1],
-    }],
+      },
+    ],
   },
 };
 
@@ -216,11 +218,11 @@ const noValidStreamsRoutine = {
   manifest: noValidStreamsManifest,
   expected: {
     channelCount: 0,
-  }
+  },
 };
 
 export default [
   baseRoutine,
   loopRoutine,
   noValidStreamsRoutine,
-]
+];
