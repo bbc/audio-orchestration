@@ -79,4 +79,30 @@ describe('EventTarget', function() {
     expect(eventFunction1).toHaveBeenCalledTimes(1);
     expect(eventFunction2).toHaveBeenCalledTimes(2);
   });
+
+  it('should handle duplicate registers of the same event', function() {
+    const eventTarget = new EventTarget();
+    const eventFunction = jasmine.createSpy('eventFunction');
+    const testEvent = { type: 'testevent' };
+
+    // Add the same event listener for an event twice.
+    eventTarget.addEventListener(testEvent.type, eventFunction);
+    eventTarget.addEventListener(testEvent.type, eventFunction);
+    eventTarget.dispatchEvent(testEvent);
+
+    // Test that function is still only called once.
+    expect(eventFunction).toHaveBeenCalledWith(testEvent);
+    expect(eventFunction).toHaveBeenCalledTimes(1);
+  });
+
+  it('should handle attempting to remove an unregistered event', function() {
+    const eventTarget = new EventTarget();
+    const eventFunction = jasmine.createSpy('eventFunction');
+    const testEvent = { type: 'testevent' };
+
+    // Test that no error is thrown.
+    expect(() => {
+      eventTarget.removeEventListener(testEvent.type, eventFunction);
+    }).not.toThrow();
+  });
 });
