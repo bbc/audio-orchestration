@@ -38,7 +38,7 @@ export default class DashSourceNode extends CompoundNode {
   }
 
   /**
-   * Buffers and starts playback of a DASH stream for the defined region.
+   * Buffers a DASH stream for the parameter-defined region.
    * @param  {?number} [initial=0]
    *         The time into the region playback should start from.
    * @param  {?boolean} [loop=true]
@@ -47,57 +47,82 @@ export default class DashSourceNode extends CompoundNode {
    *         The time into the performance the region starts.
    * @param  {?number} [duration=presentationDuration-offset]
    *         The duration of the region to play.
+   * @return {Promise}
+   *         A Promise that resolves when the node is ready for playback.
    */
-  start(initial = 0, loop = false,
+  prime(initial = 0, loop = false,
     offset = 0, duration = this._presentationDuration - offset) {
-    // Check node state and parse all input paramaters.
-    if (this.state !== 'ready') {
+    // Return a promise that resolves when all streams are primed. Promise is
+    // rejected if node cannot currently be primed.
+    return new Promise((resolve, reject) => {
+      // Check node state and parse all input paramaters.
+      if (this.state !== 'ready') {
+        reject('State must be ready before prime() is called.');
+        return;
+      }
+
+      if (initial < 0 || initial >= duration) {
+        reject('Invalid initial. Must be a number less than ' +
+          'duration and greater than or equal to 0.');
+        return;
+      }
+
+      if (!(loop === false || loop === true)) {
+        reject('Invalid loop. Must be a boolean.');
+        return;
+      }
+
+      if (offset < 0 || offset >= this._presentationDuration) {
+        reject('Invalid offset. Must be a number less than ' +
+          'presentationDuration and greater than or equal to 0.');
+        return;
+      }
+
+      if (duration <= 0 || duration > this._presentationDuration - offset) {
+        reject('Invalid duration. Must be a number less than ' +
+          'presentationDuration minus offset and greater than 0.');
+        return;
+      }
+
+      // Store information describing the playback region.
+      this._playbackInitial = initial;
+      this._playbackOffset = offset;
+      this._playbackDuration = duration;
+      this._playbackLoop = loop;
+      this._state = 'priming';
+
+      // Prime all streams with the same offset, duration and loop parameters.
+      const primeStreamsPromises = this._allStreams.map((stream) =>
+        stream.prime(initial, loop, offset, duration));
+
+      Promise.all(primeStreamsPromises).then(() => {
+        this._state = 'primed';
+        resolve();
+      });
+    });
+  }
+
+  /**
+   * Starts playback of the buffered region, synchronised with AudioContext.
+   * @param  {?number} [contextSyncTime=context.currentTime]
+   *         The context time to synchronise with.
+   */
+  start(contextSyncTime = this.context.currentTime) {
+    if (this.state !== 'primed') {
       return;
     }
 
-    if (initial < 0 || initial >= duration) {
-      throw new Error('Invalid initial. Must be a number less than ' +
-        'duration and greater than or equal to 0.');
-    }
+    // Start all streams.
+    this._contextSyncTime = contextSyncTime;
+    const startStreamsPromises = this._allStreams.map((stream) =>
+      new Promise((ended) => stream.start(this._contextSyncTime, ended)));
 
-    if (!(loop === false || loop === true)) {
-      throw new Error('Invalid loop. Must be a boolean.');
-    }
-
-    if (offset < 0 || offset >= this._presentationDuration) {
-      throw new Error('Invalid offset. Must be a number less than ' +
-        'presentationDuration and greater than or equal to 0.');
-    }
-
-    if (duration <= 0 || duration > this._presentationDuration - offset) {
-      throw new Error('Invalid duration. Must be a number less than ' +
-        'presentationDuration minus offset and greater than 0.');
-    }
-
-    // Store information describing the playback region.
-    this._playbackInitial = initial;
-    this._playbackOffset = offset;
-    this._playbackDuration = duration;
-    this._playbackLoop = loop;
-    this._state = 'priming';
-
-    // Prime all streams with the same offset, duration and loop parameters.
-    const primeStreamsPromises = this._allStreams.map((stream) =>
-      stream.prime(initial, loop, offset, duration));
-
-    Promise.all(primeStreamsPromises).then(() => {
-      // When all steams are primed, latch the current audio context time and
-      // start all streams with the same context sync time.
-      this._contextSyncTime = this.context.currentTime;
-      const startStreamsPromises = this._allStreams.map((stream) =>
-        new Promise((resolve) => stream.start(this._contextSyncTime, resolve)));
-
-      this._state = 'playing';
-      Promise.all(startStreamsPromises).then(() => {
-        // Streams playback has been reached.
-        this._dispatchEndedEvent();
-        this._state = 'ready';
-      });
+    // Resolve when all streams have completed.
+    this._state = 'playing';
+    Promise.all(startStreamsPromises).then(() => {
+      // Streams playback has been reached.
+      this._dispatchEndedEvent();
+      this._state = 'ready';
     });
   }
 

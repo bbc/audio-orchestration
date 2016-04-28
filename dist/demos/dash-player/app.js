@@ -52,8 +52,9 @@ function setupPlayer(blob) {
   // });
 
   playButton.addEventListener('click', function() {
-    dashSource.start(playTime, loop);
-    //dashSource.start(0, 20, true);
+    dashSource.prime(playTime, loop)
+      .then(function () { dashSource.start(); })
+      .catch(function () {});
   });
 
   stopButton.addEventListener('click', function() {
@@ -72,7 +73,9 @@ function setupPlayer(blob) {
     playTime = parseFloat(range.value) || 0;
     if (dashSource.state === 'playing') {
       dashSource.stop();
-      dashSource.start(playTime, loop);
+      dashSource.prime(playTime, loop)
+        .then(function () { dashSource.start(); })
+        .catch(function () {});
     }
   });
 
@@ -80,7 +83,9 @@ function setupPlayer(blob) {
     loop = loopCheckbox.checked;
     if (dashSource.state === 'playing') {
       dashSource.stop();
-      dashSource.start(playTime, loop);
+      dashSource.prime(playTime, loop)
+        .then(function () { dashSource.start(); })
+        .catch(function () {});
     }
   });
 }

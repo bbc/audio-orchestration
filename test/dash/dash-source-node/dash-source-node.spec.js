@@ -85,43 +85,44 @@ describe('DashSourceNode', () => {
     expect(() => { dashSourceNode.state = null; }).toThrowError(TypeError);
   });
 
-  it('should expose read only and up-to-date playbackTime', function it(done) {
+  it('should expose read only playbackTime', function it() {
     const context = new MockAudioContext();
     const routine = this.loopRoutine;
-    const manifest = routine.manifest;
-    const dashSourceNode = new DashSourceNode(context, manifest);
+    const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
     expect(dashSourceNode.playbackTime).toBe(0);
     expect(() => {
       dashSourceNode.playbackTime = null;
     }).toThrowError(TypeError);
+  });
 
-    this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
+  it('should keep playbackTime up-to-date', function it(done) {
+    const context = new MockAudioContext();
+    const routine = this.loopRoutine;
+    const dashSourceNode = new DashSourceNode(context, routine.manifest);
     const { initial, loop, offset, duration } = routine.primeParameters;
+    this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
-    const statechangeCallback = (event) => {
-      if (event.state === 'playing') {
-        // Test initial time.
-        expect(dashSourceNode.playbackTime).toBe(
-          offset + initial);
+    dashSourceNode.prime(initial, loop, offset, duration).then(() => {
+      dashSourceNode.start();
 
-        // Test after small increment.
-        context.currentTime += 3;
-        expect(dashSourceNode.playbackTime).toBe(
-          offset + (initial + 3) % duration);
+      // Test initial time.
+      expect(dashSourceNode.playbackTime).toBe(
+        offset + initial);
 
-        // Test time follows loop.
-        context.currentTime += 10;
-        expect(dashSourceNode.playbackTime).toBe(
-          offset + (initial + 3 + 10) % duration);
+      // Test after small increment.
+      context.currentTime += 3;
+      expect(dashSourceNode.playbackTime).toBe(
+        offset + (initial + 3) % duration);
 
-        dashSourceNode.stop();
-        done();
-      }
-    };
+      // Test time follows loop.
+      context.currentTime += 10;
+      expect(dashSourceNode.playbackTime).toBe(
+        offset + (initial + 3 + 10) % duration);
 
-    dashSourceNode.addEventListener('statechange', statechangeCallback);
-    dashSourceNode.start(initial, loop, offset, duration);
+      dashSourceNode.stop();
+      done();
+    });
   });
 
   it('should emit statechange events', function it(done) {
@@ -132,12 +133,14 @@ describe('DashSourceNode', () => {
 
     // Ensure that states are emitted and in the corrct order.
     let statechangeCount = 0;
-    const statechanges = ['priming', 'playing', 'ready'];
+    const statechanges = ['priming', 'primed', 'playing', 'ready'];
     const statechangeCallback = (event) => {
       expect(event.state).toBe(statechanges[statechangeCount]);
       statechangeCount++;
 
-      if (event.state === 'playing') {
+      if (event.state === 'primed') {
+        dashSourceNode.start();
+      } else if (event.state === 'playing') {
         dashSourceNode.stop();
       } else if (event.state === 'ready') {
         done();
@@ -146,31 +149,28 @@ describe('DashSourceNode', () => {
 
     const { initial, loop, offset, duration } = routine.primeParameters;
     dashSourceNode.addEventListener('statechange', statechangeCallback);
-    dashSourceNode.start(initial, loop, offset, duration);
+    dashSourceNode.prime(initial, loop, offset, duration);
   });
 
   it('should emit ended event', function it(done) {
     const context = new MockAudioContext();
     const routine = this.baseRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
+    const { initial, loop, offset, duration } = routine.primeParameters;
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
-
-    const statechangeCallback = (event) => {
-      if (event.state === 'playing') {
-        context.currentTime += routine.manifest.mediaPresentationDuration;
-        jasmine.clock().tick(routine.manifest.mediaPresentationDuration * 1000);
-      }
-    };
 
     const endedCallback = () => {
       dashSourceNode.stop();
       done();
     };
 
-    const { initial, loop, offset, duration } = routine.primeParameters;
-    dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.addEventListener('ended', endedCallback);
-    dashSourceNode.start(initial, loop, offset, duration);
+    dashSourceNode.prime(initial, loop, offset, duration).then(() => {
+      dashSourceNode.start();
+
+      context.currentTime += routine.manifest.mediaPresentationDuration;
+      jasmine.clock().tick(routine.manifest.mediaPresentationDuration * 1000);
+    });
   });
 
   it('should emit metadata events', function it(done) {
@@ -217,16 +217,13 @@ describe('DashSourceNode', () => {
       }
     };
 
-    const statechangeCallback = (event) => {
-      if (event.state === 'playing') {
-        context.currentTime += start;
-        jasmine.clock().tick(start * 1000);
-      }
-    };
-
     dashSourceNode.addEventListener('metadata', metadataCallback);
-    dashSourceNode.addEventListener('statechange', statechangeCallback);
-    dashSourceNode.start(initial, loop, offset, duration);
+    dashSourceNode.prime(initial, loop, offset, duration).then(() => {
+      dashSourceNode.start();
+
+      context.currentTime += start;
+      jasmine.clock().tick(start * 1000);
+    });
   });
 
   it('should schedule audio correctly', function it(done) {
@@ -259,17 +256,14 @@ describe('DashSourceNode', () => {
       }
     };
 
-    const statechangeCallback = (event) => {
-      if (event.state === 'playing') {
-        context.currentTime += routine.primeParameters.start;
-        jasmine.clock().tick(routine.primeParameters.start * 1000);
-      }
-    };
-
     spyOn(context, 'bufferSourceStartCallback').and.callThrough();
     const { initial, loop, offset, duration } = routine.primeParameters;
-    dashSourceNode.addEventListener('statechange', statechangeCallback);
-    dashSourceNode.start(initial, loop, offset, duration);
+    dashSourceNode.prime(initial, loop, offset, duration).then(() => {
+      dashSourceNode.start();
+
+      context.currentTime += routine.primeParameters.start;
+      jasmine.clock().tick(routine.primeParameters.start * 1000);
+    });
   });
 
   it('should allow start/stop to be called out-of-order', function it(done) {
@@ -278,72 +272,96 @@ describe('DashSourceNode', () => {
     const dashSourceNode = new DashSourceNode(context, manifest);
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
 
-    // Should not throw error.
+    // Should not error out-of-order before primed.
     dashSourceNode.stop();
-
-    const statechangeCallback = (event) => {
-      if (event.state === 'playing') {
-        // Should not throw error.
-        dashSourceNode.start();
-        dashSourceNode.stop();
-        done();
-      }
-    };
-
-    dashSourceNode.addEventListener('statechange', statechangeCallback);
     dashSourceNode.start();
+
+    dashSourceNode.prime().then(() => {
+      // Should not error out-of-order after primed.
+      dashSourceNode.stop();
+      dashSourceNode.start();
+
+      // Should not error on subsequent calls.
+      dashSourceNode.start();
+      dashSourceNode.stop();
+      done();
+    });
   });
 
-  it('should correctly validate start initial parameter', function it() {
+  it('should error when prime initial is too small', function it(done) {
+    const context = new MockAudioContext();
+    const manifest = this.baseRoutine.manifest;
+    const dashSourceNode = new DashSourceNode(context, manifest);
+
+    dashSourceNode.prime(-1)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
+  });
+
+  it('should error when prime initial is too large', function it(done) {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { loop, offset, duration } = this.baseRoutine.primeParameters;
 
-    // Test the initial parameter.
-    expect(() => { dashSourceNode.start(- 1); }).toThrowError(Error);
-    expect(() => {
-      dashSourceNode.start(duration, loop, offset, duration);
-    }).toThrowError(Error);
+    dashSourceNode.prime(duration, loop, offset, duration)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
   });
 
-  it('should correctly validate start loop parameter', function it() {
+  it('should error when prime loop is invalid', function it(done) {
     const context = new MockAudioContext();
     const routine = this.baseRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
     const initial = routine.primeParameters.initial;
 
-    // Test the loop parameter.
-    expect(() => { dashSourceNode.start(initial, 'str'); }).toThrowError(Error);
-    expect(() => { dashSourceNode.start(initial, 0); }).toThrowError(Error);
+    dashSourceNode.prime(initial, 0)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
   });
 
-  it('should correctly validate start offset parameter', function it() {
+  it('should error when prime offset is too small', function it(done) {
+    const context = new MockAudioContext();
+    const manifest = this.baseRoutine.manifest;
+    const dashSourceNode = new DashSourceNode(context, manifest);
+    const { loop } = this.baseRoutine.primeParameters;
+
+    dashSourceNode.prime(0, loop, -1)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
+  });
+
+  it('should error when prime offset is too large', function it(done) {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { initial, loop } = this.baseRoutine.primeParameters;
 
-    // Test the offset parameter.
-    expect(() => { dashSourceNode.start(0, loop, -1); }).toThrowError(Error);
-    expect(() => {
-      dashSourceNode.start(initial, loop, manifest.mediaPresentationDuration);
-    }).toThrowError(Error);
+    dashSourceNode.prime(initial, loop, manifest.mediaPresentationDuration)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
   });
 
-  it('should correctly validate start duration parameter', function it() {
+  it('should error when prime duration is too small', function it(done) {
     const context = new MockAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { initial, loop, offset } = this.baseRoutine.primeParameters;
 
-    // Test the duration parameter.
-    expect(() => {
-      dashSourceNode.start(initial, loop, offset, 0);
-    }).toThrowError(Error);
-    expect(() => {
-      dashSourceNode.start(initial, loop, offset,
-        manifest.mediaPresentationDuration + 1);
-    }).toThrowError(Error);
+    dashSourceNode.prime(initial, loop, offset, 0)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
+  });
+
+  it('should error when prime duration is too large', function it(done) {
+    const context = new MockAudioContext();
+    const manifest = this.baseRoutine.manifest;
+    const dashSourceNode = new DashSourceNode(context, manifest);
+    const { initial, loop, offset } = this.baseRoutine.primeParameters;
+
+    dashSourceNode.prime(initial, loop, offset,
+      manifest.mediaPresentationDuration + 1)
+    .then(() => { done.fail('Promise should have rejected.'); })
+    .catch(() => { done(); });
   });
 });
