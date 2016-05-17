@@ -56,7 +56,7 @@ describe('DashSourceNode', () => {
 
   it('should construct with correct number of inputs/outputs', function it() {
     this.mockRoutines.forEach((routine) => {
-      const context = new MockAudioContext();
+      const context = new window.AudioContext();
       const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
       expect(dashSourceNode.numberOfOutputs).toBe(
@@ -65,7 +65,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should expose read only presentationDuration', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
 
@@ -77,7 +77,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should expose read only state', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
 
@@ -86,7 +86,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should expose read only playbackTime', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const routine = this.loopRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
@@ -97,7 +97,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should keep playbackTime up-to-date', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const routine = this.loopRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
     const { initial, loop, offset, duration } = routine.primeParameters;
@@ -126,7 +126,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should emit statechange events', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const routine = this.baseRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
@@ -153,7 +153,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should emit ended event', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const routine = this.baseRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
     const { initial, loop, offset, duration } = routine.primeParameters;
@@ -179,7 +179,7 @@ describe('DashSourceNode', () => {
     const { initial, loop, offset, duration, start } = routine.primeParameters;
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
     let segmentCount = 0;
@@ -233,7 +233,7 @@ describe('DashSourceNode', () => {
       routine.expected.segments.length;
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
     let segmentCount = 0;
@@ -267,7 +267,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should allow start/stop to be called out-of-order', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     this.registerSegmentUrls(this.baseRoutine.segmentsUrlPayloadMap);
@@ -289,7 +289,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime initial is too small', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
 
@@ -299,7 +299,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime initial is too large', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { loop, offset, duration } = this.baseRoutine.primeParameters;
@@ -310,7 +310,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime loop is invalid', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const routine = this.baseRoutine;
     const dashSourceNode = new DashSourceNode(context, routine.manifest);
     const initial = routine.primeParameters.initial;
@@ -321,7 +321,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime offset is too small', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { loop } = this.baseRoutine.primeParameters;
@@ -332,7 +332,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime offset is too large', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { initial, loop } = this.baseRoutine.primeParameters;
@@ -343,7 +343,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime duration is too small', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { initial, loop, offset } = this.baseRoutine.primeParameters;
@@ -354,7 +354,7 @@ describe('DashSourceNode', () => {
   });
 
   it('should error when prime duration is too large', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const manifest = this.baseRoutine.manifest;
     const dashSourceNode = new DashSourceNode(context, manifest);
     const { initial, loop, offset } = this.baseRoutine.primeParameters;

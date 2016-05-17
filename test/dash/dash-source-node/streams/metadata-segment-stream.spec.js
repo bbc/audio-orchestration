@@ -48,14 +48,14 @@ describe('MetadataSegmentStream', () => {
   });
 
   it('should construct', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
     expect(metadataStream).toBeDefined();
   });
 
   it('should accept a metadata callback function', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
     const metadataCallback = () => {};
@@ -74,7 +74,7 @@ describe('MetadataSegmentStream', () => {
   });
 
   it('should prime and play with default parameters', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
 
@@ -139,7 +139,7 @@ describe('MetadataSegmentStream', () => {
   });
 
   it('should end naturally and call endedCallback', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const metadataStream = new MetadataSegmentStream(context, definition);
 
@@ -164,7 +164,7 @@ describe('MetadataSegmentStream', () => {
     const routinePromises = this.mockRoutines.map(
       (routine) => new Promise((resolve) => {
         // Construct new objects for each test routine.
-        const context = new MockAudioContext();
+        const context = MockAudioContext.createAudioContext();
         const definition = routine.definition;
         const metadataStream = new MetadataSegmentStream(context, definition);
 

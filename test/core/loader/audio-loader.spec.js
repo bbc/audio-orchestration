@@ -20,13 +20,13 @@ describe('AudioLoader', () => {
   });
 
   it('should construct', () => {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
     expect(audioLoader).toBeDefined();
   });
 
   it('should load a single file', (done) => {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
     const mockResponse = mockHttpResponses[0];
 
@@ -40,7 +40,7 @@ describe('AudioLoader', () => {
   });
 
   it('should load multiple files', (done) => {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
     const mockResponses = mockHttpResponses.slice(0, 3);
     const mockResponsesUrls = mockResponses.map((mock) => mock.url);
@@ -57,7 +57,7 @@ describe('AudioLoader', () => {
   });
 
   it('should reject when file is not found', (done) => {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
     const mockResponse = mockHttpResponses[3];
 
@@ -70,7 +70,7 @@ describe('AudioLoader', () => {
   });
 
   it('should reject when transport errors', (done) => {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
 
     audioLoader.load('error')

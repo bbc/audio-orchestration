@@ -2,62 +2,40 @@
 // A class that mocks the Web Audio API AudioContext.
 
 export default class MockAudioContext {
-  constructor(numOfChannels = 2, length = 1, sampleRate = 48000) {
-    const Context = window.OfflineAudioContext || window.OfflineAudioContext;
-    this._context = new Context(numOfChannels, length, sampleRate);
-    this._currentTime = 0;
+  static createAudioContext(numOfChannels = 2, length = 1, sampleRate = 48000) {
+    const Context = window.OfflineAudioContext;
+    const context = new Context(numOfChannels, length, sampleRate);
 
-    this.bufferSourceStartCallback = () => {};
-    this.bufferSourceStopCallback = () => {};
-  }
+    // Add a setter alongside currentTime getter..
+    context._currentTime = 0;
+    Object.defineProperty(context, 'currentTime', {
+      get: function get() { return context._currentTime; },
+      set: function set(value) { context._currentTime = value; },
+    });
 
-  get destination() {
-    return this._context.destination;
-  }
+    // Allow callbacks on BufferSource start and stop.
+    context.bufferSourceStartCallback = () => {};
+    context.bufferSourceStopCallback = () => {};
 
-  get sampleRate() {
-    return this._context.sampleRate;
-  }
+    context._createBufferSource = context.createBufferSource;
+    context.createBufferSource = () => {
+      const bufferSource = context._createBufferSource();
 
-  get currentTime() {
-    return this._currentTime;
-  }
+      bufferSource._start = bufferSource.start;
+      bufferSource.start = (when, offset, duration) => {
+        bufferSource._start(when, offset, duration);
+        context.bufferSourceStartCallback(when, offset, duration);
+      };
 
-  set currentTime(currentTime) {
-    this._currentTime = currentTime;
-  }
+      bufferSource._stop = bufferSource.stop;
+      bufferSource.stop = () => {
+        bufferSource._stop();
+        context.bufferSourceStopCallback();
+      };
 
-  createChannelSplitter(channelCount) {
-    return this._context.createChannelSplitter(channelCount);
-  }
-
-  createBufferSource() {
-    const bufferSource = this._context.createBufferSource();
-
-    bufferSource._start = bufferSource.start;
-    bufferSource.start = (when, offset, duration) => {
-      bufferSource._start(when, offset, duration);
-      this.bufferSourceStartCallback(when, offset, duration);
+      return bufferSource;
     };
 
-    bufferSource._stop = bufferSource.stop;
-    bufferSource.stop = () => {
-      bufferSource._stop();
-      this.bufferSourceStopCallback();
-    };
-
-    return bufferSource;
-  }
-
-  createGain() {
-    return this._context.createGain();
-  }
-
-  decodeAudioData(data, resolve, reject) {
-    return this._context.decodeAudioData(data, resolve, reject);
-  }
-
-  startRendering() {
-    return this._context.startRendering();
+    return context;
   }
 }

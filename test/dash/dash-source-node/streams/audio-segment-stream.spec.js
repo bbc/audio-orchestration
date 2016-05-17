@@ -55,14 +55,14 @@ describe('AudioSegmentStream', () => {
   });
 
   it('should construct', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const audioStream = new MockAudioSegmentStream(context, definition);
     expect(audioStream).toBeDefined();
   });
 
   it('should expose read only output node', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
@@ -71,7 +71,7 @@ describe('AudioSegmentStream', () => {
   });
 
   it('should expose read only channel count', function it() {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
@@ -80,7 +80,7 @@ describe('AudioSegmentStream', () => {
   });
 
   it('should end naturally and call endedCallback', function it(done) {
-    const context = new MockAudioContext();
+    const context = MockAudioContext.createAudioContext();
     const definition = this.baseMockRoutine.definition;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
@@ -105,7 +105,7 @@ describe('AudioSegmentStream', () => {
     const routinePromises = this.mockRoutines.map(
       (routine) => new Promise((resolve) => {
         // Construct new objects for each test routine.
-        const context = new MockAudioContext();
+        const context = MockAudioContext.createAudioContext();
         const definition = routine.definition;
         const audioStream = new MockAudioSegmentStream(context, definition);
 
@@ -178,7 +178,7 @@ describe('AudioSegmentStream', () => {
       delaysToTest.forEach((delay) => {
         routinePromises.push(new Promise((resolve) => {
           // Construct new objects for each test routine.
-          const context = new MockAudioContext();
+          const context = MockAudioContext.createAudioContext();
           const definition = routine.definition;
           const audioStream = new MockAudioSegmentStream(context, definition);
 
