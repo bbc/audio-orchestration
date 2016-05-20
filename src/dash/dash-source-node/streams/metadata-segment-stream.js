@@ -60,6 +60,13 @@ export default class MetadataSegmentStream extends SegmentStream {
       if (this._buffer.segments[i].n === n) {
         segment = this._buffer.segments[i];
         segment.metadata = data;
+
+        // Offset the metadata time for the current loop.
+        const loopOffset = segment.loopNumber * this._play.duration;
+        for (let j = 0; j < segment.metadata.length; j++) {
+          segment.metadata[j].timens += loopOffset * 1e9;
+        }
+
         this._metadataCallback(segment);
         isFound = true;
       }

@@ -229,7 +229,7 @@ export default class SegmentStream {
     }
 
     // Return the template for the segment.
-    return { n, number, url, when, offset, duration };
+    return { n, loopNumber, number, url, when, offset, duration };
   }
 
   /**
