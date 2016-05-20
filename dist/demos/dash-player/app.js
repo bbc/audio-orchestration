@@ -8,7 +8,7 @@ function setupPlayer(blob) {
   var manifest = new bbcat.dash.ManifestParser().parse(blob);
   var dashSource = new bbcat.dash.DashSourceNode(context, manifest);
 
-  for (var i = 0; i < dashSource.numberOfOutputs; i++) {
+  for (var i = 0; i < dashSource.outputs.length; i++) {
     dashSource.connect(context.destination, i);
   }
 
@@ -90,7 +90,12 @@ function setupPlayer(blob) {
   });
 }
 
+// var manifestURL = 'http://vm-1015-user.virt.ch.bbc.co.uk/dash/thering11/thering11.mpd';
+// var manifestURL = 'http://vm-1015-user.virt.ch.bbc.co.uk/dash/thering32/thering32.mpd';
 var manifestURL = 'http://vm-1015-user.virt.ch.bbc.co.uk/dash/everythingeverything/everythingeverything.mpd';
+// var manifestURL = 'http://vm-1015-user.virt.ch.bbc.co.uk/dash/elephantcamel/elephantcamel.mpd';
+// var manifestURL = 'http://vm-1015-user.virt.ch.bbc.co.uk/dash/intergallacticlovers/intergallacticlovers.mpd';
+
 new bbcat.dash.ManifestLoader()
   .load(manifestURL)
   .then(setupPlayer)

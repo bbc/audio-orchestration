@@ -32,21 +32,21 @@ export default class CompoundNode extends EventTarget {
   }
 
   /**
-   * Returns the number of inputs feeding the node.
-   * @return {number}
-   *         The number of inputs feeding the node.
+   * Returns the inputs feeding the node.
+   * @return {Array<AudioNode>}
+   *         The inputs feeding the node.
    */
-  get numberOfInputs() {
-    return this._inputs.length;
+  get inputs() {
+    return this._inputs;
   }
 
   /**
-   * Returns the number of outputs from the node.
-   * @return {number}
-   *         The number of outputs from the node.
+   * Returns the inputs outputs the node.
+   * @return {Array<AudioNode>}
+   *         The outputs feeding the node.
    */
-  get numberOfOutputs() {
-    return this._outputs.length;
+  get outputs() {
+    return this._outputs;
   }
 
   /**

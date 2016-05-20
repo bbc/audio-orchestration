@@ -59,7 +59,7 @@ describe('DashSourceNode', () => {
       const context = new window.AudioContext();
       const dashSourceNode = new DashSourceNode(context, routine.manifest);
 
-      expect(dashSourceNode.numberOfOutputs).toBe(
+      expect(dashSourceNode.outputs.length).toBe(
         routine.expected.channelCount);
     });
   });

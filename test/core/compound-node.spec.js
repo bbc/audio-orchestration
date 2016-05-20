@@ -16,22 +16,20 @@ describe('CompoundNode', () => {
     }).toThrowError(TypeError);
   });
 
-  it('should expose read only numberOfInputs', function it() {
+  it('should expose read only inputs', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 3, 0);
 
-    expect(mockCompoundNode.numberOfInputs).toBe(3);
-    expect(() => {
-      mockCompoundNode.numberOfInputs = null;
-    }).toThrowError(TypeError);
+    expect(mockCompoundNode.inputs).toEqual(jasmine.any(Array));
+    expect(mockCompoundNode.inputs.length).toEqual(3);
+    expect(() => { mockCompoundNode.inputs = null; }).toThrowError(TypeError);
   });
 
-  it('should expose read only numberOfOutputs', function it() {
+  it('should expose read only outputs', function it() {
     const mockCompoundNode = new MockCompoundNode(this.context, 0, 3);
 
-    expect(mockCompoundNode.numberOfOutputs).toBe(3);
-    expect(() => {
-      mockCompoundNode.numberOfOutputs = null;
-    }).toThrowError(TypeError);
+    expect(mockCompoundNode.outputs).toEqual(jasmine.any(Array));
+    expect(mockCompoundNode.outputs.length).toEqual(3);
+    expect(() => { mockCompoundNode.outputs = null; }).toThrowError(TypeError);
   });
 
   it('should connect and disconnect with defaults', function it() {
