@@ -48,7 +48,7 @@ const metadataSegments = [
         el: 0.0000000000000000,
         d: 37.301979000000003,
       },
-      gain: 1.0000000000000000,
+      gain: 0.5000000000000000,
       diffuseness: 0.0000000000000000,
       dialogue: 0,
       othervalues: {
@@ -66,7 +66,7 @@ const metadataSegments = [
         el: 0.0000000000000000,
         d: 40.731476000000008,
       },
-      gain: 1.0000000000000000,
+      gain: 0.7500000000000000,
       diffuseness: 0.0000000000000000,
       dialogue: 0,
       othervalues: {
@@ -85,7 +85,7 @@ const metadataSegments = [
         el: 3.3383640000000003,
         d: 34.345115999999997,
       },
-      gain: 1.0000000000000000,
+      gain: 0.2500000000000000,
       diffuseness: 0.0000000000000000,
       dialogue: 0,
       othervalues: {
@@ -111,17 +111,29 @@ const metadataSegments = [
         sourcetype: '4',
       },
     },
+  }, {
+    timens: 8905000000,
+    channel: 2,
+    parameters: {
+      position: {
+        polar: true,
+        az: 17.25165200000000,
+        el: 0.000000000000000,
+        d: 1.527534000000003,
+      },
+      gain: 1.0000000000000000,
+      diffuseness: 0.0000000000000000,
+      dialogue: 0,
+      othervalues: {
+        bbcrenderer_rendertype: 'echoic',
+        sourcetype: '4',
+      },
+    },
   }],
   [{ // Segment 4.
     timens: 12675000000,
     channel: 0,
     parameters: {
-      position: {
-        polar: true,
-        az: -47.169320999999997,
-        el: 0.0000000000000000,
-        d: 47.412010000000002,
-      },
       gain: 1.0000000000000000,
       diffuseness: 0.0000000000000000,
       dialogue: 0,
@@ -140,7 +152,6 @@ const metadataSegments = [
         el: 0.0000000000000000,
         d: 49.765976000000009,
       },
-      gain: 1.0000000000000000,
       diffuseness: 0.0000000000000000,
       dialogue: 0,
       othervalues: {
