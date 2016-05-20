@@ -34,6 +34,7 @@
     "karma-jasmine": "^0.3.8",
     "karma-webpack": "^1.7.0",
     "path": "^0.12.7",
+    "three": "^0.76.1",
     "webpack": "^1.12.14"
   }
 }
