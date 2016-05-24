@@ -1,5 +1,5 @@
 import mockAudio from './../../audio';
-import mockMetadata from './../../metadata';
+import createMetadata from './../../metadata-generator';
 
 const offsetManifest = {
   type: 'static',
@@ -108,16 +108,16 @@ const noValidStreamsManifest = {
 const segmentsUrlPayloadMap = [
   {
     url: 'http://example.org/some/mpd/md/dash_1.json',
-    payload: mockMetadata[0],
+    payload: createMetadata(1, 2, 0),
   }, {
     url: 'http://example.org/some/mpd/md/dash_2.json',
-    payload: mockMetadata[1],
+    payload: createMetadata(2, 2, 2),
   }, {
     url: 'http://example.org/some/mpd/md/dash_3.json',
-    payload: mockMetadata[2],
+    payload: createMetadata(3, 2, 4),
   }, {
     url: 'http://example.org/some/mpd/md/dash_4.json',
-    payload: mockMetadata[3],
+    payload: createMetadata(4, 2, 6),
   }, {
     url: 'http://example.org/some/mpd/1/segment_1.m4a',
     payload: mockAudio[0],
@@ -180,35 +180,35 @@ const loopRoutine = {
         when: 0,
         offset: 1,
         duration: 1,
-        metadata: mockMetadata[0],
+        metadata: createMetadata(1, 2, -1, 2),
       }, {
         n: 1,
         number: 2,
         when: 1,
         offset: 0,
         duration: 2,
-        metadata: mockMetadata[1],
+        metadata: createMetadata(2, 2, 1, 2),
       }, {
         n: 2,
         number: 3,
         when: 3,
         offset: 0,
         duration: 1,
-        metadata: mockMetadata[2],
+        metadata: createMetadata(3, 2, 3, 1),
       }, {
         n: 4,
         number: 1,
         when: 5,
         offset: 0,
         duration: 2,
-        metadata: mockMetadata[0],
+        metadata: createMetadata(1, 2, 5, 2),
       }, {
         n: 5,
         number: 2,
         when: 7,
         offset: 0,
         duration: 2,
-        metadata: mockMetadata[1],
+        metadata: createMetadata(2, 2, 7, 2),
       },
     ],
   },

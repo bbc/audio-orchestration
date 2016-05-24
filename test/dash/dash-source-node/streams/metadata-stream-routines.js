@@ -1,4 +1,4 @@
-import mockMetadata from './../../../metadata';
+import createMetadata from './../../../metadata-generator';
 
 // Exports routines to test a MetadataSegmentStream.
 // routine.segmentsUrlPayloadMap
@@ -14,21 +14,31 @@ import mockMetadata from './../../../metadata';
 //     the number of segments expected to prime the buffer and the segments
 //     in order of buffering with period metadata (when, offset, etc.) attached.
 
-const segmentsUrlPayloadMap = [
-  {
-    url: '/segment_1.json',
-    payload: mockMetadata[0],
-  }, {
-    url: '/segment_2.json',
-    payload: mockMetadata[1],
-  }, {
-    url: '/segment_3.json',
-    payload: mockMetadata[2],
-  }, {
-    url: '/segment_4.json',
-    payload: mockMetadata[3],
-  },
-];
+const segmentsUrlPayloadMap = [{
+  url: '/2/segment_1.json',
+  payload: createMetadata(1, 2, 0),
+}, {
+  url: '/2/segment_2.json',
+  payload: createMetadata(2, 2, 2),
+}, {
+  url: '/2/segment_3.json',
+  payload: createMetadata(3, 2, 4),
+}, {
+  url: '/2/segment_4.json',
+  payload: createMetadata(4, 2, 6),
+}, {
+  url: '/4/segment_1.json',
+  payload: createMetadata(1, 4, 0),
+}, {
+  url: '/4/segment_2.json',
+  payload: createMetadata(2, 4, 4),
+}, {
+  url: '/4/segment_3.json',
+  payload: createMetadata(3, 4, 8),
+}, {
+  url: '/4/segment_4.json',
+  payload: createMetadata(4, 4, 12),
+}];
 
 const baseMetadataDefinition = {
   id: 0,
@@ -36,7 +46,7 @@ const baseMetadataDefinition = {
   duration: 16,
   segmentDuration: 4,
   segmentStart: 1,
-  templateUrl: '/segment_$Number.json',
+  templateUrl: '/4/segment_$Number.json',
   bufferTime: 12,
 };
 
@@ -46,7 +56,7 @@ const offsetMetadataDefinition = {
   duration: 8,
   segmentDuration: 2,
   segmentStart: 1,
-  templateUrl: '/segment_$Number.json',
+  templateUrl: '/2/segment_$Number.json',
   bufferTime: 6,
 };
 
@@ -70,28 +80,28 @@ const baseRoutine = {
       when: 0,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 4, 0, 4),
     }, {
       n: 1,
       number: 2,
       when: 4,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 4, 4, 4),
     }, {
       n: 2,
       number: 3,
       when: 8,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 4, 8, 4),
     }, {
       n: 3,
       number: 4,
       when: 12,
       offset: 0,
       duration: 4,
-      metadata: mockMetadata[3],
+      metadata: createMetadata(4, 4, 12, 4),
     }],
   },
 };
@@ -116,42 +126,42 @@ const loopTestRoutine = {
       when: 1,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 2, 1, 2),
     }, {
       n: 2,
       number: 2,
       when: 3,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 2, 3, 2),
     }, {
       n: 3,
       number: 3,
       when: 5,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 2, 5, 2),
     }, {
       n: 4,
       number: 4,
       when: 7,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[3],
+      metadata: createMetadata(4, 2, 7, 1),
     }, {
       n: 6,
       number: 1,
       when: 9,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 2, 9, 2),
     }, {
       n: 7,
       number: 2,
       when: 11,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 2, 11, 2),
     }],
   },
 };
@@ -176,42 +186,42 @@ const offsetTestRoutine = {
       when: 0,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 2, -1, 2),
     }, {
       n: 1,
       number: 2,
       when: 1,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 2, 1, 2),
     }, {
       n: 2,
       number: 3,
       when: 3,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 2, 3, 1),
     }, {
       n: 3,
       number: 1,
       when: 4,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 2, 3, 2),
     }, {
       n: 4,
       number: 2,
       when: 5,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 2, 5, 2),
     }, {
       n: 5,
       number: 3,
       when: 7,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 2, 7, 1),
     }],
   },
 };
@@ -236,28 +246,28 @@ const initialTestRoutine = {
       when: 0,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 2, 0, 1),
     }, {
       n: 1,
       number: 1,
       when: 1,
       offset: 1,
       duration: 1,
-      metadata: mockMetadata[0],
+      metadata: createMetadata(1, 2, 0, 2),
     }, {
       n: 2,
       number: 2,
       when: 2,
       offset: 0,
       duration: 2,
-      metadata: mockMetadata[1],
+      metadata: createMetadata(2, 2, 2, 2),
     }, {
       n: 3,
       number: 3,
       when: 4,
       offset: 0,
       duration: 1,
-      metadata: mockMetadata[2],
+      metadata: createMetadata(3, 2, 4, 1),
     }],
   },
 };

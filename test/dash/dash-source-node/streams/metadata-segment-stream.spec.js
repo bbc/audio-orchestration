@@ -91,8 +91,8 @@ describe('MetadataSegmentStream', () => {
       // Buffer loaded segments as they may arrive out of sequence order.
       segmentsToTest.push(segment);
 
-      // Get the current segment expected segment and the corresponding
-      // loaded segment if it exists in the buffer.
+      // Get the current segment expected and the corresponding loaded segment
+      // if it exists in the buffer.
       let mockSegment = expectedSegments[segmentCount];
       let testSegment = mockSegment ?
         this.getSegment(segmentsToTest, mockSegment.n) : null;
@@ -100,12 +100,12 @@ describe('MetadataSegmentStream', () => {
       // Attempt to advance the expected segment checks as far as possible.
       while (mockSegment && testSegment) {
         // Check that segment playback-region metadata is as expected.
-        expect(mockSegment.n).toBe(testSegment.n);
-        expect(mockSegment.number).toBe(testSegment.number);
-        expect(mockSegment.when).toBe(testSegment.when);
-        expect(mockSegment.offset).toBe(testSegment.offset);
-        expect(mockSegment.duration).toBe(testSegment.duration);
-        expect(mockSegment.metadata).toBe(testSegment.metadata);
+        expect(mockSegment.n).toEqual(testSegment.n);
+        expect(mockSegment.number).toEqual(testSegment.number);
+        expect(mockSegment.when).toEqual(testSegment.when);
+        expect(mockSegment.offset).toEqual(testSegment.offset);
+        expect(mockSegment.duration).toEqual(testSegment.duration);
+        expect(mockSegment.metadata).toEqual(testSegment.metadata);
 
         // If segment was all correct, increment segment number.
         segmentCount++;
@@ -132,7 +132,7 @@ describe('MetadataSegmentStream', () => {
       // Confirm the correct number of segments have been primed.
       expect(segmentCount).toBe(routine.expected.numberOfPrimeSegments);
 
-      // Start the stream and advance the context and system time.
+      // Start the stream and advance the system time.
       metadataStream.start();
       jasmine.clock().tick(1000 * context.currentTime);
     });
@@ -191,12 +191,12 @@ describe('MetadataSegmentStream', () => {
           // Attempt to advance the expected segment checks as far as possible.
           while (mockSegment && testSegment) {
             // Check that segment playback-region metadata is as expected.
-            expect(mockSegment.n).toBe(testSegment.n);
-            expect(mockSegment.number).toBe(testSegment.number);
-            expect(mockSegment.when).toBe(testSegment.when);
-            expect(mockSegment.offset).toBe(testSegment.offset);
-            expect(mockSegment.duration).toBe(testSegment.duration);
-            expect(mockSegment.metadata).toBe(testSegment.metadata);
+            expect(mockSegment.n).toEqual(testSegment.n);
+            expect(mockSegment.number).toEqual(testSegment.number);
+            expect(mockSegment.when).toEqual(testSegment.when);
+            expect(mockSegment.offset).toEqual(testSegment.offset);
+            expect(mockSegment.duration).toEqual(testSegment.duration);
+            expect(mockSegment.metadata).toEqual(testSegment.metadata);
 
             // If segment was all correct, increment segment number.
             segmentCount++;

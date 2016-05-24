@@ -5,6 +5,7 @@ import SegmentStream from './segment-stream';
  * A class to manage a single stream of metadata segments, synchronised to an
  * audio context.
  * @ignore
+ * @private
  */
 export default class MetadataSegmentStream extends SegmentStream {
   /**
@@ -59,13 +60,26 @@ export default class MetadataSegmentStream extends SegmentStream {
     while (!isFound && i < this._buffer.segments.length) {
       if (this._buffer.segments[i].n === n) {
         segment = this._buffer.segments[i];
-        segment.metadata = data;
 
-        // Offset the metadata time for the current loop.
-        const loopOffset = segment.loopNumber * this._play.duration;
-        for (let j = 0; j < segment.metadata.length; j++) {
-          segment.metadata[j].timens += loopOffset * 1e9;
-        }
+        // The bounds in nanoseconds that metadata must fall within.
+        const metadataStart = 1e9 * this._stream.segmentDuration *
+          (segment.number - this._stream.segmentStart);
+        const metadataEnd = metadataStart + 1e9 *
+          (segment.offset + segment.duration);
+
+        // Offset in nanoseconds to convert metadata to context time.
+        const metadataOffset = - metadataStart +
+          1e9 * (segment.when - segment.offset);
+
+        // Filter metadata to be within bounds and apply context offset.
+        segment.metadata = data
+          .filter((datum) =>
+            datum.timens >= metadataStart && datum.timens < metadataEnd)
+          .map((datum) => {
+            const newMetadata = Object.assign({}, datum);
+            newMetadata.timens += metadataOffset;
+            return newMetadata;
+          });
 
         this._metadataCallback(segment);
         isFound = true;

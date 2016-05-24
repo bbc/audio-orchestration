@@ -1,7 +1,7 @@
-// Exports an array of mocked metadata segments.
+// Exports a function to generate metadata segments.
 
 const metadataSegments = [
-  [{ // Segment 1.
+  [{ // Segment 1. 0 <= timens < 4.
     timens: 0,
     channel: 0,
     parameters: {
@@ -38,7 +38,7 @@ const metadataSegments = [
       },
     },
   }],
-  [{ // Segment 2.
+  [{ // Segment 2. 4 <= timens < 8.
     timens: 4075000000,
     channel: 0,
     parameters: {
@@ -75,7 +75,7 @@ const metadataSegments = [
       },
     },
   }],
-  [{ // Segment 3.
+  [{ // Segment 3. 8 <= timens < 12.
     timens: 8905000000,
     channel: 0,
     parameters: {
@@ -112,7 +112,7 @@ const metadataSegments = [
       },
     },
   }, {
-    timens: 8905000000,
+    timens: 10000000000,
     channel: 2,
     parameters: {
       position: {
@@ -130,8 +130,8 @@ const metadataSegments = [
       },
     },
   }],
-  [{ // Segment 4.
-    timens: 12675000000,
+  [{ // Segment 4. 12 <= timens < 16.
+    timens: 13000000000,
     channel: 0,
     parameters: {
       gain: 1.0000000000000000,
@@ -143,7 +143,7 @@ const metadataSegments = [
       },
     },
   }, {
-    timens: 12675000000,
+    timens: 13000000000,
     channel: 1,
     parameters: {
       position: {
@@ -160,7 +160,7 @@ const metadataSegments = [
       },
     },
   }, {
-    timens: 13645000000,
+    timens: 15000000000,
     channel: 0,
     parameters: {
       position: {
@@ -178,7 +178,7 @@ const metadataSegments = [
       },
     },
   }, {
-    timens: 13645000000,
+    timens: 15000000000,
     channel: 1,
     parameters: {
       position: {
@@ -198,4 +198,28 @@ const metadataSegments = [
   }],
 ];
 
-export default metadataSegments;
+const defaultDuration = 4;
+const createMetadata = (
+    number, duration = defaultDuration, offset = 0, cutoff = duration) => {
+  // Calculate which metadata segment shoud be used and the ratio to
+  // compress/expand metadata times.
+  const segmentIndex = (number - 1) % metadataSegments.length;
+  const metadata = metadataSegments[segmentIndex];
+  const durationRatio = duration / defaultDuration;
+
+  // Caluclate where to filter out metadata based upon cutoff.
+  const metadataStart = 1e9 * segmentIndex * defaultDuration;
+  const metadataEnd = 1e9 * cutoff / durationRatio + metadataStart;
+
+  // Filter the relevant metadata, and scale and offset the metadata times.
+  return metadata
+    .filter((datum) => datum.timens < metadataEnd)
+    .map((datum) => {
+      const newDatum = Object.assign({}, datum);
+      newDatum.timens = (newDatum.timens - metadataStart) *
+        durationRatio + 1e9 * offset;
+      return newDatum;
+    });
+};
+
+export default createMetadata;

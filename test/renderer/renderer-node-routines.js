@@ -1,4 +1,11 @@
-import mockMetadata from '../metadata';
+import createMetadata from './../metadata-generator';
+
+const mockMetadata = [
+  createMetadata(1, 4, 0),
+  createMetadata(2, 4, 4),
+  createMetadata(3, 4, 8),
+  createMetadata(4, 4, 12),
+];
 
 const testTimingRoutine = {
   metadata: [mockMetadata[0], mockMetadata[1]],

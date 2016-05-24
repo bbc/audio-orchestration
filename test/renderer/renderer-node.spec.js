@@ -1,8 +1,8 @@
 import RendererNode from './../../src/renderer/renderer-node';
 import EqualPowerChannelHandler from './../../src/renderer/stereo/equal-power-channel-handler';
 import MockAudioContext from './../mock-audio-context';
-import mockMetadata from '../metadata';
 import mockRenderRoutines from './renderer-node-routines';
+import createMetadata from './../metadata-generator';
 
 describe('RendererNode', () => {
   beforeAll(() => {
@@ -54,14 +54,14 @@ describe('RendererNode', () => {
     // Should accept empty metadata.
     rendererNode.addMetaData([]);
     // Should accept valid metadata.
-    rendererNode.addMetaData(mockMetadata[0]);
+    rendererNode.addMetaData(createMetadata(1));
     // Should accept metadata out of order.
-    rendererNode.addMetaData(mockMetadata[1]);
-    rendererNode.addMetaData(mockMetadata[0]);
+    rendererNode.addMetaData(createMetadata(2));
+    rendererNode.addMetaData(createMetadata(1));
     // Should accept metadata with channels that are not being rendered.
-    rendererNode.addMetaData(mockMetadata[2]);
+    rendererNode.addMetaData(createMetadata(3));
     // Should accept partial metadata (e.g. missing gain or position.)
-    rendererNode.addMetaData(mockMetadata[3]);
+    rendererNode.addMetaData(createMetadata(4));
   });
 
   it('should handle metadata correctly', (done) => {
@@ -73,8 +73,8 @@ describe('RendererNode', () => {
       const rendererNode = new RendererNode(context, routine.channelCount,
         channelHandlerFactory);
 
-      sourceNode.connect(rendererNode._inputs[0]);
-      sourceNode.connect(rendererNode._inputs[1]);
+      sourceNode.connect(rendererNode.inputs[0]);
+      sourceNode.connect(rendererNode.inputs[1]);
       sourceNode.start();
       rendererNode.connect(context.destination);
 

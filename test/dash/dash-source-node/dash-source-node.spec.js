@@ -197,11 +197,11 @@ describe('DashSourceNode', () => {
       // Attempt to advance the expected segment checks as far as possible.
       while (mockSegment && testSegment) {
         // Check that segment playback-region metadata is as expected.
-        expect(mockSegment.n).toBe(testSegment.n);
-        expect(mockSegment.when).toBe(testSegment.when);
-        expect(mockSegment.offset).toBe(testSegment.offset);
-        expect(mockSegment.duration).toBe(testSegment.duration);
-        expect(mockSegment.metadata).toBe(testSegment.metadata);
+        expect(mockSegment.n).toEqual(testSegment.n);
+        expect(mockSegment.when).toEqual(testSegment.when);
+        expect(mockSegment.offset).toEqual(testSegment.offset);
+        expect(mockSegment.duration).toEqual(testSegment.duration);
+        expect(mockSegment.metadata).toEqual(testSegment.metadata);
 
         // If segment was all correct, increment segment number.
         segmentCount++;
