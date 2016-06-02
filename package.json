@@ -21,7 +21,6 @@
     "babel-plugin-__coverage__": "^0.111111.1",
     "babel-plugin-transform-runtime": "^6.7.5",
     "babel-preset-es2015": "^6.5.0",
-    "binauralfir": "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages",
     "esdoc": "^0.4.6",
     "esdoc-es7-plugin": "0.0.3",
     "eslint": "^2.4.0",
@@ -36,8 +35,13 @@
     "karma-jasmine": "^0.3.8",
     "karma-webpack": "^1.7.0",
     "path": "^0.12.7",
-    "quickhull3d": "^2.0.0",
-    "three": "^0.76.1",
     "webpack": "^1.12.14"
+  },
+  "dependencies": {
+    "binauralfir": "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages",
+    "fractional-delay": "git+https://github.com/Ircam-RnD/fractional-delay.git#gh-pages",
+    "kdt": "^0.1.0",
+    "quickhull3d": "^2.0.0",
+    "three": "^0.76.1"
   }
 }

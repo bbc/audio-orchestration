@@ -2,6 +2,8 @@ import RendererNode from './renderer-node';
 import EqualPowerChannelHandler from './stereo/equal-power-channel-handler';
 import HrtfChannelHandler from './binaural/hrtf-channel-handler';
 import IrcamFirChannelHandler from './binaural/ircam-fir-channel-handler';
+import SpatialiserChannelHandler from
+  './binaural/spatialiser-channel-handler/spatialiser-channel-handler';
 import VbapChannelHandler from './vbap/vbap-channel-handler';
 import BvsChannelHandler from './vbap/bvs-channel-handler';
 import HrtfHelper from './hrtf-helper';
@@ -34,7 +36,7 @@ const createStereoRenderer = (context, numberOfInputs) => {
  *         {@link IrcamFirChannelHandler}.
  */
 const createBinauralRenderer = (context, numberOfInputs, hrtfs) => {
-  const channelHandlerFactory = IrcamFirChannelHandler.createFactory(hrtfs);
+  const channelHandlerFactory = SpatialiserChannelHandler.createFactory(hrtfs);
   return new RendererNode(context, numberOfInputs, channelHandlerFactory);
 };
 
@@ -82,6 +84,7 @@ export {
   EqualPowerChannelHandler,
   HrtfChannelHandler,
   IrcamFirChannelHandler,
+  SpatialiserChannelHandler,
   VbapChannelHandler,
   BvsChannelHandler,
   HrtfHelper,
