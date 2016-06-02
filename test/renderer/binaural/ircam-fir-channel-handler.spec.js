@@ -1,9 +1,8 @@
 import IrcamFirChannelHandler from './../../../src/renderer/binaural/ircam-fir-channel-handler';
 import ChannelHandler from './../../../src/renderer/channel-handler';
-import HrtfHelper from './../../../src/renderer/hrtf-helper';
+import HrtfGenerator from './../hrtf-generator';
 import MockAudioContext from './../../mock-audio-context';
 import coordinates from '../coordinates';
-import hrtfs from '../hrtfs';
 
 describe('IrcamFirChannelHandler', () => {
   beforeAll(() => {
@@ -15,16 +14,16 @@ describe('IrcamFirChannelHandler', () => {
   });
 
   it('should extend ChannelHandler', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
-    HrtfHelper.populateBuffers(hrtfs, context);
     const channelHandler = new IrcamFirChannelHandler(context, { hrtfs });
 
     expect(channelHandler).toEqual(jasmine.any(ChannelHandler));
   });
 
   it('should expose a static factory function', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
-    HrtfHelper.populateBuffers(hrtfs, context);
     const channelHandlerFactory = IrcamFirChannelHandler.createFactory(hrtfs);
     const channelHandler = channelHandlerFactory(context);
 
@@ -34,8 +33,8 @@ describe('IrcamFirChannelHandler', () => {
 
   it('should correctly set gain', (done) => {
     // Should be initialised to a gain of 1.
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
-    HrtfHelper.populateBuffers(hrtfs, context);
     const sourceNode = context.createOscillator();
     const channelHandler = new IrcamFirChannelHandler(context, { hrtfs });
     channelHandler.output.connect(context.destination);
@@ -58,8 +57,8 @@ describe('IrcamFirChannelHandler', () => {
 
   it('should correctly set position', () => {
     // Should be initialised to a position of { x: 0, y: 0, z: 0 }.
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
-    HrtfHelper.populateBuffers(hrtfs, context);
     const channelHandler = new IrcamFirChannelHandler(context, { hrtfs });
     expect(channelHandler.position.x).toEqual(0);
     expect(channelHandler.position.y).toEqual(0);
@@ -86,8 +85,8 @@ describe('IrcamFirChannelHandler', () => {
   });
 
   it('should set position for both polar and Cartesian coordinates', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
-    HrtfHelper.populateBuffers(hrtfs, context);
     const channelHandler = new IrcamFirChannelHandler(context, { hrtfs });
 
     // Test for all valid test coordinates in Cartesian form.

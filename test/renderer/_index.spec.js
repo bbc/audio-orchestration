@@ -7,8 +7,8 @@ import {
 import RendererNode from './../../src/renderer/renderer-node';
 import MockAudioContext from './../mock-audio-context';
 import HrtfHelper from './../../src/renderer/hrtf-helper';
+import HrtfGenerator from './hrtf-generator';
 import speakerConfigurations from './speaker-configurations';
-import hrtfs from './hrtfs';
 
 describe('_index', () => {
   it('should provide a createStereoRenderer function', () => {
@@ -24,6 +24,7 @@ describe('_index', () => {
   });
 
   it('should provide a createBinauralRenderer function', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(8, 8);
     const context = MockAudioContext.createAudioContext();
     HrtfHelper.populateBuffers(hrtfs, context);
 
@@ -50,6 +51,7 @@ describe('_index', () => {
   });
 
   it('should provide a createBvsRenderer function', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(8, 8);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     HrtfHelper.populateBuffers(hrtfs, context);

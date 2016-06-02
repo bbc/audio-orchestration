@@ -2,9 +2,9 @@ import BvsChannelHandler from './../../../src/renderer/vbap/bvs-channel-handler'
 import IrcamFirChannelHandler from './../../../src/renderer/binaural/ircam-fir-channel-handler';
 import ChannelHandler from './../../../src/renderer/channel-handler';
 import MockAudioContext from './../../mock-audio-context';
+import HrtfGenerator from './../hrtf-generator';
 import speakerConfigurations from '../speaker-configurations';
 import coordinates from '../coordinates';
-import hrtfs from '../hrtfs';
 
 describe('BvsChannelHandler', () => {
   beforeAll(() => {
@@ -16,6 +16,7 @@ describe('BvsChannelHandler', () => {
   });
 
   it('should extend ChannelHandler', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     const channelHandlerFactory = IrcamFirChannelHandler.createFactory(hrtfs);
@@ -26,6 +27,7 @@ describe('BvsChannelHandler', () => {
   });
 
   it('should expose a static factory function', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     const ircamFirChannelHandlerFactory = IrcamFirChannelHandler
@@ -40,6 +42,7 @@ describe('BvsChannelHandler', () => {
 
   it('should correctly set gain', (done) => {
     // Should be initialised to a gain of 1.
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     const sourceNode = context.createOscillator();
@@ -66,6 +69,7 @@ describe('BvsChannelHandler', () => {
 
   it('should correctly set position', () => {
     // Should be initialised to a position of { x: 0, y: 0, z: 0 }.
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     const channelHandlerFactory = IrcamFirChannelHandler.createFactory(hrtfs);
@@ -96,6 +100,7 @@ describe('BvsChannelHandler', () => {
   });
 
   it('should set position for both polar and Cartesian coordinates', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
     const speakers = speakerConfigurations[0].speakers;
     const channelHandlerFactory = IrcamFirChannelHandler.createFactory(hrtfs);
