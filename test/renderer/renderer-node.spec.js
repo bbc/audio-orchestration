@@ -65,7 +65,7 @@ describe('RendererNode', () => {
   });
 
   it('should handle metadata correctly', (done) => {
-    mockRenderRoutines.forEach((routine) => {
+    const tests = mockRenderRoutines.map((routine) => new Promise((resolve) => {
       const context = MockAudioContext.createAudioContext(
         routine.channelCount, routine.runTime);
       const sourceNode = context.createOscillator();
@@ -107,8 +107,10 @@ describe('RendererNode', () => {
           // expect(actualGain).toEqual(expectedGain);
         });
         rendererNode.stop();
-        done();
+        resolve();
       };
-    });
+    }));
+
+    Promise.all(tests).then(done);
   });
 });
