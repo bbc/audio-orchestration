@@ -1,16 +1,10 @@
 import MockAudioContext from './../mock-audio-context';
 import HrtfHelper from './../../src/renderer/hrtf-helper';
-import hrtfs from './hrtfs';
+import HrtfGenerator from './hrtf-generator';
 
 describe('HrtfHelper', () => {
-  beforeEach(() => {
-    // As HRTFs are manipulated in situ they need to be reset before each test.
-    for (let i = 0; i < hrtfs.length; i++) {
-      delete hrtfs[i].buffer;
-    }
-  });
-
-  it('should correctly populate buffers on valid hrtfs', () => {
+  it('populateBuffers should correctly populate buffers on valid hrtfs', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
 
     HrtfHelper.populateBuffers(hrtfs, context);
@@ -34,7 +28,8 @@ describe('HrtfHelper', () => {
     });
   });
 
-  it('should not error on multiple calls.', () => {
+  it('populateBuffers should not error on multiple calls.', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
 
     HrtfHelper.populateBuffers(hrtfs, context);
@@ -44,7 +39,8 @@ describe('HrtfHelper', () => {
     });
   });
 
-  it('should handle custom irLength', () => {
+  it('populateBuffers should handle custom irLength', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
 
     HrtfHelper.populateBuffers(hrtfs, context, context.sampleRate, 5);
@@ -57,7 +53,8 @@ describe('HrtfHelper', () => {
     });
   });
 
-  it('should handle custom sampleRate', () => {
+  it('populateBuffers should handle custom sampleRate', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32);
     const context = MockAudioContext.createAudioContext();
 
     HrtfHelper.populateBuffers(hrtfs, context, 44000);
@@ -71,5 +68,32 @@ describe('HrtfHelper', () => {
       expect(rightChannel.length).toEqual(expectedLength);
       expect(hrtf.buffer.sampleRate).toEqual(44000);
     });
+  });
+
+  it('populateDelayAggregates should calculate min correctly', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32, 10, true);
+
+    let minDelay = Infinity;
+    hrtfs.forEach((hrtf) => {
+      minDelay = Math.min(minDelay, hrtf.toas[0], hrtf.toas[1]);
+    });
+
+    HrtfHelper.populateDelayAggregates(hrtfs);
+    expect(hrtfs.minDelay).toEqual(jasmine.any(Number));
+    expect(hrtfs.minDelay).toEqual(minDelay);
+  });
+
+  it('populateDelayAggregates should calculate mean correctly', () => {
+    const hrtfs = HrtfGenerator.generateHrtfs(32, 32, 10, true);
+
+    let total = 0;
+    hrtfs.forEach((hrtf) => {
+      total += hrtf.toas[0] + hrtf.toas[1];
+    });
+    const mean = total / (2 * hrtfs.length);
+
+    HrtfHelper.populateDelayAggregates(hrtfs);
+    expect(hrtfs.meanDelay).toEqual(jasmine.any(Number));
+    expect(hrtfs.meanDelay).toEqual(mean);
   });
 });

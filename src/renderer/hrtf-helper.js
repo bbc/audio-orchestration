@@ -40,9 +40,9 @@ export default class HrtfHelper {
    */
   static populateBuffers(
     hrtfs, context, sampleRate = context.sampleRate, irLength = 0) {
-    for (let i = 0; i < hrtfs.length; i++) {
-      const hrtf = hrtfs[i];
-
+    // Disable rule for this function as it modifies HRTFs in-place.
+    /* eslint-disable no-param-reassign */
+    hrtfs.forEach((hrtf) => {
       const bufferLength = irLength > 0 ? irLength :
         Math.min(hrtf.fir_coeffs_left.length, hrtf.fir_coeffs_right.length);
       const buffer = context.createBuffer(2, bufferLength, sampleRate);
@@ -54,8 +54,49 @@ export default class HrtfHelper {
       }
 
       hrtf.buffer = buffer;
-      // delete hrtf.fir_coeffs_left;
-      // delete hrtf.fir_coeffs_right;
-    }
+    });
+    /* eslint-enable no-param-reassign */
+  }
+
+  /**
+   * Calculate and sets the minimum and median delays *in-place* (minDelay and
+   * meanDelay respectively) from the HRTFs separate delay parameters.
+   * @example
+   * const hrtfs = [{
+   *   azimuth: 0,
+   *   distance: 1,
+   *   elevation: -40,
+   *   toas: [15.4, 15.3],
+   *   fir_coeffs_left: [0.00021427, -0.0038777, 0.001307, ...],
+   *   fir_coeffs_right: [0.00021427, -0.0038777, 0.001307, ...],
+   * }, {
+   *   azimuth: -6,
+   *   distance: 1,
+   *   elevation: -40,
+   *   toas: [12.6, 12.3],
+   *   fir_coeffs_left: [0.0026005, -0.0025651, -0.0030957, ...],
+   *   fir_coeffs_right: [-0.00057896, -0.0029811, -0.0023989, ...],
+   * }, {
+   *   ...
+   * }];
+   * HrtfHelper.populateDelayAggregates(hrtfs);
+   * // Use hrtf.minDelay or hrtf.meanDelay...
+   * @param  {!Array<Object>} hrtfs
+   *         An Array of HRTFs with seperate separate delay parameters (toas).
+   */
+  static populateDelayAggregates(hrtfs) {
+    // Disable rule for this function as it modifies HRTFs in-place.
+    /* eslint-disable no-param-reassign */
+    let minDelay = Infinity;
+    let totalDelay = 0;
+
+    hrtfs.forEach((hrtf) => {
+      totalDelay += hrtf.toas[0] + hrtf.toas[1];
+      minDelay = Math.min(minDelay, hrtf.toas[0], hrtf.toas[1]);
+    });
+
+    hrtfs.meanDelay = totalDelay / (2 * hrtfs.length);
+    hrtfs.minDelay = minDelay;
+    /* eslint-enable no-param-reassign */
   }
 }
