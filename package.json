@@ -1,10 +1,11 @@
 {
-  "name": "bbcat-js",
+  "name": "bbcat",
   "version": "0.0.1",
-  "description": "BBC Audio Team Javascript Libraries.",
+  "description": "BBC Audio Toolkit",
   "scripts": {
-    "build": "webpack --optimize-minimize ",
+    "build": "npm run lint && npm run test && npm run doc && npm run webpack",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
+    "webpack": "webpack --optimize-minimize ",
     "test": "karma start --singleRun",
     "watch:test": "karma start",
     "lint": "eslint .",
