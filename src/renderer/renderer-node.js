@@ -81,7 +81,6 @@ export default class RendererNode extends CompoundNode {
     while (this._metadataQueue[0] &&
       this._metadataQueue[0].timens <= lookAhead) {
       this._handleMetadataEvent(this._metadataQueue[0]);
-      // TODO: Consider emitting a metadata scheduled event.
       this._metadataQueue.shift();
     }
   }

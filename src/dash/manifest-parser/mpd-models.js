@@ -87,6 +87,8 @@ const Period = {
   }],
 };
 
+// TODO: Replace value (represents number of audio channels) with an
+// AudioChannelConfiguration id-value pair. See MPD XSD.
 const AdaptationSet = {
   attributes: [{
     name: 'id',
@@ -95,7 +97,6 @@ const AdaptationSet = {
     name: 'mimeType',
     type: 'string',
   }, {
-    // TODO: Sort this out.
     name: 'value',
     type: 'integer',
   }],
@@ -120,7 +121,6 @@ const SegmentTemplate = {
   }, {
     name: 'timescale',
     type: 'integer',
-    // TODO: Set this.
     default: 0,
   }, {
     name: 'startNumber',

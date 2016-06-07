@@ -17,6 +17,7 @@ export default class ChannelHandler {
     this._context = context;
     this._options = options;
     this._rampDuration = 5 / 1000; // Seconds.
+    this._channelCount = 2;
 
     this._initAudioGraph();
     this._position = new Vector3();
@@ -105,14 +106,12 @@ export default class ChannelHandler {
    * Initialises the required AudioNodes.
    */
   _initAudioGraph() {
-    // TODO: Consider defaulting input gain.
     this._inputGainNode = this._context.createGain();
     this._outputGainNode = this._context.createGain();
     this._createPanner(this._inputGainNode, this._outputGainNode,
       this._options);
 
-    // TODO: Make this cleaner.
-    this._outputGainNode.channelCount = this._channelCount || 2;
+    this._outputGainNode.channelCount = this._channelCount;
     this._outputGainNode.channelCountMode = 'explicit';
     this._outputGainNode.channelInterpretation = 'discrete';
   }
