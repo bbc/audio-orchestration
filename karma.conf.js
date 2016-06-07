@@ -36,6 +36,7 @@ module.exports = function(config) {
           }
         }]
       },
+      devtool: '#inline-source-map',
       watch: true
     },
     webpackServer: {
