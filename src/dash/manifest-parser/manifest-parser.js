@@ -16,7 +16,7 @@ import parsers from './mpd-parsers';
  * const manifestParser = new bbcat.dash.ManifestParser();
  *
  * manifestLoader.load('http://example.org/manifest.mpd').then((doc) => {
- *  const manifest = documentParser.parse(doc);
+ *  const manifest = manifestParser.parse(doc);
  *  // Use manifest.mediaPresentationDuration etc.
  * });
  */
