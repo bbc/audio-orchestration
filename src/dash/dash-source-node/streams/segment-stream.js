@@ -19,6 +19,7 @@ export default class SegmentStream {
     this._context = context;
     this._contextSyncTime = 0;
     this._loader = loader;
+    this._minBufferSize = 3;
 
     // Clone required information form the provided definition.
     this._stream = {};
@@ -35,8 +36,8 @@ export default class SegmentStream {
     this._buffer = {};
     this._buffer.segments = [];
     this._buffer.frontIndex = 0;
-    this._buffer.size = Math.ceil(definition.bufferTime /
-      definition.segmentDuration);
+    this._buffer.size = Math.min(Math.ceil(definition.bufferTime /
+      definition.segmentDuration), this._minBufferSize);
 
     // Instantiate information describing the playback region.
     this._play = {};
