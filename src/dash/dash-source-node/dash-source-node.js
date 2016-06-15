@@ -200,7 +200,7 @@ export default class DashSourceNode extends CompoundNode {
           start: period.start + template.presentationTimeOffset,
           duration: period.duration,
           segmentStart: template.startNumber,
-          segmentDuration: Math.floor(template.duration / template.timescale),
+          segmentDuration: template.duration / template.timescale,
           channelCount: adaptationSet.value,
           templateUrl: baseURL + template.media,
           bufferTime,
