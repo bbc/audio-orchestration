@@ -81,9 +81,11 @@ export default class SegmentStream {
     this._play.endOverlap = (this._stream.segmentDuration -
       ((this._play.startOverlap + this._play.duration) %
       this._stream.segmentDuration)) % this._stream.segmentDuration;
-    this._play.initialOverlap = (this._stream.segmentDuration -
-      ((this._play.initial + this._stream.start - this._play.offset) %
-      this._stream.segmentDuration)) % this._stream.segmentDuration;
+    this._play.initialOverlap = (this._play.initial + this._stream.start -
+      this._play.offset) % this._stream.segmentDuration;
+    // this._play.initialOverlap = (this._stream.segmentDuration -
+    //   ((this._play.initial + this._stream.start - this._play.offset) %
+    //   this._stream.segmentDuration)) % this._stream.segmentDuration;
 
     this._play.startSegment = this._stream.segmentStart +
       Math.floor((this._play.offset - this._stream.start) /
