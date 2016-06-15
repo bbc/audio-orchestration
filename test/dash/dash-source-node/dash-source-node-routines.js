@@ -24,7 +24,7 @@ const offsetManifest = {
       mimeType: 'text/json',
       value: NaN,
       segmentTemplate: {
-        duration: 98000,
+        duration: 96000,
         timescale: 48000,
         startNumber: 1,
         presentationTimeOffset: 0,
@@ -39,7 +39,7 @@ const offsetManifest = {
       mimeType: 'audio/mp4',
       value: 5,
       segmentTemplate: {
-        duration: 98000,
+        duration: 96000,
         timescale: 48000,
         startNumber: 1,
         presentationTimeOffset: 0,
@@ -54,7 +54,7 @@ const offsetManifest = {
       mimeType: 'audio/mp4',
       value: 5,
       segmentTemplate: {
-        duration: 98000,
+        duration: 96000,
         timescale: 48000,
         startNumber: 1,
         presentationTimeOffset: 0,

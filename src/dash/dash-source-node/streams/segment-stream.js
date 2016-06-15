@@ -75,27 +75,23 @@ export default class SegmentStream {
 
     // Precalculate useful segment numbers and overlap so that there is no need
     // to repeat calculations in the worker threads that maintain the buffer.
-    this._play.startOverlap = (this._stream.segmentDuration -
-      ((this._stream.start - this._play.offset) %
-      this._stream.segmentDuration)) % this._stream.segmentDuration;
-    this._play.endOverlap = (this._stream.segmentDuration -
-      ((this._play.startOverlap + this._play.duration) %
-      this._stream.segmentDuration)) % this._stream.segmentDuration;
-    this._play.initialOverlap = (this._play.initial + this._stream.start -
-      this._play.offset) % this._stream.segmentDuration;
-    // this._play.initialOverlap = (this._stream.segmentDuration -
-    //   ((this._play.initial + this._stream.start - this._play.offset) %
-    //   this._stream.segmentDuration)) % this._stream.segmentDuration;
+    const startOffset = this._play.offset - this._stream.start;
+    const initialOffset = startOffset + this._play.initial;
+    const endOffset = startOffset + this._play.duration;
+
+    this._play.startOverlap = Math.abs(startOffset) %
+      this._stream.segmentDuration;
+    this._play.initialOverlap = Math.abs(initialOffset) %
+      this._stream.segmentDuration;
+    this._play.endOverlap = Math.abs(endOffset) %
+      this._stream.segmentDuration;
 
     this._play.startSegment = this._stream.segmentStart +
-      Math.floor((this._play.offset - this._stream.start) /
-      this._stream.segmentDuration);
-    this._play.endSegment = this._play.startSegment - 1 +
-      Math.ceil((this._play.startOverlap + this._play.duration) /
-      this._stream.segmentDuration);
+      Math.floor(startOffset / this._stream.segmentDuration);
     this._play.initialSegment = this._stream.segmentStart +
-      Math.floor((this._play.offset + this._play.initial - this._stream.start) /
-      this._stream.segmentDuration);
+      Math.floor(initialOffset / this._stream.segmentDuration);
+    this._play.endSegment = this._stream.segmentStart - 1 +
+      Math.ceil(endOffset / this._stream.segmentDuration);
 
     this._play.segmentsPerLoop = 1 + this._play.endSegment -
       this._play.startSegment;
@@ -217,7 +213,7 @@ export default class SegmentStream {
     // Trim the start of the first segment of the first loop if required.
     // Otherwise; trim the start of the first loop segment if required.
     if (n === 0) {
-      when = when + this._play.initialOverlap;
+      when = 0;
       duration = duration - this._play.initialOverlap;
       offset = offset + this._play.initialOverlap;
     } else if (number === this._play.startSegment) {

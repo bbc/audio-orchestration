@@ -132,11 +132,13 @@ describe('AudioSegmentStream', () => {
           // Attempt to advance the expected segment checks as far as possible.
           while (mockSegment && testSegment) {
             // Check that segment playback-region metadata is as expected.
-            expect(mockSegment.n).toBe(testSegment.n);
-            expect(mockSegment.number).toBe(testSegment.number);
-            expect(mockSegment.when).toBe(testSegment.when);
-            expect(mockSegment.offset).toBe(testSegment.offset);
-            expect(mockSegment.duration).toBe(testSegment.duration);
+            const isMockEqualToTest =
+              mockSegment.n === testSegment.n &&
+              mockSegment.number === testSegment.number &&
+              mockSegment.when === testSegment.when &&
+              mockSegment.offset === testSegment.offset &&
+              mockSegment.duration === testSegment.duration;
+            expect(isMockEqualToTest).toBeTruthy();
 
             // If segment was all correct, increment segment number.
             segmentCount++;

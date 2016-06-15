@@ -191,12 +191,13 @@ describe('MetadataSegmentStream', () => {
           // Attempt to advance the expected segment checks as far as possible.
           while (mockSegment && testSegment) {
             // Check that segment playback-region metadata is as expected.
-            expect(mockSegment.n).toEqual(testSegment.n);
-            expect(mockSegment.number).toEqual(testSegment.number);
-            expect(mockSegment.when).toEqual(testSegment.when);
-            expect(mockSegment.offset).toEqual(testSegment.offset);
-            expect(mockSegment.duration).toEqual(testSegment.duration);
-            expect(mockSegment.metadata).toEqual(testSegment.metadata);
+            const segmentsEqual =
+              mockSegment.n === testSegment.n &&
+              mockSegment.number === testSegment.number &&
+              mockSegment.when === testSegment.when &&
+              mockSegment.offset === testSegment.offset &&
+              mockSegment.duration === testSegment.duration;
+            expect(segmentsEqual).toBeTruthy();
 
             // If segment was all correct, increment segment number.
             segmentCount++;
