@@ -6,6 +6,30 @@ import MetadataSegmentStream from './streams/metadata-segment-stream';
  * An AudioNode to perform DASH playback.
  * @see http://mpeg.chiariglione.org/standards/mpeg-dash
  * @extends {CompoundNode}
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('url/to/manifest.mpd')
+ *   .then((manifestBlob) => {
+ *     // Parse the manifest blob to a manifest object.
+ *     const manifest = manifestParser.parse(manifestBlob);
+ *
+ *     // Create the DashSourceNode and connect to context destintion.
+ *     const context = new AudioContext();
+ *     const dashSourceNode = new bbcat.dash.DashSourceNode(context, manifest);
+ *     dashSourceNode.outputs.forEach((output) => {
+ *       output.connect(context.destination);
+ *     });
+ *
+ *     // Prime and start playback.
+ *     dashSourceNode.prime().then(() => {
+ *       dashSourceNode.start();
+ *     });
+ *   })
+ *   .catch((error) => {
+ *     console.log(error);
+ *   });
  */
 export default class DashSourceNode extends CompoundNode {
   /**
