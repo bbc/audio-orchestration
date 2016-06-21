@@ -6,6 +6,11 @@ import CoordinateHelper from './../../coordinate-helper';
  * HRTFs must be provided in the Ircam Binaural FIR format. Given positions must
  * be in BBCAT Cartesian or polar form (see {@link CoordinateHelper}).
  * @see https://github.com/Ircam-RnD/binauralFIR
+ * @example
+ * // Given a set of HRTFs in the Ircam Binaural FIR format.
+ * const filterSelector = new SpatialiserFilterSelector(hrtfs);
+ * const filter = filterSelector.getHrtfForPosition(
+ *   { az: 120, el: 50, d: 2, polar: true });
  */
 export default class SpatialiserFilterSelector {
   /**
