@@ -1,6 +1,17 @@
 /**
  * A class that provides Promise-based, asynchronous file loading.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+ * @example
+ * const jsonLoader = new bbcat.core.Loader(json);
+ *
+ * jsonLoader.load([
+ *   'url/to/json/1.json',
+ *   'url/to/json/2.json'
+ * ]).then((jsonArray) {
+ *   // Use the json objects (jsonArray[0], jsonArray[1])
+ * }).catch(function(error) {
+ *   console.log(error);
+ * });;
  */
 export default class Loader {
   /**
