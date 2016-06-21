@@ -4,6 +4,14 @@ import Loader from '../../core/loaders/loader';
  * A class that provides Promise-based, asynchronous DASH Manifest loading.
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
  * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('http://example.org/manifest.mpd').then((doc) => {
+ *  const manifest = manifestParser.parse(doc);
+ *  // Use manifest.mediaPresentationDuration etc.
+ * });
  */
 export default class ManifestLoader extends Loader {
   /**
