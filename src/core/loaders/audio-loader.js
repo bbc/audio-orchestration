@@ -4,6 +4,18 @@ import Loader from './loader';
  * A class that provides Promise-based, asynchronous audio loading/decoding.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
  * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/decodeAudioData
+ * @example
+ * const context = new AudioContext();
+ * const audioLoader = new bbcat.core.AudioLoader(context);
+ *
+ * audioLoader.load([
+ *   'url/to/audio/1.m4a',
+ *   'url/to/audio/2.m4a'
+ * ]).then((decodedAudioArray) => {
+ *   // Use the decoded audio (decodedAudioArray[0], decodedAudioArray[1])
+ * }).catch((error) => {
+ *   console.log(error);
+ * });;
  */
 export default class AudioLoader extends Loader {
   /**
