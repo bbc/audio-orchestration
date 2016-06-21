@@ -6,6 +6,22 @@ import { Vector3 } from 'three';
  * For definitions of these representations see EBU TECH 3364 (pages 31-32.)
  * @see https://tech.ebu.ch/docs/tech/tech3364.pdf
  * @public
+ * @example
+ * // Output {polar: true, az: -0, el: 44.99, d: 1.41}.
+ * console.log(CoordinateHelper.convertToADMPolar(
+ *   { x: 0, y: 1, z: 1, polar: false }));
+ *
+ * // Output {polar: false, x: -1.11, y: -0.64, z: 1.53},
+ * console.log(CoordinateHelper.convertToADMCartesian(
+ *   { az: 120, el: 50, d: 2, polar: true }));
+ *
+ * // Outputs true.
+ * console.log(CoordinateHelper.isValidADMCoordinate(
+ *   { x: 0, y: 0, z: 0, polar: false }));
+ *
+ * // Outputs fasle.
+ * console.log(CoordinateHelper.isValidADMCoordinate
+ *   { not: 'valid' }));
  */
 export default class CoordinateHelper {
   /**

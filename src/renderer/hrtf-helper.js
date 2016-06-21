@@ -1,6 +1,33 @@
 /**
  * A class that provides static methods for manipulating HRTF data.
  * @public
+ * @example
+ * const hrtfs = [{
+ *   azimuth: 0,
+ *   distance: 1,
+ *   elevation: -40,
+ *   toas: [15.4, 15.3],
+ *   fir_coeffs_left: [0.00021427, -0.0038777, 0.001307, ...],
+ *   fir_coeffs_right: [0.00021427, -0.0038777, 0.001307, ...],
+ * }, {
+ *   azimuth: -6,
+ *   distance: 1,
+ *   elevation: -40,
+ *   toas: [12.6, 12.3],
+ *   fir_coeffs_left: [0.0026005, -0.0025651, -0.0030957, ...],
+ *   fir_coeffs_right: [-0.00057896, -0.0029811, -0.0023989, ...],
+ * }, {
+ *   ...
+ * }];
+ *
+ * const context = new window.AudioContext();
+ * HrtfHelper.populateBuffers(hrtfs, context);
+ * hrtfs.forEach((hrtf) => {
+ *   // Use hrtf.buffer...
+ * });
+ *
+ * HrtfHelper.populateDelayAggregates(hrtfs);
+ * // Use hrtfs.minDelay or hrtfs.meanDelay...
  */
 export default class HrtfHelper {
   /**
@@ -80,7 +107,7 @@ export default class HrtfHelper {
    *   ...
    * }];
    * HrtfHelper.populateDelayAggregates(hrtfs);
-   * // Use hrtf.minDelay or hrtf.meanDelay...
+   * // Use hrtfs.minDelay or hrtfs.meanDelay...
    * @param  {!Array<Object>} hrtfs
    *         An Array of HRTFs with seperate separate delay parameters (toas).
    */

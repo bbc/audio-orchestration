@@ -6,6 +6,42 @@ import CompoundNode from '../core/compound-node';
  * @see https://tech.ebu.ch/docs/tech/tech3364.pdf
  * @public
  * @extends {CompoundNode}
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('url/to/manifest.mpd')
+ *   .then((manifestBlob) => {
+ *     // Parse the manifest blob to a manifest object.
+ *     const manifest = manifestParser.parse(manifestBlob);
+ *
+ *     // Create audio nodes.
+ *     const context = new AudioContext();
+ *     const dashSourceNode = new bbcat.dash.DashSourceNode(context, manifest);
+ *     const stereoRendererNode = new bbcat.renderer.createStereoRenderer(
+ *       context, dashSourceNode.outputs.length);
+ *
+ *     // Connect nodes.
+ *     stereoRendererNode.connect(context.destination);
+ *     for (let i = 0; i < dashSourceNode.outputs.length; i++) {
+ *       dashSourceNode.connect(stereoRendererNode, i, i);
+ *     }
+ *
+ *     // Pass metadata from the DashSourceNode to the RendererNode.
+ *     dashSourceNode.addEventListener('metadata', function (e) {
+ *       stereoRendererNode.addMetaData(e.metadata);
+ *     });
+ *
+ *     // Start playback and rendering synced to the same context time.
+ *     const contextSyncTime = context.currentTime;
+ *     dashSourceNode.prime().then(() => {
+ *       dashSourceNode.start(contextSyncTime);
+ *       stereoRendererNode.start(contextSyncTime);
+ *     });
+ *   })
+ *   .catch((error) => {
+ *     console.log(error);
+ *   });
  */
 export default class RendererNode extends CompoundNode {
   /**

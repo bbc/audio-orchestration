@@ -4,6 +4,31 @@ import { Vector3 } from 'three';
  * A class to render a single audio channel, synchronised to an audio context.
  * @public
  * @abstract
+ * @example
+ * class EqualPowerChannelHandler extends bbcat.renderer.ChannelHandler {
+ *   // Override the _createPanner function.
+ *   _createPanner(inputNode, outputNode) {
+ *     this._panner = this._context.createPanner();
+ *     this._panner.panningModel = 'equalpower';
+ *     this._panner.connect(outputNode);
+ *     inputNode.connect(this._panner);
+ *   }
+ *
+ *   // Override the _createPositionFunction function.
+ *   _createPositionFunction(position) {
+ *     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+ *     const setPosition = () => {
+ *       this._panner.setPosition(x, y, z);
+ *       this._position.set(x, y, z);
+ *     };
+ *     return setPosition;
+ *   }
+ *
+ *   // Override the createFactory function.
+ *   static createFactory() {
+ *     return (context) => new this(context);
+ *   }
+ * }
  */
 export default class ChannelHandler {
   /**
