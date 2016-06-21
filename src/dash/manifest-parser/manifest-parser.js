@@ -10,8 +10,6 @@ import parsers from './mpd-parsers';
  * @see http://mpeg.chiariglione.org/standards/mpeg-dash
  * @extends {DocumentParser}
  * @example
- * import bbcat from 'bbcat';
- *
  * const manifestLoader = new bbcat.dash.ManifestLoader();
  * const manifestParser = new bbcat.dash.ManifestParser();
  *
