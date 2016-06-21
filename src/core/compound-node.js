@@ -4,8 +4,40 @@ import EventTarget from './event-target.js';
  * A class representing a collection of AudioNodes. The collection is defined
  * similarly to a single node; by a context, and number of channel inputs and
  * outputs.
+ * @abstract
+ * @private
  * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioNode
  * @see https://webaudio.github.io/web-audio-api/#the-audionode-interface
+ * @example
+ * export default class ToneSourceNode extends CompoundNode {
+ *   constructor(context, toneFrequencies) {
+ *     super(context);
+ *
+ *     // Create a gain node that will serve as output.
+ *     this._gainNode = context.createGain();
+ *     this.outputs.push(this._gainNode);
+ *
+ *     // For each tone, create an oscillator node set to that tone, connected to
+ *     // the output gain node.
+ *     this._oscillatorNodes = [];
+ *     toneFrequencies.forEach((toneFrequency) => {
+ *       const oscillatorNode = context.createOscillator();
+ *       oscillatorNode.type = 'sine';
+ *       oscillatorNode.frequency.value = toneFrequency;
+ *       oscillatorNode.connect(this._gainNode);
+ *     });
+ *   }
+ *
+ *   start(when) {
+ *     // Start all the oscillators at the given time, when.
+ *     this._oscillatorNodes.forEach(oscillator => oscillator.start(when));
+ *   }
+ *
+ *   stop(when) {
+ *     // Stop all the oscillators at the given time, when.
+ *     this._oscillatorNodes.forEach(oscillator => oscillator.stop(when));
+ *   }
+ * }
  */
 export default class CompoundNode extends EventTarget {
   /**
@@ -24,7 +56,7 @@ export default class CompoundNode extends EventTarget {
 
   /**
    * Returns the associated {@link AudioContext}.
-   * @return {AudioContext}
+   * @type   {AudioContext}
    *         The associated {@link AudioContext}.
    */
   get context() {
@@ -33,7 +65,7 @@ export default class CompoundNode extends EventTarget {
 
   /**
    * Returns the inputs feeding the node.
-   * @return {Array<AudioNode>}
+   * @type   {Array<AudioNode>}
    *         The inputs feeding the node.
    */
   get inputs() {
@@ -42,7 +74,7 @@ export default class CompoundNode extends EventTarget {
 
   /**
    * Returns the inputs outputs the node.
-   * @return {Array<AudioNode>}
+   * @type   {Array<AudioNode>}
    *         The outputs feeding the node.
    */
   get outputs() {
