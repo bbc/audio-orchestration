@@ -1,4 +1,4 @@
-import { CompoundNode } from '../core/_index';
+import CompoundNode from '../core/compound-node';
 
 /**
  * An AudioNode to perform object-based rendering from audio and metadata
