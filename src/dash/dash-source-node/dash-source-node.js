@@ -56,8 +56,8 @@ export default class DashSourceNode extends CompoundNode {
     // rejected if node cannot currently be primed.
     return new Promise((resolve, reject) => {
       // Check node state and parse all input paramaters.
-      if (this.state !== 'ready') {
-        reject('State must be ready before prime() is called.');
+      if (this.state !== 'ready' && this.state !== 'primed') {
+        reject('State must be ready or primed before prime() is called.');
         return;
       }
 
