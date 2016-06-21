@@ -23,15 +23,15 @@ These following examples assume the library has been installed using npm and the
 Load and decode multiple audio files asynchronously:
 
 ```javascript
-var context = new AudioContext();
-var audioLoader = bbcat.core.AudioLoader(context);
+const context = new AudioContext();
+const audioLoader = new bbcat.core.AudioLoader(context);
 
 audioLoader.load([
   'url/to/audio/1.m4a',
   'url/to/audio/2.m4a'
-]).then(function(decodedAudioArray) {
-  // Use the decoded audio.
-}).catch(function(error) {
+]).then((decodedAudioArray) => {
+  // Use the decoded audio (decodedAudioArray[0], decodedAudioArray[1])
+}).catch((error) => {
   console.log(error);
 });;
 ```
@@ -40,10 +40,12 @@ Stream object-based DASH audio and render to a stereo speaker pair:
 
 ```javascript
 const manifestLoader = new bbcat.dash.ManifestLoader();
+const manifestParser = new bbcat.dash.ManifestParser();
+
 manifestLoader.load('url/to/manifest.mpd')
   .then((manifestBlob) => {
     // Parse the manifest blob to a manifest object.
-    const manifest = new bbcat.dash.ManifestParser().parse(manifestBlob);
+    const manifest = manifestParser.parse(manifestBlob);
 
     // Create audio nodes.
     const context = new AudioContext();
@@ -64,8 +66,10 @@ manifestLoader.load('url/to/manifest.mpd')
 
     // Start playback and rendering synced to the same context time.
     const contextSyncTime = context.currentTime;
-    dashSourceNode.start(contextSyncTime);
-    stereoRendererNode.start(contextSyncTime);
+    dashSourceNode.prime().then(() => {
+      dashSourceNode.start(contextSyncTime);
+      stereoRendererNode.start(contextSyncTime);
+    });
   })
   .catch((error) => {
     console.log(error);
