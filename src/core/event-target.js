@@ -1,10 +1,8 @@
-
-// TODO: Consider adding more argument checking to the addEventListener,
-// removeEventListener and dispatchEvent methods.
-
 /**
  * An implementaton of the Event-Listener pattern that meets the
  * EventTarget interface specified by Mozilla.
+ * @abstract
+ * @private
  * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
  */
 export default class EventTarget {
