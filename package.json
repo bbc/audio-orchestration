@@ -2,13 +2,17 @@
   "name": "bbcat",
   "version": "0.0.1",
   "description": "BBC Audio Toolkit",
+  "main": " dist/bbcat.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "npm run lint && npm run test && npm run doc && npm run webpack",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
     "webpack": "webpack --optimize-minimize ",
     "test": "karma start --singleRun",
     "watch:test": "karma start",
-    "lint": "eslint .",
+    "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
   },
   "repository": {

@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: "bbcat.js",
-    libraryTarget: "var",
+    libraryTarget: "umd",
     library: "bbcat"
   },
   module: {
