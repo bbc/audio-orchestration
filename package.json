@@ -2,7 +2,7 @@
   "name": "bbcat",
   "version": "0.0.1",
   "description": "BBC Audio Toolkit",
-  "main": " dist/bbcat.js",
+  "main": "dist/bbcat.js",
   "files": [
     "dist"
   ],
