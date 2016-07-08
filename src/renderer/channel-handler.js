@@ -1,3 +1,4 @@
+import CoordinateHelper from './coordinate-helper';
 import { Vector3 } from 'three';
 
 /**
@@ -46,6 +47,8 @@ export default class ChannelHandler {
 
     this._initAudioGraph();
     this._position = new Vector3();
+    this._transform = new Vector3();
+    this._nextPosition = new Vector3();
   }
 
   /**
@@ -112,13 +115,35 @@ export default class ChannelHandler {
    *         The time at which to set the gain.
    */
   setPosition(position, time) {
-    const setPositionFunction = this._createPositionFunction(position);
+    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    this._nextPosition.set(x, y, z);
+    this._nextPosition.sub(this._transform);
+    const nextPosition = {
+      polar: false,
+      x: this._nextPosition.x,
+      y: this._nextPosition.y,
+      z: this._nextPosition.z,
+    };
+
+    const setPositionFunction = this._createPositionFunction(nextPosition);
     const timeDiff = (time - this._context.currentTime) * 1000;
     if (timeDiff > 0) {
       setTimeout(setPositionFunction, timeDiff);
     } else {
       setPositionFunction();
     }
+  }
+
+  setTransform(position) {
+    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    this._transform.set(x, y, z);
+    const currentPosition = {
+      polar: false,
+      x: this._position.x,
+      y: this._position.y,
+      z: this._position.z,
+    };
+    this.setPosition(currentPosition, this._context.currentTime);
   }
 
   // Not yet implemented.

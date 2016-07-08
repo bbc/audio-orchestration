@@ -202,4 +202,10 @@ export default class RendererNode extends CompoundNode {
       Array.prototype.splice.apply(this._metadataQueue, args);
     }
   }
+
+  setTransform(position) {
+    this._channelHandlers.forEach((channelHandler) => {
+      channelHandler.setTransform(position);
+    });
+  }
 }
