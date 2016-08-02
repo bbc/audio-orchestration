@@ -36,7 +36,7 @@ export default class SegmentStream {
     this._buffer = {};
     this._buffer.segments = [];
     this._buffer.frontIndex = 0;
-    this._buffer.size = Math.min(Math.ceil(definition.bufferTime /
+    this._buffer.size = Math.max(Math.ceil(definition.bufferTime /
       definition.segmentDuration), this._minBufferSize);
 
     // Instantiate information describing the playback region.
