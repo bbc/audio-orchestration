@@ -213,11 +213,15 @@ export default class DashSourceNode extends CompoundNode {
     // case of audio) to the AudioContext.
     this._presentationDuration = manifest.mediaPresentationDuration;
     const bufferTime = manifest.minBufferTime;
-    const baseURL = manifest.baseURL[0];
+    const baseURL = manifest.baseURL ? manifest.baseURL[0] : '';
 
     manifest.periods.forEach((period) => {
       period.adaptationSets.forEach((adaptationSet) => {
         const template = adaptationSet.segmentTemplate;
+        const representationURL = adaptationSet.representations &&
+          adaptationSet.representations[0] ?
+            adaptationSet.representations[0].baseURL : '';
+
         const definition = {
           id: `${period.id}-${adaptationSet.id}`,
           type: adaptationSet.mimeType,
@@ -226,7 +230,7 @@ export default class DashSourceNode extends CompoundNode {
           segmentStart: template.startNumber,
           segmentDuration: template.duration / template.timescale,
           channelCount: adaptationSet.value,
-          templateUrl: baseURL + template.media,
+          templateUrl: (baseURL || representationURL || '') + template.media,
           bufferTime,
         };
 
