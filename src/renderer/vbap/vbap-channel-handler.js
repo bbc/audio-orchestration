@@ -1,6 +1,7 @@
 import CoordinateHelper from '../coordinate-helper';
 import ChannelHandler from '../channel-handler';
 import Vbap from './vbap';
+import { Vector3 } from 'three';
 
 /**
  * A class to render a single audio channel, synchronised to an audio context.
@@ -58,8 +59,21 @@ export default class VbapChannelHandler extends ChannelHandler {
    *         The time at which to set the gain.
    */
   setPosition(position, time) {
+    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    this._nextPosition.set(x, y, z);
+    this._nextPositionTime = time;
+
+    // Apply transform.
+    const pRot = new Vector3(x, y, z).applyQuaternion(this._transform);
+    const positionRot = {
+      polar: false,
+      x: pRot.x,
+      y: pRot.y,
+      z: pRot.z,
+    };
+
     // Get the target speaker gains from VBAP.
-    const targetGains = this._vbap.pan(position);
+    const targetGains = this._vbap.pan(positionRot);
 
     // Apply each gain to the respective speaker.
     for (let i = 0; i < this._vbapGainNodes.length; i++) {
@@ -69,8 +83,15 @@ export default class VbapChannelHandler extends ChannelHandler {
         targetGains[i], time + this._rampDuration);
     }
 
-    // Apply the move at the desired time.
-    const setPositionFunction = this._createPositionFunction(position);
+    // Update the position parameter at the desired time
+    // (acutal update handled with gain node automation above).
+    const nextPosition = {
+      polar: false,
+      x: x,
+      y: y,
+      z: z,
+    };
+    const setPositionFunction = this._createPositionFunction(nextPosition);
     const timeDiff = (time - this._context.currentTime) * 1000;
     if (timeDiff > 0) {
       setTimeout(setPositionFunction, timeDiff);

@@ -44,9 +44,10 @@ export default class SpatialiserChannelHandler extends ChannelHandler {
    */
   _createPositionFunction(position) {
     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    const positionRot = this._applyTransform(position);
     const setPosition = () => {
       // Panner coordinate system has inverted azimuth.
-      this._panner.setPosition(position);
+      this._panner.setPosition(positionRot);
       this._position.set(x, y, z);
     };
 

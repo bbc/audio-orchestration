@@ -1,5 +1,5 @@
 import CoordinateHelper from './coordinate-helper';
-import { Vector3 } from 'three';
+import { Vector3, Quaternion } from 'three';
 
 /**
  * A class to render a single audio channel, synchronised to an audio context.
@@ -49,6 +49,7 @@ export default class ChannelHandler {
     this._position = new Vector3();
     this._transform = new Vector3();
     this._nextPosition = new Vector3();
+    this._nextPositionTime = 0;
   }
 
   /**
@@ -117,7 +118,7 @@ export default class ChannelHandler {
   setPosition(position, time) {
     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
     this._nextPosition.set(x, y, z);
-    this._nextPosition.sub(this._transform);
+    this._nextPositionTime = time;
     const nextPosition = {
       polar: false,
       x: this._nextPosition.x,
@@ -134,16 +135,41 @@ export default class ChannelHandler {
     }
   }
 
-  setTransform(position) {
-    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
-    this._transform.set(x, y, z);
+  /**
+   * Sets the listener transform.
+   * @param  {!Object} transform
+   *         The listener transform as a THREE.Quaternion.
+   */
+  setTransform(transform) {
+    this._transform = transform;
+
     const currentPosition = {
       polar: false,
       x: this._position.x,
       y: this._position.y,
       z: this._position.z,
     };
+    const nextPosition = {
+      polar: false,
+      x: this._nextPosition.x,
+      y: this._nextPosition.y,
+      z: this._nextPosition.z,
+    };
+    const nextPositionTime = this._nextPositionTime;
     this.setPosition(currentPosition, this._context.currentTime);
+    this.setPosition(nextPosition,    nextPositionTime);
+  }
+
+  _applyTransform(position) {
+    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    const pRot = new Vector3(x, y, z).applyQuaternion(this._transform);
+    const positionRot = {
+      polar: false,
+      x: pRot.x,
+      y: pRot.y,
+      z: pRot.z,
+    };
+    return positionRot;
   }
 
   // Not yet implemented.
@@ -182,6 +208,7 @@ export default class ChannelHandler {
   /**
    * Creates a function that can be called to set the position.
    * Must be overridden by subclasses.
+   * The created function should apply the transform if required.
    * @abstract
    * @param  {!Object} position
    *         The position to set in ADM position format.

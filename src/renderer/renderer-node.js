@@ -1,4 +1,5 @@
 import CompoundNode from '../core/compound-node';
+import { Quaternion } from 'three';
 
 /**
  * An AudioNode to perform object-based rendering from audio and metadata
@@ -72,6 +73,8 @@ export default class RendererNode extends CompoundNode {
     this._metadataQueue = [];
     this._channelHandlers = [];
     this._contextSyncTime = 0;
+
+    this._transform = new Quaternion()
 
     this._initAudioGraph();
   }
@@ -202,10 +205,25 @@ export default class RendererNode extends CompoundNode {
       Array.prototype.splice.apply(this._metadataQueue, args);
     }
   }
+  
+  /**
+   * Sets the listener transform.
+   * @param  {!Float32Array} transform
+   *         Transform quaternion as a Float32Array[4] (x,y,z,w).
+   */
+  setTransform(transform) {
+    const t = new Quaternion(transform[0], transform[1], transform[2], transform[3]);
+    t.normalize(); // normalize to ensure rotation (especially important due to single to double conversion)
+    const look = new Vector3(0, 1, 0);
+    const up   = new Vector3(0, 0, 1);
+    look.applyQuaternion(t);
+    up.applyQuaternion(t);
+    this.context.listener.setOrientation(look.x, look.y, look.z, up.x, up.y, up.z);
 
-  setTransform(position) {
+    this._transform.copy(t.inverse());
+
     this._channelHandlers.forEach((channelHandler) => {
-      channelHandler.setTransform(position);
+      channelHandler.setTransform(this._transform);
     });
   }
 }

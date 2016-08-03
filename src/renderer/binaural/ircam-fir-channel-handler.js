@@ -44,7 +44,8 @@ export default class IrcamFirChannelHandler extends ChannelHandler {
    */
   _createPositionFunction(position) {
     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
-    const { az, el, d } = CoordinateHelper.convertToADMPolar(position);
+    const positionRot = this._applyTransform(position);
+    const { az, el, d } = CoordinateHelper.convertToADMPolar(positionRot);
     const setPosition = () => {
       // IRCAM polar coordinate system has inverted azimuth.
       this._panner.setPosition(-az, el, d);
