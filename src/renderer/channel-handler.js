@@ -47,9 +47,9 @@ export default class ChannelHandler {
 
     this._initAudioGraph();
     this._position = new Vector3();
-    this._transform = new Vector3();
     this._nextPosition = new Vector3();
     this._nextPositionTime = 0;
+    this._transform = new Quaternion();
   }
 
   /**
@@ -83,6 +83,19 @@ export default class ChannelHandler {
   }
 
   /**
+   * Gets the rendered position in 3D Cartesian space.
+   * @public
+   * @type {THREE.Vector3}
+   *       An object defining the rendered position in 3D Cartesian space.
+   */
+  get transformedPosition() {
+    const posT = new Vector3(this._position.x, 
+      this._position.y, 
+      this._position.z).applyQuaternion(this._transform);
+    return posT;
+  }
+
+  /**
    * Gets the rendered gain.
    * @public
    * @type {number}
@@ -90,6 +103,16 @@ export default class ChannelHandler {
    */
   get gain() {
     return this._outputGainNode.gain.value;
+  }
+
+  /**
+   * Gets the position transform quaternion.
+   * @public
+   * @type {THREE.Quaternion}
+   *       A quaternion defining a position transformation (e.g. rotation).
+   */
+  get transform() {
+    return this._transform;
   }
 
   /**
@@ -149,6 +172,12 @@ export default class ChannelHandler {
       y: this._position.y,
       z: this._position.z,
     };
+
+    // if the next position is the same as the current position,
+    // then we don't need to subsequently schedule an update
+    // otherwise we do because the first call to setPosition
+    // overwrites the _nextPosition parameter
+    const doNextPos = this._position.equals(this._nextPosition);
     const nextPosition = {
       polar: false,
       x: this._nextPosition.x,
@@ -156,20 +185,23 @@ export default class ChannelHandler {
       z: this._nextPosition.z,
     };
     const nextPositionTime = this._nextPositionTime;
+
     this.setPosition(currentPosition, this._context.currentTime);
-    this.setPosition(nextPosition,    nextPositionTime);
+    
+    if (doNextPos) {
+      this.setPosition(nextPosition, nextPositionTime);
+    }
   }
 
   _applyTransform(position) {
     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
     const pRot = new Vector3(x, y, z).applyQuaternion(this._transform);
-    const positionRot = {
+    return {
       polar: false,
       x: pRot.x,
       y: pRot.y,
       z: pRot.z,
     };
-    return positionRot;
   }
 
   // Not yet implemented.

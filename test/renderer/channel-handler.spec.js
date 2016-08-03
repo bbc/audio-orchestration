@@ -55,4 +55,21 @@ describe('ChannelHandler', () => {
     expect(channelHandler.position.y).toEqual(0);
     expect(channelHandler.position.z).toEqual(0);
   });
+
+  it('should expose read-only transform', () => {
+    const context = MockAudioContext.createAudioContext();
+    const channelHandler = new ChannelHandler(context);
+    expect(channelHandler.transform).toBeDefined();
+    expect(() => { channelHandler.transform = null; }).toThrowError(TypeError);
+  });
+
+  it('should correctly default transform', () => {
+    const context = MockAudioContext.createAudioContext();
+    const channelHandler = new ChannelHandler(context);
+
+    expect(channelHandler.transform.x).toEqual(0);
+    expect(channelHandler.transform.y).toEqual(0);
+    expect(channelHandler.transform.z).toEqual(0);
+    expect(channelHandler.transform.w).toEqual(1);
+  });
 });

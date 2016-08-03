@@ -64,13 +64,8 @@ export default class VbapChannelHandler extends ChannelHandler {
     this._nextPositionTime = time;
 
     // Apply transform.
-    const pRot = new Vector3(x, y, z).applyQuaternion(this._transform);
-    const positionRot = {
-      polar: false,
-      x: pRot.x,
-      y: pRot.y,
-      z: pRot.z,
-    };
+    let positionRot = this._applyTransform(position);
+    positionRot = CoordinateHelper.convertToADMCartesian(positionRot);
 
     // Get the target speaker gains from VBAP.
     const targetGains = this._vbap.pan(positionRot);

@@ -1,5 +1,5 @@
 import CompoundNode from '../core/compound-node';
-import { Quaternion } from 'three';
+import { Vector3, Quaternion } from 'three';
 
 /**
  * An AudioNode to perform object-based rendering from audio and metadata
@@ -74,7 +74,8 @@ export default class RendererNode extends CompoundNode {
     this._channelHandlers = [];
     this._contextSyncTime = 0;
 
-    this._transform = new Quaternion()
+    this._transform    = new Quaternion();
+    this._invtransform = new Quaternion();
 
     this._initAudioGraph();
   }
@@ -90,6 +91,10 @@ export default class RendererNode extends CompoundNode {
       const { position, gain } = channel;
       return { position, gain };
     });
+  }
+
+  get transform() {
+    return this._transform;
   }
 
   /**
@@ -212,18 +217,20 @@ export default class RendererNode extends CompoundNode {
    *         Transform quaternion as a Float32Array[4] (x,y,z,w).
    */
   setTransform(transform) {
-    const t = new Quaternion(transform[0], transform[1], transform[2], transform[3]);
-    t.normalize(); // normalize to ensure rotation (especially important due to single to double conversion)
+    this._transform.set(transform[0], transform[1], transform[2], transform[3]);
+    this._transform.normalize(); // normalize to ensure rotation (especially important due to single to double conversion)
+    
+    // set listener orientation in context
     const look = new Vector3(0, 1, 0);
     const up   = new Vector3(0, 0, 1);
-    look.applyQuaternion(t);
-    up.applyQuaternion(t);
+    look.applyQuaternion(this._transform);
+    up.applyQuaternion(this._transform);
     this.context.listener.setOrientation(look.x, look.y, look.z, up.x, up.y, up.z);
 
-    this._transform.copy(t.inverse());
-
+    // set inverse transform in channel handlers
+    this._invtransform.copy(this._transform).inverse();
     this._channelHandlers.forEach((channelHandler) => {
-      channelHandler.setTransform(this._transform);
+      channelHandler.setTransform(this._invtransform);
     });
   }
 }

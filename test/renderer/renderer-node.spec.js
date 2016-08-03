@@ -113,4 +113,36 @@ describe('RendererNode', () => {
 
     Promise.all(tests).then(done);
   });
+
+  it('should expose read-only transform', () => {
+    const context = MockAudioContext.createAudioContext();
+    const channelHandlerFactory = EqualPowerChannelHandler.createFactory();
+    const rendererNode = new RendererNode(context, 2, channelHandlerFactory);
+
+    expect(rendererNode.transform).toBeDefined();
+    expect(() => { rendererNode.transform = null; }).toThrowError(TypeError);
+  });
+
+  it('should correctly default transform', () => {
+    const context = MockAudioContext.createAudioContext();
+    const channelHandlerFactory = EqualPowerChannelHandler.createFactory();
+    const rendererNode = new RendererNode(context, 2, channelHandlerFactory);
+
+    expect(rendererNode.transform.x).toEqual(0);
+    expect(rendererNode.transform.y).toEqual(0);
+    expect(rendererNode.transform.z).toEqual(0);
+    expect(rendererNode.transform.w).toEqual(1);
+  });
+
+  it('should correctly set transform', () => {
+    const context = MockAudioContext.createAudioContext();
+    const channelHandlerFactory = EqualPowerChannelHandler.createFactory();
+    const rendererNode = new RendererNode(context, 2, channelHandlerFactory);
+    const q = new Float32Array([1, 0, 0, 0]);
+    rendererNode.setTransform(q);
+    expect(rendererNode.transform.x).toBeCloseTo(q[0],5);
+    expect(rendererNode.transform.y).toBeCloseTo(q[1],5);
+    expect(rendererNode.transform.z).toBeCloseTo(q[2],5);
+    expect(rendererNode.transform.w).toBeCloseTo(q[3],5);
+  });
 });
