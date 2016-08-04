@@ -135,7 +135,7 @@ export default class Vbap {
       if (triangleGains.x >= -this._eps &&
           triangleGains.y >= -this._eps &&
           triangleGains.z >= -this._eps) {
-        // Normalise triangle gains (as gain should be 0-1).
+        // Normalise triangle gains for energy preservation
         triangleGains.normalize();
         //  Set gain on corresponding speakers.
         speakerGains[triangle[0]] = triangleGains.x;
