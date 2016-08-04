@@ -128,8 +128,8 @@ export default class Vbap {
       const inverse = new Matrix3();
       const triangleGains = new Vector3();
 
-      matrix.set(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z);
-      inverse.getInverse(matrix).transpose();
+      matrix.set(p1.x, p2.x, p3.x, p1.y, p2.y, p3.y, p1.z, p2.z, p3.z);
+      inverse.getInverse(matrix);
       triangleGains.copy(normalisedPosition).applyMatrix3(inverse);
 
       if (triangleGains.x >= -this._eps &&
