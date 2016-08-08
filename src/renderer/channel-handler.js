@@ -119,10 +119,11 @@ export default class ChannelHandler {
    * Sets the gain at the specified time.
    * @param  {!number} gain
    *         The gain value to set.
-   * @param  {!number} time
-   *         The time at which to set the gain.
+   * @param  {?number} [time = 0]
+   *         The time at which to set the gain. If time is omitted the change
+   *         is actioned as soon as posible.
    */
-  setGain(gain, time) {
+  setGain(gain, time = 0) {
     // First set value at scheduled time to this current value, then set ramp
     // to new value at scheduled time plus the ramp duration.
     this._outputGainNode.gain.setValueAtTime(
@@ -135,10 +136,11 @@ export default class ChannelHandler {
    * Sets the position at the specified time.
    * @param  {!Object} position
    *         The position to set in ADM position format.
-   * @param  {!number} time
-   *         The time at which to set the gain.
+   * @param  {?number} [time = 0]
+   *         The time at which to set the position. If time is omitted the
+   *         change is actioned as soon as posible.
    */
-  setPosition(position, time) {
+  setPosition(position, time = 0) {
     const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
     this._nextPosition.set(x, y, z);
     this._nextPositionTime = time;
