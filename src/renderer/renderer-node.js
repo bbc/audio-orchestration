@@ -152,17 +152,17 @@ export default class RendererNode extends CompoundNode {
       const { gain, position } = event.parameters;
       const time = 1e-9 * event.timens + this._contextSyncTime;
 
-      if (gain) {
+      if (gain !== null && gain !== undefined) {
         channelHandler.setGain(gain, time);
       }
-      if (position) {
+      if (position !== null && position !== undefined) {
         channelHandler.setPosition(position, time);
       }
       // Not yet implemented.
-      // if (diffuseness) {
+      // if (diffuseness !== null && diffuseness !== undefined) {
       //   channelHandler.setDiffuseness(diffuseness, time);
       // }
-      // if (dialogue) {
+      // if (dialogue !== null && dialogue !== undefined) {
       //   channelHandler.setDialogue(dialogue, time);
       // }
     }
