@@ -17,8 +17,8 @@ To install with the minified library:
 ```
 
 
-## Examples
-These following examples assume the library has been installed using npm and the `bbcat` base object has been imported. The examples are ES6 compliant. Full documentation of the library with examples can be found in */doc/index.html*.
+## Usage
+The following code-snippets assume the library has been installed using npm and the `bbcat` base object has been imported. The examples are ES6 compliant. Full documentation of the library with examples can be found in */doc/index.html*.
 
 Load and decode multiple audio files asynchronously:
 
@@ -118,3 +118,8 @@ Documentation can be generated or updated with `npm run doc`. Documentation is a
 The entry point for the build process is the */src/bbcat.js* file. The entry point and referenced files are packaged with [webpack](https://webpack.github.io/) and transpiled with [Babel](https://babeljs.io/) to ES5 compliant code. The packaged library is output at */dist/bbcat.js*.
 
 The library can be packaged with `npm run webpack`. The library is also packaged as part of the build process.
+
+
+## Examples
+
+Examples can be found in the `./examples` directory. Instructions for installing and running examples can be found in their respective READMEs.
