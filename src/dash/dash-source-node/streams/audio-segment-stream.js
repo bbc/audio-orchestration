@@ -7,6 +7,13 @@ import SegmentStream from './segment-stream';
  * @ignore
  */
 export default class AudioSegmentStream extends SegmentStream {
+  /**
+   * Constructs a new {@link AudioSegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
   constructor(context, definition) {
     super(context, new AudioLoader(context), definition);
 

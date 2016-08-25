@@ -133,6 +133,10 @@ const SegmentTemplate = {
   }, {
     name: 'media',
     type: 'string',
+  }, {
+    name: 'initialization',
+    type: 'string',
+    default: null,
   }],
 };
 

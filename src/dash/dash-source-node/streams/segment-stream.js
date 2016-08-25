@@ -31,6 +31,7 @@ export default class SegmentStream {
     this._stream.segmentEnd = definition.segmentStart - 1 +
       Math.ceil(definition.duration / definition.segmentDuration);
     this._stream.templateUrl = definition.templateUrl;
+    this._stream.initUrl = definition.initUrl;
 
     // Instantiate a circular buffer for segments .
     this._buffer = {};

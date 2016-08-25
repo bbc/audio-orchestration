@@ -1,5 +1,6 @@
 import CompoundNode from '../../core/compound-node';
 import AudioSegmentStream from './streams/audio-segment-stream';
+import HeaderlessAudioSegmentStream from './streams/headerless-audio-segment-stream';
 import MetadataSegmentStream from './streams/metadata-segment-stream';
 
 /**
@@ -231,6 +232,7 @@ export default class DashSourceNode extends CompoundNode {
           segmentDuration: template.duration / template.timescale,
           channelCount: adaptationSet.value,
           templateUrl: (baseURL || representationURL || '') + template.media,
+          initUrl: (baseURL || representationURL || '') + template.initialization,
           bufferTime,
         };
 
@@ -240,8 +242,12 @@ export default class DashSourceNode extends CompoundNode {
           stream.metadataCallback = this._dispatchMetadataEvent.bind(this);
           this._allStreams.push(stream);
         } else if (adaptationSet.mimeType.indexOf('audio') > -1) {
-          // If type is audio then create an audio stream.
-          const stream = new AudioSegmentStream(this.context, definition);
+          // If type is audio then create an audio stream. If there is an
+          // initialization chunk then create a headerless stream.
+          const stream = template.initialization ?
+            new HeaderlessAudioSegmentStream(this.context, definition) :
+            new AudioSegmentStream(this.context, definition);
+
           this._audioStreams.push(stream);
           this._allStreams.push(stream);
 
