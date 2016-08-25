@@ -63,6 +63,15 @@ export default class CompoundNode extends EventTarget {
   }
 
   /**
+   * Returns the first input feeding the node.
+   * @type   {AudioNode}
+   *         The first input feeding the node.
+   */
+  get input() {
+    return this._inputs[0];
+  }
+
+  /**
    * Returns the inputs feeding the node.
    * @type   {Array<AudioNode>}
    *         The inputs feeding the node.
@@ -72,9 +81,18 @@ export default class CompoundNode extends EventTarget {
   }
 
   /**
-   * Returns the inputs outputs the node.
+   * Returns the first output from the node.
+   * @type   {AudioNode}
+   *         The first output from the node.
+   */
+  get output() {
+    return this._outputs[0];
+  }
+
+  /**
+   * Returns the outputs from the node.
    * @type   {Array<AudioNode>}
-   *         The outputs feeding the node.
+   *         The outputs from the node.
    */
   get outputs() {
     return this._outputs;
