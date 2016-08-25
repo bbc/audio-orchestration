@@ -5,7 +5,6 @@ import EventTarget from './event-target.js';
  * similarly to a single node; by a context, and number of channel inputs and
  * outputs.
  * @abstract
- * @private
  * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioNode
  * @see https://webaudio.github.io/web-audio-api/#the-audionode-interface
  * @example
