@@ -80,9 +80,8 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     if (segment && segment.bufferSource) {
       // Adjust the parameters when, offset and duration for the context time.
       const when = segment.when + this._contextSyncTime;
-      const offset = segment.offset +
-        (segment.number === this._play.startSegment ?
-          0 : segment.bufferSource.buffer.duration / 2);
+      const offset = segment.offset + (segment.number === this._stream.segmentStart ?
+        0 : segment.bufferSource.buffer.duration / 2);
       const duration = segment.duration;
 
       // Calculate any lateness in playback.
@@ -100,12 +99,8 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
         const osDuration = playOffset > 0 ? duration - playOffset : duration;
 
         segment.bufferSource.start(osWhen, osOffset, osDuration);
-        // console.log(this._context.currentTime, 'Segment', segment.number,
-        //   'scheduled for ', osWhen, osOffset, osDuration);
       } else {
         segment.bufferSource.start(0, 0, 0);
-        // console.log(this._context.currentTime, 'Segment', segment.number,
-        //   'scheduled for ', 0, 0, 0);
       }
     }
   }
@@ -139,13 +134,18 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
    */
   _mergeBuffersToSegment(prevSegment, segment) {
     /* eslint-disable no-param-reassign */
-    if (segment && segment.data && !segment.isDecoded && (prevSegment &&
-      prevSegment.data || segment.number === this._play.startSegment)) {
+    if (((prevSegment && prevSegment.data) || (segment.n === 0))
+      && segment && segment.data && !segment.isDecoded) {
       segment.isDecoded = true;
 
-      const arrayBuffer = segment.number === this._play.startSegment ?
-        this._mergeBuffers(this._buffer.init, segment.data) :
-        this._mergeBuffers(this._buffer.init, prevSegment.data, segment.data);
+      let arrayBuffer = null;
+      if (segment.number === this._stream.segmentStart) {
+        arrayBuffer = this._mergeBuffers(this._buffer.init, segment.data);
+      } else if (segment.n === 0) {
+        arrayBuffer = this._mergeBuffers(this._buffer.init, this._buffer.decode, segment.data);
+      } else {
+        arrayBuffer = this._mergeBuffers(this._buffer.init, prevSegment.data, segment.data);
+      }
 
       this._context.decodeAudioData(arrayBuffer,
         (decodedAudio) => {
@@ -159,7 +159,7 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
         },
         (error) => {
           // eslint-disable-next-line no-console
-          console.log('Could nto decode audio data:', error);
+          console.log('Could not decode audio data:', error);
         });
     }
     /* eslint-enable no-param-reassign */
@@ -192,10 +192,42 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     return segment;
   }
 
-  prime(initial = 0, loop = false, offset = 0,
-    duration = this._stream.duration - offset) {
-    return this._loader.load(this._stream.initUrl)
-      .then((data) => { this._buffer.init = data; })
-      .then(super.prime(initial, loop, offset, duration));
+  /**
+   * Primes the buffer with the initialisation segment, and fills the segment
+   * buffer with segment templates and downloads corresponding segments.
+   * @return {Promise}
+   *         A Promise that resolves when buffer is primed.
+   */
+  _primeBuffer() {
+    const getInitSegment = this._loader
+      .load(this._stream.initUrl)
+      .then((data) => {
+        this._buffer.init = data;
+      });
+
+    const decodeSegment = this._getTemplateForNthSegment(-1);
+    const getDecodeSegment = decodeSegment.number >= this._stream.segmentStart ?
+      this._loader
+        .load(decodeSegment.url)
+        .then((data) => { this._buffer.decode = data; }) :
+      Promise.resolve();
+
+    const promises = [];
+    for (let i = 0; i < this._buffer.size; i++) {
+      const segment = this._getTemplateForNthSegment(i);
+      this._buffer.segments.push(segment);
+
+      // Only load segments that lay within the streams segment bounds.
+      if (segment.number >= this._stream.segmentStart &&
+        (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
+        promises.push(this._loader.load(segment.url).then((data) => {
+          this._addDataToSegment(data, segment.n);
+        }));
+      }
+    }
+
+    return getInitSegment
+      .then(getDecodeSegment)
+      .then(Promise.all(promises));
   }
 }

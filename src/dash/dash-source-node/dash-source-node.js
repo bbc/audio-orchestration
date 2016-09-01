@@ -86,7 +86,8 @@ export default class DashSourceNode extends CompoundNode {
         return;
       }
 
-      if (initial < 0 || initial >= duration) {
+      if (this._presentationDuration !== 0 &&
+        (initial < 0 || initial >= duration)) {
         reject('Invalid initial. Must be a number less than ' +
           'duration and greater than or equal to 0.');
         return;
@@ -97,13 +98,15 @@ export default class DashSourceNode extends CompoundNode {
         return;
       }
 
-      if (offset < 0 || offset >= this._presentationDuration) {
+      if (this._presentationDuration !== 0 &&
+        (offset < 0 || offset >= this._presentationDuration)) {
         reject('Invalid offset. Must be a number less than ' +
           'presentationDuration and greater than or equal to 0.');
         return;
       }
 
-      if (duration <= 0 || duration > this._presentationDuration - offset) {
+      if (this._presentationDuration !== 0 &&
+        (duration <= 0 || duration > this._presentationDuration - offset)) {
         reject('Invalid duration. Must be a number less than ' +
           'presentationDuration minus offset and greater than 0.');
         return;
@@ -212,27 +215,31 @@ export default class DashSourceNode extends CompoundNode {
     // Digests the manifest into a set of streams. Each stream manages a buffer
     // for downloaded segments and synchronises scheduling (and playback in the
     // case of audio) to the AudioContext.
-    this._presentationDuration = manifest.mediaPresentationDuration;
+    this._presentationDuration = manifest.mediaPresentationDuration || 0;
     const bufferTime = manifest.minBufferTime;
     const baseURL = manifest.baseURL ? manifest.baseURL[0] : '';
 
     manifest.periods.forEach((period) => {
       period.adaptationSets.forEach((adaptationSet) => {
         const template = adaptationSet.segmentTemplate;
-        const representationURL = adaptationSet.representations &&
-          adaptationSet.representations[0] ?
-            adaptationSet.representations[0].baseURL : '';
+        const representation = adaptationSet.representations ?
+          adaptationSet.representations[0] : null;
+        const representationURL = representation ? representation.baseURL : '';
 
         const definition = {
-          id: `${period.id}-${adaptationSet.id}`,
+          periodId: period.id,
+          adaptationSetId: adaptationSet.id,
+          representationId: representation ? representation.id : null,
           type: adaptationSet.mimeType,
-          start: period.start + template.presentationTimeOffset,
+          start: period.start + (template.presentationTimeOffset / template.timescale),
+          // duration: period.duration,
           duration: period.duration,
           segmentStart: template.startNumber,
           segmentDuration: template.duration / template.timescale,
-          channelCount: adaptationSet.value,
-          templateUrl: (baseURL || representationURL || '') + template.media,
-          initUrl: (baseURL || representationURL || '') + template.initialization,
+          templateUrl: (baseURL || representationURL || '') +
+            (adaptationSet.baseURL || '') + (template.media || ''),
+          initUrl: (baseURL || representationURL || '') +
+            (adaptationSet.baseURL || '') + (template.initialization || ''),
           bufferTime,
         };
 
@@ -242,6 +249,10 @@ export default class DashSourceNode extends CompoundNode {
           stream.metadataCallback = this._dispatchMetadataEvent.bind(this);
           this._allStreams.push(stream);
         } else if (adaptationSet.mimeType.indexOf('audio') > -1) {
+          // Add channel count to the definition for audio streams.
+          definition.channelCount = adaptationSet.value === 0 || adaptationSet.value ?
+            adaptationSet.value : adaptationSet.audioChannelConfiguration.value;
+
           // If type is audio then create an audio stream. If there is an
           // initialization chunk then create a headerless stream.
           const stream = template.initialization ?

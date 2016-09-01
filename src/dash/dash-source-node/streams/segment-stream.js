@@ -23,15 +23,29 @@ export default class SegmentStream {
 
     // Clone required information form the provided definition.
     this._stream = {};
-    this._stream.id = definition.id;
+    this._stream.periodId = definition.periodId;
+    this._stream.adaptationSetId = definition.adaptationSetId;
+    this._stream.representationId = definition.representationId;
     this._stream.start = definition.start;
     this._stream.duration = definition.duration;
     this._stream.segmentDuration = definition.segmentDuration;
     this._stream.segmentStart = definition.segmentStart;
     this._stream.segmentEnd = definition.segmentStart - 1 +
       Math.ceil(definition.duration / definition.segmentDuration);
+    this._stream.initUrl = definition.initUrl || '';
+    this._stream.initUrl = this._stream.initUrl
+      .replace('$RepresentationID$', this._stream.representationId);
     this._stream.templateUrl = definition.templateUrl;
-    this._stream.initUrl = definition.initUrl;
+    this._stream.templateUrl = this._stream.templateUrl
+      .replace('$RepresentationID$', this._stream.representationId);
+    const templateRegxRes = this._stream.templateUrl
+      .match(/(\$[Nn]umber%*([0-9]*)d*\$)/);
+    if (templateRegxRes) {
+      this._stream.templateUrl = this._stream.templateUrl
+        .replace(templateRegxRes[1], '$Number');
+      this._stream.templateUrlLeadingZeros = templateRegxRes[2] ?
+        parseInt(templateRegxRes[2], 10) : 0;
+    }
 
     // Instantiate a circular buffer for segments .
     this._buffer = {};
@@ -62,8 +76,25 @@ export default class SegmentStream {
    * @return {Promise}
    *         A Promise that resolves when the stream is primed.
    */
-  prime(initial = 0, loop = false,
-    offset = 0, duration = this._stream.duration - offset) {
+  prime(initial = 0, loop = false, offset = 0,
+    duration = this._stream.duration - offset) {
+    this._primePlayRegion(initial, loop, offset, duration);
+    return this._primeBuffer();
+  }
+
+  /**
+   * Primes playback paramters that define the play region. Caclulations
+   * that are buffered for use in scheduling later during priming/playback.
+   * @param  {?number} [initial=0]
+   *         The time into the region playback should start from.
+   * @param  {?boolean} [loop=false]
+   *         True if playback of the region should loop.
+   * @param  {?number} [offset=0]
+   *         The time into the performance the region starts.
+   * @param  {?number} [duration=definition.duration-offset]
+   *         The duration of the region to play.
+   */
+  _primePlayRegion(initial, loop, offset, duration) {
     // Store information describing the playback region.
     this._play.initial = initial;
     this._play.loop = loop;
@@ -80,8 +111,8 @@ export default class SegmentStream {
     const initialOffset = startOffset + this._play.initial;
     const endOffset = startOffset + this._play.duration;
 
-    this._play.startOverlap = Math.abs(startOffset) %
-      this._stream.segmentDuration;
+    this._play.startOverlap = (this._stream.segmentDuration - Math.abs(startOffset) %
+      this._stream.segmentDuration) % this._stream.segmentDuration;
     this._play.initialOverlap = Math.abs(initialOffset) %
       this._stream.segmentDuration;
     this._play.endOverlap = Math.abs(endOffset) %
@@ -96,16 +127,22 @@ export default class SegmentStream {
 
     this._play.segmentsPerLoop = 1 + this._play.endSegment -
       this._play.startSegment;
+  }
 
-    // Initially fill the buffer with segments.
+  /**
+   * Primes the buffer with segment templates and downloads corresponding segments.
+   * @return {Promise}
+   *         A Promise that resolves when buffer is primed.
+   */
+  _primeBuffer() {
     const promises = [];
     for (let i = 0; i < this._buffer.size; i++) {
       const segment = this._getTemplateForNthSegment(i);
       this._buffer.segments.push(segment);
 
       // Only load segments that lay within the streams segment bounds.
-      if (segment.number >= this._stream.segmentStart &&
-        segment.number <= this._stream.segmentEnd) {
+      if (segment.number >= this._stream.segmentStart
+        && (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
         promises.push(this._loader.load(segment.url).then((data) => {
           this._addDataToSegment(data, segment.n);
         }));
@@ -146,7 +183,8 @@ export default class SegmentStream {
     const currentTime = this._getCurrentSyncTime();
 
     if (currentTime >= currentSegmentEnd) {
-      if (!this._play.loop && currentSegment.number >= this._play.endSegment) {
+      if (!this._play.loop && this._play.duration
+        && currentSegment.number >= this._play.endSegment) {
         // Playback has naturally ended.
         this._end();
       } else {
@@ -159,8 +197,8 @@ export default class SegmentStream {
         this._buffer.frontIndex++;
         this._buffer.frontIndex = this._buffer.frontIndex % this._buffer.size;
 
-        if (newSegment.number >= this._stream.segmentStart &&
-          newSegment.number <= this._stream.segmentEnd) {
+        if (newSegment.number >= this._stream.segmentStart
+          && (!this._stream.segmentEnd || newSegment.number <= this._stream.segmentEnd)) {
           this._loader.load(newSegment.url).then((data) => {
             this._addDataToSegment(data, newSegment.n);
           });
@@ -191,14 +229,15 @@ export default class SegmentStream {
   _getTemplateForNthSegment(n) {
     // Calculate the loop position and number of the nth segment.
     const nOffset = n + this._play.initialSegment - this._play.startSegment;
-    const loopNumber = this._play.loop ?
+    const loopNumber = this._play.loop && this._play.segmentsPerLoop ?
       Math.floor(nOffset / this._play.segmentsPerLoop) : 0;
-    const loopPosition = this._play.loop ?
+    const loopPosition = this._play.loop && this._play.segmentsPerLoop ?
       nOffset % this._play.segmentsPerLoop : nOffset;
 
     // Calulate the stream segment number and url.
     const number = this._play.startSegment + loopPosition;
-    const url = this._stream.templateUrl.replace('$Number', number);
+    const url = this._stream.templateUrl.replace('$Number',
+      this._padNumberWithZeros(number, this._stream.templateUrlLeadingZeros));
 
     // Construct the default parameters for when, offset and duration that
     // describe the period covered by the segment (w.r.t. context time:)
@@ -230,6 +269,23 @@ export default class SegmentStream {
 
     // Return the template for the segment.
     return { n, number, url, when, offset, duration };
+  }
+
+  /**
+   * Returns a string representation of number padded with zeros.
+   * @param  {!number} number
+   *         The number to pad.
+   * @param  {!number} zeros
+   *         The number of '0' characters to pad the number.
+   * @return {string}
+   *         The string representation of the zero padded number.
+   */
+  _padNumberWithZeros(number, zeros) {
+    let str = `${number}`;
+    while (str.length < zeros) {
+      str = `0${str}`;
+    }
+    return str;
   }
 
   /**
