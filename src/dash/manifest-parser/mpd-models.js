@@ -15,6 +15,9 @@ const MPD = {
   }, {
     name: 'maxSegmentDuration',
     type: 'period',
+  }, {
+    name: 'availabilityStartTime',
+    type: 'date',
   }],
   nodes: [{
     name: 'programInformation',
@@ -71,7 +74,7 @@ const Period = {
     default: 0,
   }, {
     name: 'start',
-    type: 'integer',
+    type: 'period',
     default: 0,
   }],
   nodes: [{
@@ -87,20 +90,27 @@ const Period = {
   }],
 };
 
-// TODO: Replace value (represents number of audio channels) with an
-// AudioChannelConfiguration id-value pair. See MPD XSD.
+// TODO: Remove value (represents number of audio channels) when
+// AudioChannelConfiguration id-value pair is used across all test assets.
 const AdaptationSet = {
   attributes: [{
     name: 'id',
     type: 'string',
+    default: '',
   }, {
     name: 'mimeType',
     type: 'string',
+    default: '',
   }, {
     name: 'value',
     type: 'integer',
   }],
   nodes: [{
+    name: 'audioChannelConfiguration',
+    node: 'AudioChannelConfiguration',
+    type: 'AudioChannelConfiguration',
+    mapping: 'one',
+  }, {
     name: 'segmentTemplate',
     node: 'SegmentTemplate',
     type: 'SegmentTemplate',
@@ -110,6 +120,19 @@ const AdaptationSet = {
     node: 'Representation',
     type: 'Representation',
     mapping: 'many',
+  }, {
+    name: 'baseURL',
+    node: 'BaseURL',
+    type: 'string',
+    mapping: 'one',
+  }],
+};
+
+const AudioChannelConfiguration = {
+  attributes: [{
+    name: 'value',
+    type: 'integer',
+    default: 0,
   }],
 };
 
@@ -133,6 +156,7 @@ const SegmentTemplate = {
   }, {
     name: 'media',
     type: 'string',
+    default: '',
   }, {
     name: 'initialization',
     type: 'string',
@@ -143,8 +167,8 @@ const SegmentTemplate = {
 const Representation = {
   attributes: [{
     name: 'id',
-    type: 'integer',
-    default: 0,
+    type: 'string',
+    default: '',
   }, {
     name: 'bandwidth',
     type: 'integer',
@@ -156,6 +180,7 @@ export default {
   ProgramInformation,
   Period,
   AdaptationSet,
+  AudioChannelConfiguration,
   SegmentTemplate,
   Representation,
 };

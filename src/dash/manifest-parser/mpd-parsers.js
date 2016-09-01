@@ -8,6 +8,10 @@ function parseInteger(value) {
   return parseInt(value, 10);
 }
 
+function parseDate(value) {
+  return value === null || value === undefined ? null : new Date(value);
+}
+
 function parsePeriod(value) {
   // Period format: ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations)
   // Regex to match and tokenize the period string. Human readable breakdown:
@@ -31,6 +35,8 @@ function parsePeriod(value) {
       parseInt(match[4] || 0, 10) * SECONDS_IN_HOUR +
       parseInt(match[5] || 0, 10) * SECONDS_IN_MINUTE +
       parseFloat(match[6] || 0);
+  } else {
+    seconds = parseInt(value, 10);
   }
 
   return seconds;
@@ -38,5 +44,6 @@ function parsePeriod(value) {
 
 export default {
   integer: parseInteger,
+  date: parseDate,
   period: parsePeriod,
 };
