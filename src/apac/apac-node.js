@@ -206,7 +206,7 @@ export default class ApacNode extends CompoundNode {
       this._autoVolume.gain.value = this._db2lin(autoVolumeGain);
     }
 
-    // Manage compressor threshold and ration according to programme/background loudness.
+    // Manage compressor threshold and ratio according to programme/background loudness.
 
     // Ratio depends on background noise. The scaling and offset with respect to
     // the background loudness have been determined empirically. Take the user's
@@ -220,7 +220,7 @@ export default class ApacNode extends CompoundNode {
     this._compressor.ratio.value = Math.max(requiredRatio, 1);
 
     // Threshold depends on programme and background noise.
-    const threshold = correctedBgLoudness <= this._compressorThresholdActionLevel ?
+    const thresholdWeightingFactor = correctedBgLoudness <= this._compressorThresholdActionLevel ?
       Math.pow(Math.E, -Math.pow(correctedBgLoudness /
         this._compressorThresholdActionLevel - 1, 2) / (2 * 0.7 * 0.7)) :
       2 - Math.pow(Math.E, -Math.pow(correctedBgLoudness /
@@ -228,9 +228,10 @@ export default class ApacNode extends CompoundNode {
 
     const currentRMSValue = Math.max(this._rmsMeter.rms,
       this._db2lin(this._lowSignalThreshold));
+    const currentRMSValueDb = this._lin2dB(currentRMSValue);
     const currentThreshold = this._compressor.threshold.value;
     const requiredThreshold = this._smooth(currentThreshold,
-      currentRMSValue * threshold * this._multiplier, 0.95);
+      currentRMSValueDb * thresholdWeightingFactor * this._multiplier, 0.95);
     // Clamp threshold value at zero or below.
     this._compressor.threshold.value = Math.min(requiredThreshold, 0);
   }
