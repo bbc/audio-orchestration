@@ -71,7 +71,6 @@ const Period = {
   }, {
     name: 'duration',
     type: 'period',
-    default: 0,
   }, {
     name: 'start',
     type: 'period',
