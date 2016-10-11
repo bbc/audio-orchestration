@@ -199,35 +199,34 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
    *         A Promise that resolves when buffer is primed.
    */
   _primeBuffer() {
-    const getInitSegment = this._loader
+    return this._loader
       .load(this._stream.initUrl)
       .then((data) => {
         this._buffer.init = data;
+      })
+      .then(() => {
+        const decodeSegment = this._getTemplateForNthSegment(-1);
+        return decodeSegment.number >= this._stream.segmentStart ?
+          this._loader.load(decodeSegment.url) : null;
+      })
+      .then((data) => {
+        this._buffer.decode = data;
+      })
+      .then(() => {
+        const promises = [];
+        for (let i = 0; i < this._buffer.size; i++) {
+          const segment = this._getTemplateForNthSegment(i);
+          this._buffer.segments.push(segment);
+
+          // Only load segments that lay within the streams segment bounds.
+          if (segment.number >= this._stream.segmentStart &&
+            (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
+            promises.push(this._loader.load(segment.url).then((data) => {
+              this._addDataToSegment(data, segment.n);
+            }));
+          }
+        }
+        return Promise.all(promises);
       });
-
-    const decodeSegment = this._getTemplateForNthSegment(-1);
-    const getDecodeSegment = decodeSegment.number >= this._stream.segmentStart ?
-      this._loader
-        .load(decodeSegment.url)
-        .then((data) => { this._buffer.decode = data; }) :
-      Promise.resolve();
-
-    const promises = [];
-    for (let i = 0; i < this._buffer.size; i++) {
-      const segment = this._getTemplateForNthSegment(i);
-      this._buffer.segments.push(segment);
-
-      // Only load segments that lay within the streams segment bounds.
-      if (segment.number >= this._stream.segmentStart &&
-        (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
-        promises.push(this._loader.load(segment.url).then((data) => {
-          this._addDataToSegment(data, segment.n);
-        }));
-      }
-    }
-
-    return getInitSegment
-      .then(getDecodeSegment)
-      .then(Promise.all(promises));
   }
 }

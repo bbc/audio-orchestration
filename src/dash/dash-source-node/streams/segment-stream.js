@@ -107,6 +107,7 @@ export default class SegmentStream {
 
     // Precalculate useful segment numbers and overlap so that there is no need
     // to repeat calculations in the worker threads that maintain the buffer.
+    // TODO: Should this._stream.start be added rather than subtracted?
     const startOffset = this._play.offset - this._stream.start;
     const initialOffset = startOffset + this._play.initial;
     const endOffset = startOffset + this._play.duration;
