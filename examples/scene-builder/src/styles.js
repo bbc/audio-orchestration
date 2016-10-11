@@ -1,18 +1,12 @@
 export const colours = {
   controlBackground: '#F5F5F5',
   channelColours: [
-    '#FFBBBB',
-    '#BBFFBB',
-    '#BBBBFF',
-    '#FFFFBB',
-    '#BBFFFF',
-    '#FFBBFF',
-    '#FFDDBB',
-    '#DDFFBB',
-    '#DDBBFF',
-    '#FFBBDD',
-    '#BBFFDD',
-    '#BBDDFF',
+    '#22988A',
+    '#212449',
+    '#C7DAE7',
+    '#F4992A',
+    '#264B59',
+    '#1C1C1B',
   ],
 };
 
@@ -31,12 +25,11 @@ export function joinStyles(...args) {
 }
 
 export const styles = {
-  app: {
-    fontFamily: 'sans-serif',
-    fontSize: 11,
-  },
   title: {
     fontSize: 14,
+  },
+  label: {
+    fontSize: 11,
   },
   button: {
     display: 'inline-block',

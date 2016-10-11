@@ -1,18 +1,45 @@
 import bbcat from 'bbcat';
 
+import ircamHrtfs from './hrtfs/ircam_hrtfs';
+import speakers5plus0 from './speakers/5+0_speakers';
+
+// export const channelHandlers = [{
+//   key: 'waaEqualPower',
+//   title: 'WAA Equal Power',
+//   factory: bbcat.renderer.EqualPowerChannelHandler.createFactory(),
+// }, {
+//   key: 'waaHrtf',
+//   title: 'WAA HRTF',
+//   factory: bbcat.renderer.HrtfChannelHandler.createFactory(),
+// }];
+
 export const channelHandlers = [{
-  key: 'waaEqualPower',
-  title: 'WAA Equal Power',
+  title: 'Stereo',
+  desc: 'WAA Equal Power',
+  key: 'WAAEqualPower',
   factory: bbcat.renderer.EqualPowerChannelHandler.createFactory(),
 }, {
-  key: 'waaHrtf',
-  title: 'WAA HRTF',
+  title: 'Binaural',
+  desc: 'WAA Hrtfs',
+  key: 'WAAHrtf',
   factory: bbcat.renderer.HrtfChannelHandler.createFactory(),
+}, {
+  title: 'Binaural',
+  desc: 'IRCAM Hrtfs',
+  key: 'IRCAMHrtf',
+  factory: bbcat.renderer.IrcamFirChannelHandler.createFactory(ircamHrtfs),
+}, {
+  title: 'BVS',
+  desc: '5+0 to WAA Hrtfs',
+  key: 'BVS5+0towWAAHrtf',
+  factory: bbcat.renderer.BvsChannelHandler.createFactory(speakers5plus0,
+    bbcat.renderer.HrtfChannelHandler.createFactory()),
 }];
 
 export default class AudioGraph {
   constructor(channelHandlerFactory) {
     this._context = new AudioContext();
+    bbcat.renderer.HrtfHelper.populateBuffers(ircamHrtfs, this._context);
     this._channelHandlerFactory = channelHandlerFactory ||
       channelHandlers[0].factory;
     this._loader = new bbcat.core.AudioLoader(this._context);

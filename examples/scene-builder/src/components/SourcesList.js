@@ -4,9 +4,9 @@ import { channelHandlers } from '../audio';
 
 const SourceList = (props) => (
   <div style={joinStyles(styles.flexboxColumn, props.style)}>
-    <h3 style={joinStyles(styles.title, styles.flexboxItemFirst)}>
+    <h1 style={joinStyles(styles.title, styles.flexboxItemFirst)}>
       {props.title}
-    </h3>
+    </h1>
 
     <div
       style={joinStyles(styles.flexbox, styles.flexboxColumnItem)}
@@ -24,7 +24,7 @@ const SourceList = (props) => (
       >
         {channelHandlers.map(handler =>
           <option key= {handler.key} value={handler.key}>
-            {handler.title}
+            {handler.title} ({handler.desc})
           </option>)}
       </select>
       <button

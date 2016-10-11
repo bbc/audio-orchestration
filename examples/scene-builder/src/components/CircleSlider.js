@@ -120,8 +120,8 @@ class CircleSlider extends React.Component {
           height={this.props.size}
           onMouseDown={this.handleMouseDownBound}
         />
-        <label>{this.props.label}</label>
-        <label>{Math.round(this.props.value)}</label>
+        <label style={styles.label}>{this.props.label}</label>
+        <label style={styles.label}>{Math.round(this.props.value)}</label>
       </div>
     );
   }

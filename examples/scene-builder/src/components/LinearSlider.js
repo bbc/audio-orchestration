@@ -107,8 +107,8 @@ class LinearSlider extends React.Component {
           height={this.props.height}
           onMouseDown={this.handleMouseDownBound}
         />
-        <label>{this.props.label}</label>
-        <label>{value}</label>
+        <label style={styles.label}>{this.props.label}</label>
+        <label style={styles.label}>{value}</label>
       </div>
     );
   }
