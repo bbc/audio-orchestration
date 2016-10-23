@@ -33,7 +33,7 @@ audioLoader.load([
   // Use the decoded audio (decodedAudioArray[0], decodedAudioArray[1])
 }).catch((error) => {
   console.log(error);
-});;
+});
 ```
 
 Stream object-based DASH audio and render to a stereo speaker pair:
@@ -122,4 +122,4 @@ The library can be packaged with `npm run webpack`. The library is also packaged
 
 ## Examples
 
-Examples can be found in the `./examples` directory. Instructions for installing and running examples can be found in their respective READMEs.
+Examples can be found in the `./examples` directory. Instructions for installing, running and using the examples can be found in the subdirectory READMEs.
