@@ -180,7 +180,7 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     const segment = this._buffer.segments.find((s) => s.n === n);
 
     if (segment) {
-      segment.data = data;
+      segment.data = this._removeTimestamps(data);
 
       const prevSegment = this._buffer.segments.find((s) => s.n === n - 1);
       const nextSegment = this._buffer.segments.find((s) => s.n === n + 1);
@@ -190,6 +190,22 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     }
 
     return segment;
+  }
+
+  /**
+   * Overwrites the timestamp data in a raw aac dash segment. This prevents chrome crashine.
+   * @param  {!Object} data
+   *         The data to modify.   
+   * @return {Object}
+   *         The modified data
+   */
+  _removeTimestamps(data){
+    var moddata = new Uint8Array(data);
+    moddata[60] = 66;
+    moddata[61] = 72;
+    moddata[62] = 75;
+    moddata[63] = 75;
+    return moddata;
   }
 
   /**
