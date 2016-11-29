@@ -1,7 +1,7 @@
 import CoordinateHelper from '../coordinate-helper';
 import ChannelHandler from '../channel-handler';
 import Vbap from './vbap';
-import { Vector3 } from 'three';
+// import { Vector3 } from 'three';
 
 /**
  * A class to render a single audio channel, synchronised to an audio context.
@@ -59,7 +59,11 @@ export default class VbapChannelHandler extends ChannelHandler {
    *         The time at which to set the gain.
    */
   setPosition(position, time) {
-    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
+    const {
+      x,
+      y,
+      z,
+    } = CoordinateHelper.convertToADMCartesian(position);
     this._nextPosition.set(x, y, z);
     this._nextPositionTime = time;
 
@@ -80,12 +84,13 @@ export default class VbapChannelHandler extends ChannelHandler {
 
     // Update the position parameter at the desired time
     // (acutal update handled with gain node automation above).
-    const nextPosition = {
-      polar: false,
-      x: x,
-      y: y,
-      z: z,
-    };
+    // const nextPosition = {
+    //   polar: false,
+    //   x: x,
+    //   y: y,
+    //   z: z,
+    // };
+    const nextPosition = { x, y, z };
     const setPositionFunction = this._createPositionFunction(nextPosition);
     const timeDiff = (time - this._context.currentTime) * 1000;
     if (timeDiff > 0) {
@@ -104,8 +109,14 @@ export default class VbapChannelHandler extends ChannelHandler {
    *         A paramater-less function that can be called to set the position.
    */
   _createPositionFunction(position) {
-    const { x, y, z } = CoordinateHelper.convertToADMCartesian(position);
-    return () => { this._position.set(x, y, z); };
+    const {
+      x,
+      y,
+      z,
+    } = CoordinateHelper.convertToADMCartesian(position);
+    return () => {
+      this._position.set(x, y, z);
+    };
   }
 
   /**
@@ -119,6 +130,8 @@ export default class VbapChannelHandler extends ChannelHandler {
    *         parameter that returns a constructed instance of this class.
    */
   static createFactory(speakers) {
-    return (context) => new this(context, { speakers });
+    return (context) => new this(context, {
+      speakers,
+    });
   }
 }

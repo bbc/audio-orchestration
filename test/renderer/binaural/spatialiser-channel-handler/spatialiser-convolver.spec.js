@@ -100,9 +100,9 @@ describe('SpatialiserConvolver', () => {
     context.startRendering();
   });
 
-  xit('should apply delay correctly', () => {
-    // TODO: Add a test to check that the delay is applied correctly. Currently
-    // the delay is achieved by using a ScriptProcessorNode. This does not
-    // currently function using an OfflineAudioContext.
-  });
+  // xit('should apply delay correctly', () => {
+  //   // TODO: Add a test to check that the delay is applied correctly. Currently
+  //   // the delay is achieved by using a ScriptProcessorNode. This does not
+  //   // currently function using an OfflineAudioContext.
+  // });
 });

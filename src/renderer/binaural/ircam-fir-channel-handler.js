@@ -1,7 +1,7 @@
 import CoordinateHelper from '../coordinate-helper';
 import ChannelHandler from '../channel-handler';
 import BinauralFIR from 'binauralfir';
-import { Vector3 } from 'three';
+// import { Vector3 } from 'three';
 
 /**
  * A class to render a single audio channel, synchronised to an audio context.

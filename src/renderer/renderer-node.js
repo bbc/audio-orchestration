@@ -74,7 +74,7 @@ export default class RendererNode extends CompoundNode {
     this._channelHandlers = [];
     this._contextSyncTime = 0;
 
-    this._poseQuaternion    = new Quaternion();
+    this._poseQuaternion = new Quaternion();
     this._rotationQuaternion = new Quaternion();
 
     this._initAudioGraph();
@@ -210,19 +210,22 @@ export default class RendererNode extends CompoundNode {
       Array.prototype.splice.apply(this._metadataQueue, args);
     }
   }
-  
+
   /**
    * Sets the listener transform.
    * @param  {!Float32Array} poseQuaternion
    *         Pose quaternion as a Float32Array[4] (x,y,z,w).
    */
   setTransform(poseQuaternion) {
-    this._poseQuaternion.set(poseQuaternion[0], poseQuaternion[1], poseQuaternion[2], poseQuaternion[3]);
-    this._poseQuaternion.normalize(); // normalize to ensure rotation (especially important due to single to double conversion)
-    
+    this._poseQuaternion.set(poseQuaternion[0],
+                             poseQuaternion[1],
+                             poseQuaternion[2],
+                             poseQuaternion[3]);
+    // normalize to ensure rotation (especially important due to single to double conversion)
+    this._poseQuaternion.normalize();
     // set listener orientation in context
     const look = new Vector3(0, 1, 0);
-    const up   = new Vector3(0, 0, 1);
+    const up = new Vector3(0, 0, 1);
     look.applyQuaternion(this._poseQuaternion);
     up.applyQuaternion(this._poseQuaternion);
     this.context.listener.setOrientation(look.x, look.y, look.z, up.x, up.y, up.z);

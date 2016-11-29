@@ -89,8 +89,8 @@ export default class ChannelHandler {
    *       An object defining the rendered position in 3D Cartesian space.
    */
   get transformedPosition() {
-    const posT = new Vector3(this._position.x, 
-      this._position.y, 
+    const posT = new Vector3(this._position.x,
+      this._position.y,
       this._position.z).applyQuaternion(this._transform);
     return posT;
   }
@@ -189,7 +189,7 @@ export default class ChannelHandler {
     const nextPositionTime = this._nextPositionTime;
 
     this.setPosition(currentPosition, this._context.currentTime);
-    
+
     if (doNextPos) {
       this.setPosition(nextPosition, nextPositionTime);
     }

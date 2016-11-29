@@ -140,9 +140,9 @@ describe('RendererNode', () => {
     const rendererNode = new RendererNode(context, 2, channelHandlerFactory);
     const q = new Float32Array([1, 0, 0, 0]);
     rendererNode.setTransform(q);
-    expect(rendererNode.transform.x).toBeCloseTo(q[0],5);
-    expect(rendererNode.transform.y).toBeCloseTo(q[1],5);
-    expect(rendererNode.transform.z).toBeCloseTo(q[2],5);
-    expect(rendererNode.transform.w).toBeCloseTo(q[3],5);
+    expect(rendererNode.transform.x).toBeCloseTo(q[0], 5);
+    expect(rendererNode.transform.y).toBeCloseTo(q[1], 5);
+    expect(rendererNode.transform.z).toBeCloseTo(q[2], 5);
+    expect(rendererNode.transform.w).toBeCloseTo(q[3], 5);
   });
 });

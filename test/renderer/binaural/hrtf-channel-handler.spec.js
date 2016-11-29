@@ -111,10 +111,10 @@ describe('HrtfChannelHandler', () => {
 
     const q = new Quaternion(1, 0, 0, 0);
     channelHandler.setTransform(q);
-    expect(channelHandler.transform.x).toBeCloseTo(q.x,5);
-    expect(channelHandler.transform.y).toBeCloseTo(q.y,5);
-    expect(channelHandler.transform.z).toBeCloseTo(q.z,5);
-    expect(channelHandler.transform.w).toBeCloseTo(q.w,5);
+    expect(channelHandler.transform.x).toBeCloseTo(q.x, 5);
+    expect(channelHandler.transform.y).toBeCloseTo(q.y, 5);
+    expect(channelHandler.transform.z).toBeCloseTo(q.z, 5);
+    expect(channelHandler.transform.w).toBeCloseTo(q.w, 5);
   });
 
   it('should not update position with transform', () => {
@@ -132,12 +132,12 @@ describe('HrtfChannelHandler', () => {
     expect(channelHandler.position.y).toEqual(1);
     expect(channelHandler.position.z).toEqual(0);
 
-    const q = new Quaternion().setFromAxisAngle(new Vector3(0,0,1), Math.PI*0.5);
+    const q = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), Math.PI * 0.5);
     channelHandler.setTransform(q);
-    expect(channelHandler.transform.x).toBeCloseTo(q.x,5);
-    expect(channelHandler.transform.y).toBeCloseTo(q.y,5);
-    expect(channelHandler.transform.z).toBeCloseTo(q.z,5);
-    expect(channelHandler.transform.w).toBeCloseTo(q.w,5);
+    expect(channelHandler.transform.x).toBeCloseTo(q.x, 5);
+    expect(channelHandler.transform.y).toBeCloseTo(q.y, 5);
+    expect(channelHandler.transform.z).toBeCloseTo(q.z, 5);
+    expect(channelHandler.transform.w).toBeCloseTo(q.w, 5);
     expect(channelHandler.position.x).toEqual(0);
     expect(channelHandler.position.y).toEqual(1);
     expect(channelHandler.position.z).toEqual(0);
@@ -150,7 +150,7 @@ describe('HrtfChannelHandler', () => {
     // Action clock ticks and then check position has been set and not transformed.
     context.currentTime = 2;
     jasmine.clock().tick(2 * 1000);
-    expect(channelHandler.position.x).toBeCloseTo(-1,5);
+    expect(channelHandler.position.x).toBeCloseTo(-1, 5);
     expect(channelHandler.position.y).toBeCloseTo(0, 5);
     expect(channelHandler.position.z).toBeCloseTo(0, 5);
   });
