@@ -116,7 +116,7 @@ export default class Vbap {
     const normalisedPosition = this._toNormalisedVector(position);
     const speakerGains = this._speakers.map(() => 0);
     let isFound = false;
-    let i = 0;
+    let i = -1;
 
     while (!isFound && i++ < this._triangles.length) {
       const triangle = this._triangles[i];

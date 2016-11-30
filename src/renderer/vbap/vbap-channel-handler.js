@@ -59,14 +59,6 @@ export default class VbapChannelHandler extends ChannelHandler {
    *         The time at which to set the gain.
    */
   setPosition(position, time) {
-    const {
-      x,
-      y,
-      z,
-    } = CoordinateHelper.convertToADMCartesian(position);
-    this._nextPosition.set(x, y, z);
-    this._nextPositionTime = time;
-
     // Apply transform.
     let positionRot = this._applyTransform(position);
     positionRot = CoordinateHelper.convertToADMCartesian(positionRot);
@@ -82,22 +74,9 @@ export default class VbapChannelHandler extends ChannelHandler {
         targetGains[i], time + this._rampDuration);
     }
 
-    // Update the position parameter at the desired time
-    // (acutal update handled with gain node automation above).
-    // const nextPosition = {
-    //   polar: false,
-    //   x: x,
-    //   y: y,
-    //   z: z,
-    // };
-    const nextPosition = { x, y, z };
-    const setPositionFunction = this._createPositionFunction(nextPosition);
-    const timeDiff = (time - this._context.currentTime) * 1000;
-    if (timeDiff > 0) {
-      setTimeout(setPositionFunction, timeDiff);
-    } else {
-      setPositionFunction();
-    }
+    // Use the super class to update the position parameter at the desired time.
+    //  (acutal vbap update handled with gain node automation above).
+    super.setPosition(position, time);
   }
 
   /**
