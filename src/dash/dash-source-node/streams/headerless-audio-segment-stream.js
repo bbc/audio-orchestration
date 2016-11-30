@@ -226,7 +226,7 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
           this._loader.load(decodeSegment.url) : null;
       })
       .then((data) => {
-        this._buffer.decode = data;
+        this._buffer.decode = this._removeTimestamps(data);
       })
       .then(() => {
         const promises = [];
