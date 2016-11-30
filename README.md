@@ -8,7 +8,7 @@ Library modules (core, dash, ...) are made available on the `bbcat` base object.
 
 To install with npm:
 ```
-npm install --save "git+ssh://git0.rd.bbc.co.uk/javascript-audio-libraries/bbcat-js.git"
+npm install --save "git+ssh://github.com:bbc/bbcat-js.git"
 ```
 
 To install with the minified library:
