@@ -20,6 +20,10 @@ export const renderTypes = [{
   desc: '5+0 to WAA Hrtfs',
   factory: bbcat.renderer.BvsChannelHandler.createFactory(speakers5plus0,
     bbcat.renderer.HrtfChannelHandler.createFactory()),
+}, {
+  title: 'VBAP',
+  desc: '5+0 VBAP',
+  factory: bbcat.renderer.VbapChannelHandler.createFactory(speakers5plus0),
 }];
 
 export default class DashAudio {
