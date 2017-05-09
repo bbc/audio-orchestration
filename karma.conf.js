@@ -6,6 +6,7 @@ module.exports = function(config) {
       included: true,
       served: true
     }],
+    browserNoActivityTimeout: 30000,
     preprocessors: {
       'src/**/*.js': ['webpack'],
       'test/**/*.js': ['webpack']
