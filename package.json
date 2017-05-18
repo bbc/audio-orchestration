@@ -47,6 +47,7 @@
   "dependencies": {
     "binauralfir": "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages",
     "fractional-delay": "git+https://github.com/Ircam-RnD/fractional-delay.git#gh-pages",
+    "gl-matrix": "^2.3.2",
     "kdt": "^0.1.0",
     "quickhull3d": "^2.0.0",
     "three": "^0.76.1"
