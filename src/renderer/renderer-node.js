@@ -1,5 +1,8 @@
 import CompoundNode from '../core/compound-node';
-import { Vector3, Quaternion } from 'three';
+import {
+  Vector3,
+  Quaternion,
+} from 'three';
 
 /**
  * An AudioNode to perform object-based rendering from audio and metadata
@@ -70,6 +73,8 @@ export default class RendererNode extends CompoundNode {
     this._renderInterval = 20; // Milliseconds.
     this._renderAhead = 150 * 1e6; // Nanoseconds.
 
+    this._metadataAutoEnabled = [];
+
     this._metadataQueue = [];
     this._channelHandlers = [];
     this._contextSyncTime = 0;
@@ -88,8 +93,14 @@ export default class RendererNode extends CompoundNode {
    */
   get channelConfigurations() {
     return this._channelHandlers.map((channel) => {
-      const { position, gain } = channel;
-      return { position, gain };
+      const {
+        position,
+        gain,
+      } = channel;
+      return {
+        position,
+        gain,
+      };
     });
   }
 
@@ -106,6 +117,7 @@ export default class RendererNode extends CompoundNode {
 
     for (let i = 0; i < this._numberOfInputs; i++) {
       const channelHandler = this._channelHandlerFactory(this.context);
+      this._metadataAutoEnabled.push(true);
       this._channelHandlers.push(channelHandler);
       this._inputs.push(channelHandler.input);
       channelHandler.output.connect(gainNode);
@@ -144,12 +156,15 @@ export default class RendererNode extends CompoundNode {
    *         The ADM metadata event to handle.
    */
   _handleMetadataEvent(event) {
-    // If the event channel is valid, handle it.
+      // If the event channel is valid, handle it.
     const channel = event.channel;
-    if (channel < this._channelHandlers.length) {
+    if (channel < this._channelHandlers.length && this._metadataAutoEnabled[channel]) {
       const channelHandler = this._channelHandlers[channel];
       // const { gain, position, diffuseness, dialogue } = event.parameters;
-      const { gain, position } = event.parameters;
+      const {
+          gain,
+          position,
+        } = event.parameters;
       const time = 1e-9 * event.timens + this._contextSyncTime;
 
       if (gain !== null && gain !== undefined) {
@@ -165,6 +180,37 @@ export default class RendererNode extends CompoundNode {
       // if (dialogue !== null && dialogue !== undefined) {
       //   channelHandler.setDialogue(dialogue, time);
       // }
+    }
+  }
+    /**
+     * Applies an array of ADM metadata events immediately.
+     * @param  {!Array<Object>} metadata
+     *         An array of ADM metadata objects.
+     */
+  setInstantMetadataEvent(metadata) {
+    // If the event channel is valid, handle it.
+    if (metadata instanceof Array && metadata.length > 0) {
+      let i = 0;
+      while (i < metadata.length) {
+        const channel = metadata[i].channel;
+        if (channel < this._channelHandlers.length && !this._metadataAutoEnabled[channel]) {
+          const channelHandler = this._channelHandlers[channel];
+          const {
+            gain,
+            position,
+          } = metadata[i].parameters;
+          const time = this._contextSyncTime;
+
+          if (gain !== null && gain !== undefined) {
+            channelHandler.setGain(gain, time);
+          }
+          if (position !== null && position !== undefined) {
+            channelHandler.setPosition(position, time);
+          }
+        }
+
+        i++;
+      }
     }
   }
 
@@ -196,9 +242,9 @@ export default class RendererNode extends CompoundNode {
    *         An array of ADM metadata objects.
    */
   addMetaData(metadata) {
-    // If there is metadata; shuffle in to the queue. Only the block is shuffled
-    // in rather than each individual item of metadata. As such, blocks may be
-    // out of order. Individual items of metadata within those blocks may not.
+      // If there is metadata; shuffle in to the queue. Only the block is shuffled
+      // in rather than each individual item of metadata. As such, blocks may be
+      // out of order. Individual items of metadata within those blocks may not.
     if (metadata instanceof Array && metadata.length > 0) {
       let i = 0;
       while (i < this._metadataQueue.length &&
@@ -210,17 +256,32 @@ export default class RendererNode extends CompoundNode {
       Array.prototype.splice.apply(this._metadataQueue, args);
     }
   }
-
-  /**
-   * Sets the listener transform.
-   * @param  {!Float32Array} poseQuaternion
-   *         Pose quaternion as a Float32Array[4] (x,y,z,w).
-   */
+    /**
+     * Sets channel to respond to incoming metadata events.
+     */
+  setAutoMetadataOn(channel) {
+    if (channel <= this._metadataAutoEnabled.length) {
+      this._metadataAutoEnabled[channel] = true;
+    }
+  }
+    /**
+     * Sets channel to ignore incoming metadata events.
+     */
+  setAutoMetadataOff(channel) {
+    if (channel <= this._metadataAutoEnabled.length) {
+      this._metadataAutoEnabled[channel] = false;
+    }
+  }
+    /**
+     * Sets the listener transform.
+     * @param  {!Float32Array} poseQuaternion
+     *         Pose quaternion as a Float32Array[4] (x,y,z,w).
+     */
   setTransform(poseQuaternion) {
     this._poseQuaternion.set(poseQuaternion[0],
-                             poseQuaternion[1],
-                             poseQuaternion[2],
-                             poseQuaternion[3]);
+      poseQuaternion[1],
+      poseQuaternion[2],
+      poseQuaternion[3]);
     // normalize to ensure rotation (especially important due to single to double conversion)
     this._poseQuaternion.normalize();
     // set listener orientation in context
