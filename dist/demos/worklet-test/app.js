@@ -1,6 +1,7 @@
 var AudioContext = window.AudioContext || window.webkitAudioContext;
 var context = new AudioContext();
 let meter = null;
+let lMeter = null;
 let microphone = null;
 var constraints = {
   audio: true,
@@ -8,12 +9,17 @@ var constraints = {
 };
 
 navigator.mediaDevices.getUserMedia(constraints)
-  .then(function(stream) {    
+  .then(function(stream) {
     microphone = context.createMediaStreamSource(stream);
     meter = new bbcat.meter.RmsMeterWorklet(context);
-    meter.construct().then(() => {
-      microphone.connect(meter.input);
-      meter.connect(context.destination);
+    lMeter = new bbcat.meter.LoudnessMeterWorklet(context);
+    lMeter.construct().then(() => {
+      microphone.connect(lMeter.input);
+      lMeter.connect(context.destination);
+      // lMeter.construct.then(() => {
+      //   microphone.connect(lMeter.input);
+      //   lMeter.connect(context.destination);
+      // });
     });
   })
   .catch(function(err) {
