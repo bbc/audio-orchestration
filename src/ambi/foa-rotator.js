@@ -38,10 +38,9 @@ export default class FOARotator extends CompoundNode {
    * Initialises the required AudioNodes.
    */
   _initAudioGraph() {
-
     // channel split/merge nodes
     this._splitter = this.context.createChannelSplitter(this._numberOfChannels);
-    this._merger   = this.context.createChannelMerger(this._numberOfChannels);
+    this._merger = this.context.createChannelMerger(this._numberOfChannels);
     this._inputs.push(this._splitter);
     this._outputs.push(this._merger);
 
@@ -53,15 +52,15 @@ export default class FOARotator extends CompoundNode {
       this._rotationMatrixGains.push(this.context.createGain());
     }
     this._splitter.connect(this._merger, 0, 0); // pass through w
-    this._splitter.connect(this._rotationMatrixGains[0],1); // a1 to r0
-    this._splitter.connect(this._rotationMatrixGains[1],1); // a1 to r1
-    this._splitter.connect(this._rotationMatrixGains[2],1); // a1 to r2
-    this._splitter.connect(this._rotationMatrixGains[3],2); // a2 to r3
-    this._splitter.connect(this._rotationMatrixGains[4],2); // a2 to r4
-    this._splitter.connect(this._rotationMatrixGains[5],2); // a2 to r5
-    this._splitter.connect(this._rotationMatrixGains[6],3); // a3 to r6
-    this._splitter.connect(this._rotationMatrixGains[7],3); // a3 to r7
-    this._splitter.connect(this._rotationMatrixGains[8],3); // a3 to r8
+    this._splitter.connect(this._rotationMatrixGains[0], 1); // a1 to r0
+    this._splitter.connect(this._rotationMatrixGains[1], 1); // a1 to r1
+    this._splitter.connect(this._rotationMatrixGains[2], 1); // a1 to r2
+    this._splitter.connect(this._rotationMatrixGains[3], 2); // a2 to r3
+    this._splitter.connect(this._rotationMatrixGains[4], 2); // a2 to r4
+    this._splitter.connect(this._rotationMatrixGains[5], 2); // a2 to r5
+    this._splitter.connect(this._rotationMatrixGains[6], 3); // a3 to r6
+    this._splitter.connect(this._rotationMatrixGains[7], 3); // a3 to r7
+    this._splitter.connect(this._rotationMatrixGains[8], 3); // a3 to r8
 
     this._rotationMatrixGains[0].connect(this._merger, 0, 1); // r0 to a1r
     this._rotationMatrixGains[1].connect(this._merger, 0, 2); // r1 to a2r
@@ -102,14 +101,14 @@ export default class FOARotator extends CompoundNode {
     // so we just need to invert the X and Y coefficients
 
     // rely on dezippering in gain node rather than a ramp
-    this._rotationMatrixGains[0].gain.value =-this._rotationMatrix[0];
-    this._rotationMatrixGains[1].gain.value =-this._rotationMatrix[1];
-    this._rotationMatrixGains[2].gain.value =-this._rotationMatrix[2];
+    this._rotationMatrixGains[0].gain.value = -this._rotationMatrix[0];
+    this._rotationMatrixGains[1].gain.value = -this._rotationMatrix[1];
+    this._rotationMatrixGains[2].gain.value = -this._rotationMatrix[2];
     this._rotationMatrixGains[3].gain.value = this._rotationMatrix[3];
     this._rotationMatrixGains[4].gain.value = this._rotationMatrix[4];
     this._rotationMatrixGains[5].gain.value = this._rotationMatrix[5];
-    this._rotationMatrixGains[6].gain.value =-this._rotationMatrix[6];
-    this._rotationMatrixGains[7].gain.value =-this._rotationMatrix[7];
-    this._rotationMatrixGains[8].gain.value =-this._rotationMatrix[8];
+    this._rotationMatrixGains[6].gain.value = -this._rotationMatrix[6];
+    this._rotationMatrixGains[7].gain.value = -this._rotationMatrix[7];
+    this._rotationMatrixGains[8].gain.value = -this._rotationMatrix[8];
   }
-};
+}

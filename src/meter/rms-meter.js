@@ -35,7 +35,7 @@ export default class RmsMeter extends CompoundNode {
 
     // Create script processor and connect to destination as audio process
     // will only fire when work outputs are not left floating.
-    this._scriptProcessor = this.context.createScriptProcessor(4096, 2, 2);
+    this._scriptProcessor = this.context.createScriptProcessor(256, 2, 2);
     this._scriptProcessor.onaudioprocess = this._audioProcess.bind(this);
     this._scriptProcessor.connect(this.context.destination);
     this.inputs.push(this._scriptProcessor);
@@ -73,7 +73,6 @@ export default class RmsMeter extends CompoundNode {
 
     // Divide the sum by the number of samples to give mean, and calculate square root.
     const rootMean = Math.sqrt(sumOfSquares / e.inputBuffer.length);
-
     // Apply an exponential moving average filter to smooth the jumps in the
     // RMS value caused by processing in blocks.
     this._rmsValue = this._smooth(this._rmsValue, rootMean, 0.98);

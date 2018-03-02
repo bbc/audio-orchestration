@@ -11,9 +11,8 @@ import FOABinaural from './foa-binaural';
  * @type   {FOABinaural}
  *         A {@link FOABinaural}.
  */
-const createFOABinaural = (context, filters) => {
-  return new FOABinaural(context, filters);
-};
+const createFOABinaural = (context, filters) => new FOABinaural(context, filters);
+
 
 /**
  * Create a first-order Ambisonics rotator.
@@ -22,9 +21,8 @@ const createFOABinaural = (context, filters) => {
  * @type   {FOARotator}
  *         A {@link FOARotator}.
  */
-const createFOARotator = (context) => {
-  return new FOARotator(context);
-};
+const createFOARotator = (context) => new FOARotator(context);
+
 
 export {
   FOARotator,

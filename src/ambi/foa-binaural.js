@@ -42,17 +42,14 @@ export default class FOABinaural extends CompoundNode {
    * Initialises the graph of audio nodes.
    */
   _initAudioGraph() {
-
     const inGainNode = this.context.createGain();
     this._inputs.push(inGainNode);
     const outGainNode = this.context.createGain();
     this._outputs.push(outGainNode);
     this._rotator = new FOARotator(this.context);
     this._splitter = this.context.createChannelSplitter(this._numberOfChannels);
-
     inGainNode.connect(this._rotator.inputs[0]);
     this._rotator.connect(this._splitter);
-
     this._convolvers = [];
     for (let i = 0; i < this._numberOfChannels; i++) {
       this._convolvers.push(this.context.createConvolver());
@@ -75,4 +72,4 @@ export default class FOABinaural extends CompoundNode {
     mat3.fromQuat(this._rotationMatrix, this._rotationQuaternion);
     this._rotator.setRotationMatrix(this._rotationMatrix);
   }
-};
+}
