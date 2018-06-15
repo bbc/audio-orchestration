@@ -1,3 +1,5 @@
+const nodeExternals = require('webpack-node-externals');
+
 const path = require('path');
 
 module.exports = {
@@ -8,6 +10,7 @@ module.exports = {
     filename: 'bbcat-orchestration.js',
     path: path.resolve(__dirname, 'dist'),
   },
+  externals: nodeExternals(),
   module: {
     rules: [
       {

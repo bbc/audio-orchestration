@@ -4,9 +4,9 @@
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
     "linebreak-style": 0,
-    "import/prefer-default-export": 0,
+    "import/prefer-default-export": 0
   },
   "env": {
-    "browser": true,
+    "browser": true
   }
 }
