@@ -7,23 +7,25 @@ __This is currently a work in progress, and most of the packages below do not ex
 
 ## Components Overview
 
-* [sync-players](src/sync-players/Readme.md):
+* [sync-players](src/sync-players/):
   Controlled audio players with synchronisation based on `bbcat-js` DASH and buffer sources.
-* [cloud-sync-adapter](src/cloud-sync-adapter/Readme.md):
+* [cloud-sync-adapter](src/cloud-sync-adapter/):
   A wrapper for synchronising with the `cloud-sync` service.
-* [dvbcss-sync-adapter](src/dvbcss-sync-adapter/Readme.md):
+* [dvbcss-sync-adapter](src/dvbcss-sync-adapter/):
   A wrapper for synchronising with self-hosted `dvbcss` synchronisation
   services, includes an example server for local development.
-* [mdo-allocation](src/mdo-allocation/Readme.md):
+* [mdo-allocation](src/mdo-allocation/):
   A rule set for allocating individual objects to synchronised devices, based on
   knowledge about available objects and devices.
-* [renderer](src/renderer/Readme.md):
+* [renderer](src/renderer/):
   A renderer for managing playback of multiple audio sources scheduled on a
   synchronised timeline.
 
 ## Setup
 
-[Node.js]() 8 and [yarn]() are recommended for the development environment.
+[Node.js](https://nodejs.org/en/) 8 and [yarn](https://yarnpkg.com/en/) are recommended.
+
+Install all dependencies for the main library:
 
 ```
 yarn install
@@ -48,13 +50,17 @@ The examples and the test suite, may be used to develop the library.
 ### Examples
 
 To develop the library together with an example, first install the example's
-dependencies and link this development version into its `node_modules`.
+dependencies and link this development version into its `node_modules`. The
+examples will try to install their own version of `bbcat-orchestration` from
+GitHub, linking the local version can make changes to the library immediately
+visible in the example.
 
 ```
 # start in this folder, bbcat-orchestration/:
 yarn install
 yarn link
 
+# now install the dependencies for an example:
 cd example/dvbcss-services
 yarn install
 yarn link bbcat-orchestration
