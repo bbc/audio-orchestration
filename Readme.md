@@ -58,10 +58,29 @@ visible in the example.
 yarn install
 yarn link
 
+# do the same for cloud sync:
+cd cloud-sync
+npm install
+yarn link
+cd ..
+
+# use local copy of synckit cloud
+yarn link synckit-cloud
+
 # now install the dependencies for an example:
 cd example/dvbcss-services
 yarn install
 yarn link bbcat-orchestration
+cd ../../
+
+# or a cloud sync example requiring synckit-cloud
+cd example/cloud-sync-client
+yarn install
+yarn link bbcat-orchestration
+yarn link synckit-cloud
+cd ../../
+
+
 ```
 
 Then follow the example's instructions, usually simply run `yarn dev` to start a

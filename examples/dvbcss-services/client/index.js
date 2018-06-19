@@ -1,4 +1,3 @@
-// import clocks from 'dvbcss-clocks';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Players from 'bbcat-orchestration/src/sync-players';
 import SyncAdapter from 'bbcat-orchestration/src/dvbcss-sync-adapter';
@@ -25,7 +24,7 @@ sync.connect(webSocketsBase).then(() => {
   console.error(e);
 });
 
-player.prepare().then(sync.synchronize(timelineClock, timelineType, contentId)).then(() => {
+player.prepare().then(sync.synchronise(timelineClock, timelineType, contentId)).then(() => {
   console.debug('ts connected');
 }).catch((e) => {
   console.error(e);

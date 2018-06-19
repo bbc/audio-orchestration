@@ -16,7 +16,7 @@ import clocks from 'dvbcss-clocks';
  *   console.log('connected');
  * });
  *
- * sync.synchronize(timelineClock, timelineType, contentId).catch((error) => {
+ * sync.synchronise(timelineClock, timelineType, contentId).catch((error) => {
  *   console.error('could not synchronise', error);
  * };
  *
@@ -119,10 +119,10 @@ class DvbcssSyncAdapter extends EventEmitter {
    *
    * @returns {Promise}
    */
-  synchronize(timelineClock, timelineType, contentId) {
+  synchronise(timelineClock, timelineType, contentId) {
     // check we have a base url
     if (this._baseUrl === undefined) {
-      throw new Error('baseUrl must be set, call connect() before synchronize().');
+      throw new Error('baseUrl must be set, call connect() before synchronise().');
     }
 
     const tsSocket = new WebSocket(`${this._baseUrl}/ts`);
