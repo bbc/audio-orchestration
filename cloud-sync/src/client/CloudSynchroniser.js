@@ -64,8 +64,8 @@ var // Prototype inheritance
  * @property {number} returnCode
  */
 
-/** 
- * An error occured during when the client aimed at registrating 
+/**
+ * An error occured during when the client aimed at registrating
  * at the Synchronisation Service.
  * @event CloudSynchroniser#DeviceRegistrationError
  * @type {Object}
@@ -80,7 +80,7 @@ var // Prototype inheritance
  * @property {string} errorMessage
  */
 
-/** 
+/**
  * The connection to the wallclock service has become available.
  * A local copy of the wallclock is available
  * @event CloudSynchroniser#WallClockAvailable
@@ -95,22 +95,22 @@ var // Prototype inheritance
  * @property {number} returnCode Possible values:
  */
 
-/** 
+/**
  * The Synchronisation Service has become unavailable.
  * @event CloudSynchroniser#SyncServiceUnavailable
  * @type {object}
- * @property {number} returnCode 
+ * @property {number} returnCode
  */
 
-/** 
+/**
  * The Synchronisation Service has requested a timeline update.
  * @event CloudSynchroniser#TimelineRequest
- */ 
+ */
 
-/** 
+/**
  * The Synchronisation Service has requested a content ID update.
  * @event CloudSynchroniser#ContentIDRequest
- */ 
+ */
 
 /**
  * A requested timeline is available to this client.
@@ -120,7 +120,7 @@ var // Prototype inheritance
  * @property {Timeline} timeline
  */
 
-/** 
+/**
  * A timeline is available for synchronisation.
  * @event CloudSynchroniser#SyncTimelinesAvailable
  * @type {Object}
@@ -128,7 +128,7 @@ var // Prototype inheritance
  * @property {Array<Timeline>} timelines
  */
 
-/** 
+/**
  * A timeline has become unavailable.
  * @event CloudSynchroniser#SyncTimelineUnavailable
  * @type {Object}
@@ -136,16 +136,16 @@ var // Prototype inheritance
  * @property {Timeline} timeline
  */
 
-/** 
+/**
  * The synchronisation error exceeded a certain threshold.
  * @event CloudSynchroniser#LowSyncAccuracy
  * @type {Object}
  * @property {number} returnCode
  * @property {number} error
- */ 
+ */
 
-/** 
- * The content ID changed on a monitored device. 
+/**
+ * The content ID changed on a monitored device.
  * @event CloudSynchroniser#ContentIdChangedOnDevice
  * @type {Object}
  * @property {number} returnCode
@@ -154,9 +154,9 @@ var // Prototype inheritance
 
 /**
  * @class CloudSynchroniser
- * 
+ *
  * @classdesc Client library of the cloud Synchronisation Service.
- * 
+ *
  * @constructor
  * @param {string} syncUrl Address of the Synchronisation Service
  * @param {string} sessionId Identifier of the synchronisation session
@@ -165,7 +165,8 @@ var // Prototype inheritance
  * @param {object} options
  * @param {number} [options.syncTimelineElection=CloudSyncKit.SyncTLElection.EARLIEST_FIRST]
  *  Specifies the algorithm to be used by the sync service to elect the synchronisation timeline
- * 
+ * @param {}
+ *
  * @fires CloudSynchroniser#DeviceRegistrationSuccess
  * @fires CloudSynchroniser#DeviceRegistrationError
  * @fires CloudSynchroniser#WallClockAvailable
@@ -179,10 +180,10 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
 
     // Private properties
     PRIVATE.set(this, {
-        
+
         // Timelines provided by this devices
         ownTimelines: new TimelineArray(),
-        
+
         // Timeline shadows, i.e. copies of timelines of other devices in this session
         timelineShadows: new TimelineArray(),
 
@@ -217,7 +218,7 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
         // ??? (currently not used)
         availableTimelines: null,
 
-        // Instance of 
+        // Instance of
         messenger: null,
 
         // Send setup messages to this topic
@@ -240,20 +241,23 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
         syncTimelineElection: opt.syncTimelineElection || SYNC_TL_ELECTION.EARLIEST_FIRST,
 
         // Subscribe to this topic to receive session state changes
-        sessionStateTopic: "Sessions/" + sessionId + "/" + "state"
+        sessionStateTopic: "Sessions/" + sessionId + "/" + "state",
+
+        // the system clock
+        sysClock: options.sysClock || new Clocks.DateNowClock(),
     });
 
     setupSyncServiceConnection.call(this).
         catch( onSyncServiceConnectionFailure.bind(this)).
-    
+
     then( joinSession.bind(this)).
         catch( this.emit.bind(this, "DeviceRegistrationFailure")).
-    
+
     then( handleJoinResponse.bind(this)).
         catch( this.emit.bind(this, "DeviceRegistrationFailure")).
-    
+
     then( this.emit.bind(this, "DeviceRegistrationSuccess")).
-    
+
     then( performWallclockSync.bind(this));
 };
 
@@ -265,7 +269,7 @@ inherits(CloudSynchroniser, events);
 // ************************************
 
 function setupSyncServiceConnection () {
-    
+
     var priv, adapterOptions;
 
     priv = PRIVATE.get(this);
@@ -276,11 +280,11 @@ function setupSyncServiceConnection () {
 
     priv.adapter = new MessagingAdapter(priv.syncUrl.hostname, priv.syncUrl.port, priv.deviceId, adapterOptions);
     priv.adapter.on("connectionlost", onSyncServiceConnectionLost.bind(this));
-    
+
     priv.messenger = new Messenger(priv.adapter);
     priv.messenger.on("message", onMessageReceived.bind(this));
     priv.messenger.on("request", onRequestReceived.bind(this));
-    
+
     return new Promise(function (resolve, reject) {
         priv.adapter.on("connectionestablished", resolve);
         priv.adapter.on("connectionfailure", reject);
@@ -333,7 +337,7 @@ function onSyncServiceConnectionFailure (e) {
 }
 
 function joinSession () {
-    
+
     var priv, self;
 
     self = this;
@@ -363,7 +367,7 @@ function handleJoinResponse (res) {
             });
             return;
         }
-    
+
         if (typeof res.sessionSyncControllerUrl !== "string" || res.sessionSyncControllerUrl.length < ("ws://").length) {
             reject({
                 errorCode: 4,
@@ -389,14 +393,14 @@ function handleJoinResponse (res) {
 }
 
 function performWallclockSync () {
-    
+
     var priv;
     priv = PRIVATE.get(this);
-    
-    priv.wallclock = new Clocks.CorrelatedClock(new Clocks.DateNowClock());
+
+    priv.wallclock = new Clocks.CorrelatedClock(priv.sysClock);
     priv.wallclock.on("available", this.emit.bind(this, "WallClockAvailable"));
     priv.wallclock.on("unavailable", this.emit.bind(this, "WallClockUnAvailable"));
-    
+
     priv.wallclockSynchroniser = new WallclockSynchroniser(
         priv.wcUrl.protocol + "//" + priv.wcUrl.hostname,
         priv.wcUrl.port,
@@ -421,11 +425,11 @@ function handleResponse (response, resolve, reject) {
 // ************************************
 
 Object.defineProperties(CloudSynchroniser.prototype, {
-    
+
     /**
      * [Clock]{@link https://doclets.io/bbc/dvbcss-clocks/master#dl-CorrelatedClock}
      * object representing the wallclock. The wallclock is available after the
-     * [WallClockAvailable]{@link CloudSynchroniser#WallClockAvailable} event has been fired. Before that, 
+     * [WallClockAvailable]{@link CloudSynchroniser#WallClockAvailable} event has been fired. Before that,
      * the value of wallclock is NULL.
      * @var {CorrelatedClock} wallclock
      * @memberof CloudSynchroniser
@@ -489,9 +493,9 @@ Object.defineProperties(CloudSynchroniser.prototype, {
  * @fires CloudSynchroniser#SyncServiceUnavailable
  */
 CloudSynchroniser.prototype.destroy = function () {
-    
+
     var priv = PRIVATE.get(this);
-    
+
     priv.wallclockSynchroniser.stop();
     // TODO: Check: emits: WallClockUnAvailable
 
@@ -521,9 +525,9 @@ function handleDeviceResponse (resolve, reject, response) {
         var res = r.devices;
         res = res.filter(function (id) {
 			if (id !== ownId) { return true; }
-			return false 
+			return false
 		});
-        resolve(res); 
+        resolve(res);
     }, reject);
 }
 
@@ -568,12 +572,12 @@ CloudSynchroniser.prototype.getContentId = function () {
  * @param {string} contentId
  */
 CloudSynchroniser.prototype.setContentId = function (contentId) {
-    
+
     var priv, message;
-    
+
     priv = PRIVATE.get(this);
     priv.contentId = contentId;
-    
+
     message = MessageFactory.create(
         "ContentIdChange",
         priv.sessionId,
@@ -588,7 +592,7 @@ CloudSynchroniser.prototype.setContentId = function (contentId) {
 }
 
 /**
- * Registers a timeline with the Synchronisation Service. The timeline is 
+ * Registers a timeline with the Synchronisation Service. The timeline is
  * represented by a media object that exposes a known API to inspect the
  * media playback and read the current timeline position and speed.
  * @param {object} mediaObject
@@ -596,12 +600,12 @@ CloudSynchroniser.prototype.setContentId = function (contentId) {
  * @param {string} contentId
  * @return {Promise<number>} returnCode
  */
-CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineType, contentId, otherParams) {  
+CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineType, contentId, otherParams) {
     throw "Not implemented";
 };
 
 /**
- * Registers a timeline with the Synchronisation Service. The timeline is 
+ * Registers a timeline with the Synchronisation Service. The timeline is
  * represented by a [Clock]{@link https://doclets.io/bbc/dvbcss-clocks/master#dl-ClockBase} object.
  * @param {Clock} clock
  * @param {string} timelineType
@@ -612,13 +616,13 @@ CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineT
  * @return {Promise<number>} returnCode
  */
 CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, contentId, options) {
-    
+
     var priv, self, timelineId, opts;
-    
+
     priv = PRIVATE.get(this);
 
     opts = options || {};
-    
+
     timelineId = new TimelineId(priv.contextId, priv.deviceId, contentId).toUrnString();
     timeline = new Timeline(timelineId);
     timeline.timelineType = timelineType;
@@ -637,9 +641,9 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
 
     // Add token bucket for rate limiting of timeline updates sent to sync service
     timeline.tokenBucket = new TokenBucket(priv.rateLimit.numUpdates, priv.rateLimit.interval);
-    
+
     priv.ownTimelines.add(timeline);
-    
+
     self = this;
     console.log("Wallclocktime: ", priv.wallclock.now(), " clocktime:" , clock.now());
 
@@ -673,7 +677,7 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
             timeline.frequency,
             timeline.updateChannel,
             timeline.useForSessionSync,
-            timeline.writable            
+            timeline.writable
 
         );
     });
@@ -706,7 +710,7 @@ function handleTimelineUpdateRequest (request) {
             timeline.clock.on("change", function (timeline) {
                 console.log("Timeline clock", timeline.clock.id, "changed");
                 if (
-                    timeline.syncTimeline === null || 
+                    timeline.syncTimeline === null ||
                     Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40
                 ) {
                     sendTimelineUpdate.call(this, timeline);
@@ -718,8 +722,8 @@ function handleTimelineUpdateRequest (request) {
         }
         sendTimelineUpdateRESP.call(this, request);
         sendTimelineUpdate.call(this, timeline);
-    } 
-    
+    }
+
     else {
         // TODO: some kind of error MGMT
         return;
@@ -744,9 +748,9 @@ function handleStopTimelineUpdateRequest () {
 }
 
 function sendTimelineUpdate(timeline) {
-    
+
     var priv, message;
-    
+
     priv = PRIVATE.get(this);
 
     // Rate limit timeline updates sent to sync service
@@ -792,10 +796,10 @@ CloudSynchroniser.prototype.removeTimeline = function (timelineId) {
  */
 CloudSynchroniser.prototype.getAvailableTimelines = function () {
     var priv, self;
-    
+
     priv = PRIVATE.get(this);
     self = this;
-    
+
     return new Promise(function (resolve, reject) {
         var message = sendRequest.call(self, "TimelineREQ", priv.reqTopic, handleTimelineREQResponse.bind(null, resolve, reject), {});
     });
@@ -810,9 +814,9 @@ function handleTimelineREQResponse (resolve, reject, response) {
  */
 CloudSynchroniser.prototype.getAvailableSyncTimelines = function () {
     var request, priv;
-    
+
     priv = PRIVATE.get(this);
-    
+
     request = MessageFactory.create(
         "TimelineREQ",
         priv.sessionId,
@@ -843,7 +847,7 @@ CloudSynchroniser.prototype.getAvailableSyncTimelines = function () {
  */
 CloudSynchroniser.prototype.subscribeTimeline = function (timelineId) {
     var priv, self;
-    
+
     priv = PRIVATE.get(this);
     self = this;
 
@@ -860,20 +864,20 @@ CloudSynchroniser.prototype.subscribeTimeline = function (timelineId) {
 
 function handleTimelineSubscriptionResponse (resolve, reject, timelineId, response) {
     var priv, timeline;
-    
+
     priv = PRIVATE.get(this);
     console.log("Received 'TimelineSubscriptionRESP':", response);
 
     if (response.responseCode === 0) {
-        resolve(0); 
+        resolve(0);
         timeline = getTimelineShadow.call(this, timelineId);
         timeline.updateChannel = response.providerChannel;
         priv.messenger.listen(timeline.updateChannel);
-        
+
         if (response.presentationTimestamp !== null) {
             updateTimelineShadow.call(this, timelineId, response.presentationTimestamp);
         }
-        
+
     } else {
         // TODO: error MGMT
         console.error("enableTimelineSync:", response);
@@ -899,10 +903,10 @@ function getTimelineShadow (timelineId) {
         timeline.clock.setAvailabilityFlag(false);
         timeline.clock.on("available", this.emit.bind(this, "TimelineAvailable", timelineId));
         console.log("Set 'available' listener on clock", timeline.clock.id);
-        
+
         priv.timelineShadows.add(timeline);
     }
-    
+
     return timeline;
 }
 
@@ -957,20 +961,20 @@ function pairTimeline (timeline, syncTimelines) {
  * Synchronises a given clock to a given timeline.
  * @param {Clock} clock Slave clock
  * @param {TimelineId} timelineId Identifier of the master timeline
- * @param {Correlation} [correlation={parentTime:0, childTime:0, errorGrowthRate: 0, initialError: 0}] Correlation between clock and timeline 
+ * @param {Correlation} [correlation={parentTime:0, childTime:0, errorGrowthRate: 0, initialError: 0}] Correlation between clock and timeline
  */
 CloudSynchroniser.prototype.syncClockToThisTimeline = function (clock, timelineId, correlation) {
     var priv, timeline, corr;
-    
+
     priv = PRIVATE.get(this);
     timeline = priv.timelineShadows.getById(timelineId);
     corr = correlation || new Clocks.Correlation({ parentTime:0, childTime:0, errorGrowthRate: 0, initialError: 0 });
-    
+
     clock.setCorrelationAndSpeed(timeline.clock.getCorrelation(), timeline.clock.speed);
     timeline.clock.on("change", function () {
         clock.setCorrelationAndSpeed(timeline.clock.getCorrelation(), timeline.clock.speed);
     });
-    
+
     console.log("Synchronising clock ID:", clock.id, "to timeline ID:", timelineId);
 };
 
@@ -980,7 +984,7 @@ CloudSynchroniser.prototype.getTimelineClockById = function (timelineId) {
     priv = PRIVATE.get(this);
     res = priv.timelineShadows.getById(timelineId) || priv.ownTimelines.getById(timelineId);
     res = res.clock;
-    return res; 
+    return res;
 };
 
 
@@ -988,7 +992,7 @@ CloudSynchroniser.prototype.getTimelineClockById = function (timelineId) {
  * Synchronises a given media object to a given timeline.
  * @param {object} mediaObject The media object to be slave
  * @param {TimelineId} timelineId Identifier of the master timeline
- * @param {Correlation} [correlation={parentTime:0, childTime:0, speed: 1}] Correlation between media object and timeline 
+ * @param {Correlation} [correlation={parentTime:0, childTime:0, speed: 1}] Correlation between media object and timeline
  */
 CloudSynchroniser.prototype.createSyncController = function (mediaObject, timelineId, correlation) {
     // ..
@@ -1004,7 +1008,7 @@ function handlePingRequest (request) {
 }
 
 function sendRequest (type, channel, onresponse, options) {
-    
+
     var args, priv, i, request, opt;
 
     priv = PRIVATE.get(this);
