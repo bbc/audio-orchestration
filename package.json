@@ -31,6 +31,7 @@
     "bbcat": "git+ssh://git@github.com:bbc/bbcat-js.git",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
-    "events": "^3.0.0"
+    "events": "^3.0.0",
+    "synckit-cloud": "./cloud-sync/"
   }
 }

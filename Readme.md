@@ -38,10 +38,8 @@ service. For development, it is recommended to use the `dvbcss-sync-adapter`
 instead, an example standalone server implementation is
 [provided](examples/dvbcss-services/).
 
-A pre-release version of the library can be accessed from the Audio Team project
-drive. Run `./get-cloud-sync.sh` to install it. This may fail to download a
-`.jar` file if run behind a proxy, in this case, run `(cd cloud-sync && npm
-install && npm run prepare)` again on an open network with the proxy disabled.
+A version of the client library with our local patches is included in this
+repository in the [cloud-sync/](cloud-sync/) directory.
 
 ## Development
 

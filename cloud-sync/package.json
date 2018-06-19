@@ -1,0 +1,62 @@
+{
+  "name": "synckit-cloud",
+  "version": "2.0.0",
+  "description": "Library implementing client and server code for cloud synchronisation",
+  "main": "dist/browser/CloudSyncKit.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "grunt build_test",
+    "prepare": "grunt build_lib"
+  },
+  "author": {
+    "name": "Rajiv Ramdhany",
+    "email": "rajiv.ramdhany@bbc.co.uk"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "async": "^2.5.0",
+    "bluebird": "^3.5.1",
+    "child-process-promise": "^2.2.1",
+    "child_process": "^1.0.2",
+    "command-line-args": "^4.0.6",
+    "consul": "^0.29.0",
+    "docker-host-ip": "^1.0.1",
+    "dvbcss-clocks": "0.0.4",
+    "dvbcss-protocols": "^0.0.2",
+    "events": "^1.1.1",
+    "google-protobuf": "^3.5.0",
+    "hiredis": "^0.5.0",
+    "inherits": "^2.0.1",
+    "mdn-polyfills": "^3.6.0",
+    "mqtt": "^2.13.1",
+    "paho-mqtt": "^1.0.3",
+    "promise-retry": "^1.1.1",
+    "redis": "^2.8.0",
+    "redis-connection": "^5.4.0",
+    "redis-smq": "^1.0.17",
+    "redlock": "^3.1.2",
+    "save": "^2.3.2",
+    "url": "^0.11.0",
+    "url-parse": "^1.2.0",
+    "weak-map": "^1.0.5",
+    "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jasmine": "^1.0.3",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-md": "0.0.4",
+    "grunt-plantuml": "^0.2.3",
+    "grunt-ts": "^6.0.0-beta.16",
+    "grunt-typescript": "^0.8.0",
+    "grunt-webpack": "^1.0.14",
+    "jasmine-node": "^1.14.5",
+    "typescript": "^2.4.2",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
