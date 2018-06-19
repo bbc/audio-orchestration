@@ -1,5 +1,3 @@
-import clocks from 'dvbcss-clocks';
-
 /**
  * the tolerated offset between ideal and actual media clock.
  * @type {number}

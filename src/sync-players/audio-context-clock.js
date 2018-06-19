@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import clocks from 'dvbcss-clocks';
+import ClockBase from 'dvbcss-clocks/src/ClockBase';
 
 /**
  * It is a subclass of ClockBase from dvbcss-clocks.
@@ -13,7 +13,7 @@ import clocks from 'dvbcss-clocks';
  * within the event loop iteration.
  *
  */
-export default class AudioContextClock extends clocks.ClockBase {
+export default class AudioContextClock extends ClockBase {
   /**
    * @param {Object} options
    * @param {number} options.tickRate

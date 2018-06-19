@@ -26,9 +26,12 @@ import clocks from 'dvbcss-clocks';
  */
 
 class DvbcssSyncAdapter extends EventEmitter {
-  constructor({ sysClock = new clocks.DateNowClock() }) {
+  constructor({ sysClock = null } = {}) {
     super();
     this._sysClock = sysClock;
+    if (this._sysClock === null) {
+      this._sysClock = new clocks.DateNowClock();
+    }
     this._connected = false;
     this._wcPromise = null;
 

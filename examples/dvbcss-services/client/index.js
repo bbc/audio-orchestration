@@ -1,4 +1,5 @@
-import clocks from 'dvbcss-clocks';
+// import clocks from 'dvbcss-clocks';
+import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Players from 'bbcat-orchestration/src/sync-players';
 import SyncAdapter from 'bbcat-orchestration/src/dvbcss-sync-adapter';
 
@@ -16,7 +17,7 @@ const sync = new SyncAdapter({
   sysClock: new Players.AudioContextClock({}, audioContext),
 });
 const { wallClock } = sync;
-const timelineClock = new clocks.CorrelatedClock(wallClock);
+const timelineClock = new CorrelatedClock(wallClock);
 
 sync.connect(webSocketsBase).then(() => {
   console.debug('wc connected');
@@ -40,11 +41,13 @@ function initButtons() {
     document.getElementById('state').innerText = e.state;
   });
 
-  const updateTimes = () => {
-    document.getElementById('time').innerText = player.currentTime.toFixed(2);
-    document.getElementById('dispersion').innerText = (wallClock.dispersionAtTime(wallClock.now()) * 1000).toFixed(0);
+  const elTime = document.getElementById('time');
+  const elDispersion = document.getElementById('dispersion');
+  function updateTimes() {
+    elTime.innerText = player.currentTime.toFixed(2);
+    elDispersion.innerText = (wallClock.dispersionAtTime(wallClock.now()) * 1000).toFixed(0);
     requestAnimationFrame(updateTimes);
-  };
+  }
   updateTimes();
 
   document.getElementById('btn-prepare').addEventListener('click', (e) => {
