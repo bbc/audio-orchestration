@@ -56,11 +56,11 @@ MqttMessagingAdapter = function (host, port, user, options) {
     lastWill.retain = false;
 
     if (typeof port !== undefined){
-        priv.client = mqtt.connect({ host: host, port: port, keepalive: 10000, clientId: user, will: lastWill });
+        priv.client = mqtt.connect({ host: host, port: port, keepalive: 60, clientId: user, will: lastWill });
     }else
     {
         var url = "wss://" + host;
-        priv.client = mqtt.connect( url,  { keepalive: 10000, clientId: user, will: lastWill });
+        priv.client = mqtt.connect( url,  { keepalive: 60, clientId: user, will: lastWill });
     }
 
    
