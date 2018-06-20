@@ -82,8 +82,9 @@ class SyncController {
     if (v === 0) {
       // need to pause
       this.strategyPaused();
-    } else if (Math.abs(s) < this.toleratedOffset) {
-      // within tolerance, do nothing.
+    } else if (v === this.mediaPlayer.speed && Math.abs(s) < this.toleratedOffset) {
+      // within tolerance and same speed, do nothing
+      // TODO: was AMP check to see if speed needed to be adjusted, if offset was small.
     } else {
       // needs to seek
       this.strategyMfs(s, v);

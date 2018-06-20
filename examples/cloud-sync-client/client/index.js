@@ -16,6 +16,14 @@ const sync = new SyncAdapter({
 });
 const { wallClock } = sync;
 const timelineClock = new CorrelatedClock(wallClock, { speed: 0 });
+timelineClock.on('change', () => {
+  console.log(`timelineClock.change: child ${timelineClock.getCorrelation().childTime.toFixed(0)}, parent ${timelineClock.getCorrelation().parentTime.toFixed(0)}, speed ${timelineClock.getSpeed()}.`);
+});
+
+// TODO: we never actually use this reference, perhaps it should be a function on the player object?
+const controller = new Players.SyncController(timelineClock, player, {
+  bufferingDelay: 0.1,
+});
 
 function connect() {
   const sessionId = document.getElementById('input-session-id').value;
@@ -37,23 +45,17 @@ function connect() {
   }).catch((e) => {
     console.error(e);
   });
-
-  // TODO: we never actually use this reference, perhaps it should be a function on the player object?
-  const controller = new Players.SyncController(timelineClock, player, {
-    bufferingDelay: 0.1,
-  });
 }
 
 // TODO I think the sync controller or player should do this.
 function updateTimeline({
   speed = timelineClock.getSpeed(),
-  childTime = timelineClock.now(),
+  contentTime = timelineClock.now(),
 } = {}) {
   timelineClock.setCorrelationAndSpeed({
     parentTime: timelineClock.getParent().now(),
-    childTime,
+    childTime: contentTime,
   }, speed);
-  console.log(timelineClock.getCorrelation());
 }
 
 function initButtons() {
@@ -79,9 +81,16 @@ function initButtons() {
     updateTimeline({ speed: 1 });
   });
 
-
   document.getElementById('btn-pause').addEventListener('click', (e) => {
     updateTimeline({ speed: 0 });
+  });
+
+  document.getElementById('btn-seek-start').addEventListener('click', (e) => {
+    updateTimeline({ contentTime: 0 });
+  });
+
+  document.getElementById('btn-seek-forward').addEventListener('click', (e) => {
+    updateTimeline({ contentTime: timelineClock.now() + (10 * 1000) });
   });
 }
 
