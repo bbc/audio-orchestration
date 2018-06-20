@@ -711,7 +711,8 @@ function handleTimelineUpdateRequest (request) {
                 console.log("Timeline clock", timeline.clock.id, "changed");
                 if (
                     timeline.syncTimeline === null ||
-                    Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40
+                    Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40 ||
+                    timeline.clock.getEffectiveSpeed() !== timeline.syncTimeline.clock.getEffectiveSpeed()
                 ) {
                     sendTimelineUpdate.call(this, timeline);
                 } else {
