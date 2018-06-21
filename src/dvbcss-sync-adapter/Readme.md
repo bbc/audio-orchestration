@@ -1,1 +1,0 @@
-# dvbcss-sync-adapter

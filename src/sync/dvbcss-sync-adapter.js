@@ -1,6 +1,6 @@
-import EventEmitter from 'events';
 import dvbcss from 'dvbcss-protocols';
 import clocks from 'dvbcss-clocks';
+import SyncAdapter from './sync-adapter';
 
 /**
  * The DvbcssSyncAdapter wraps the dvbcss synchronisation clients in an API
@@ -25,7 +25,7 @@ import clocks from 'dvbcss-clocks';
  *
  */
 
-class DvbcssSyncAdapter extends EventEmitter {
+class DvbcssSyncAdapter extends SyncAdapter {
   constructor({ sysClock = null } = {}) {
     super();
     this._sysClock = sysClock;

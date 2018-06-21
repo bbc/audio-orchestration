@@ -9,11 +9,9 @@ __This is currently a work in progress, and most of the packages below do not ex
 
 * [sync-players](src/sync-players/):
   Controlled audio players with synchronisation based on `bbcat-js` DASH and buffer sources.
-* [cloud-sync-adapter](src/cloud-sync-adapter/):
-  A wrapper for synchronising with the `cloud-sync` service.
-* [dvbcss-sync-adapter](src/dvbcss-sync-adapter/):
-  A wrapper for synchronising with self-hosted `dvbcss` synchronisation
-  services, includes an example server for local development.
+* [sync](src/sync/):
+  Wrapper for communicating with synchronisation and message exchange services. Contains adapters
+  for synchronising with the `cloud-sync` service.
 * [mdo-allocation](src/mdo-allocation/):
   A rule set for allocating individual objects to synchronised devices, based on
   knowledge about available objects and devices.

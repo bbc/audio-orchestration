@@ -1,10 +1,10 @@
-import EventEmitter from 'events';
 import cloudSyncKit from 'synckit-cloud';
 import clocks from 'dvbcss-clocks';
+import SyncAdapter from './sync-adapter';
 
 /**
- * The DvbcssSyncAdapter wraps the dvbcss synchronisation clients in an API
- * compatible with the {@link CloudSyncAdapter} so they can be swapped out.
+ * The CloudSyncAdapter wraps the cloud-sync synchronisation clients in an API
+ * compatible with the {@link DvbcssSyncAdapter} so they can be swapped out.
  *
  * @example
  * import clocks from 'dvbcss-clocks';
@@ -25,7 +25,7 @@ import clocks from 'dvbcss-clocks';
  *
  */
 
-class CloudSyncAdapter extends EventEmitter {
+class CloudSyncAdapter extends SyncAdapter {
   constructor({ sysClock = null } = {}) {
     super();
     this._sysClock = sysClock;
@@ -36,12 +36,12 @@ class CloudSyncAdapter extends EventEmitter {
     this._connectPromise = null;
     this._synchroniser = null;
 
+
     /**
      * Create a wall clock (units milliseconds)
      * @type {CorrelatedClock}
      */
     this._wallClock = new clocks.CorrelatedClock(this._sysClock, { tickRate: 1000 });
-    console.log('wall clock after creation:', this._wallClock.getCorrelation().parentTime, this._wallClock);
   }
 
   /**
@@ -59,7 +59,6 @@ class CloudSyncAdapter extends EventEmitter {
     this._syncUrl = syncUrl;
 
     this._connectPromise = new Promise((resolve, reject) => {
-      console.log(sessionId, deviceId);
       this._synchroniser = cloudSyncKit.getCloudSynchroniser(
         { hostname: syncUrl },
         sessionId,
@@ -71,20 +70,17 @@ class CloudSyncAdapter extends EventEmitter {
         },
       );
 
+      console.log('----- synchroniser -----', this._synchroniser);
+
       this._synchroniser.on('WallClockAvailable', () => {
         this._wallClock.setParent(this._synchroniser.wallclock);
-        console.log('wall clock after connection:', this._wallClock.getCorrelation().parentTime, this._wallClock.getCorrelation().childTime, this._wallClock);
         this.emit('connected');
         resolve(this);
       });
 
       this._synchroniser.on('SyncServiceUnavailable', () => {
-        this.emit('disconnected');
+        this.emit('disconnected', 'CloudSyncAdapter: connect failed.');
         reject();
-      });
-
-      this._synchroniser.on('SyncTimelinesAvailable', (timelines) => {
-        console.log(timelines);
       });
     });
     return this._connectPromise;
@@ -112,12 +108,12 @@ class CloudSyncAdapter extends EventEmitter {
    * @param {string} timelineType
    * @param {string} contentId
    *
-   * @returns {Promise}
+   * @returns {Promise<CorrelatedClock>}
    * @public
    */
-  synchronise(timelineClock, timelineType, contentId) {
+  provideTimelineClock(timelineClock, timelineType, contentId) {
     if (this._connectPromise === null) {
-      throw new Error('Synchroniser not available. call connect() before synchronise().');
+      throw new Error('CloudSyncAdapter: provideTimelineClock: Not connected. Call connect() first.');
     }
     return this._connectPromise.then(() => {
       this._synchroniser.synchronise(timelineClock, timelineType, contentId);
@@ -138,21 +134,20 @@ class CloudSyncAdapter extends EventEmitter {
    * @return {Promise<CorrelatedClock>} resolving when the clock is available.
    * @public
    */
-  synchroniseToTimeline(timelineType, contentId) {
+  requestTimelineClock(timelineType, contentId) {
     if (this._connectPromise === null) {
-      throw new Error('Synchroniser not available. call connect() before synchroniseToTimeline().');
+      throw new Error('CloudSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
     }
 
+    // method to use in find() to test if a timeline object matches the timelineType and contentid.
     const matchTimeline = tl => tl.timelineType === timelineType &&
                                 tl.contentId === contentId;
 
-    return this._connectPromise.then(() => {
-      return this._synchroniser.getAvailableSyncTimelines();
-    }).then((availableTimelines) => {
+    return this._connectPromise.then(() =>
+      this._synchroniser.getAvailableSyncTimelines()).then((timelines) => {
       // first check the currently available timelines.
-      const timeline = availableTimelines.find(matchTimeline);
-      console.log(`cloud-sync-adapter: getAvailableSyncTimelines: selected timeline:`, timeline);
-      return timeline !== undefined ? timeline.timelineId : null;
+      const timeline = timelines.find(matchTimeline);
+      return (timeline !== undefined) ? timeline.timelineId : null;
     }).then((timelineId) => {
       // if it is already available, resolve to its id immediately.
       if (timelineId !== null) {
@@ -161,14 +156,13 @@ class CloudSyncAdapter extends EventEmitter {
 
       // Otherwise listen for new timelines being registered, and return a
       // promise resolving when it is found.
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         this._synchroniser.on('SyncTimelinesAvailable', (timelines) => {
           const timeline = timelines.find(matchTimeline);
 
-          // if a matching timeline is found, resolve to its id. Otherwise, we
-          // may have to wait for the next event of this kind to find it.
+          // if a matching timeline is found, resolve to its id and stop listening.
+          // Otherwise, we may have to wait for the next event of this kind to find it.
           if (timeline !== undefined) {
-            console.log(`cloud-sync-adapter: SyncTimelinesAvailable: selected timeline:`, timeline);
             resolve(timeline.timelineId);
           }
         });
@@ -177,21 +171,33 @@ class CloudSyncAdapter extends EventEmitter {
       // Then subscribe to the specific timeline id matching the content and type.
       // return a promise resolving to the timeline clock when it becomes available.
       this._synchroniser.subscribeTimeline(timelineId).then((responseCode) => {
-        console.log('subscribed to timeline.', timelineId);
         if (responseCode !== 0) {
-          throw new Error('could not subscribe to timeline');
+          throw new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`);
         }
 
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
           this._synchroniser.on('TimelineAvailable', (id) => {
             if (id === timelineId) {
-              console.log('cloud-sync-adapter: subscribedTimeline: TimelineAvailable:', id);
               resolve(this._synchroniser.getTimelineClockById(id));
             }
           });
         });
-      }));
+      }))
+      .catch((e) => {
+        throw new Error(`cloud-sync-adapter: requestTimelineClock: ${e.message}`);
+      });
+  }
+
+  /**
+   * Send a message to this topic to all devices in the same session.
+   *
+   * @param {string} topic
+   * @param {object} message
+   */
+  sendMessage(topic, message) {
+    return Promise.reject('not implemented');
   }
 }
 
 export default CloudSyncAdapter;
+

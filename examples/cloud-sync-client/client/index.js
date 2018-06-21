@@ -1,6 +1,7 @@
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Players from 'bbcat-orchestration/src/sync-players';
-import SyncAdapter from 'bbcat-orchestration/src/cloud-sync-adapter';
+import Sync from 'bbcat-orchestration/src/sync/sync';
+import CloudSyncAdapter from 'bbcat-orchestration/src/sync/cloud-sync-adapter';
 
 const url = 'audio/vostok-intro.m4a';
 const timelineType = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
@@ -11,9 +12,9 @@ const audioContext = new AudioContext();
 const player = new Players.BufferPlayer(audioContext, url);
 player.output.connect(audioContext.destination);
 
-const sync = new SyncAdapter({
+const sync = new Sync(new CloudSyncAdapter({
   sysClock: new Players.AudioContextClock({}, audioContext),
-});
+}));
 const { wallClock } = sync;
 
 // the master clock can be updated to send updates, but will also be updated by the sync service.
@@ -23,10 +24,7 @@ function connect(isMaster = false) {
   const sessionId = document.getElementById('input-session-id').value;
   const deviceId = document.getElementById('input-device-id').value;
 
-  sync.connect(cloudSyncEndpoint, {
-    sessionId,
-    deviceId,
-  }).then(() => {
+  sync.connect(cloudSyncEndpoint, sessionId, deviceId).then(() => {
     console.debug('cloud-sync connected');
   }).catch((e) => {
     console.error(e);
@@ -40,11 +38,11 @@ function connect(isMaster = false) {
     // master device: publish updates from the timeline clock
 
     if (isMaster) {
-      return sync.synchronise(masterClock, timelineType, contentId);
+      return sync.provideTimelineClock(masterClock, timelineType, contentId);
     }
 
     // slave device: receive updates only.
-    return sync.synchroniseToTimeline(timelineType, contentId);
+    return sync.requestTimelineClock(timelineType, contentId);
   }).then((timelineClock) => {
     // TODO: we never actually use this reference, perhaps it should be a function on the player object?
     const controller = new Players.SyncController(timelineClock, player, {
