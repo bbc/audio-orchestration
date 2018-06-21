@@ -82,6 +82,25 @@ class CloudSyncAdapter extends SyncAdapter {
         this.emit('disconnected', 'CloudSyncAdapter: connect failed.');
         reject();
       });
+
+      this._synchroniser.on('ApplicationBroadcast', (e) => {
+        const { deviceId, topic, content } = e;
+        this.emit('broadcast', {
+          deviceId,
+          topic,
+          content,
+        });
+      });
+
+      this._synchroniser.on('DeviceStatus', (e) => {
+        const { deviceId, status } = e;
+        this.emit('presence', {
+          deviceId,
+          status,
+        });
+      });
+
+
     });
     return this._connectPromise;
   }
@@ -195,7 +214,8 @@ class CloudSyncAdapter extends SyncAdapter {
    * @param {object} message
    */
   sendMessage(topic, message) {
-    return Promise.reject('not implemented');
+    this._synchroniser.sendApplicationBroadcast(topic, message);
+    return Promise.resolve();
   }
 }
 

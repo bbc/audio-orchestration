@@ -15,10 +15,10 @@ import EventEmitter from 'events';
  */
 
 /**
- * @typedef {object} Sync#message
+ * @typedef {object} Sync#broadcast
  * @property {string} topic
  * @property {string} deviceId
- * @property {object} message
+ * @property {object} content
  */
 
 
@@ -47,6 +47,7 @@ class Sync extends EventEmitter {
     this.adapter.on('presence', this.onPresence.bind(this));
     this.adapter.on('connected', this.onConnected.bind(this));
     this.adapter.on('disconnected', this.onDisconnected.bind(this));
+    this.adapter.on('broadcast', this.onBroadcast.bind(this));
   }
 
   /**
@@ -155,6 +156,13 @@ class Sync extends EventEmitter {
    */
   onDisconnected(e) {
     this.emit('disconnected', e);
+  }
+
+  /**
+   * @private
+   */
+  onBroadcast(e) {
+    this.emit('broadcast', e);
   }
 }
 

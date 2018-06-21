@@ -34,6 +34,14 @@ function connect(isMaster = false) {
     console.error('sync service disconnected');
   });
 
+  sync.on('broadcast', (message) => {
+    console.log('=== Broadcast received ===', message.deviceId, message.topic, message.content);
+  });
+
+  sync.on('presence', (message) => {
+    console.log('=== Presence ===', message.deviceId, message.status);
+  });
+
   player.prepare().then(() => {
     // master device: publish updates from the timeline clock
 
