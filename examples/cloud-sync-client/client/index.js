@@ -15,17 +15,11 @@ const sync = new SyncAdapter({
   sysClock: new Players.AudioContextClock({}, audioContext),
 });
 const { wallClock } = sync;
-const timelineClock = new CorrelatedClock(wallClock, { speed: 0 });
-timelineClock.on('change', () => {
-  console.log(`timelineClock.change: child ${timelineClock.getCorrelation().childTime.toFixed(0)}, parent ${timelineClock.getCorrelation().parentTime.toFixed(0)}, speed ${timelineClock.getSpeed()}.`);
-});
 
-// TODO: we never actually use this reference, perhaps it should be a function on the player object?
-const controller = new Players.SyncController(timelineClock, player, {
-  bufferingDelay: 0.1,
-});
+// the master clock can be updated to send updates, but will also be updated by the sync service.
+const masterClock = new CorrelatedClock(wallClock, { speed: 0 });
 
-function connect() {
+function connect(isMaster = false) {
   const sessionId = document.getElementById('input-session-id').value;
   const deviceId = document.getElementById('input-device-id').value;
 
@@ -38,22 +32,42 @@ function connect() {
     console.error(e);
   });
 
+  sync.on('disconnected', () => {
+    console.error('sync service disconnected');
+  });
+
   player.prepare().then(() => {
-    return sync.synchronise(timelineClock, timelineType, contentId);
-  }).then(() => {
-    console.debug('timeline clock synchronised');
+    // master device: publish updates from the timeline clock
+
+    if (isMaster) {
+      return sync.synchronise(masterClock, timelineType, contentId);
+    }
+
+    // slave device: receive updates only.
+    return sync.synchroniseToTimeline(timelineType, contentId);
+  }).then((timelineClock) => {
+    // TODO: we never actually use this reference, perhaps it should be a function on the player object?
+    const controller = new Players.SyncController(timelineClock, player, {
+      bufferingDelay: 0.1,
+    });
+
+    // log changes to the timeline clock
+    timelineClock.on('change', () => {
+      console.log(`timelineClock.change: child ${timelineClock.getCorrelation().childTime.toFixed(0)}, ` +
+                  `parent ${timelineClock.getCorrelation().parentTime.toFixed(0)}, ` +
+                  `effective speed ${timelineClock.getEffectiveSpeed()}.`);
+    });
   }).catch((e) => {
     console.error(e);
   });
 }
 
-// TODO I think the sync controller or player should do this.
 function updateTimeline({
-  speed = timelineClock.getSpeed(),
-  contentTime = timelineClock.now(),
+  speed = masterClock.getSpeed(),
+  contentTime = masterClock.now(),
 } = {}) {
-  timelineClock.setCorrelationAndSpeed({
-    parentTime: timelineClock.getParent().now(),
+  masterClock.setCorrelationAndSpeed({
+    parentTime: masterClock.getParent().now(),
     childTime: contentTime,
   }, speed);
 }
@@ -65,7 +79,12 @@ function initButtons() {
 
   document.getElementById('btn-connect').addEventListener('click', (e) => {
     e.target.disabled = true;
-    connect();
+    connect(true);
+  });
+
+  document.getElementById('btn-connect-slave').addEventListener('click', (e) => {
+    e.target.disabled = true;
+    connect(false);
   });
 
   const elTime = document.getElementById('time');
@@ -90,7 +109,7 @@ function initButtons() {
   });
 
   document.getElementById('btn-seek-forward').addEventListener('click', (e) => {
-    updateTimeline({ contentTime: timelineClock.now() + (10 * 1000) });
+    updateTimeline({ contentTime: masterClock.now() + (10 * 1000) });
   });
 }
 

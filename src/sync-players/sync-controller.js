@@ -1,4 +1,9 @@
 /**
+ * The SyncController slaves a {@link Player} to a clock. It will play, pause, and seek
+ * the media to keep it in sync with the given {@link CorrelatedClock}.
+ */
+
+/**
  * the tolerated offset between ideal and actual media clock.
  * @type {number}
  */
@@ -10,11 +15,6 @@ const DEFAULT_S_L_AUDIO = 0.06; // 60ms, was 30ms
  */
 const DEFAULT_T_BUFDELAY_AUDIO = 1.0;
 
-/**
- * The AudioSyncController takes a timeline clock and a media player, and
- * controls the media player to keep its playback state in sync with the timeline
- * clock.
- */
 class SyncController {
   /**
    * @param {CorrelatedClock} idealTimelineClock
