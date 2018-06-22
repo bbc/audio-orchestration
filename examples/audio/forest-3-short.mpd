@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD type="static" xmlns="urn:mpeg:dash:schema:mpd:2011" profiles="urn:dvb:dash:profile:dvb-dash:2014,urn:dvb:dash:profile:dvb-dash:isoff-ext-live:2014" minBufferTime="PT8S" mediaPresentationDuration="PT1M0S" maxSegmentDuration="PT8S">
+  <BaseURL>/audio/</BaseURL>
+	<Period duration="PT1M0S" start="PT0S">
+		<AdaptationSet id="stereo" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="stereo" bandwidth="320000"/>
+		</AdaptationSet>
+		<AdaptationSet id="mono_0" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="1"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="mono_0" bandwidth="320000"/>
+		</AdaptationSet>
+		<AdaptationSet id="mono_1" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="1"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="mono_1" bandwidth="320000"/>
+		</AdaptationSet>
+		<AdaptationSet id="mono_2" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="1"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="mono_2" bandwidth="320000"/>
+		</AdaptationSet>
+		<AdaptationSet id="mono_3" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="1"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="mono_3" bandwidth="320000"/>
+		</AdaptationSet>
+		<AdaptationSet id="clicks_mono" startWithSAP="1" segmentAlignment="true" codecs="mp4a.40.2" audioSamplingRate="48000" lang="eng" mimeType="audio/mp4">
+			<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="1"/>
+			<Role schemeIdUri="urn:mpeg:dash:role:2011" value="main"/>
+			<SegmentTemplate startNumber="1" timescale="48000" duration="384000" media="forest-3-short/$RepresentationID$/$Number$.m4s" initialization="forest-3-short/$RepresentationID$/IS.mp4"/>
+			<Representation id="clicks_mono" bandwidth="320000"/>
+		</AdaptationSet>
+	</Period>
+</MPD>
