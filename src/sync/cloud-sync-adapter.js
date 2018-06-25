@@ -99,8 +99,6 @@ class CloudSyncAdapter extends SyncAdapter {
           status,
         });
       });
-
-
     });
     return this._connectPromise;
   }
@@ -162,46 +160,50 @@ class CloudSyncAdapter extends SyncAdapter {
     const matchTimeline = tl => tl.timelineType === timelineType &&
                                 tl.contentId === contentId;
 
-    return this._connectPromise.then(() =>
-      this._synchroniser.getAvailableSyncTimelines()).then((timelines) => {
-      // first check the currently available timelines.
-      const timeline = timelines.find(matchTimeline);
-      return (timeline !== undefined) ? timeline.timelineId : null;
-    }).then((timelineId) => {
-      // if it is already available, resolve to its id immediately.
-      if (timelineId !== null) {
-        return timelineId;
-      }
-
-      // Otherwise listen for new timelines being registered, and return a
-      // promise resolving when it is found.
-      return new Promise((resolve) => {
-        this._synchroniser.on('SyncTimelinesAvailable', (timelines) => {
-          const timeline = timelines.find(matchTimeline);
-
-          // if a matching timeline is found, resolve to its id and stop listening.
-          // Otherwise, we may have to wait for the next event of this kind to find it.
-          if (timeline !== undefined) {
-            resolve(timeline.timelineId);
-          }
-        });
-      });
-    }).then(timelineId =>
-      // Then subscribe to the specific timeline id matching the content and type.
-      // return a promise resolving to the timeline clock when it becomes available.
-      this._synchroniser.subscribeTimeline(timelineId).then((responseCode) => {
-        if (responseCode !== 0) {
-          throw new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`);
+    return this._connectPromise
+      .then(() =>
+        this._synchroniser.getAvailableSyncTimelines()).then((timelines) => {
+        // first check the currently available timelines.
+        const timeline = timelines.find(matchTimeline);
+        return (timeline !== undefined) ? timeline.timelineId : null;
+      })
+      .then((timelineId) => {
+        // if it is already available, resolve to its id immediately.
+        if (timelineId !== null) {
+          return timelineId;
         }
 
+        // Otherwise listen for new timelines being registered, and return a
+        // promise resolving when it is found.
         return new Promise((resolve) => {
-          this._synchroniser.on('TimelineAvailable', (id) => {
-            if (id === timelineId) {
-              resolve(this._synchroniser.getTimelineClockById(id));
+          this._synchroniser.on('SyncTimelinesAvailable', (timelines) => {
+            const timeline = timelines.find(matchTimeline);
+
+            // if a matching timeline is found, resolve to its id and stop listening.
+            // Otherwise, we may have to wait for the next event of this kind to find it.
+            if (timeline !== undefined) {
+              resolve(timeline.timelineId);
             }
           });
         });
-      }))
+      })
+      .then(timelineId =>
+        // Then subscribe to the specific timeline id matching the content and type.
+        // return a promise resolving to the timeline clock when it becomes available.
+        this._synchroniser.subscribeTimeline(timelineId)
+          .then((responseCode) => {
+            if (responseCode !== 0) {
+              throw new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`);
+            }
+
+            return new Promise((resolve) => {
+              this._synchroniser.on('TimelineAvailable', (id) => {
+                if (id === timelineId) {
+                  resolve(this._synchroniser.getTimelineClockById(id));
+                }
+              });
+            });
+          }))
       .catch((e) => {
         throw new Error(`cloud-sync-adapter: requestTimelineClock: ${e.message}`);
       });

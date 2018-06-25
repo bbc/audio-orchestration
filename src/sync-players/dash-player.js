@@ -130,7 +130,8 @@ class DashPlayer extends Player {
    * files present multiple mono outputs, instead of a single multi-channel output.
    *
    * TODO: Currently assuming that the output rendering will be stereo.
-   *       Instead, a bbcat-js Renderer should be used.
+   *       Instead, a bbcat-js Renderer should be used, and the DashPlayer should just output
+   *       a multi-channel output like the dash source node.
    */
   connectOutputs(source) {
     const channelMapping = [];

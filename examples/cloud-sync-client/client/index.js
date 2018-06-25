@@ -52,7 +52,6 @@ function connect(isMaster = false) {
     // slave device: receive updates only.
     return sync.requestTimelineClock(timelineType, contentId);
   }).then((timelineClock) => {
-    // TODO: we never actually use this reference, perhaps it should be a function on the player object?
     const controller = new Players.SyncController(timelineClock, player, {
       bufferingDelay: 0.1,
     });
@@ -102,19 +101,19 @@ function initButtons() {
   }
   updateTimes();
 
-  document.getElementById('btn-play').addEventListener('click', (e) => {
+  document.getElementById('btn-play').addEventListener('click', () => {
     updateTimeline({ speed: 1 });
   });
 
-  document.getElementById('btn-pause').addEventListener('click', (e) => {
+  document.getElementById('btn-pause').addEventListener('click', () => {
     updateTimeline({ speed: 0 });
   });
 
-  document.getElementById('btn-seek-start').addEventListener('click', (e) => {
+  document.getElementById('btn-seek-start').addEventListener('click', () => {
     updateTimeline({ contentTime: 0 });
   });
 
-  document.getElementById('btn-seek-forward').addEventListener('click', (e) => {
+  document.getElementById('btn-seek-forward').addEventListener('click', () => {
     updateTimeline({ contentTime: masterClock.now() + (10 * 1000) });
   });
 }
