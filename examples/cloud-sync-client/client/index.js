@@ -36,35 +36,40 @@ function connect(isMaster = false) {
 
   sync.on('broadcast', (message) => {
     console.log('=== Broadcast received ===', message.deviceId, message.topic, message.content);
+    document.getElementById('broadcast-log').innerText += `${message.topic} ${message.deviceId}: ${JSON.stringify(message.content)}\n`;
   });
 
   sync.on('presence', (message) => {
     console.log('=== Presence ===', message.deviceId, message.status);
+    document.getElementById('presence-log').innerText += `${message.deviceId}: ${message.status}\n`;
   });
 
-  player.prepare().then(() => {
-    // master device: publish updates from the timeline clock
+  player.prepare()
+    .then(() => {
+      // master device: publish updates from the timeline clock
 
-    if (isMaster) {
-      return sync.provideTimelineClock(masterClock, timelineType, contentId);
-    }
+      if (isMaster) {
+        return sync.provideTimelineClock(masterClock, timelineType, contentId);
+      }
 
-    // slave device: receive updates only.
-    return sync.requestTimelineClock(timelineType, contentId);
-  }).then((timelineClock) => {
-    const controller = new Players.SyncController(timelineClock, player, {
-      bufferingDelay: 0.1,
+      // slave device: receive updates only.
+      return sync.requestTimelineClock(timelineType, contentId);
+    })
+    .then((timelineClock) => {
+      const controller = new Players.SyncController(timelineClock, player, {
+        bufferingDelay: 0.1,
+      });
+
+      // log changes to the timeline clock
+      timelineClock.on('change', () => {
+        console.log(`timelineClock.change: child ${timelineClock.getCorrelation().childTime.toFixed(0)}, ` +
+                    `parent ${timelineClock.getCorrelation().parentTime.toFixed(0)}, ` +
+                    `effective speed ${timelineClock.getEffectiveSpeed()}.`);
+      });
+    })
+    .catch((e) => {
+      console.error(e);
     });
-
-    // log changes to the timeline clock
-    timelineClock.on('change', () => {
-      console.log(`timelineClock.change: child ${timelineClock.getCorrelation().childTime.toFixed(0)}, ` +
-                  `parent ${timelineClock.getCorrelation().parentTime.toFixed(0)}, ` +
-                  `effective speed ${timelineClock.getEffectiveSpeed()}.`);
-    });
-  }).catch((e) => {
-    console.error(e);
-  });
 }
 
 function updateTimeline({
@@ -115,6 +120,10 @@ function initButtons() {
 
   document.getElementById('btn-seek-forward').addEventListener('click', () => {
     updateTimeline({ contentTime: masterClock.now() + (10 * 1000) });
+  });
+
+  document.getElementById('btn-broadcast').addEventListener('click', () => {
+    sync.sendMessage('my-topic', { foo: 'bar', hello: 'world' });
   });
 }
 
