@@ -1,5 +1,6 @@
 import bbcat from 'bbcat';
 import Player from './player';
+
 const { ManifestLoader, ManifestParser, DashSourceNode } = bbcat.dash;
 
 class DashPlayer extends Player {
@@ -19,9 +20,6 @@ class DashPlayer extends Player {
     this.source = null;
 
     /** @private */
-    this.previousSource = null;
-
-    /** @private */
     this.when = 0;
 
     /** @private */
@@ -29,10 +27,42 @@ class DashPlayer extends Player {
 
     /** @private */
     this.manifestPromise = null;
+
+    /** @private */
+    this.manifestLoader = new ManifestLoader();
+
+    /** @private */
+    this.manifestParser = new ManifestParser();
+
+    /** @private */
+    this.state = 'ready';
   }
 
   /**
-   * Prepares the player by loading and parsing the DASH manifest.
+   * Modifies the manifest object in place to remove all adaptation sets that are not in the
+   * list of adaptationSetIds.
+   *
+   * @returns {Object} the filtered manifest
+   * @private
+   */
+  filterManifest(manifest) {
+    // If no specific adaptationSetIds have been specified, return the manifest unchanged.
+    if (this.adaptationSetIds === null) {
+      return manifest;
+    }
+
+    // Remove all adaptation sets from the parsed manifest, except for those matching this
+    // player's adaptationSetIds.
+    manifest.periods.forEach((p) => {
+      manifest.periods[p.id].adaptationSets = p.adaptationSets.filter(a =>
+        this.adaptationSetIds.includes(a.id));
+    });
+
+    return manifest;
+  }
+
+  /**
+   * Prepares the player by loading, parsing, and filtering the DASH manifest.
    *
    * @returns {Promise<Object>} resolving to the manifest if successfully parsed
    * @private
@@ -43,35 +73,27 @@ class DashPlayer extends Player {
       return this.manifestPromise;
     }
 
-    this.manifestPromise = new ManifestLoader().load(this.manifestUrl)
-      .then((manifestBlob) => {
-        // Parse the manifest
-        const manifest = new ManifestParser().parse(manifestBlob);
-
-        // If no specific adaptationSetIds have been specified, return the manifest unchanged.
-        if (this.adaptationSetIds === null) {
-          return manifest;
-        }
-
-        // Remove all adaptation sets from the parsed manifest, except for those matching this
-        // player's adaptationSetIds.
-        manifest.periods.forEach((p) => {
-          manifest.periods[p.id].adaptationSets = p.adaptationSets.filter(a =>
-            this.adaptationSetIds.includes(a.id));
-        });
-
-        // Resolve to the filtered manifest.
-        return manifest;
-      })
-      .catch((e) => {
-        this.manifestPromise = null;
-        throw e;
-      })
+    this.manifestPromise = this.manifestLoader
+      .load(this.manifestUrl)
+      .then(manifestBlob => this.manifestParser.parse(manifestBlob))
+      .then(manifest => this.filterManifest(manifest))
       .then((manifest) => {
-        console.debug(manifest);
         this.manifest = manifest;
         return manifest;
-      });
+      })
+      .then((manifest) => {
+        this.source = new DashSourceNode(this.audioContext, manifest);
+        this.source.addEventListener('statechange', (e) => {
+          console.log(e.state);
+          if (e.state === 'playing') {
+            this.state = 'playing';
+          } else if (e.state === 'ready') {
+            this.offset = this.currentTime;
+            this.state = 'ready';
+          }
+        });
+      })
+      .then(() => this.connectOutputs(this.source));
 
     return this.manifestPromise;
   }
@@ -82,58 +104,22 @@ class DashPlayer extends Player {
    * @param {number} when - the context sync time to start playing at.
    * @param {number} offset - the content time to start playing from.
    *
-   * @returns {Promise<DashPlayer>}
+   * @returns {Promise}
    */
-  play(when = this.audioContext.currentTime, offset = this.offset) {
-    return this.prepare().then((manifest) => {
-      // check that offset is valid
-      if (offset < 0 || offset > this.manifest.mediaPresentationDuration) {
-        throw new Error('offset must be >= 0 and < manifest.mediaPresentationDuration.');
-      }
-
-      // if we already have a playing source, stop it.
-      // However, a DashSourceNode can not be stopped at a sync time, so instead,
-      // we wait for the new stream to begin playing before stopping this one.
-      if (this.source !== null) {
-        if (this.previousSource !== null) {
-          this.previousSource.stop();
+  play(when = null, offset = this.offset) {
+    console.debug('DashPlayer.play', this.audioContext.currentTime, 'offset', offset);
+    return this.prepare()
+      .then(() => this.source.stop())
+      .then(() => this.source.prime(offset))
+      .then(() => {
+        this.when = when;
+        if (when === null) {
+          this.when = this.audioContext.currentTime;
         }
-        this.previousSource = this.source;
-      }
-
-      // save new start time and offset.
-      this.when = when;
-      this.offset = offset;
-
-      // create new source
-      const currentSource = new DashSourceNode(this.audioContext, manifest);
-      this.source = currentSource;
-      this.connectOutputs(currentSource);
-
-      this.source.addEventListener('statechange', (e) => {
-        console.debug('DashPlayer source.statechange:', e.state);
-        if (e.state === 'playing') {
-          if (currentSource === this.source) {
-            this.state = 'playing';
-            if (this.previousSource !== null) {
-              this.previousSource.stop();
-            }
-          }
-        } else if (e.state === 'ready') {
-          // if it hasn't been replaced already, update the player state.
-          // set offset to current position to handle pause/resume.
-          // The ended event on DashSourceNode is only triggered when the end of media is reached.
-          if (currentSource === this.source) {
-            this.offset = this.currentTime;
-            this.state = 'ready';
-          }
-        }
+        this.offset = offset;
+        console.debug('DashPlayer.play, starting at:', this.when);
+        this.source.start(this.when);
       });
-
-      return this.source.prime(offset)
-        .then(() => this.source.start(when))
-        .then(() => this);
-    });
   }
 
   /**
@@ -152,9 +138,7 @@ class DashPlayer extends Player {
     merger.connect(this.output);
 
     this.manifest.periods.forEach((period) => {
-      console.debug(period);
       period.adaptationSets.forEach((adaptationSet) => {
-        console.debug(adaptationSet);
         const count = adaptationSet.audioChannelConfiguration.value;
         if (count === 1) {
           channelMapping.push([0, 1]);
@@ -170,7 +154,7 @@ class DashPlayer extends Player {
     });
 
     source.outputs.forEach((output, i) => {
-      console.debug(i, channelMapping[i]);
+      console.debug(i, ' => ', channelMapping[i].join(', '));
       channelMapping[i].forEach((outputChannel) => {
         output.connect(merger, 0, outputChannel);
       });
@@ -186,9 +170,6 @@ class DashPlayer extends Player {
   stopNow() {
     if (this.source !== null) {
       this.source.stop();
-    }
-    if (this.previousSource !== null) {
-      this.previousSource.stop();
     }
   }
 
