@@ -1,0 +1,287 @@
+# Define stage - these run in order specified below
+stages:
+  - build
+
+# ----------------------------------------
+#    WallClock Service
+# ----------------------------------------
+# Builds wallclock-service latest
+wallclock-service-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/wallclock-service:latest ./wallclock-service
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/wallclock-service:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds wallclock-service tagged releases
+wallclock-service-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/wallclock-service:$CI_COMMIT_REF_NAME ./wallclock-service
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/wallclock-service:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds wallclock-service branches to allow testing MRs
+wallclock-service-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/wallclock-service:$CI_COMMIT_REF_NAME ./wallclock-service
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/wallclock-service:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
+# ----------------------------------------
+#    Mosquitto 
+# ----------------------------------------
+# Builds docker-mosquitto latest
+docker-mosquitto-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/docker-mosquitto:latest ./docker-mosquitto
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/docker-mosquitto:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds docker-mosquitto tagged releases
+docker-mosquitto-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/docker-mosquitto:$CI_COMMIT_REF_NAME ./docker-mosquitto
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/docker-mosquitto:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds docker-mosquitto branches to allow testing MRs
+docker-mosquitto-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/docker-mosquitto:$CI_COMMIT_REF_NAME ./docker-mosquitto
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/docker-mosquitto:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
+# ----------------------------------------
+#    SessionController
+# ----------------------------------------
+# Builds sessioncontroller latest
+sessioncontroller-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/sessioncontroller:latest -f ./src/sessioncontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/sessioncontroller:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds sessioncontroller tagged releases
+sessioncontroller-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/sessioncontroller:$CI_COMMIT_REF_NAME -f ./src/sessioncontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/sessioncontroller:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds sessioncontroller branches to allow testing MRs
+sessioncontroller-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/sessioncontroller:$CI_COMMIT_REF_NAME -f ./src/sessioncontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/sessioncontroller:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
+# ----------------------------------------
+#    SyncController
+# ----------------------------------------
+# Builds synccontroller latest
+synccontroller-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synccontroller:latest -f ./src/synccontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synccontroller:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds synccontroller tagged releases
+synccontroller-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synccontroller:$CI_COMMIT_REF_NAME -f ./src/synccontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synccontroller:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds synccontroller branches to allow testing MRs
+synccontroller-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synccontroller:$CI_COMMIT_REF_NAME -f ./src/synccontroller/Dockerfile ./src
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synccontroller:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
+# ----------------------------------------
+#    TimelineObserver
+# ----------------------------------------
+# Builds timelineobserver latest
+timelineobserver-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/timelineobserver:latest -f ./src/timelineobserver/TimelineObserver/Dockerfile ./src/timelineobserver/TimelineObserver
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/timelineobserver:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds timelineobserver tagged releases
+timelineobserver-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/timelineobserver:$CI_COMMIT_REF_NAME -f ./src/timelineobserver/TimelineObserver/Dockerfile ./src/timelineobserver/TimelineObserver
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/timelineobserver:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds timelineobserver branches to allow testing MRs
+timelineobserver-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/timelineobserver:$CI_COMMIT_REF_NAME -f ./src/timelineobserver/TimelineObserver/Dockerfile ./src/timelineobserver/TimelineObserver
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/timelineobserver:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
+
+# ----------------------------------------
+#    SynchronisedVideo
+# ----------------------------------------
+# Builds synchronisedvideo latest
+synchronisedvideo-edge:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synchronisedvideo:latest ./examples/synchronisedvideo
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synchronisedvideo:latest
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - master
+
+# Builds synchronisedvideo tagged releases
+synchronisedvideo-tag:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synchronisedvideo:$CI_COMMIT_REF_NAME ./examples/synchronisedvideo
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synchronisedvideo:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - tags
+
+# Builds synchronisedvideo branches to allow testing MRs
+synchronisedvideo-branches:
+  stage: build
+  image: docker:latest
+  script:
+    - docker build -t $CI_REGISTRY_IMAGE/synchronisedvideo:$CI_COMMIT_REF_NAME ./examples/synchronisedvideo
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $CI_REGISTRY_IMAGE/synchronisedvideo:$CI_COMMIT_REF_NAME
+  tags:
+    - 2immerse
+    - docker
+  only:
+    - branches
+  except:
+    - master
+
