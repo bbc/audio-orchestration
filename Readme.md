@@ -37,7 +37,8 @@ instead, an example standalone server implementation is
 [provided](examples/dvbcss-services/).
 
 A version of the client library with our local patches is included in this
-repository in the [cloud-sync/](cloud-sync/) directory.
+repository in the [cloud-sync/](cloud-sync/) directory. See [subtree.md](subtree.md)
+to setup git remotes for developing it.
 
 ## Development
 
