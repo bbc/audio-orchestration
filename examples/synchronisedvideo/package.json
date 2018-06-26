@@ -1,0 +1,35 @@
+{
+  "name": "synchronisedvideo",
+  "version": "1.0.0",
+  "description": "Synchronises video presentations across different browsers by means of the CloudSyncKit",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "grunt && node server.js",
+    "test": "echo \"no tests specified\""
+  },
+  "author": "Christoph Ziegler (IRT)",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-express-server": "^0.5.3",
+    "grunt-webpack": "^3.0.2",
+    "webpack": "^3.7.1",
+    "webpack-dev-server": "^2.9.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "dvbcss-clocks": "0.0.4",
+    "events": "^2.0.0",
+    "express": "^4.16.2",
+    "inherits": "^2.0.3",
+    "jsonfile": "^4.0.0",
+    "purecss": "^1.0.0",
+    "qrcodejs": "^1.0.0",
+    "video.js": "^6.4.0",
+    "weak-map": "^1.0.5",
+    "winston": "^2.4.0"
+  }
+}

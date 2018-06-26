@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!--
+	 Copyright 2015 British Broadcasting Corporation
+
+	 Unless required by applicable law or agreed to in writing, software
+	 distributed under the License is distributed on an "AS IS" BASIS,
+	 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 See the License for the specific language governing permissions and
+	 limitations under the License.
+	-->
+	<title> MQTT Client Example</title>
+	<link rel="stylesheet" type="text/css" href="style.css" />
+
+	<script type="text/javascript" src="mqtt-client.js">	</script>
+
+	<script type="text/javascript">
+  function join()
+	{
+		msg = document.getElementById("insertedVal").value;
+		mqttclient.sendMessage(msg);
+	}
+
+</script>
+
+
+
+</head>
+<body>
+	<h2>Example MQTT Service client</h2>
+
+	  <div id="console" class="console"></div>
+
+		A value: <input  id="insertedVal" />
+		<button id="joinBtn" onclick="join();">Join</button>
+
+
+
+	</body>
+</html>
