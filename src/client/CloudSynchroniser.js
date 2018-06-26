@@ -240,7 +240,11 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
         syncTimelineElection: opt.syncTimelineElection || SYNC_TL_ELECTION.EARLIEST_FIRST,
 
         // Subscribe to this topic to receive session state changes
-        sessionStateTopic: "Sessions/" + sessionId + "/" + "state"
+        sessionStateTopic: "Sessions/" + sessionId + "/" + "state",
+        sessionApplicationBroadcastTopic: "Sessions/" + sessionId + "/" + "application-broadcast",
+
+        // the system clock
+        sysClock: options.sysClock || new Clocks.DateNowClock(),
     });
 
     setupSyncServiceConnection.call(this).
@@ -296,6 +300,12 @@ function onMessageReceived (message) {
         case "SyncTimelinesAvailable":
             handleSyncTimelinesAvailable.call(this, message);
             break;
+        case "DeviceStatus":
+            handleDeviceStatus.call(this, message);
+            break;
+        case "ApplicationBroadcast":
+            handleApplicationBroadcast.call(this, message);
+            break;
         default:
             break;
     }
@@ -341,6 +351,7 @@ function joinSession () {
 
     priv.messenger.listen(priv.respTopic);
     priv.messenger.listen(priv.sessionStateTopic);
+    priv.messenger.listen(priv.sessionApplicationBroadcastTopic);
 
     return new Promise(function (resolve, reject) {
         sendRequest.call(self, "JoinREQ", priv.onboardingTopic, resolve, {
@@ -692,6 +703,23 @@ function handleSyncTimelinesAvailable (message) {
     this.emit("SyncTimelinesAvailable", message.timelineInfo);
 }
 
+function handleApplicationBroadcast (message) {
+    console.log("[CloudSynchroniser.js]:", "ApplicationBroadcast", message.broadcastTopic, message.broadcastContent);
+    this.emit("ApplicationBroadcast", {
+      deviceId: message.deviceId,
+      topic: message.broadcastTopic,
+      content: message.broadcastContent,
+    });
+}
+
+function handleDeviceStatus (message) {
+    console.log("[CloudSynchroniser.js]:", "DeviceStatus");
+    this.emit("DeviceStatus", {
+      deviceId: message.deviceId,
+      status: message.status,
+    });
+}
+
 function handleTimelineUpdateRequest (request) {
     var priv, message, clock, self, timeline;
 
@@ -706,8 +734,9 @@ function handleTimelineUpdateRequest (request) {
             timeline.clock.on("change", function (timeline) {
                 console.log("Timeline clock", timeline.clock.id, "changed");
                 if (
-                    timeline.syncTimeline === null || 
-                    Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40
+                    timeline.syncTimeline === null ||
+                    Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40 ||
+                    timeline.clock.getEffectiveSpeed() !== timeline.syncTimeline.clock.getEffectiveSpeed()
                 ) {
                     sendTimelineUpdate.call(this, timeline);
                 } else {
@@ -731,6 +760,15 @@ function sendTimelineUpdateRESP (request) {
     priv = PRIVATE.get(this);
     message = MessageFactory.create("TimelineUpdateRESP", priv.sessionId, 0, request.id, priv.version);
     priv.messenger.send(message, request.responseChannel);
+    console.log("Sent:", message);
+}
+
+CloudSynchroniser.prototype.sendApplicationBroadcast = function (topic, content) {
+    var priv, message;
+    priv = PRIVATE.get(this);
+
+    message = MessageFactory.create("ApplicationBroadcast", priv.sessionId, priv.deviceId, topic, content);
+    priv.messenger.send(message, priv.sessionApplicationBroadcastTopic);
     console.log("Sent:", message);
 }
 
