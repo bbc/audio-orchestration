@@ -1,0 +1,106 @@
+{
+  "duration": 60.0,
+  "loop": true,
+  "outPoints": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0,
+    12.0,
+    14.0,
+    16.0
+  ],
+  "objects": [
+    {
+      "objectId": "Bed_L",
+      "channelMapping": "mono",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "stereo",
+            "channelNumber": 0
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "Bed_R",
+      "channelMapping": "mono",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "stereo",
+            "channelNumber": 1
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "narrator",
+      "channelMapping": "mono",
+      "orchestration": {
+        "objectNumber": 1,
+        "label": "Narrator",
+        "group": 0,
+        "mdoThreshold": 0,
+        "mdoOnly": 0,
+        "mdoMethod": 3,
+        "speakerNumber": null,
+        "diffuseness": 0,
+        "mdoSpread": 0,
+        "mdoDynamic": 0,
+        "mdoGainDB": 0,
+        "muteIfObject": 0,
+        "exclusivity": 0,
+        "nearFront": 1,
+        "nearSide": 1,
+        "nearRear": 1,
+        "farFront": 1,
+        "farSide": 1,
+        "farRear": 1,
+        "above": 1,
+        "onDropin": 1,
+        "onDropout": 1,
+        "minQuality": 1
+      },
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "mono_0"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "ambience",
+      "channelMapping": "mono",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "mono_1"
+          }
+        }
+      ]
+    }
+  ]
+}

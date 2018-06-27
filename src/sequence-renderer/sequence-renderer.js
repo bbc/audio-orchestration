@@ -75,13 +75,13 @@ class SynchronisedSequenceRenderer {
      * @type {RendererOutputRouter}
      * @private
      */
-    this._output = new OutputRouter(this._isStereo);
+    this._output = new OutputRouter(this._audioContext, this._isStereo);
 
     // listen for changes to the master clock object
     this._clock.on('update', this.notify.bind(this));
 
     // set up the routing based on the sequence description
-    this.initAudioGraph();
+    // this.initAudioGraph();
   }
 
   /**
@@ -90,10 +90,10 @@ class SynchronisedSequenceRenderer {
    *
    * @param {Array<string>} newObjectIds
    */
-  set activeObjectIds(newObjectIds) {
+  setActiveObjectIds(newObjectIds) {
     // trigger addition of objects not present in old list
     newObjectIds
-      .filter(objectId => this._activeObjectIds.includes(objectId))
+      .filter(objectId => !this._activeObjectIds.includes(objectId))
       .forEach(objectId => this.addObject(objectId));
 
     // trigger removal of objects not present in new list
@@ -157,7 +157,7 @@ class SynchronisedSequenceRenderer {
    * @private
    */
   addObject(objectId) {
-    this._activeObjectIds.push(objectId);
+    this._activeObjectIds = [...this.activeObjectIds, objectId];
 
     this.notify();
   }
@@ -171,7 +171,7 @@ class SynchronisedSequenceRenderer {
    * @private
    */
   removeObject(objectId) {
-    this._activeObjectIds.remove(objectId);
+    this._activeObjectIds = this._activeObjectIds.filter(o => o !== objectId);
 
     this.notify();
   }

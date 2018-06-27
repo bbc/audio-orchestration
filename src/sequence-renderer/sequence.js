@@ -206,6 +206,15 @@ class Sequence {
   }
 
   /**
+   * Get all objectIds used in this sequence
+   *
+   * @returns {Array<string>}
+   */
+  get objectIds() {
+    return this._sequence.objects.map(object => object.objectId);
+  }
+
+  /**
    * Gets the out-points of the sequence, if any.
    *
    * @returns {Array<number>}

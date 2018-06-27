@@ -5,7 +5,9 @@
  * Its inputs (left, right, and mono) correspond to the channelMapping specified in MDO objects.
  *
  * It does not perform any gain processing; the mono input is routed unchanged to both the left and
- * theright output.
+ * the right output.
+ *
+ * TODO: Perhaps it should do gain processing and take a numerical pan value for each input.
  *
  * @example
  * output = new OutputRouter(audioContext, true);

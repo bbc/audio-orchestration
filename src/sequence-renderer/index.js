@@ -1,8 +1,8 @@
 import Sequence from './sequence';
-import SynchronisedTimelineRenderer from './sequence-renderer';
+import SynchronisedSequenceRenderer from './sequence-renderer';
 
 export default {
   Sequence,
-  SynchronisedTimelineRenderer,
+  SynchronisedSequenceRenderer,
 };
 
