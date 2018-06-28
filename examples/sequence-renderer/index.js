@@ -13,6 +13,7 @@ const isStereo = true;
 function initRenderer(sequenceData) {
   const sequence = new Sequence(sequenceData);
   const renderer = new SynchronisedSequenceRenderer(audioContext, clock, sequence, isStereo);
+  renderer.output.connect(audioContext.destination);
 
   console.log(renderer);
 
@@ -30,7 +31,7 @@ function initControls(renderer) {
   renderer.sequence.objectIds.forEach((objectId) => {
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.checked = false;
+    input.checked = true;
     input.value = objectId;
 
     const label = document.createElement('label');
@@ -44,7 +45,7 @@ function initControls(renderer) {
     'btn-play': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 1),
     'btn-pause': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 0),
     'btn-reset': () => clock.setCorrelationAndSpeed([sysClock.now(), 0], 1),
-    'btn-skip': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now() + 10000], 1),
+    'btn-skip': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now() + 10], 1),
     'btn-allocate': () => renderer.setActiveObjectIds(getSelectedObjectIds()),
   };
   Object.entries(clickHandlers).forEach(([id, cb]) => {

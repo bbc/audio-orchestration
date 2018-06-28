@@ -1,13 +1,23 @@
+import Clocks from 'dvbcss-clocks';
 import Sequence from './sequence';
 import OutputRouter from './output-router';
+import SyncPlayers from '../sync-players';
+
+const { CorrelatedClock } = Clocks;
+const { SyncController, BufferPlayer, DashPlayer } = SyncPlayers;
+
+/**
+ * @typedef {Object} ActiveSequenceItem
+ * @property {CorrelatedClock} clock
+ * @property {Player} player
+ * @property {SyncController} controller
+ */
+
 /**
  * @class
  * @desc
  * The SynchronisedSequenceRenderer is responsible for orchestrating all audio sources related to a
  * {@link Sequence} on the device it is running on.
- *
- *
- *
  */
 class SynchronisedSequenceRenderer {
   /**
@@ -53,6 +63,12 @@ class SynchronisedSequenceRenderer {
     this._activePlaybackItems = {};
 
     /**
+     * @type {Map<ActiveSequenceItem>}
+     * @private
+     */
+    this._activeItems = new Map();
+
+    /**
      * @type {number}
      * How far in advance are items downloaded and scheduled (seconds).
      */
@@ -78,10 +94,7 @@ class SynchronisedSequenceRenderer {
     this._output = new OutputRouter(this._audioContext, this._isStereo);
 
     // listen for changes to the master clock object
-    this._clock.on('update', this.notify.bind(this));
-
-    // set up the routing based on the sequence description
-    // this.initAudioGraph();
+    this._clock.on('change', this.notify.bind(this));
   }
 
   /**
@@ -100,6 +113,9 @@ class SynchronisedSequenceRenderer {
     this._activeObjectIds
       .filter(objectId => !newObjectIds.includes(objectId))
       .forEach(objectId => this.removeObject(objectId));
+
+    // update the audio graph and player instances
+    this.notify();
   }
 
   /**
@@ -145,6 +161,73 @@ class SynchronisedSequenceRenderer {
    */
   notify() {
     console.debug('SSR: notify', this._sequence, this._activeObjectIds);
+
+    // create a list of all active items for all active and valid objects
+    const activeItems = this._activeObjectIds
+      .filter(objectId => this._sequence.objectIds.includes(objectId))
+      .map(objectId => this._sequence.items(objectId, this._clock.now()))
+      .reduce((acc, a) => acc.concat(a), []);
+
+    const activeItemIds = activeItems.map(item => item.itemId);
+
+    activeItems.forEach(({ itemId, start, duration, source }) => {
+      // Do nothing if the item has already been scheduled.
+      if (this._activeItems.has(itemId)) {
+        return;
+      }
+
+      // otherwise create the clock, player, and sync controller.
+      const activeItem = {
+        clock: new CorrelatedClock(this._clock, [start, 0], 1),
+        player: null,
+        syncController: null,
+      };
+
+      if (source.type === 'dash') {
+        activeItem.player = new DashPlayer(
+          this._audioContext,
+          source.url,
+          [source.adaptationSetId],
+        );
+      } else if (source.type === 'buffer') {
+        activeItem.player = new BufferPlayer(
+          this._audioContext,
+          source.url,
+        );
+      } else {
+        throw new Error(`Cannot create a player for unknown source type ${source.type}`);
+      }
+      activeItem.syncController = new SyncController(
+        activeItem.clock,
+        activeItem.player,
+        0,
+      );
+
+      activeItem.player.output.connect(this._output.mono);
+
+      this._activeItems.set(itemId, activeItem);
+    });
+
+    // stop all abandoned currently active players that don't correspond to an enabled object.
+    const abandonedItemIds = Array.from(this._activeItems.keys())
+      .filter(itemId => !activeItemIds.includes(itemId));
+
+    console.log(`Active items: ${activeItemIds}.\nAbandoned items: ${abandonedItemIds}`);
+
+    const stopTime = this._clock.calcWhen(this._clock.now() + this.fadeOutDuration);
+
+    Array.from(this._activeItems.keys())
+      .filter(key => !activeItemIds.includes(key)) // stop all not in activeItemIds
+      .forEach((itemId) => {
+        console.debug(`Stopping player for item ${itemId}`);
+        const { player, clock, syncController } = this._activeItems.get(itemId);
+        player.output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration);
+        setTimeout(() => {
+          clock.setSpeed(0); // pause the player
+          // TODO: destroy player and sync controller and clock to free up resources.
+        }, this.fadeOutDuration);
+        this._activeItems.delete(itemId);
+      });
   }
 
   /**
@@ -158,8 +241,6 @@ class SynchronisedSequenceRenderer {
    */
   addObject(objectId) {
     this._activeObjectIds = [...this.activeObjectIds, objectId];
-
-    this.notify();
   }
 
   /**
@@ -172,8 +253,6 @@ class SynchronisedSequenceRenderer {
    */
   removeObject(objectId) {
     this._activeObjectIds = this._activeObjectIds.filter(o => o !== objectId);
-
-    this.notify();
   }
 }
 

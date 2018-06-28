@@ -162,9 +162,7 @@ class Sequence {
 
     // Find all items starting after the given time, or starting before and ending after.
     return object.items
-      .filter(item => (item.start >= after ||
-                       (item.start < after && item.start + item.duration >= after)))
-      .map((item) => {
+      .map((item, i) => {
         const { start, duration } = item;
         const {
           type,
@@ -174,6 +172,7 @@ class Sequence {
         } = item.source;
 
         return {
+          itemId: `item-${objectId}-${i}`,
           objectId,
           start,
           duration,
@@ -184,7 +183,9 @@ class Sequence {
             channelMapping,
           },
         };
-      });
+      })
+      .filter(item => (item.start >= after ||
+                       (item.start < after && item.start + item.duration >= after)));
   }
 
   /**

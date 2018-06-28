@@ -57,20 +57,20 @@ class OutputRouter {
    * @private
    */
   initAudioGraph() {
+    this._merger = this._audioContext.createChannelMerger(this._isStereo ? 2 : 1);
     if (this._isStereo) {
       // Stereo: left and right routed to their respective output channels, mono to both.
-      this._merger = this._audioContext.createChannelMerger(2);
       this.left.connect(this._merger, 0, 0);
       this.right.connect(this._merger, 0, 1);
       this.mono.connect(this.right);
       this.mono.connect(this.left);
     } else {
       // Mono: A single output channel, everything connected to this.
-      this._merger = this._audioContext.createChannelMerger(1);
       this.mono.connect(this._merger, 0, 0);
       this.left.connect(this.mono);
       this.right.connect(this.mono);
     }
+    this._merger.connect(this.output);
   }
 }
 
