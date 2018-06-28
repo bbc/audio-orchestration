@@ -214,7 +214,6 @@ class SynchronisedSequenceRenderer {
 
     console.log(`Active items: ${activeItemIds}.\nAbandoned items: ${abandonedItemIds}`);
 
-    const stopTime = this._clock.calcWhen(this._clock.now() + this.fadeOutDuration);
 
     Array.from(this._activeItems.keys())
       .filter(key => !activeItemIds.includes(key)) // stop all not in activeItemIds
@@ -223,7 +222,9 @@ class SynchronisedSequenceRenderer {
         const { player, clock, syncController } = this._activeItems.get(itemId);
         player.output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration);
         setTimeout(() => {
-          clock.setSpeed(0); // pause the player
+          clock.setSpeed(0);
+          syncController.stop();
+          player.output.disconnect();
           // TODO: destroy player and sync controller and clock to free up resources.
         }, this.fadeOutDuration);
         this._activeItems.delete(itemId);

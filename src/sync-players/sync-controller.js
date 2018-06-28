@@ -15,6 +15,14 @@ const DEFAULT_S_L_AUDIO = 0.06; // 60ms, was 30ms
  */
 const DEFAULT_T_BUFDELAY_AUDIO = 1.0;
 
+
+/**
+ * The interval period for checking the player progress, in addition to checks on clock change
+ * events.
+ * @type {number}
+ */
+const DEFAULT_RESYNC_PERIOD = 4.0;
+
 class SyncController {
   /**
    * @param {CorrelatedClock} idealTimelineClock
@@ -24,6 +32,7 @@ class SyncController {
   constructor(idealTimelineClock, mediaPlayer, {
     toleratedOffset = DEFAULT_S_L_AUDIO,
     bufferingDelay = DEFAULT_T_BUFDELAY_AUDIO,
+    resyncIntervalPeriod = DEFAULT_RESYNC_PERIOD,
   } = {}) {
     /**
      * @type {CorrelatedClock}
@@ -49,10 +58,34 @@ class SyncController {
      */
     this.bufferingDelay = bufferingDelay;
 
-    this.idealTimelineClock.on('change', () => {
-      this.notify();
-    });
+    /**
+     * @type {boolean}
+     * @private
+     */
+    this.stopped = false;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.resyncIntervalPeriod = resyncIntervalPeriod;
+
+    // bind notify to this, because it is used as an event handler. now this in it always refers
+    // to this instance.
+    this.notify = this.notify.bind(this);
+    this.idealTimelineClock.on('change', this.notify);
+    this.resyncInterval = setInterval(this.notify, this.resyncIntervalPeriod * 1000);
     this.notify();
+  }
+
+  /**
+   * Stops listening to clock changes and updating the player periodically.
+   */
+  stop() {
+    this.idealTimelineClock.removeListener('change', this.notify);
+    clearInterval(this.resyncInterval);
+    this.mediaPlayer.pause();
+    this.stopped = true;
   }
 
   /**
@@ -61,7 +94,7 @@ class SyncController {
    * @private
    */
   notify() {
-    if (this.idealTimelineClock.getAvailabilityFlag()) {
+    if (!this.stopped && this.idealTimelineClock.getAvailabilityFlag()) {
       this.resync();
     }
   }
@@ -75,6 +108,7 @@ class SyncController {
     // convert to seconds by dividing by tick rate.
     const expectedMediaTime = this.idealTimelineClock.now() / this.idealTimelineClock.tickRate;
     const actualMediaTime = this.mediaPlayer.currentTime;
+    const actualSpeed = this.mediaPlayer.playbackRate;
 
     const s = expectedMediaTime - actualMediaTime;
     const v = this.idealTimelineClock.getEffectiveSpeed();
@@ -82,11 +116,12 @@ class SyncController {
     if (v === 0) {
       // need to pause
       this.strategyPaused();
-    } else if (v === this.mediaPlayer.speed && Math.abs(s) < this.toleratedOffset) {
+    } else if (v === actualSpeed && Math.abs(s) < this.toleratedOffset) {
       // within tolerance and same speed, do nothing
       // TODO: was AMP check to see if speed needed to be adjusted, if offset was small.
     } else {
       // needs to seek
+      // console.warn(`seeking, by ${s}, speed: ${actualSpeed} (clock: ${v})`);
       this.strategyMfs(s, v);
     }
   }
@@ -121,6 +156,7 @@ class SyncController {
     // TODO: use buffered Interval if available in player, without a delay
 
     // seek to a later position, and schedule it later, as it takes time to prime the player
+    // TODO: should not need this at all, because we can specify a sync time in the past.
     if (this.bufferingDelay > 0) {
       const delay = this.bufferingDelay * v;
       seekPosition += delay;

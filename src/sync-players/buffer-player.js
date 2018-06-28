@@ -118,6 +118,13 @@ class BufferPlayer extends Player {
     const currentTime = this.audioContext.currentTime - (this.when - this.offset);
     return Math.max(this.offset, Math.min(currentTime, this.buffer.duration));
   }
+
+  get playbackRate() {
+    if (this.state === 'playing') {
+      return 1;
+    }
+    return 0;
+  }
 }
 
 export default BufferPlayer;

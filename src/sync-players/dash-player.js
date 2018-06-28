@@ -84,7 +84,6 @@ class DashPlayer extends Player {
       .then((manifest) => {
         this.source = new DashSourceNode(this.audioContext, manifest);
         this.source.addEventListener('statechange', (e) => {
-          console.log(e.state);
           if (e.state === 'playing') {
             this.state = 'playing';
           } else if (e.state === 'ready') {
@@ -107,7 +106,6 @@ class DashPlayer extends Player {
    * @returns {Promise}
    */
   play(when = null, offset = this.offset) {
-    console.debug('DashPlayer.play', this.audioContext.currentTime, 'offset', offset);
     return this.prepare()
       .then(() => this.source.stop())
       .then(() => this.source.prime(offset))
@@ -117,7 +115,6 @@ class DashPlayer extends Player {
           this.when = this.audioContext.currentTime;
         }
         this.offset = offset;
-        console.debug('DashPlayer.play, starting at:', this.when);
         this.source.start(this.when);
       });
   }
@@ -155,7 +152,6 @@ class DashPlayer extends Player {
     });
 
     source.outputs.forEach((output, i) => {
-      console.debug(i, ' => ', channelMapping[i].join(', '));
       channelMapping[i].forEach((outputChannel) => {
         output.connect(merger, 0, outputChannel);
       });
@@ -197,6 +193,13 @@ class DashPlayer extends Player {
 
     const currentTime = this.audioContext.currentTime - (this.when - this.offset);
     return Math.max(this.offset, Math.min(currentTime, this.source.presentationDuration));
+  }
+
+  get playbackRate() {
+    if (this.state === 'playing') {
+      return 1;
+    }
+    return 0;
   }
 }
 
