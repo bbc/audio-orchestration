@@ -20,7 +20,7 @@ class Player extends EventEmitter {
      * @type {AudioNode}
      * @private
     */
-    this.outputNode = audioContext.createGain();
+    this._outputs = [];
 
     /**
      * The player state.
@@ -88,8 +88,8 @@ class Player extends EventEmitter {
    *
    * @final
    */
-  get output() {
-    return this.outputNode;
+  get outputs() {
+    return this._outputs;
   }
 
   /**

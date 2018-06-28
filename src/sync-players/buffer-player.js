@@ -46,8 +46,14 @@ class BufferPlayer extends Player {
       this.mediaUrl,
     ]).then((decodedBuffers) => {
       [this.buffer] = decodedBuffers;
-      this.state = 'ready';
       return this.buffer;
+    }).then((buffer) => {
+      this._outputs = [...Array(this.buffer.numChannels).keys()]
+        .map(() => this.audioContext.createGain);
+      return buffer;
+    }).then((buffer) => {
+      this.state = 'ready';
+      return buffer;
     });
 
     return this.preparePromise;
@@ -77,7 +83,7 @@ class BufferPlayer extends Player {
 
       this.source = this.audioContext.createBufferSource();
       this.source.buffer = buffer;
-      this.source.connect(this.output);
+      this.connectOutputs();
 
       this.source.onended = (e) => {
         // if it hasn't been replaced already, update the player state.
@@ -95,6 +101,13 @@ class BufferPlayer extends Player {
     });
   }
 
+  connectOutputs() {
+    const splitter = this.audioContext.createChannelSplitter(this._outputs.length);
+    this.source.connect(splitter);
+    this._outputs.forEach((output, i) => {
+      splitter.connect(output, i);
+    });
+  }
   /**
    * @param when
    */

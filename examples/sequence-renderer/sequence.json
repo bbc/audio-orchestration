@@ -13,42 +13,23 @@
   ],
   "objects": [
     {
-      "objectId": "Bed_L",
-      "channelMapping": "mono",
+      "objectId": "Bed",
       "orchestration": {},
       "items": [
         {
           "start": 0,
           "duration": 60.0,
           "source": {
+            "channelMapping": "stereo",
             "type": "dash",
             "url": "/audio/forest-3-short.mpd",
-            "adaptationSetId": "stereo",
-            "channelNumber": 0
-          }
-        }
-      ]
-    },
-    {
-      "objectId": "Bed_R",
-      "channelMapping": "mono",
-      "orchestration": {},
-      "items": [
-        {
-          "start": 0,
-          "duration": 60.0,
-          "source": {
-            "type": "dash",
-            "url": "/audio/forest-3-short.mpd",
-            "adaptationSetId": "stereo",
-            "channelNumber": 1
+            "adaptationSetId": "stereo"
           }
         }
       ]
     },
     {
       "objectId": "narrator",
-      "channelMapping": "mono",
       "orchestration": {
         "objectNumber": 1,
         "label": "Narrator",
@@ -79,6 +60,7 @@
           "start": 0,
           "duration": 60.0,
           "source": {
+            "channelMapping": "mono",
             "type": "dash",
             "url": "/audio/forest-3-short.mpd",
             "adaptationSetId": "mono_0"
@@ -88,13 +70,13 @@
     },
     {
       "objectId": "ambience",
-      "channelMapping": "mono",
       "orchestration": {},
       "items": [
         {
           "start": 0,
           "duration": 60.0,
           "source": {
+            "channelMapping": "mono",
             "type": "dash",
             "url": "/audio/forest-3-short.mpd",
             "adaptationSetId": "mono_1"

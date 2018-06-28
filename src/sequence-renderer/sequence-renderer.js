@@ -149,10 +149,6 @@ class SynchronisedSequenceRenderer {
   }
 
   /**
-   * Initialises the audio graph based on the sequence description.
-   */
-
-  /**
    * Notify this object that something changed and requires attention.
    *
    * Changes the audio routing graph, schedules parameter updates, and creates players as required.
@@ -197,13 +193,31 @@ class SynchronisedSequenceRenderer {
       } else {
         throw new Error(`Cannot create a player for unknown source type ${source.type}`);
       }
+
       activeItem.syncController = new SyncController(
         activeItem.clock,
         activeItem.player,
         0,
       );
 
-      activeItem.player.output.connect(this._output.mono);
+      activeItem.player.prepare().then(() => {
+        switch (this._isStereo ? source.channelMapping : 'mono') {
+          case 'stereo':
+            activeItem.player.outputs[0].connect(this._output.left);
+            activeItem.player.outputs[1].connect(this._output.right);
+            break;
+          case 'left':
+            activeItem.player.outputs[0].connect(this._output.left);
+            break;
+          case 'right':
+            activeItem.player.outputs[0].connect(this._output.right);
+            break;
+          case 'mono':
+          default:
+            activeItem.player.outputs[0].connect(this._output.mono);
+            break;
+        }
+      });
 
       this._activeItems.set(itemId, activeItem);
     });
@@ -220,11 +234,12 @@ class SynchronisedSequenceRenderer {
       .forEach((itemId) => {
         console.debug(`Stopping player for item ${itemId}`);
         const { player, clock, syncController } = this._activeItems.get(itemId);
-        player.output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration);
+        player.outputs.forEach(output =>
+          output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration));
         setTimeout(() => {
           clock.setSpeed(0);
           syncController.stop();
-          player.output.disconnect();
+          player.outputs.forEach(output => output.disconnect());
           // TODO: destroy player and sync controller and clock to free up resources.
         }, this.fadeOutDuration);
         this._activeItems.delete(itemId);

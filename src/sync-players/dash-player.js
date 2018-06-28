@@ -92,7 +92,7 @@ class DashPlayer extends Player {
           }
         });
       })
-      .then(() => this.connectOutputs(this.source));
+      .then(() => this.connectOutputs());
 
     return this.manifestPromise;
   }
@@ -120,41 +120,16 @@ class DashPlayer extends Player {
   }
 
   /**
-   * Connects outputs from a DashSourceNode to the correct output channels based on the
-   * manifest's AudioChannelConfiguration property.
+   * Connect DashSourceNode outputs to the player outputs.
    *
    * The DashSourceNode presents a mono output for every channel in any file. Multi-channel
    * files present multiple mono outputs, instead of a single multi-channel output.
-   *
-   * TODO: Currently assuming that the output rendering will be stereo.
-   *       Instead, a bbcat-js Renderer should be used, and the DashPlayer should just output
-   *       a multi-channel output like the dash source node.
    */
-  connectOutputs(source) {
-    const channelMapping = [];
-    const merger = this.audioContext.createChannelMerger(2);
-    merger.connect(this.output);
-
-    this.manifest.periods.forEach((period) => {
-      period.adaptationSets.forEach((adaptationSet) => {
-        const count = adaptationSet.audioChannelConfiguration.value;
-        if (count === 1) {
-          channelMapping.push([0, 1]);
-        } else if (count === 2) {
-          channelMapping.push([0]);
-          channelMapping.push([1]);
-        } else {
-          for (let i = 0; i < count; i += 1) {
-            channelMapping.push([0, 1]);
-          }
-        }
-      });
-    });
-
-    source.outputs.forEach((output, i) => {
-      channelMapping[i].forEach((outputChannel) => {
-        output.connect(merger, 0, outputChannel);
-      });
+  connectOutputs() {
+    this._outputs = this.source.outputs.map((output) => {
+      const node = this.audioContext.createGain();
+      output.connect(node);
+      return node;
     });
   }
 
