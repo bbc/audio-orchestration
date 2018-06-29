@@ -74,7 +74,7 @@ class BufferPlayer extends Player {
 
       // if we already have a playing source, stop it.
       if (this.source !== null) {
-        this.source.stop(when);
+        this.source.stop();
       }
 
       // save new start time and offset.
