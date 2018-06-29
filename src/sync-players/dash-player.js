@@ -219,6 +219,13 @@ class DashPlayer extends Player {
   get defaultBufferingDelay() {
     return 0;
   }
+
+  get duration() {
+    if (this.source === null) {
+      return 0;
+    }
+    return this.source.presentationDuration;
+  }
 }
 
 export default DashPlayer;

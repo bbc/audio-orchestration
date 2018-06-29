@@ -171,7 +171,16 @@ class SyncController {
       const syncTime = this.idealTimelineClock.calcWhen(seekPosition * tr);
 
       // schedule seek: seekPosition is where to seek to relative to start of media
-      this.mediaPlayer.seek(syncTime, seekPosition);
+
+      if (seekPosition >= this.mediaPlayer.duration) {
+        // console.debug('did not seek because past media end');
+      } else if (seekPosition < 0) {
+        // console.debug(`schedule in future, cannot seek to ${seekPosition} at ${syncTime}`);
+        this.mediaPlayer.seek(syncTime - seekPosition, 0);
+      } else {
+        // console.debug(`regular seek to ${seekPosition} at ${syncTime}`);
+        this.mediaPlayer.seek(syncTime, seekPosition);
+      }
     }
   }
 }

@@ -49,7 +49,7 @@ class BufferPlayer extends Player {
       return this.buffer;
     }).then((buffer) => {
       this._outputs = [...Array(this.buffer.numChannels).keys()]
-        .map(() => this.audioContext.createGain);
+        .map(() => this.audioContext.createGain());
       return buffer;
     }).then((buffer) => {
       this.state = 'ready';
@@ -161,6 +161,14 @@ class BufferPlayer extends Player {
   /* eslint-disable-next-line class-methods-use-this */
   get defaultBufferingDelay() {
     return 0;
+  }
+
+  get duration() {
+    if (this.buffer === null) {
+      return 0;
+    }
+
+    return this.buffer.duration;
   }
 }
 
