@@ -60,7 +60,8 @@ class Player extends EventEmitter {
    * @param {number} offset - position (seconds) within the media to begin playing from.
    */
   seek(when = this.audioContext.currentTime, offset = 0) {
-    return this.play(when, offset);
+    return this.pause()
+      .then(this.play(when, offset));
   }
 
   /**

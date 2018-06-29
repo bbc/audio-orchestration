@@ -165,9 +165,12 @@ class DashPlayer extends Player {
   }
 
   /**
-   * @param when
+   * Pauses the player at a specified context syncTime.
+   *
+   * @param {number} when
+   * @returns {Promise} resolving when the player has been stopped.
    */
-  pause(when) {
+  pause(when = this.audioContext.currentTime) {
     return new Promise((resolve) => {
       setTimeout(() => {
         this.stopNow();
@@ -176,6 +179,12 @@ class DashPlayer extends Player {
     }).then(() => this);
   }
 
+
+  /**
+   * Get the current content time, the progress of the player.
+   *
+   * @returns {number}
+   */
   get currentTime() {
     if (this.source === null) {
       return 0;
@@ -189,10 +198,25 @@ class DashPlayer extends Player {
     return Math.max(this.offset, Math.min(currentTime, this.source.presentationDuration));
   }
 
+  /**
+   * Get the current playback rate (0 = paused, 1 = playing)
+   *
+   * @returns {number}
+   */
   get playbackRate() {
     if (this.state === 'playing') {
       return 1;
     }
+    return 0;
+  }
+
+  /**
+   * get the default buffering delay for this type of player.
+   *
+   * @returns {number}
+   */
+  /* eslint-disable-next-line class-methods-use-this */
+  get defaultBufferingDelay() {
     return 0;
   }
 }

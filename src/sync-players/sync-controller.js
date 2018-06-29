@@ -31,7 +31,7 @@ class SyncController {
    */
   constructor(idealTimelineClock, mediaPlayer, {
     toleratedOffset = DEFAULT_S_L_AUDIO,
-    bufferingDelay = DEFAULT_T_BUFDELAY_AUDIO,
+    bufferingDelay = mediaPlayer.defaultBufferingDelay,
     resyncIntervalPeriod = DEFAULT_RESYNC_PERIOD,
   } = {}) {
     /**
@@ -57,6 +57,9 @@ class SyncController {
      * @private
      */
     this.bufferingDelay = bufferingDelay;
+    if (this.bufferingDelay === undefined) {
+      this.bufferingDelay = DEFAULT_T_BUFDELAY_AUDIO;
+    }
 
     /**
      * @type {boolean}

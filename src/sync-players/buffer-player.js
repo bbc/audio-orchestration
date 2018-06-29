@@ -108,10 +108,14 @@ class BufferPlayer extends Player {
       splitter.connect(output, i);
     });
   }
+
   /**
-   * @param when
+   * Pauses the player at a specified context syncTime.
+   *
+   * @param {number} when
+   * @returns {Promise} resolving when the stop has been scheduled.
    */
-  pause(when) {
+  pause(when = this.audioContext.currentTime) {
     if (this.source !== null) {
       this.source.stop(when);
     }
@@ -119,6 +123,11 @@ class BufferPlayer extends Player {
     return Promise.resolve(this);
   }
 
+  /**
+   * Get the current content time, the progress of the player.
+   *
+   * @returns {number}
+   */
   get currentTime() {
     if (this.source === null || this.buffer === null) {
       return 0;
@@ -132,10 +141,25 @@ class BufferPlayer extends Player {
     return Math.max(this.offset, Math.min(currentTime, this.buffer.duration));
   }
 
+  /**
+   * Get the current playback rate (0 = paused, 1 = playing)
+   *
+   * @returns {number}
+   */
   get playbackRate() {
     if (this.state === 'playing') {
       return 1;
     }
+    return 0;
+  }
+
+  /**
+   * get the default buffering delay for this type of player.
+   *
+   * @returns {number}
+   */
+  /* eslint-disable-next-line class-methods-use-this */
+  get defaultBufferingDelay() {
     return 0;
   }
 }
