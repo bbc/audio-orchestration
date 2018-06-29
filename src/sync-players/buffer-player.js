@@ -110,17 +110,16 @@ class BufferPlayer extends Player {
   }
 
   /**
-   * Pauses the player at a specified context syncTime.
+   * Pauses the player.
    *
-   * @param {number} when
    * @returns {Promise} resolving when the stop has been scheduled.
    */
-  pause(when = this.audioContext.currentTime) {
+  pause() {
     if (this.source !== null) {
-      this.source.stop(when);
+      this.source.stop();
     }
 
-    return Promise.resolve(this);
+    return Promise.resolve();
   }
 
   /**

@@ -42,14 +42,12 @@ class Player extends EventEmitter {
   }
 
   /**
-   * Pause playback immediately, or at an AudioContext time.
-   *
-   * @param {number} when - AudioContext time (seconds) to synchronise to.
+   * Pause playback immediately.
    *
    * @abstract
    */
   /* eslint-disable-next-line class-methods-use-this, no-unused-vars */
-  pause(when = 0) {
+  pause() {
     throw new Error('Player.pause() is not implemented.');
   }
 

@@ -88,7 +88,6 @@ class SynchronisedSequenceRenderer {
      */
     this.fadeOutDuration = 0.2;
 
-
     /**
      * @type {RendererOutputRouter}
      * @private
@@ -241,7 +240,12 @@ class SynchronisedSequenceRenderer {
     const abandonedItemIds = Array.from(this._activeItems.keys())
       .filter(itemId => !activeItemIds.includes(itemId));
 
-    console.log(`Active items: ${activeItemIds}.\nAbandoned items: ${abandonedItemIds}`);
+    if (activeItemIds.filter(a => !this._activeItems.has(a.itemId)).length > 1) {
+      console.debug(`Active items: ${activeItemIds}.`);
+    }
+    if (abandonedItemIds.length > 0) {
+      console.debug(`Abandoned items: ${abandonedItemIds}`);
+    }
 
     Array.from(this._activeItems.keys())
       .filter(key => !activeItemIds.includes(key)) // stop all not in activeItemIds

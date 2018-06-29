@@ -3,6 +3,8 @@ import Player from './player';
 
 const { ManifestLoader, ManifestParser, DashSourceNode } = bbcat.dash;
 
+let playCount = 0;
+
 class DashPlayer extends Player {
   constructor(audioContext, manifestUrl, adaptationSetIds = null) {
     super(audioContext);
@@ -111,14 +113,27 @@ class DashPlayer extends Player {
   /**
    * Buffers the region requested and begins playing when it is available.
    *
+   * TODO: The play method may be called again by the sync controller before the prime promise has
+   *       resolved. Thie may cause prime to be called before the source node is ready to accept it.
+   *       In this case, we currently catch the error and pause the player, however, this should be
+   *       handled once the DashSourceNode natively supports seek() without an explicit call to
+   *       prime. We cannot cancel promises.
+   *
    * @param {number} when - the context sync time to start playing at.
    * @param {number} offset - the content time to start playing from.
    *
    * @returns {Promise}
    */
   play(when = null, offset = this.offset) {
+    let pc = playCount;
+    playCount += 1;
+
+    console.debug(`DashPlayer.play() called at ${this.audioContext.currentTime}`, pc);
     return this.prepare(offset)
-      .then(() => this.source.stop())
+      .then(() => {
+        console.debug('DashPlayer: stop()', pc);
+        this.source.stop();
+      })
       .then(() => {
         if (this.source.state === 'primed' && this.lastInitial === offset) {
           // console.debug(`DashPlayer.play using pre-primed source node for offset = ${offset}.`);
@@ -126,6 +141,8 @@ class DashPlayer extends Player {
         }
         // console.debug(`DashPlayer.play priming again for offset = ${offset}.`);
         this.lastInitial = offset;
+
+        console.debug('DashPlayer: prime()', pc);
         return this.source.prime(offset);
       })
       .then(() => {
@@ -134,7 +151,13 @@ class DashPlayer extends Player {
           this.when = this.audioContext.currentTime;
         }
         this.offset = offset;
+
+        console.debug('DashPlayer: start()', pc);
         this.source.start(this.when);
+      })
+      .catch((e) => {
+        console.warn('DashPlayer: play() failed. Stopping DashSourceNode.', e, pc);
+        this.source.stop();
       });
   }
 
@@ -152,33 +175,18 @@ class DashPlayer extends Player {
     });
   }
 
-
   /**
-   * Stops all active sources playing immediately.
+   * Pauses the player.
    *
-   * @private
-   */
-  stopNow() {
-    if (this.source !== null) {
-      this.source.stop();
-    }
-  }
-
-  /**
-   * Pauses the player at a specified context syncTime.
-   *
-   * @param {number} when
    * @returns {Promise} resolving when the player has been stopped.
    */
-  pause(when = this.audioContext.currentTime) {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        this.stopNow();
-        resolve();
-      }, 1000 * (when - this.audioContext.currentTime));
-    }).then(() => this);
+  pause() {
+    if (this.source === 'playing') {
+      console.log('DashPlayer.pause', this.source.state);
+      this.source.stop();
+    }
+    return Promise.resolve();
   }
-
 
   /**
    * Get the current content time, the progress of the player.
