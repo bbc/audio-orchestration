@@ -71,8 +71,10 @@ class SynchronisedSequenceRenderer {
     /**
      * @type {number}
      * How far in advance are items downloaded and scheduled (seconds).
+     *
+     * @private
      */
-    this.lookaheadDuration = 2.0;
+    this._lookaheadDuration = 2.0;
 
     /**
      * @type {fadeInDuration}
@@ -95,6 +97,7 @@ class SynchronisedSequenceRenderer {
 
     // listen for changes to the master clock object
     this._clock.on('change', this.notify.bind(this));
+    setInterval(this.notify.bind(this), 1000 * (this._lookaheadDuration / 2));
   }
 
   /**
@@ -158,11 +161,12 @@ class SynchronisedSequenceRenderer {
   notify() {
     // console.debug('SSR: notify', this._sequence, this._activeObjectIds);
 
-    // create a list of all active items for all active and valid objects
+    // find all active items (active now up to lookaheadDuration) for all active and valid objects.
     const activeItems = this._activeObjectIds
       .filter(objectId => this._sequence.objectIds.includes(objectId))
       .map(objectId => this._sequence.items(objectId, this._clock.now()))
-      .reduce((acc, a) => acc.concat(a), []);
+      .reduce((acc, a) => acc.concat(a), [])
+      .filter(item => item.start <= this._clock.now() + this._lookaheadDuration);
 
     const activeItemIds = activeItems.map(item => item.itemId);
 
@@ -179,7 +183,11 @@ class SynchronisedSequenceRenderer {
 
       // otherwise create the clock, player, and sync controller.
       const activeItem = {
-        clock: new CorrelatedClock(this._clock, [start, 0], 1),
+        clock: new CorrelatedClock(this._clock, {
+          correlation: [start, 0],
+          speed: 1,
+          tickRate: 1,
+        }),
         player: null,
         syncController: null,
       };
@@ -199,30 +207,32 @@ class SynchronisedSequenceRenderer {
         throw new Error(`Cannot create a player for unknown source type ${source.type}`);
       }
 
-      activeItem.syncController = new SyncController(
-        activeItem.clock,
-        activeItem.player,
-        0,
-      );
-
-      activeItem.player.prepare().then(() => {
-        switch (this._isStereo ? source.channelMapping : 'mono') {
-          case 'stereo':
-            activeItem.player.outputs[0].connect(this._output.left);
-            activeItem.player.outputs[1].connect(this._output.right);
-            break;
-          case 'left':
-            activeItem.player.outputs[0].connect(this._output.left);
-            break;
-          case 'right':
-            activeItem.player.outputs[0].connect(this._output.right);
-            break;
-          case 'mono':
-          default:
-            activeItem.player.outputs[0].connect(this._output.mono);
-            break;
-        }
-      });
+      activeItem.player.prepare()
+        .then(() => {
+          activeItem.syncController = new SyncController(
+            activeItem.clock,
+            activeItem.player,
+            0,
+          );
+        })
+        .then(() => {
+          switch (this._isStereo ? source.channelMapping : 'mono') {
+            case 'stereo':
+              activeItem.player.outputs[0].connect(this._output.left);
+              activeItem.player.outputs[1].connect(this._output.right);
+              break;
+            case 'left':
+              activeItem.player.outputs[0].connect(this._output.left);
+              break;
+            case 'right':
+              activeItem.player.outputs[0].connect(this._output.right);
+              break;
+            case 'mono':
+            default:
+              activeItem.player.outputs[0].connect(this._output.mono);
+              break;
+          }
+        });
 
       this._activeItems.set(itemId, activeItem);
     });
@@ -233,11 +243,9 @@ class SynchronisedSequenceRenderer {
 
     console.log(`Active items: ${activeItemIds}.\nAbandoned items: ${abandonedItemIds}`);
 
-
     Array.from(this._activeItems.keys())
       .filter(key => !activeItemIds.includes(key)) // stop all not in activeItemIds
       .forEach((itemId) => {
-        console.debug(`Stopping player for item ${itemId}`);
         const { player, clock, syncController } = this._activeItems.get(itemId);
         player.outputs.forEach(output =>
           output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration));
@@ -245,7 +253,6 @@ class SynchronisedSequenceRenderer {
           clock.setSpeed(0);
           syncController.stop();
           player.outputs.forEach(output => output.disconnect());
-          // TODO: destroy player and sync controller and clock to free up resources.
         }, this.fadeOutDuration);
         this._activeItems.delete(itemId);
       });
