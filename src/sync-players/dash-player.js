@@ -26,7 +26,7 @@ class DashPlayer extends Player {
     this.offset = 0;
 
     /** @private */
-    this.manifestPromise = null;
+    this.preparePromise = null;
 
     /** @private */
     this.manifestLoader = new ManifestLoader();
@@ -62,18 +62,24 @@ class DashPlayer extends Player {
   }
 
   /**
-   * Prepares the player by loading, parsing, and filtering the DASH manifest.
+   * Prepares the player by loading, parsing, and filtering the DASH manifest,
+   * and priming it to download the audio for playback from the beginning.
+   *
+   * {@link play}() will prime it again if a different offset is required.
+   *
+   * @param {number} initialOffset - the content time to prepare the player for,
+   *    only used if the player is prepared for the first time.
    *
    * @returns {Promise<Object>} resolving to the manifest if successfully parsed
    * @private
    */
-  prepare() {
+  prepare(initialOffset = 0) {
     // If we have previously started loading the manifest, return the same promise.
-    if (this.manifestPromise !== null) {
-      return this.manifestPromise;
+    if (this.preparePromise !== null) {
+      return this.preparePromise;
     }
 
-    this.manifestPromise = this.manifestLoader
+    this.preparePromise = this.manifestLoader
       .load(this.manifestUrl)
       .then(manifestBlob => this.manifestParser.parse(manifestBlob))
       .then(manifest => this.filterManifest(manifest))
@@ -92,9 +98,14 @@ class DashPlayer extends Player {
           }
         });
       })
-      .then(() => this.connectOutputs());
+      .then(() => this.connectOutputs())
+      .then(() => {
+        this.offset = initialOffset;
+        this.lastInitial = initialOffset;
+        return this.source.prime(initialOffset);
+      });
 
-    return this.manifestPromise;
+    return this.preparePromise;
   }
 
   /**
@@ -106,9 +117,17 @@ class DashPlayer extends Player {
    * @returns {Promise}
    */
   play(when = null, offset = this.offset) {
-    return this.prepare()
+    return this.prepare(offset)
       .then(() => this.source.stop())
-      .then(() => this.source.prime(offset))
+      .then(() => {
+        if (this.source.state === 'primed' && this.lastInitial === offset) {
+          // console.debug(`DashPlayer.play using pre-primed source node for offset = ${offset}.`);
+          return Promise.resolve();
+        }
+        // console.debug(`DashPlayer.play priming again for offset = ${offset}.`);
+        this.lastInitial = offset;
+        return this.source.prime(offset);
+      })
       .then(() => {
         this.when = when;
         if (when === null) {

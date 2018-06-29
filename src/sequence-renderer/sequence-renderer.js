@@ -156,7 +156,7 @@ class SynchronisedSequenceRenderer {
    * @private
    */
   notify() {
-    console.debug('SSR: notify', this._sequence, this._activeObjectIds);
+    // console.debug('SSR: notify', this._sequence, this._activeObjectIds);
 
     // create a list of all active items for all active and valid objects
     const activeItems = this._activeObjectIds
@@ -166,7 +166,12 @@ class SynchronisedSequenceRenderer {
 
     const activeItemIds = activeItems.map(item => item.itemId);
 
-    activeItems.forEach(({ itemId, start, duration, source }) => {
+    activeItems.forEach(({
+      itemId,
+      start,
+      duration,
+      source,
+    }) => {
       // Do nothing if the item has already been scheduled.
       if (this._activeItems.has(itemId)) {
         return;
