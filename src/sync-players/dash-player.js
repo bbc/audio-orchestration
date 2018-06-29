@@ -125,7 +125,7 @@ class DashPlayer extends Player {
    * @returns {Promise}
    */
   play(when = null, offset = this.offset) {
-    let pc = playCount;
+    const pc = playCount;
     playCount += 1;
 
     console.debug(`DashPlayer.play() called at ${this.audioContext.currentTime}`, pc);

@@ -1,17 +1,8 @@
 import Clocks from 'dvbcss-clocks';
 import Sequence from './sequence';
-import OutputRouter from './output-router';
-import SyncPlayers from '../sync-players';
+import ItemRendererFactory from './item-renderer';
 
 const { CorrelatedClock } = Clocks;
-const { SyncController, BufferPlayer, DashPlayer } = SyncPlayers;
-
-/**
- * @typedef {Object} ActiveSequenceItem
- * @property {CorrelatedClock} clock
- * @property {Player} player
- * @property {SyncController} controller
- */
 
 /**
  * @class
@@ -57,16 +48,10 @@ class SynchronisedSequenceRenderer {
     this._activeObjectIds = [];
 
     /**
-     * @type {Array}
+     * @type {Map<ItemRenderer>}
      * @private
      */
-    this._activePlaybackItems = {};
-
-    /**
-     * @type {Map<ActiveSequenceItem>}
-     * @private
-     */
-    this._activeItems = new Map();
+    this._activeItemRenderers = new Map();
 
     /**
      * @type {number}
@@ -92,7 +77,18 @@ class SynchronisedSequenceRenderer {
      * @type {RendererOutputRouter}
      * @private
      */
-    this._output = new OutputRouter(this._audioContext, this._isStereo);
+    this._output = this._audioContext.createGain();
+
+    /**
+     * @type {ItemRendererFactory}
+     * @private
+     */
+    this._itemRendererFactory = new ItemRendererFactory(
+      this._audioContext,
+      {
+        stereoOutput: isStereo,
+      },
+    );
 
     // listen for changes to the master clock object
     this._clock.on('change', this.notify.bind(this));
@@ -147,7 +143,7 @@ class SynchronisedSequenceRenderer {
    * @returns {GainNode}
    */
   get output() {
-    return this._output.output;
+    return this._output;
   }
 
   /**
@@ -172,94 +168,43 @@ class SynchronisedSequenceRenderer {
     activeItems.forEach(({
       itemId,
       start,
-      duration,
       source,
     }) => {
       // Do nothing if the item has already been scheduled.
-      if (this._activeItems.has(itemId)) {
+      if (this._activeItemRenderers.has(itemId)) {
         return;
       }
 
       // otherwise create the clock, player, and sync controller.
-      const activeItem = {
-        clock: new CorrelatedClock(this._clock, {
-          correlation: [start, 0],
-          speed: 1,
-          tickRate: 1,
-        }),
-        player: null,
-        syncController: null,
-      };
-
-      if (source.type === 'dash') {
-        activeItem.player = new DashPlayer(
-          this._audioContext,
-          source.url,
-          [source.adaptationSetId],
-        );
-      } else if (source.type === 'buffer') {
-        activeItem.player = new BufferPlayer(
-          this._audioContext,
-          source.url,
-        );
-      } else {
-        throw new Error(`Cannot create a player for unknown source type ${source.type}`);
-      }
-
-      activeItem.player.prepare()
-        .then(() => {
-          activeItem.syncController = new SyncController(
-            activeItem.clock,
-            activeItem.player,
-            0,
-          );
+      const clock = new CorrelatedClock(this._clock, {
+        correlation: [start, 0],
+        speed: 1,
+        tickRate: 1,
+      });
+      this._itemRendererFactory.getInstance(source, clock)
+        .then((renderer) => {
+          renderer.output.connect(this._output);
+          renderer.start();
+          this._activeItemRenderers.set(itemId, renderer);
         })
-        .then(() => {
-          switch (this._isStereo ? source.channelMapping : 'mono') {
-            case 'stereo':
-              activeItem.player.outputs[0].connect(this._output.left);
-              activeItem.player.outputs[1].connect(this._output.right);
-              break;
-            case 'left':
-              activeItem.player.outputs[0].connect(this._output.left);
-              break;
-            case 'right':
-              activeItem.player.outputs[0].connect(this._output.right);
-              break;
-            case 'mono':
-            default:
-              activeItem.player.outputs[0].connect(this._output.mono);
-              break;
-          }
-        });
-
-      this._activeItems.set(itemId, activeItem);
+        .then(() => console.debug('got renderer'));
     });
 
-    // stop all abandoned currently active players that don't correspond to an enabled object.
-    const abandonedItemIds = Array.from(this._activeItems.keys())
+    const abandonedItemIds = Array.from(this._activeItemRenderers.keys())
       .filter(itemId => !activeItemIds.includes(itemId));
 
-    if (activeItemIds.filter(a => !this._activeItems.has(a.itemId)).length > 1) {
+    abandonedItemIds.forEach((itemId) => {
+      console.debug(itemId, this._activeItemRenderers.get(itemId));
+      this._activeItemRenderers.get(itemId).stop()
+        .then(() => this._activeItemRenderers.delete(itemId));
+    });
+
+    if (activeItemIds.filter(a => !this._activeItemRenderers.has(a.itemId)).length > 1) {
       console.debug(`Active items: ${activeItemIds}.`);
     }
     if (abandonedItemIds.length > 0) {
       console.debug(`Abandoned items: ${abandonedItemIds}`);
     }
-
-    Array.from(this._activeItems.keys())
-      .filter(key => !activeItemIds.includes(key)) // stop all not in activeItemIds
-      .forEach((itemId) => {
-        const { player, clock, syncController } = this._activeItems.get(itemId);
-        player.outputs.forEach(output =>
-          output.gain.exponentialRampToValueAtTime(0.1, 2 * this.fadeOutDuration));
-        setTimeout(() => {
-          clock.setSpeed(0);
-          syncController.stop();
-          player.outputs.forEach(output => output.disconnect());
-        }, this.fadeOutDuration);
-        this._activeItems.delete(itemId);
-      });
   }
 
   /**
