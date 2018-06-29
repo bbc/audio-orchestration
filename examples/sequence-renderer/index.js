@@ -28,10 +28,10 @@ function getSelectedObjectIds() {
 }
 
 function initControls(renderer) {
-  renderer.sequence.objectIds.forEach((objectId) => {
+  renderer.sequence.objectIds.forEach((objectId, i) => {
     const input = document.createElement('input');
     input.type = 'checkbox';
-    input.checked = true;
+    input.checked = (i === 0);
     input.value = objectId;
 
     const label = document.createElement('label');

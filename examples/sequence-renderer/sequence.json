@@ -13,6 +13,189 @@
   ],
   "objects": [
     {
+      "objectId": "3_Clicks",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 1,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 2,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 3,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "16_Clicks",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 1,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 2,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 3,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 4,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 5,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 6,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 7,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 8,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 9,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 10,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 11,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 12,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 13,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 14,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 15,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        }
+      ]
+    },
+    {
       "objectId": "Bed",
       "orchestration": {},
       "items": [
