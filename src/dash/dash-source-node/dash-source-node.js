@@ -165,7 +165,20 @@ export default class DashSourceNode extends CompoundNode {
     this._allStreams.forEach((stream) => stream.stop());
     this._state = 'ready';
   }
-
+   /**
+   * Seek playback by a provided offset value.
+   * @param  {?number} [seconds]
+   *         Time in seconds to seek by note this is relative to the current playback position and 
+   *         can be +/ve or -/ve
+   */
+  seek(seekTime) {
+    let seekStart = this.context.currentTime;
+    let seekEnd = seekStart + seekTime;
+    this.stop();
+    this.prime(seekEnd).then(() => {
+      this.start();
+    });
+  }
   /**
    * Get the current performance time in seconds.
    * @type {number}
