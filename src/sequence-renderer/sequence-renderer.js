@@ -4,6 +4,8 @@ import ItemRendererFactory from './item-renderer';
 
 const { CorrelatedClock } = Clocks;
 
+const MUTE_GAIN = 1.0e-6;
+
 /**
  * @class
  * @desc
@@ -80,6 +82,12 @@ class SynchronisedSequenceRenderer {
     this._output = this._audioContext.createGain();
 
     /**
+     * @type {boolean}
+     * @private
+     */
+    this._stopped = false;
+
+    /**
      * @type {ItemRendererFactory}
      * @private
      */
@@ -144,6 +152,41 @@ class SynchronisedSequenceRenderer {
    */
   get output() {
     return this._output;
+  }
+
+  /**
+   * Mutes all outputs from this renderer and stops all players at the given AudioContext syncTime.
+   *
+   * @param {number} syncTime
+   * @param {boolean} fade
+   */
+  stop(syncTime, fade = true) {
+    this._stopped = true;
+    this._activeItemRenderers.forEach((renderer) => {
+      if (fade) {
+        renderer.output.gain.setTargetAtTime(MUTE_GAIN, syncTime, this.fadeOutDuration / 3);
+      } else {
+        renderer.output.gain.setValueAtTime(MUTE_GAIN, syncTime);
+      }
+      setTimeout(
+        renderer.stop,
+        1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
+      );
+    });
+  }
+
+  /**
+   * Mutes all outputs from this renderer and stops all players at the next suitable time after the
+   * given delay.  Renders this renderer useless.
+   *
+   * @param {delay}
+   * @returns {number} the context time when the output will be muted
+   */
+  stopAtOutPoint(delay = 0) {
+    const out = this._sequence.nextOutPoint(this._clock.now() + delay);
+    const syncTime = this._clock.calcWhen(out);
+    this.stop(syncTime, false);
+    return syncTime;
   }
 
   /**

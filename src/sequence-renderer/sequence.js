@@ -216,7 +216,34 @@ class Sequence {
   }
 
   /**
-   * Gets the out-points of the sequence, if any.
+   * Gets the next out point. If there are no defined out points after the given time, or no time is
+   * specified, returns the duration of the sequence.
+   *
+   * @param {number} after - the time in seconds to select the next out point.
+   * @param {boolean} wrap - if true, will wrap around and return the first out point instead, if
+   * there are none after the given time.
+   *
+   * @returns {number}
+   */
+  nextOutPoint(after = null, wrap = false) {
+    if (after === null) {
+      return this.duration;
+    }
+
+    const next = this.outPoints
+      .filter(o => o >= (wrap === false ? after : (after % this.duration)))
+      .sort()
+      .shift();
+
+    if (next === undefined) {
+      return this.duration;
+    }
+
+    return next;
+  }
+
+  /**
+   * Gets all out points defined for the sequence.
    *
    * @returns {Array<number>}
    */
