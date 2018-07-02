@@ -181,7 +181,7 @@ class DashPlayer extends Player {
    * @returns {Promise} resolving when the player has been stopped.
    */
   pause() {
-    if (this.source === 'playing') {
+    if (this.source !== null && this.source.state === 'playing') {
       console.log('DashPlayer.pause', this.source.state);
       this.source.stop();
     }

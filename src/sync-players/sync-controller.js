@@ -116,6 +116,8 @@ class SyncController {
     const s = expectedMediaTime - actualMediaTime;
     const v = this.idealTimelineClock.getEffectiveSpeed();
 
+    console.debug('SyncController.resync: v =', v, 'actualSpeed =', actualSpeed, 's =', s.toFixed(1));
+
     if (v === 0) {
       // need to pause
       this.strategyPaused();
