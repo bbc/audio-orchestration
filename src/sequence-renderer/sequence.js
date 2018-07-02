@@ -232,7 +232,7 @@ class Sequence {
 
     const next = this.outPoints
       .filter(o => o >= (wrap === false ? after : (after % this.duration)))
-      .sort()
+      .sort((a, b) => a - b)
       .shift();
 
     if (next === undefined) {

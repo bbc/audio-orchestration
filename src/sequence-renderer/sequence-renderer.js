@@ -169,7 +169,10 @@ class SynchronisedSequenceRenderer {
         renderer.output.gain.setValueAtTime(MUTE_GAIN, syncTime);
       }
       setTimeout(
-        renderer.stop,
+        () => {
+          renderer.stop();
+          console.debug(`renderer.stop at ${this._audioContext.currentTime}`);
+        },
         1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
       );
     });
@@ -184,8 +187,9 @@ class SynchronisedSequenceRenderer {
    */
   stopAtOutPoint(delay = 0) {
     const out = this._sequence.nextOutPoint(this._clock.now() + delay);
+    console.debug('stopAtOutPoint:', this._clock.now(), delay, out);
     const syncTime = this._clock.calcWhen(out);
-    this.stop(syncTime, false);
+    this.stop(syncTime, true);
     return syncTime;
   }
 
