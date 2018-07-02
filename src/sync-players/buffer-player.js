@@ -48,7 +48,7 @@ class BufferPlayer extends Player {
       [this.buffer] = decodedBuffers;
       return this.buffer;
     }).then((buffer) => {
-      this._outputs = [...Array(this.buffer.numChannels).keys()]
+      this._outputs = [...Array(this.buffer.numberOfChannels).keys()]
         .map(() => this.audioContext.createGain());
       return buffer;
     }).then((buffer) => {
