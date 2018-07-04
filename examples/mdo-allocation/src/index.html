@@ -4,6 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MDO Allocation</title>
+    <style type="text/css">
+      body {
+        font-family: sans-serif;
+      }
+
+      .device {
+        display: inline-block;
+        border: 1px solid #ccc;
+        margin: 0.5em;
+      }
+
+      .device h1 {
+        font-size: 1em;
+        background-color: #ccc;
+        text-align: center;
+        padding: 0.2em;
+      }
+
+      .device p, .device h1, .device ul {
+        padding: 0.2em;
+        margin: 0;
+      }
+
+      button {
+        border: 1px outset #ccc;
+        padding: 0.5em 1em;
+        color: #111;
+        margin: 0.1em;
+        cursor: pointer;
+      }
+      button.enabled {
+        background-color: #cfc;
+      }
+      button.disabled {
+        background-color: #fcc;
+      }
+      button.enabled:hover {
+        background-color: #9c9;
+      }
+      button.disabled:hover {
+        background-color: #c99;
+      }
+      button:active {
+        background-color: #ccf;
+        border-style: inset;
+      }
+
+      .object-list {
+        border-top: 1px solid #ccc;
+        padding: 0;
+        list-style: none;
+        height: 150px;
+        overflow-y: auto;
+      }
+
+      .object-list li {
+        display: inline-block;
+        background: #fc3;
+        border-radius: 0.25em;
+        margin: 0.2em;
+        padding: 0.5em;
+        font-size: smaller;
+      }
+    </style>
   </head>
   <body>
     <div id="app"></div>

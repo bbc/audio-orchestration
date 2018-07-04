@@ -27,4 +27,7 @@ module.exports = {
       { from: path.resolve(__dirname, 'sequence.json') },
     ]),
   ],
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };

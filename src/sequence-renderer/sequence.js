@@ -130,7 +130,6 @@ class Sequence {
     return new Sequence(JSON.parse(str));
   }
 
-
   /**
    * Serialise this sequence object as a string.
    *
@@ -186,6 +185,21 @@ class Sequence {
       })
       .filter(item => (item.start >= after ||
                        (item.start < after && item.start + item.duration >= after)));
+  }
+
+  /**
+   * Gets a copy of the orchestration metadata for the object of the given id.
+   *
+   * @param {string} objectId
+   *
+   * @returns {MdoMetadata}
+   */
+  getOrchestrationData(objectId) {
+    const object = this._sequence.objects.find(o => o.objectId === objectId);
+    if (object === undefined) {
+      return {};
+    }
+    return Object.assign({}, object.orchestration);
   }
 
   /**
