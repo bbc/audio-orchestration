@@ -22,38 +22,22 @@ function allocate(objects, devices, previousAllocations = {}) {
     domain: new Set(availableDeviceIds),
   }));
 
-  console.log(domains);
-
   // Apply simple rules for reducing the domains in order
-
   [
     Rules.mdoOnly,
     Rules.mdoThreshold,
     Rules.zonesNever,
+    Rules.minQuality,
+    Rules.exclusivity,
+    Rules.muteIf,
+    Rules.chooseOrSpread,
   ].forEach(f => f(domains, objects, devices));
 
   // Choose the best device(s) out of the remaining domains.
   const allocations = {};
   domains.forEach(({ objectId, domain }) => {
-    const object = objects.find(o => o.objectId === objectId);
-    const domainDeviceIds = Array.from(domain.values());
-    switch (domain.size) {
-      case 0:
-        allocations[objectId] = [];
-        break;
-      case 1:
-        allocations[objectId] = [domainDeviceIds[0]];
-        break;
-      default:
-        if (object.orchestration.mdoSpread) {
-          allocations[objectId] = domainDeviceIds;
-        } else {
-          allocations[objectId] = [domainDeviceIds[Math.floor(domain.size * Math.random())]];
-        }
-        break;
-    }
+    allocations[objectId] = Array.from(domain.values());
   });
-  console.log(allocations);
   return allocations;
 }
 
