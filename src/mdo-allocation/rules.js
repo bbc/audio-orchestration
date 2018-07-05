@@ -64,6 +64,44 @@ function objectNumberToId(objects, objectNumber) {
   return (objects.find(o => o.orchestration.objectNumber === objectNumber) || {}).objectId;
 }
 
+function findObject(objects, objectId) {
+  return objects.find(o => o.objectId === objectId);
+}
+
+function randomElement(a) {
+  return a[Math.floor(Math.random() * a.length)];
+}
+
+/**
+ * Selects a device from the current domain based on its zones and returns its id.
+ * If multiple devices in the domain match, chooses one at random.
+ *
+ * @returns {Array<string>} deviceId, null if no match found in domain.
+ */
+function domainDevicesByZoneFlag(domain, orchestration, devices, zonePriority) {
+  return devices
+    .filter(({ deviceId, mainDevice }) => domain.has(deviceId) && !mainDevice)
+    .filter(({ location }) =>
+      deviceLocationToZones(location).some(zone =>
+        orchestration[zone] === zonePriority))
+    .map(({ deviceId }) => deviceId);
+}
+
+/**
+ * Selects the best deviceId remaining in the domain, based on it having a matching should or could
+ * zone. Returns null if no MDO device matches. In this case, the main device may be selected.
+ */
+function bestInDomainByZone(domain, orchestration, devices) {
+  const should = domainDevicesByZoneFlag(domain, orchestration, devices, SHOULD);
+  const could = domainDevicesByZoneFlag(domain, orchestration, devices, COULD);
+  if (should.length > 0) {
+    return randomElement(should);
+  } else if (could.size > 0) {
+    return randomElement(could);
+  }
+  return null;
+}
+
 /*
  * These rules only ever delete devices from the domains of objects. Devices or object metadata is
  * not modified. Each rule should only be concerned with its property's own effect. It may use the
@@ -75,7 +113,7 @@ export default {
    */
   mdoOnly: (domains, objects, devices) => {
     domains.forEach(({ objectId, domain }) => {
-      const { orchestration } = objects.find(o => o.objectId === objectId);
+      const { orchestration } = findObject(objects, objectId);
       if (orchestration.mdoOnly) {
         const mainDevice = devices.find(d => d.mainDevice === true);
         if (mainDevice !== undefined) {
@@ -91,7 +129,7 @@ export default {
   mdoThreshold: (domains, objects, devices) => {
     const numMdoDevices = devices.filter(d => d.enabled === true && d.mainDevice === false).length;
     domains.forEach(({ objectId, domain }) => {
-      const { orchestration } = objects.find(o => o.objectId === objectId);
+      const { orchestration } = findObject(objects, objectId);
       devices.forEach(({ deviceId, mainDevice }) => {
         if (!mainDevice && numMdoDevices < orchestration.mdoThreshold) {
           domain.delete(deviceId);
@@ -136,7 +174,27 @@ export default {
    * other object's domain.
    */
   exclusivity: (domains, objects, devices) => {
+    domains.forEach(({ objectId, domain }) => {
+      const { orchestration } = objects.find(o => o.objectId === objectId);
+      if (orchestration.exclusivity) {
+        const bestDeviceId = bestInDomainByZone(domain, orchestration, devices);
+        if (bestDeviceId !== null) {
+          // remove all unselected device ids from this exclusive object's domain
+          devices.forEach(({ deviceId }) => {
+            if (deviceId !== bestDeviceId) {
+              domain.delete(deviceId);
+            }
+          });
 
+          // remove the selected device from all other object's domains
+          domains.forEach(({ domain: otherDomain, objectId: otherObjectId }) => {
+            if (otherObjectId !== objectId) {
+              otherDomain.delete(bestDeviceId);
+            }
+          });
+        }
+      }
+    });
   },
   /*
    * muteIf: The object disappears entirely if another object is active. If the domain for the
@@ -161,51 +219,28 @@ export default {
    */
   chooseOrSpread: (domains, objects, devices) => {
     domains.forEach(({ objectId, domain }) => {
-      console.debug(`chooseOrSpread: ${objectId}: domain ${Array.from(domain.values()).join(',')}`);
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.mdoSpread || domain.size <= 1) {
         return;
       }
 
-      const domainShouldDeviceIds = new Set();
-      const domainCouldDeviceIds = new Set();
-      devices
-        .filter(({ deviceId, mainDevice }) => domain.has(deviceId) && !mainDevice)
-        .forEach(({ deviceId, location }) => {
-          deviceLocationToZones(location).forEach((zone) => {
-            if (orchestration[zone] === SHOULD) {
-              domainShouldDeviceIds.add(deviceId);
-            } else if (orchestration[zone] === COULD) {
-              domainCouldDeviceIds.add(deviceId);
-            }
-          });
-        });
-      if (domainShouldDeviceIds.size > 0) {
-        // if there is at least one 'should' device, chose it.
-        const chosenDeviceId = Array.from(domainShouldDeviceIds.values())[0];
-        console.debug(`chooseOrSpread: ${objectId}: chose 'should' ${chosenDeviceId}`);
+      const bestDevice = bestInDomainByZone(domain, orchestration, devices);
+      if (bestDevice !== null) {
+        // delete all but the best (should, or maybe could) device.
         devices.forEach(({ deviceId }) => {
-          if (deviceId !== chosenDeviceId) {
-            domain.delete(deviceId);
-          }
-        });
-      } else if (domainCouldDeviceIds.size > 0) {
-        // otherwise, if there is at least one 'could' device, chose it.
-        const chosenDeviceId = Array.from(domainCouldDeviceIds.values())[0];
-        console.debug(`chooseOrSpread: ${objectId}: chose 'could' ${chosenDeviceId}`);
-        devices.forEach(({ deviceId }) => {
-          if (deviceId !== chosenDeviceId) {
+          if (deviceId !== bestDevice) {
             domain.delete(deviceId);
           }
         });
       } else {
-        // if no should or could devices exist, remove everything but the main device.
+        // no suitable MDO device selected, so remove all but the main device.
         devices.forEach(({ deviceId, mainDevice }) => {
           if (!mainDevice) {
             domain.delete(deviceId);
           }
         });
       }
+
     });
   },
 };
