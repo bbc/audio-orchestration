@@ -47,6 +47,8 @@ class Allocations extends React.Component {
 
   render() {
     const { devices, allocations } = this.state;
+    const { visibleObjects, setObjectVisible } = this.props;
+
     return (
       <div>
         { devices.map(d => (
@@ -58,6 +60,8 @@ class Allocations extends React.Component {
             enabled={d.enabled}
             updateDeviceInfo={deviceInfo => this.updateDeviceInfo(d.deviceId, deviceInfo)}
             allocations={allocations}
+            visibleObjects={visibleObjects}
+            setObjectVisible={setObjectVisible}
           />
         ))}
       </div>

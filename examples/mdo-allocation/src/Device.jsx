@@ -19,6 +19,8 @@ const Device = ({
   enabled,
   updateDeviceInfo,
   allocations,
+  visibleObjects,
+  setObjectVisible,
 }) => (
   <div className="device">
     <h1>
@@ -82,15 +84,27 @@ const Device = ({
       {
       Object.entries(allocations)
         .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+        .filter(([objectId, deviceIds]) => visibleObjects.includes(objectId))
         .map(([objectId]) => objectId)
         .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
         .map(objectId => (
-          <li key={objectId}>
+          <li
+            key={objectId}
+            onClick={() => setObjectVisible(objectId, false)}
+          >
             { objectId.substr(0, 8) }
           </li>
         ))
       }
     </ul>
+
+    <p>
+      {`+ ${Object.entries(allocations)
+        .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+        .filter(([objectId]) => !visibleObjects.includes(objectId))
+        .length
+      } hidden`}
+    </p>
   </div>
 );
 
