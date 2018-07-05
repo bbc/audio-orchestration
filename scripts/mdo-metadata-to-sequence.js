@@ -47,7 +47,7 @@ const sequenceData = {
   loop: false,
   outPoints: [],
   objects: mdoMetadata.mdoObjects.map(metadata => ({
-    objectId: `${metadata.objectNumber}-${metadata.label}`,
+    objectId: `${toInt(metadata.objectNumber)}-${metadata.label}`,
     items: [],
     orchestration: transformOrchestration(metadata),
   })),

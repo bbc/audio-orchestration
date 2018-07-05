@@ -18,7 +18,7 @@ const Device = ({
   location,
   enabled,
   updateDeviceInfo,
-  activeObjects,
+  allocations,
 }) => (
   <div className="device">
     <h1>
@@ -79,11 +79,17 @@ const Device = ({
     </p>
 
     <ul className="object-list">
-      {activeObjects.map(({ objectNumber, objectLabel }) => (
-        <li key={objectNumber}>
-          { `${objectNumber}: ${objectLabel}` }
-        </li>
-      ))}
+      {
+      Object.entries(allocations)
+        .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+        .map(([objectId]) => objectId)
+        .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+        .map(objectId => (
+          <li key={objectId}>
+            { objectId.substr(0, 8) }
+          </li>
+        ))
+      }
     </ul>
   </div>
 );

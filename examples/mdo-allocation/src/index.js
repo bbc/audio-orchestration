@@ -5,15 +5,18 @@ import App from './App';
 
 function render(sequence = null) {
   const numDevices = 8;
-  let mdoObjects = [];
+  let objects = [];
 
   // extract MDO metadata from sequence's list of objects.
   if (sequence !== null) {
-    mdoObjects = sequence.objectIds.map(objectId => sequence.getOrchestrationData(objectId));
+    objects = sequence.objectIds.map(objectId => ({
+      objectId,
+      orchestration: sequence.getOrchestrationData(objectId),
+    }));
   }
 
   ReactDOM.render(React.createElement(App, {
-    mdoObjects,
+    objects,
     numDevices,
   }), document.getElementById('app'));
 }

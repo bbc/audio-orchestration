@@ -2,9 +2,9 @@ import React from 'react';
 import { hot } from 'react-hot-loader';
 import Allocations from './Allocations';
 
-const App = ({ mdoObjects, numDevices }) => (
+const App = ({ objects, numDevices }) => (
   <Allocations
-    mdoObjects={mdoObjects}
+    objects={objects}
     numDevices={numDevices}
   />
 );

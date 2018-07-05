@@ -25,7 +25,7 @@ class Allocations extends React.Component {
 
   updateDeviceInfo(deviceId, { enabled, location }) {
     this.setState((prevState, props) => {
-      const { mdoObjects } = props;
+      const { objects } = props;
       const devices = prevState.devices.map((d) => {
         if (d.deviceId !== deviceId) {
           return d;
@@ -35,8 +35,9 @@ class Allocations extends React.Component {
           location: (prevState.persistLocation || enabled) ? location : {},
         });
       });
-      const allocations = MdoAllocation.allocate(mdoObjects, devices, prevState.allocations);
+      const allocations = MdoAllocation.allocate(objects, devices, prevState.allocations);
 
+      // merge previous state and updated properties
       return Object.assign({}, prevState, {
         devices,
         allocations,
@@ -56,7 +57,7 @@ class Allocations extends React.Component {
             location={d.location}
             enabled={d.enabled}
             updateDeviceInfo={deviceInfo => this.updateDeviceInfo(d.deviceId, deviceInfo)}
-            activeObjects={allocations[d.deviceId] || []}
+            allocations={allocations}
           />
         ))}
       </div>
