@@ -41,6 +41,10 @@ const NEVER = 1;
 const COULD = 2;
 const SHOULD = 3;
 
+/**
+ * @param {MdoLocation} location
+ * @returns {Array<string>} zones
+ */
 function deviceLocationToZones({ distance = null, direction = null } = {}) {
   // Ensure the values are valid - compare lower case to account for capitalisation in DIRECTIONS
   // If one of distance, direction is not set, use all possible values.
@@ -73,8 +77,8 @@ function randomElement(a) {
 }
 
 /**
- * Selects a device from the current domain based on its zones and returns its id.
- * If multiple devices in the domain match, chooses one at random.
+ * Selects all deviceIds that match the given zone priority for the given orchestration object.
+ * The mainDevice is never included in the results, and its location is ignored.
  *
  * @returns {Array<string>} deviceId, null if no match found in domain.
  */
@@ -96,7 +100,7 @@ function bestInDomainByZone(domain, orchestration, devices) {
   const could = domainDevicesByZoneFlag(domain, orchestration, devices, COULD);
   if (should.length > 0) {
     return randomElement(should);
-  } else if (could.size > 0) {
+  } else if (could.length > 0) {
     return randomElement(could);
   }
   return null;
@@ -145,12 +149,8 @@ export default {
   zonesNever: (domains, objects, devices) => {
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
-      devices.forEach(({ deviceId, location, mainDevice }) => {
-        deviceLocationToZones(location).forEach((zone) => {
-          if (!mainDevice && orchestration[zone] === NEVER) {
-            domain.delete(deviceId);
-          }
-        });
+      domainDevicesByZoneFlag(domain, orchestration, devices, NEVER).forEach((deviceId) => {
+        domain.delete(deviceId);
       });
     });
   },
@@ -172,6 +172,9 @@ export default {
    * exclusivity: An exclusive object commands control of the entire device. This rule chooses the
    * 'best' device for each exclusive object if possible, and then removes that device from every
    * other object's domain.
+   *
+   * TODO: Confirm that exclusive objects must always have mdoOnly (or that exclusive applies to
+   * mainDevice). Currently assume that exclusive implies it can never be in mainDevice.
    */
   exclusivity: (domains, objects, devices) => {
     domains.forEach(({ objectId, domain }) => {
@@ -179,6 +182,7 @@ export default {
       if (orchestration.exclusivity) {
         const bestDeviceId = bestInDomainByZone(domain, orchestration, devices);
         if (bestDeviceId !== null) {
+          // console.debug(`EXCLUSIVITY: ${objectId} is exclusive in device ${bestDeviceId}`);
           // remove all unselected device ids from this exclusive object's domain
           devices.forEach(({ deviceId }) => {
             if (deviceId !== bestDeviceId) {
@@ -192,6 +196,9 @@ export default {
               otherDomain.delete(bestDeviceId);
             }
           });
+        } else {
+          domain.clear();
+          // console.debug(`EXCLUSIVITY: ${objectId} is exclusive but has no MDO devices to be in.`);
         }
       }
     });
@@ -207,6 +214,7 @@ export default {
         const muteIfObjectId = objectNumberToId(objects, orchestration.muteIfObject);
         if (muteIfObjectId !== undefined) {
           if (domains.find(d => d.objectId === muteIfObjectId).domain.size > 0) {
+            // console.debug(`MUTEIF: ${objectId} muted as ${muteIfObjectId} is active`);
             domain.clear();
           }
         }
