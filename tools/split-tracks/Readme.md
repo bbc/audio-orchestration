@@ -55,6 +55,7 @@ considered separate.
 
 These scripts further analyse the `.json` metadata files produced by the main tool:
 
+ * `get_metadata.py <dir>` collects all the metadata files and outputs them as single json object.
  * `analyse_metadata_active_tracks.py --duration <seconds> <dir>` lists the active tracks for each second.
  * `analyse_metadata_utilisation.py <dir>` finds the number and total duration of objects for each track.
 
