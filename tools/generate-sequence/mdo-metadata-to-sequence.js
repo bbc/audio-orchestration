@@ -120,7 +120,7 @@ sequenceData.objects.forEach(({ filename, items, panning }) => {
       source: {
         channelMapping,
         type: duration < MAX_BUFFER_DURATION ? 'buffer' : 'dash',
-        url: itemFilename,
+        url: `${track.trackName}/${itemFilename}`,
       },
     });
   });
