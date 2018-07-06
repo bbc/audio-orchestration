@@ -43,7 +43,7 @@ function encodeBuffer(inputName, inputPath, outputPath) {
   const outputName = `${path.basename(inputName, '.wav')}.${BUFFER_EXTENSION}`;
   const output = path.join(outputPath, outputName);
 
-  spawnSync('ffmpeg', [
+  const cmdArgs = [
     '-loglevel', 'warning',
     '-hide_banner',
     '-y',
@@ -51,9 +51,9 @@ function encodeBuffer(inputName, inputPath, outputPath) {
     '-c:a', ENCODE_CODEC,
     '-b:a', ENCODE_BITRATE,
     output,
-  ], {
-    stdio: 'inherit',
-  });
+  ];
+  console.debug('ffmpeg', cmdArgs.join(' '));
+  spawnSync('ffmpeg', cmdArgs, { stdio: 'inherit' });
 
   return outputName;
 }
@@ -66,7 +66,7 @@ function encodeDash(inputName, inputPath, outputPath) {
     fs.mkdirSync(path.dirname(output));
   }
 
-  spawnSync('ffmpeg', [
+  const cmdArgs = [
     '-loglevel', 'warning',
     '-hide_banner',
     '-y',
@@ -74,12 +74,15 @@ function encodeDash(inputName, inputPath, outputPath) {
     '-c:a', ENCODE_CODEC,
     '-b:a', ENCODE_BITRATE,
     '-use_template', 1,
+    '-use_timeline', 0,
     '-min_seg_duration', 1.0e6 * SEGMENT_DURATION,
     '-f', 'dash',
     output,
-  ], {
-    stdio: 'inherit',
-  });
+  ];
+
+  console.debug('ffmpeg', cmdArgs.join(' '));
+
+  spawnSync('ffmpeg', cmdArgs, { stdio: 'inherit' });
 
   return outputName;
 }
