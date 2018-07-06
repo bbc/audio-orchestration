@@ -87,7 +87,7 @@ class ItemRendererFactory {
           resolve(new DashPlayer(
             this._audioContext,
             source.url,
-            [source.adaptationSetId],
+            [source.adaptationSetId || '0'], // TODO hard-coded default name for ffmpeg dash manifests
           ));
           break;
         case 'buffer':
