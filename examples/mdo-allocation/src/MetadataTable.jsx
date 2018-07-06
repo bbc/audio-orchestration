@@ -50,7 +50,7 @@ const MetadataTable = ({
         >
           { orchestrationColumns.map(c => (
             <td key={c} className={`meta-${c}`}>
-              { orchestration[c] }
+              { `${orchestration[c]}` }
             </td>
           ))}
         </tr>
