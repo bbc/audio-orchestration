@@ -22,12 +22,12 @@ const Device = ({
   visibleObjects,
   setObjectVisible,
 }) => (
-  <div className="device">
-    <h1>
+  <tr className="device">
+    <td>
       { deviceId }
-    </h1>
+    </td>
 
-    <p>
+    <td>
       <button
         type="button"
         disabled={mainDevice}
@@ -40,9 +40,9 @@ const Device = ({
         {enabled ? 'Disconnect' : 'Connect'}
         {mainDevice ? ' (Main)' : ''}
       </button>
-    </p>
+    </td>
 
-    <p>
+    <td>
       { DISTANCES.map(distance => (
         <button
           key={distance}
@@ -59,9 +59,9 @@ const Device = ({
           { distance }
         </button>
       ))}
-    </p>
+    </td>
 
-    <p>
+    <td>
       { DIRECTIONS.map(direction => (
         <button
           key={direction}
@@ -78,9 +78,21 @@ const Device = ({
           { direction }
         </button>
       ))}
-    </p>
-
-    <ul className="object-list">
+    </td>
+    <td>
+      {
+      `${Object.entries(allocations)
+          .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+          .length}`
+      }
+      {
+      ` (${Object.entries(allocations)
+        .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+        .filter(([objectId]) => !visibleObjects.includes(objectId))
+        .length} hidden)`
+      }
+    </td>
+    <td className="object-list">
       {
       Object.entries(allocations)
         .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
@@ -88,24 +100,17 @@ const Device = ({
         .map(([objectId]) => objectId)
         .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
         .map(objectId => (
-          <li
+          <button
+            type="button"
             key={objectId}
             onClick={() => setObjectVisible(objectId, false)}
           >
-            { objectId.substr(0, 8) }
-          </li>
+            { objectId }
+          </button>
         ))
       }
-    </ul>
-
-    <p>
-      {`+ ${Object.entries(allocations)
-        .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
-        .filter(([objectId]) => !visibleObjects.includes(objectId))
-        .length
-      } hidden`}
-    </p>
-  </div>
+    </td>
+  </tr>
 );
 
 export default Device;

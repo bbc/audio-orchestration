@@ -10,23 +10,9 @@
       }
 
       .device {
-        display: inline-block;
         border: 1px solid #ccc;
         margin: 0.5em;
-        width: 200px;
-        vertical-align: text-top;
-      }
-
-      .device h1 {
-        font-size: 1em;
-        background-color: #ccc;
-        text-align: center;
-        padding: 0.2em;
-      }
-
-      .device p, .device h1, .device ul {
-        padding: 0.2em;
-        margin: 0;
+        white-space: nowrap;
       }
 
       button {
@@ -56,18 +42,13 @@
       .object-list {
         border-top: 1px solid #ccc;
         padding: 0;
-        list-style: none;
-        height: 150px;
-        overflow-y: auto;
+        white-space: normal;
       }
 
-      .not-rendered-device .object-list {
-        height: 250px;
-      }
-
-      .object-list li {
+      .object-list button {
         display: inline-block;
         background: #fc3;
+        border: 0px solid;
         border-radius: 0.25em;
         margin: 0.2em;
         padding: 0.5em;

@@ -12,6 +12,12 @@ class App extends React.Component {
     };
   }
 
+  componentWillReceiveProps() {
+    this.setState((prevState, props) => Object.assign({}, prevState, {
+      visibleObjects: props.objects.map(o => o.objectId),
+    }));
+  }
+
   setObjectVisible(objectId, visible) {
     this.setState((prevState, props) => Object.assign({}, prevState, {
       visibleObjects: props.objects.filter((object) => {
@@ -34,6 +40,7 @@ class App extends React.Component {
           visibleObjects={visibleObjects}
           setObjectVisible={(objectId, visible) => { this.setObjectVisible(objectId, visible); }}
         />
+        <br />
         <MetadataTable
           objects={objects}
           visibleObjects={visibleObjects}

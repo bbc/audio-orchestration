@@ -51,25 +51,28 @@ class Allocations extends React.Component {
     const { visibleObjects, setObjectVisible } = this.props;
 
     return (
-      <div>
-        { devices.map(d => (
-          <Device
-            key={d.deviceId}
-            deviceId={d.deviceId}
-            mainDevice={d.mainDevice}
-            location={d.location}
-            enabled={d.enabled}
-            updateDeviceInfo={deviceInfo => this.updateDeviceInfo(d.deviceId, deviceInfo)}
+      <table>
+        <tbody>
+          { devices.map(d => (
+            <Device
+              key={d.deviceId}
+              deviceId={d.deviceId}
+              mainDevice={d.mainDevice}
+              location={d.location}
+              enabled={d.enabled}
+              updateDeviceInfo={deviceInfo => this.updateDeviceInfo(d.deviceId, deviceInfo)}
+              allocations={allocations}
+              visibleObjects={visibleObjects}
+              setObjectVisible={setObjectVisible}
+            />
+          ))}
+          <NotRenderedDevice
             allocations={allocations}
             visibleObjects={visibleObjects}
             setObjectVisible={setObjectVisible}
           />
-        ))}
-        <NotRenderedDevice
-          allocations={allocations}
-          visibleObjects={visibleObjects}
-        />
-      </div>
+        </tbody>
+      </table>
     );
   }
 }
