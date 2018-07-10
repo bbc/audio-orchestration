@@ -1,6 +1,7 @@
 import React from 'react';
 import MdoAllocation from 'bbcat-orchestration/src/mdo-allocation/';
 import Device from './Device';
+import NotRenderedDevice from './NotRenderedDevice';
 
 // whether or not the device location settings are rememberd after disconnecting the device
 const DEFAULT_PERSIST_LOCATION = true;
@@ -64,6 +65,10 @@ class Allocations extends React.Component {
             setObjectVisible={setObjectVisible}
           />
         ))}
+        <NotRenderedDevice
+          allocations={allocations}
+          visibleObjects={visibleObjects}
+        />
       </div>
     );
   }
