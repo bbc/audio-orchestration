@@ -404,7 +404,7 @@ function performWallclockSync () {
     var priv;
     priv = PRIVATE.get(this);
     
-    priv.wallclock = new Clocks.CorrelatedClock(new Clocks.DateNowClock());
+    priv.wallclock = new Clocks.CorrelatedClock(priv.sysClock);
     priv.wallclock.on("available", this.emit.bind(this, "WallClockAvailable"));
     priv.wallclock.on("unavailable", this.emit.bind(this, "WallClockUnAvailable"));
     
