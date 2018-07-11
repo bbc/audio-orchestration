@@ -1,9 +1,7 @@
-import bbcat from 'bbcat';
+import bbcat from 'bbcat/src/bbcat.js';
 import Player from './player';
 
 const { ManifestLoader, ManifestParser, DashSourceNode } = bbcat.dash;
-
-let playCount = 0;
 
 class DashPlayer extends Player {
   constructor(audioContext, manifestUrl, adaptationSetIds = null) {
@@ -29,6 +27,9 @@ class DashPlayer extends Player {
 
     /** @private */
     this.preparePromise = null;
+
+    /** @private */
+    this.lastPrimePromise = Promise.resolve();
 
     /** @private */
     this.manifestLoader = new ManifestLoader();
@@ -64,6 +65,54 @@ class DashPlayer extends Player {
   }
 
   /**
+   * Replaces the current source with a new DashSourceNode, registering all required handlers etc.
+   * @param {number} offset
+   *
+   * @returns {Promise<DashSourceNode>} resolving immediately. Use this.lastPrimePromise
+   * to wait until the sourceNode is primed.
+   */
+  replaceSource(offset) {
+    if (this.source !== null && this.source.state === 'primed' && this.source.playbackTime === offset) {
+      // the requested source is equivalent to the current source. Nothing needs to be changed!
+      // console.debug('replaceSource not replacing because source is equivalent.');
+      return Promise.resolve(this.source);
+    }
+
+    // Clean up the previous source.
+    if (this.source !== null) {
+      const oldSource = this.source;
+
+      // disconnect the outputs of the old source to mute it immediately.
+      oldSource.outputs.forEach(output => output.disconnect());
+
+      // wait for the priming to complete, because we can't cancel promises, then stop the source.
+      this.lastPrimePromise.then(() => {
+        oldSource.stop();
+      });
+    }
+
+    // Create the new source
+    const newSource = new DashSourceNode(this.audioContext, this.manifest);
+    newSource.addEventListener('statechange', (e) => {
+      // only using the source's state to detect when the stream has ended.
+      // DashSourceNode states: ready -> priming -> primed -> playing -> ready
+      // only do this if the source triggering the event is still the current source.
+      if (newSource === this.source && e.state === 'ready') {
+        this.state = 'ready';
+      }
+    });
+    this.lastPrimePromise = newSource.prime(offset);
+
+    // store the new source, set the current offset used for determining currentTime, and reset the
+    // player state. It is ready until play() is called - regardless of prime promise completion.
+    this.source = newSource;
+    this.offset = offset;
+    this.state = 'ready';
+
+    return Promise.resolve(this.source);
+  }
+
+  /**
    * Prepares the player by loading, parsing, and filtering the DASH manifest,
    * and priming it to download the audio for playback from the beginning.
    *
@@ -87,25 +136,12 @@ class DashPlayer extends Player {
       .then(manifest => this.filterManifest(manifest))
       .then((manifest) => {
         this.manifest = manifest;
-        return manifest;
       })
-      .then((manifest) => {
-        this.source = new DashSourceNode(this.audioContext, manifest);
-        this.source.addEventListener('statechange', (e) => {
-          if (e.state === 'playing') {
-            this.state = 'playing';
-          } else if (e.state === 'ready') {
-            this.offset = this.currentTime;
-            this.state = 'ready';
-          }
-        });
+      .then(() => this.replaceSource(initialOffset))
+      .then((source) => {
+        this._outputs = source.outputs.map(() => this.audioContext.createGain());
       })
-      .then(() => this.connectOutputs())
-      .then(() => {
-        this.offset = initialOffset;
-        this.lastInitial = initialOffset;
-        return this.source.prime(initialOffset);
-      });
+      .then(() => this.connectOutputs());
 
     return this.preparePromise;
   }
@@ -125,39 +161,21 @@ class DashPlayer extends Player {
    * @returns {Promise}
    */
   play(when = null, offset = this.offset) {
-    const pc = playCount;
-    playCount += 1;
+    // console.debug(`play when = ${when}, offset = ${offset}`);
+    this.when = when || 0;
 
-    console.debug(`DashPlayer.play() called at ${this.audioContext.currentTime}`, pc);
-    return this.prepare(offset)
+    this.prepare(offset)
+      .then(() => this.replaceSource(offset))
+      .then(() => this.connectOutputs())
       .then(() => {
-        console.debug('DashPlayer: stop()', pc);
-        this.source.stop();
-      })
-      .then(() => {
-        if (this.source.state === 'primed' && this.lastInitial === offset) {
-          // console.debug(`DashPlayer.play using pre-primed source node for offset = ${offset}.`);
-          return Promise.resolve();
-        }
-        // console.debug(`DashPlayer.play priming again for offset = ${offset}.`);
-        this.lastInitial = offset;
-
-        console.debug('DashPlayer: prime()', pc);
-        return this.source.prime(offset);
-      })
-      .then(() => {
-        this.when = when;
-        if (when === null) {
-          this.when = this.audioContext.currentTime;
-        }
-        this.offset = offset;
-
-        console.debug('DashPlayer: start()', pc);
-        this.source.start(this.when);
-      })
-      .catch((e) => {
-        console.warn('DashPlayer: play() failed. Stopping DashSourceNode.', e, pc);
-        this.source.stop();
+        this.state = 'playing';
+        this.lastPrimePromise.then(() => {
+          if (this.source.state === 'primed') {
+            this.source.start(this.when);
+          } else {
+            console.warn('PrimePromise resolved but source not primed. Source may have changed?');
+          }
+        });
       });
   }
 
@@ -168,10 +186,8 @@ class DashPlayer extends Player {
    * files present multiple mono outputs, instead of a single multi-channel output.
    */
   connectOutputs() {
-    this._outputs = this.source.outputs.map((output) => {
-      const node = this.audioContext.createGain();
-      output.connect(node);
-      return node;
+    this.source.outputs.forEach((output, i) => {
+      output.connect(this.outputs[i]);
     });
   }
 
@@ -181,10 +197,14 @@ class DashPlayer extends Player {
    * @returns {Promise} resolving when the player has been stopped.
    */
   pause() {
-    if (this.source !== null && this.source.state === 'playing') {
-      console.log('DashPlayer.pause', this.source.state);
-      this.source.stop();
+    this.offset = this.currentTime;
+    this.when = this.audioContext.currentTime;
+
+    if (this.state === 'playing') {
+      this.state = 'ready';
+      return this.replaceSource(this.offset);
     }
+
     return Promise.resolve();
   }
 
@@ -194,16 +214,7 @@ class DashPlayer extends Player {
    * @returns {number}
    */
   get currentTime() {
-    if (this.source === null) {
-      return 0;
-    }
-
-    if (this.state === 'ready') {
-      return this.offset;
-    }
-
-    const currentTime = this.audioContext.currentTime - (this.when - this.offset);
-    return Math.max(this.offset, Math.min(currentTime, this.source.presentationDuration));
+    return this.audioContext.currentTime - (this.when - this.offset);
   }
 
   /**

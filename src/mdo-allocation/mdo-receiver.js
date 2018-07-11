@@ -10,6 +10,8 @@ class MdoReceiver extends MdoHelper {
     if (this._sync !== null) {
       this._sync.sendMessage(TOPICS.DEVICE_METADATA, metadata);
     }
+
+    // console.debug('MdoReceiver sending metadata update', metadata);
   }
 
   _handleRemoteAllocations({ allocations, contentId }) {

@@ -78,35 +78,37 @@ class ItemRendererFactory {
   }
 
   /**
-   * @returns {Promise<ItemRenderer>}
+   * @returns {ItemRenderer}
    */
   getInstance(source, clock) {
-    return new Promise((resolve) => {
-      switch (source.type) {
-        case 'dash':
-          resolve(new DashPlayer(
-            this._audioContext,
-            source.url,
-            [source.adaptationSetId || '0'], // TODO hard-coded default name for ffmpeg dash manifests
-          ));
-          break;
-        case 'buffer':
-          resolve(new BufferPlayer(
-            this._audioContext,
-            source.url,
-          ));
-          break;
-        default:
-          throw new Error(`Cannot create a player for unknown source type ${source.type}`);
-      }
-    }).then(player => new ItemRenderer(
+    let player = null;
+
+    switch (source.type) {
+      case 'dash':
+        player = new DashPlayer(
+          this._audioContext,
+          source.url,
+          [source.adaptationSetId || '0'], // TODO hard-coded default name for ffmpeg dash manifests
+        );
+        break;
+      case 'buffer':
+        player = new BufferPlayer(
+          this._audioContext,
+          source.url,
+        );
+        break;
+      default:
+        throw new Error(`Cannot create a player for unknown source type ${source.type}`);
+    }
+
+    return new ItemRenderer(
       this._audioContext,
       player,
       clock,
       Object.assign({}, this._options, {
         channelMapping: source.channelMapping,
       }),
-    ));
+    );
   }
 }
 

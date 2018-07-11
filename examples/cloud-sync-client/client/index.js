@@ -10,11 +10,9 @@ const contentId = url;
 
 const audioContext = new AudioContext();
 const player = new Players.BufferPlayer(audioContext, url);
-player.output.connect(audioContext.destination);
 
-const sync = new Sync(new CloudSyncAdapter({
-  sysClock: new Players.AudioContextClock({}, audioContext),
-}));
+const sysClock = new Players.AudioContextClock({}, audioContext);
+const sync = new Sync(new CloudSyncAdapter({ sysClock }));
 const { wallClock } = sync;
 
 // the master clock can be updated to send updates, but will also be updated by the sync service.
@@ -47,6 +45,7 @@ function connect(isMaster = false) {
   player.prepare()
     .then(() => {
       // master device: publish updates from the timeline clock
+      player.outputs[0].connect(audioContext.destination);
 
       if (isMaster) {
         return sync.provideTimelineClock(masterClock, timelineType, contentId);
@@ -56,6 +55,8 @@ function connect(isMaster = false) {
       return sync.requestTimelineClock(timelineType, contentId);
     })
     .then((timelineClock) => {
+      console.debug(sysClock.now(), timelineClock.getRoot().now());
+
       const controller = new Players.SyncController(timelineClock, player, {
         bufferingDelay: 0.1,
       });

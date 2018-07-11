@@ -186,9 +186,9 @@ class SynchronisedSequenceRenderer {
    * @returns {number} the context time when the output will be muted
    */
   stopAtOutPoint(delay = 0) {
-    const out = this._sequence.nextOutPoint(this._clock.now() + delay);
-    console.debug('stopAtOutPoint:', this._clock.now(), delay, out);
-    const syncTime = this._clock.calcWhen(out);
+    const out = this._sequence.nextOutPoint(this.contentTime + delay);
+    console.debug('stopAtOutPoint:', this.contentTime, delay, out);
+    const syncTime = this._clock.calcWhen(out * this._clock.tickRate);
     this.stop(syncTime, true);
     return syncTime;
   }
@@ -206,9 +206,9 @@ class SynchronisedSequenceRenderer {
     // find all active items (active now up to lookaheadDuration) for all active and valid objects.
     const activeItems = this._activeObjectIds
       .filter(objectId => this._sequence.objectIds.includes(objectId))
-      .map(objectId => this._sequence.items(objectId, this._clock.now()))
+      .map(objectId => this._sequence.items(objectId, this.contentTime))
       .reduce((acc, a) => acc.concat(a), [])
-      .filter(item => item.start <= this._clock.now() + this._lookaheadDuration);
+      .filter(item => item.start <= this.contentTime + this._lookaheadDuration);
 
     const activeItemIds = activeItems.map(item => item.itemId);
 
@@ -224,34 +224,31 @@ class SynchronisedSequenceRenderer {
 
       // otherwise create the clock, player, and sync controller.
       const clock = new CorrelatedClock(this._clock, {
-        correlation: [start, 0],
+        correlation: [start * this._clock.tickRate, 0],
         speed: 1,
         tickRate: 1,
       });
-      this._itemRendererFactory.getInstance(source, clock)
-        .then((renderer) => {
-          renderer.output.connect(this._output);
-          renderer.start();
-          this._activeItemRenderers.set(itemId, renderer);
-        })
-        .then(() => console.debug('got renderer'));
+
+      const renderer = this._itemRendererFactory.getInstance(source, clock);
+      renderer.output.connect(this._output);
+      renderer.start();
+      this._activeItemRenderers.set(itemId, renderer);
     });
 
     const abandonedItemIds = Array.from(this._activeItemRenderers.keys())
       .filter(itemId => !activeItemIds.includes(itemId));
 
     abandonedItemIds.forEach((itemId) => {
-      console.debug(itemId, this._activeItemRenderers.get(itemId));
       this._activeItemRenderers.get(itemId).stop()
         .then(() => this._activeItemRenderers.delete(itemId));
     });
 
-    if (activeItemIds.filter(a => !this._activeItemRenderers.has(a.itemId)).length > 1) {
-      console.debug(`Active items: ${activeItemIds}.`);
-    }
-    if (abandonedItemIds.length > 0) {
-      console.debug(`Abandoned items: ${abandonedItemIds}`);
-    }
+    // if (activeItemIds.filter(a => !this._activeItemRenderers.has(a.itemId)).length > 1) {
+    //   console.debug(`Active items: ${activeItemIds}.`);
+    // }
+    // if (abandonedItemIds.length > 0) {
+    //   console.debug(`Abandoned items: ${abandonedItemIds}`);
+    // }
   }
 
   /**
@@ -277,6 +274,15 @@ class SynchronisedSequenceRenderer {
    */
   removeObject(objectId) {
     this._activeObjectIds = this._activeObjectIds.filter(o => o !== objectId);
+  }
+
+  /**
+   * Gets the current contentTime in seconds.
+   *
+   * @returns {number}
+   */
+  get contentTime() {
+    return this._clock.now() / this._clock.tickRate;
   }
 }
 

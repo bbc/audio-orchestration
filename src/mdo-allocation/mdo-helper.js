@@ -37,7 +37,7 @@ class MdoHelper extends EventEmitter {
     this._deviceId = deviceId;
     this._deviceMetadata = {
       deviceId,
-      location: null,
+      location: { distance: null, direction: null },
       quality: 1,
       enabled: true,
       deviceType: null,
@@ -49,7 +49,6 @@ class MdoHelper extends EventEmitter {
 
   setAllocations(allocations, contentId = DEFAULT_CONTENT_ID) {
     this._allocations[contentId] = allocations;
-    console.debug('MdoHelper: emitting change event');
     this.emit('change', {
       contentId,
       activeObjects: this.getActiveObjects(contentId),
@@ -144,7 +143,12 @@ class MdoHelper extends EventEmitter {
    * @param {MdoLocation} location
    */
   setLocation({ direction = null, distance = null } = {}) {
-    this._deviceMetadata._location = Object.assign({ direction, distance });
+    if (direction !== null) {
+      this._deviceMetadata.location.direction = direction;
+    }
+    if (distance !== null) {
+      this._deviceMetadata.location.distance = distance;
+    }
     this.emit('location', this._deviceMetadata.location);
   }
 

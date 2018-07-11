@@ -70,8 +70,6 @@ class CloudSyncAdapter extends SyncAdapter {
         },
       );
 
-      console.log('----- synchroniser -----', this._synchroniser);
-
       this._synchroniser.on('WallClockAvailable', () => {
         this._wallClock.setParent(this._synchroniser.wallclock);
         this.emit('connected');
@@ -164,10 +162,12 @@ class CloudSyncAdapter extends SyncAdapter {
       .then(() =>
         this._synchroniser.getAvailableSyncTimelines()).then((timelines) => {
         // first check the currently available timelines.
+        // console.debug('requestTimelineClock available sync timelines:', timelines.map(t => `${t.contentId} ${t.timelineId}`));
         const timeline = timelines.find(matchTimeline);
         return (timeline !== undefined) ? timeline.timelineId : null;
       })
       .then((timelineId) => {
+        // console.debug('requestTimelineClock', timelineId);
         // if it is already available, resolve to its id immediately.
         if (timelineId !== null) {
           return timelineId;
@@ -176,12 +176,15 @@ class CloudSyncAdapter extends SyncAdapter {
         // Otherwise listen for new timelines being registered, and return a
         // promise resolving when it is found.
         return new Promise((resolve) => {
+          // console.warn('registering SyncTimelinesAvailable handler');
           this._synchroniser.on('SyncTimelinesAvailable', (timelines) => {
+            // console.debug('requestTimelineClock SyncTimelinesAvailable', timelines);
             const timeline = timelines.find(matchTimeline);
 
             // if a matching timeline is found, resolve to its id and stop listening.
             // Otherwise, we may have to wait for the next event of this kind to find it.
             if (timeline !== undefined) {
+              // console.debug('requestTimelineClock resolving', timeline.timelineId);
               resolve(timeline.timelineId);
             }
           });
