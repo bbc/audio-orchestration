@@ -8,7 +8,7 @@ class MdoReceiver extends MdoHelper {
   _handleDeviceMetadata(metadata) {
     super._handleDeviceMetadata(metadata);
     if (this._sync !== null) {
-      this._sync.broadcast(TOPICS.DEVICE_METADATA, metadata);
+      this._sync.sendMessage(TOPICS.DEVICE_METADATA, metadata);
     }
   }
 

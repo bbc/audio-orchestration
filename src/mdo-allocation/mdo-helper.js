@@ -20,7 +20,7 @@ export const TOPICS = {
   ALLOCATIONS: 'mdo-allocations',
 };
 
-const DEFAULT_CONTENT_ID = 'default';
+export const DEFAULT_CONTENT_ID = 'default';
 
 /**
  * The MdoHelper is a base class defining the common interface for the {@link MdoAllocator}
@@ -49,6 +49,7 @@ class MdoHelper extends EventEmitter {
 
   setAllocations(allocations, contentId = DEFAULT_CONTENT_ID) {
     this._allocations[contentId] = allocations;
+    console.debug('MdoHelper: emitting change event');
     this.emit('change', {
       contentId,
       activeObjects: this.getActiveObjects(contentId),
@@ -76,7 +77,9 @@ class MdoHelper extends EventEmitter {
    */
   getActiveObjects(contentId = DEFAULT_CONTENT_ID) {
     const allocations = this._allocations[contentId] || {};
-    return allocations[this._deviceId] || [];
+    return Object.entries(allocations)
+      .filter(([, deviceIds]) => deviceIds.includes(this._deviceId))
+      .map(([objectId]) => objectId);
   }
 
   /**
@@ -130,7 +133,7 @@ class MdoHelper extends EventEmitter {
    *
    * @param {string} deviceType
    */
-  set deviceType(deviceType) {
+  setDeviceType(deviceType) {
     this._deviceMetadata.deviceType = deviceType;
     this.emit('deviceType', deviceType);
   }
@@ -140,8 +143,8 @@ class MdoHelper extends EventEmitter {
    *
    * @param {MdoLocation} location
    */
-  set location(location) {
-    this._deviceMetadata._location = Object.assign({ direction: null, distance: null });
+  setLocation({ direction = null, distance = null } = {}) {
+    this._deviceMetadata._location = Object.assign({ direction, distance });
     this.emit('location', this._deviceMetadata.location);
   }
 
@@ -150,7 +153,7 @@ class MdoHelper extends EventEmitter {
    *
    * @param {number} quality
    */
-  set quality(quality) {
+  setQuality(quality) {
     this._deviceMetadata.quality = quality;
     this.emit('quality', quality);
   }

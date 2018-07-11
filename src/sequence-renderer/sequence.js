@@ -229,6 +229,11 @@ class Sequence {
     return this._sequence.objects.map(object => object.objectId);
   }
 
+  get objects() {
+    // TODO deep copy?
+    return this._sequence.objects.slice();
+  }
+
   /**
    * Gets the next out point. If there are no defined out points after the given time, or no time is
    * specified, returns the duration of the sequence.

@@ -1,4 +1,4 @@
-import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS } from './mdo-allocator';
+import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS } from './mdo-helper';
 import allocate from './allocate';
 
 /**
@@ -9,7 +9,7 @@ import allocate from './allocate';
 class MdoAllocator extends MdoHelper {
   constructor(deviceId) {
     super(deviceId);
-    this._deviceMedata.mainDevice = true;
+    this._deviceMetadata.mainDevice = true;
 
     // start the list of devices with only this device in it.
     this._devices = [
@@ -22,6 +22,9 @@ class MdoAllocator extends MdoHelper {
   /**
    * register objects for a given content id. Ususally this would be done only once and immediately
    * after the sequence definition has been downloaded. Triggers an allocation for this contentId.
+   *
+   * @param {Array<MdoObject>} objects
+   * @param {string} contentId
    */
   registerObjects(objects, contentId = DEFAULT_CONTENT_ID) {
     this._objects[contentId] = objects;
@@ -46,14 +49,20 @@ class MdoAllocator extends MdoHelper {
       return;
     }
 
-    this._allocations[contentId] = allocate(
+    console.debug(
+      'calling allocate()',
       this._objects[contentId],
       this._devices,
       this._allocations[contentId],
     );
 
+    this.setAllocations(
+      allocate(this._objects[contentId], this._devices, this._allocations[contentId]),
+      contentId,
+    );
+
     if (this._sync !== null) {
-      this._sync.broadcast(TOPICS.ALLOCATIONS, {
+      this._sync.sendMessage(TOPICS.ALLOCATIONS, {
         contentId,
         allocations: this._allocations[contentId],
       });
@@ -87,9 +96,12 @@ class MdoAllocator extends MdoHelper {
    * @param {object} metadata
    */
   _handleRemoteDeviceMetadata(deviceId, metadata) {
+    console.debug('remote device metadata', deviceId, metadata);
+
     if (this._devices.find(d => d.deviceId === deviceId) === undefined) {
       this._addDevice(deviceId);
     }
+
     this._devices = this._devices.map((d) => {
       if (d.deviceId === deviceId) {
         return Object.assign({}, d, metadata);
@@ -97,7 +109,7 @@ class MdoAllocator extends MdoHelper {
       return d;
     });
 
-    this.allocate();
+    this.allocateAll();
   }
 
   /**
@@ -115,6 +127,25 @@ class MdoAllocator extends MdoHelper {
       'MdoAllocator should never receive a remote allocations object. Are there too many Masters?',
       `${allocations.map(({ contentId }) => contentId).join(', ')}`,
     );
+  }
+
+  /**
+   * Creates a new empty device with the given deviceId.
+   *
+   * @param {string} deviceId
+   *
+   * @private
+   */
+  _addDevice(deviceId) {
+    this._devices = [
+      {
+        deviceId,
+        location: {},
+        quality: 1,
+        mainDevice: false,
+      },
+      ...this._devices.filter(d => d.deviceId !== deviceId),
+    ];
   }
 }
 
