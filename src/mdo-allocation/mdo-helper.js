@@ -179,6 +179,9 @@ class MdoHelper extends EventEmitter {
 
   // eslint-disable-next-line class-methods-use-this
   _handleRemoteAllocations() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  _handleRemoteDeviceMetadata() {}
 }
 
 export default MdoHelper;
