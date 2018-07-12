@@ -31,7 +31,9 @@ function initControls(player, playerType) {
   });
 
   document.getElementById('btn-prepare').addEventListener('click', () => {
-    player.prepare();
+    player.prepare().then(() => {
+      player.outputs.forEach(output => output.connect(audioContext.destination));
+    });
   });
 
   document.getElementById('btn-play').addEventListener('click', () => {
@@ -53,12 +55,10 @@ function initControls(player, playerType) {
 
 document.getElementById('btn-dash').addEventListener('click', () => {
   const player = getDashPlayer();
-  player.output.connect(audioContext.destination);
   initControls(player, 'DashPlayer');
 });
 
 document.getElementById('btn-buffer').addEventListener('click', () => {
   const player = getBufferPlayer();
-  player.output.connect(audioContext.destination);
   initControls(player, 'BufferPlayer');
 });
