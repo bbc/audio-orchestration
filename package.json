@@ -32,6 +32,6 @@
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
     "events": "^3.0.0",
-    "synckit-cloud": "file:./cloud-sync/"
+    "synckit-cloud": "git+ssh://git@github.com:bbc/cloud-synckit-js#kh-media-device-orchestration"
   }
 }
