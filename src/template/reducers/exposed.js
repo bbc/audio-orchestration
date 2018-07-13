@@ -1,3 +1,4 @@
+
 const initialState = {
   deviceMainDevice: false,
   deviceLocation: null,
@@ -24,6 +25,8 @@ const initialState = {
 
 const exposed = (state = initialState, action) => {
   switch (action.type) {
+    case 'LOADING':
+      return state;
     default:
       return state;
   }
