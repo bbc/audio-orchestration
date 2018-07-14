@@ -5,7 +5,7 @@ const initialState = {
   deviceType: null,
   deviceQuality: 1,
   sessionId: null,
-  deviceId: null,
+  connectedDeviceTypes: [],
   deviceFriendlyName: null,
   role: null,
   activeObjectIds: null,
@@ -16,7 +16,6 @@ const initialState = {
   error: false,
   errorMessage: null,
   loading: false,
-  connected: false,
   canReplaceSequence: false,
   canSeek: false,
   canPause: false,
@@ -25,8 +24,23 @@ const initialState = {
 
 const exposed = (state = initialState, action) => {
   switch (action.type) {
-    case 'LOADING':
-      return state;
+    case 'SET_LOADING':
+      return Object.assign({}, state, {
+        loading: action.loading,
+      });
+    case 'SET_SESSION_CODE':
+      return Object.assign({}, state, {
+        sessionCode: action.sessionCode,
+      });
+    case 'SET_ROLE':
+      return Object.assign({}, state, {
+        role: action.role,
+      });
+    case 'SET_ERROR':
+      return Object.assign({}, state, {
+        error: action.error,
+        errorMessage: action.errorMessage,
+      });
     default:
       return state;
   }

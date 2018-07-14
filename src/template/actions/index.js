@@ -1,59 +1,24 @@
-const setLoading = isLoading => ({
-  type: 'LOADING',
-  isLoading,
-});
+// This file exports actions that are to be called directly by the user interface and that affect
+// the exposed state. See actions/orchestration.js for actions managing non-exposed state and
+// interfacing with the sync services, object allocation, and media players.
 
-export const startSession = sessionId => (dispatch) => {
-  dispatch(setLoading(true));
+import {
+  initialiseOrchestration,
+} from './orchestration';
 
-  dispatch(setLoading(false));
+export {
+  play,
+  pause,
+  seek,
+  mute,
+  log,
+  setDeviceLocation,
+} from './orchestration';
+
+export const startSession = () => (dispatch) => {
+  dispatch(initialiseOrchestration(true));
 };
 
-export const joinSession = () => (dispatch) => {
-  dispatch(setLoading(true));
-  return {
-    type: '',
-  };
-};
-
-export const setDeviceLocation = () => {
-  return {
-    type: '',
-  };
-};
-
-export const play = () => {
-  return {
-    type: '',
-  };
-};
-
-export const pause = () => {
-  return {
-    type: '',
-  };
-};
-
-export const mute = () => {
-  return {
-    type: '',
-  };
-};
-
-export const seek = () => {
-  return {
-    type: '',
-  };
-};
-
-export const log = () => {
-  return {
-    type: '',
-  };
-};
-
-export const dismissError = () => {
-  return {
-    type: '',
-  };
+export const joinSession = sessionCode => (dispatch) => {
+  dispatch(initialiseOrchestration(false, { joinSessionCode: sessionCode }));
 };

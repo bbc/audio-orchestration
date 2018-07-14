@@ -21,8 +21,8 @@ function mapDispatchToProps(dispatch) {
     startSession: () => {
       dispatch(startSession());
     },
-    joinSession: (sessionId) => {
-      dispatch(joinSession(sessionId));
+    joinSession: (sessionCode) => {
+      dispatch(joinSession(sessionCode));
     },
     setDeviceLocation: (location) => {
       dispatch(setDeviceLocation(location));

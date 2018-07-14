@@ -44,8 +44,6 @@ class StartPage extends React.Component {
       connectVisible,
     } = this.state;
 
-    console.log('render', connectVisible);
-
     return (
       <div className="page page-start">
         <h1>

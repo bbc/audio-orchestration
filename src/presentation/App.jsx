@@ -23,7 +23,7 @@ import Help from './Modals/HelpModal';
 const App = (props) => {
   const { role } = props;
 
-  let page = <Start />;
+  let page = <Start {...props} />;
 
   if (role === 'master') {
     page = <Master {...props} />;

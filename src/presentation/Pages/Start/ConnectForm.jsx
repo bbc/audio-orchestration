@@ -54,9 +54,7 @@ class ConnectForm extends React.Component {
           Connect your device
         </h1>
         <p>
-          Please enter the
-          {numChars}
-          -digit code displayed on your main device.
+          { `Please enter the ${numChars}-digit code displayed on your main device.` }
         </p>
         <input
           placeholder={'*'.repeat(numChars)}
