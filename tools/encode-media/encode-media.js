@@ -3,9 +3,10 @@ const path = require('path');
 const { spawnSync } = require('child_process');
 
 const ENCODE_CODEC = 'libfdk_aac';
-const ENCODE_BITRATE = '320k';
+const ENCODE_BITRATE = '128k';
 const BUFFER_EXTENSION = 'm4a';
 const SEGMENT_DURATION = 4.0;
+const SILENCE_PATH = 'silence.wav';
 
 const args = {
   inputPathSequence: process.argv[2],
@@ -58,7 +59,7 @@ function encodeBuffer(inputName, inputPath, outputPath) {
   return outputName;
 }
 
-function encodeDash(inputName, inputPath, outputPath) {
+function encodeDash(inputName, inputPath, outputPath, silencePath = null) {
   const input = path.join(inputPath, inputName);
   const outputName = path.join(path.basename(inputName, '.wav'), `${path.basename(inputName, '.wav')}.mpd`);
   const output = path.join(outputPath, outputName);
@@ -66,11 +67,21 @@ function encodeDash(inputName, inputPath, outputPath) {
     fs.mkdirSync(path.dirname(output));
   }
 
-  const cmdArgs = [
+  const inputArgs = [
     '-loglevel', 'warning',
     '-hide_banner',
     '-y',
     '-i', input,
+  ];
+
+  const silenceArgs = [
+    '-i',
+    silencePath,
+    '-filter_complex',
+    '[0:a] concat=n=2:v=0:a=1',
+  ];
+
+  const outputArgs = [
     '-c:a', ENCODE_CODEC,
     '-b:a', ENCODE_BITRATE,
     '-use_template', 1,
@@ -80,18 +91,33 @@ function encodeDash(inputName, inputPath, outputPath) {
     output,
   ];
 
-  console.debug('ffmpeg', cmdArgs.join(' '));
+  const cmdArgs = [].concat(
+    inputArgs,
+    silencePath !== null ? silenceArgs : [],
+    outputArgs,
+  );
 
+  console.debug('ffmpeg', cmdArgs.join(' '));
   spawnSync('ffmpeg', cmdArgs, { stdio: 'inherit' });
 
   return outputName;
 }
 
+spawnSync('ffmpeg', [
+  '-hide_banner',
+  '-loglevel', 'warning',
+  '-y',
+  '-f', 'lavfi',
+  '-i', 'anullsrc=r=48000:cl=1',
+  '-t', SEGMENT_DURATION,
+  SILENCE_PATH,
+], { stdio: 'inherit' });
+
 sequenceData.objects = sequenceData.objects.map(object => Object.assign({}, object, {
   items: object.items.map((item) => {
     let url = null;
     if (item.source.type === 'dash') {
-      url = encodeDash(item.source.url, args.inputPath, args.outputPath);
+      url = encodeDash(item.source.url, args.inputPath, args.outputPath, SILENCE_PATH);
     } else if (item.source.type === 'buffer') {
       url = encodeBuffer(item.source.url, args.inputPath, args.outputPath);
     }
