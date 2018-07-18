@@ -15,10 +15,10 @@ const MUTE_GAIN = 1.0e-6;
 class SynchronisedSequenceRenderer {
   /**
    * @param {AudioContext} audioContext
-   * @param {CorrelatedClock} clock
+   * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
    */
-  constructor(audioContext, clock, sequence, isStereo) {
+  constructor(audioContext, syncClock, sequence, isStereo) {
     /**
      * @type {AudioContext}
      * @private
@@ -29,7 +29,22 @@ class SynchronisedSequenceRenderer {
      * @type {CorrelatedClock}
      * @private
      */
-    this._clock = clock;
+    this._syncClock = syncClock;
+
+    /**
+     * A clock for the item renderers initially paused at time 0.
+     *
+     * @type {CorrelatedClock}
+     * @private
+     */
+    this._clock = new CorrelatedClock(this._syncClock, {
+      correlation: {
+        parentTime: 0,
+        childTime: 0,
+      },
+      speed: 0,
+      tickRate: this._syncClock.tickRate,
+    });
 
     /**
      * @type {Sequence}
@@ -155,12 +170,24 @@ class SynchronisedSequenceRenderer {
   }
 
   /**
+   * @param {number} syncClockTime
+   * @param {number} offset - in seconds, where in the sequence playback should start.
+   */
+  start(syncClockTime, offset = 0) {
+    this._clock.setCorrelationAndSpeed({
+      parentTime: syncClockTime,
+      childTime: offset * this._syncClock.tickRate,
+    }, 1);
+  }
+
+  /**
    * Mutes all outputs from this renderer and stops all players at the given AudioContext syncTime.
    *
-   * @param {number} syncTime
+   * @param {number} syncClockTime
    * @param {boolean} fade
    */
-  stop(syncTime, fade = true) {
+  stop(syncClockTime, fade = true) {
+    const syncTime = this._syncClock.calcWhen(syncClockTime);
     this._stopped = true;
     this._activeItemRenderers.forEach((renderer) => {
       if (fade) {
@@ -182,14 +209,16 @@ class SynchronisedSequenceRenderer {
    * Mutes all outputs from this renderer and stops all players at the next suitable time after the
    * given delay.  Renders this renderer useless.
    *
-   * @param {delay}
+   * @param {delay} in seconds
    * @returns {number} the context time when the output will be muted
    */
   stopAtOutPoint(delay = 0) {
     const out = this._sequence.nextOutPoint(this.contentTime + delay);
     console.debug('stopAtOutPoint:', this.contentTime, delay, out);
     const syncTime = this._clock.calcWhen(out * this._clock.tickRate);
-    this.stop(syncTime, true);
+    const syncClockTime = this._syncClock.fromRootTime(syncTime);
+
+    this.stop(syncClockTime, true);
     return syncTime;
   }
 
