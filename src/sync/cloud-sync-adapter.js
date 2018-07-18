@@ -189,8 +189,14 @@ class CloudSyncAdapter extends SyncAdapter {
               reject(new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`));
             }
 
-            this._synchroniser.syncClockToThisTimeline(timelineClock, timelineId);
+            // Create a dummy clock synchronised to the cloud-sync timeline,
+            // and set this as the parent to the returned timelineClock.
+            // Now we can change the timeline synchronised to without ending up with two parents.
+            const intermediateClock = new clocks.CorrelatedClock(this.wallClock);
+            this._synchroniser.syncClockToThisTimeline(intermediateClock, timelineId);
+            timelineClock.setParent(intermediateClock);
             timelineClock.setAvailabilityFlag(true);
+            console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock available.');
             resolve(timelineClock);
           });
         } else {
