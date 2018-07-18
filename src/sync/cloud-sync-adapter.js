@@ -164,89 +164,47 @@ class CloudSyncAdapter extends SyncAdapter {
 
     console.warn('called requestTimelineClock');
 
-    return this._connectPromise
-      .then(() =>
-        // Listen for new timelines being registered, and return a
-        // promise resolving when it is found.
-        new Promise((resolve) => {
-          console.warn('requestTimelineClock registering SyncTimelinesAvailable handler');
+    // create the clock object to return. It will become unavailable if the sync timeline goes away.
+    const timelineClock = new clocks.CorrelatedClock(this.wallClock, {
+      available: false,
+    });
+    timelineClock.id = `timelineClock_${contentId}`;
 
-          // listen for timelines becoming available, resolve if one matches
-          const handler = (timelines) => {
-            console.debug('requestTimelineClock SyncTimelinesAvailable', timelines);
+    return this._connectPromise.then(() => new Promise((resolve, reject) => {
+      // Listen for new timelines being registered, and return a
+      // promise resolving when it is found.
+      console.debug('requestTimelineClock registering SyncTimelinesAvailable handler');
 
-            // if a matching timeline is found, resolve to its id and stop listening.
-            // Otherwise, we may have to wait for the next event of this kind to find it.
-            const timeline = timelines.find(matchTimeline);
-            if (timeline !== undefined) {
-              console.debug('requestTimelineClock resolving', timeline.timelineId);
-              resolve(timeline.timelineId);
+      // listen for timelines becoming available, resolve if one matches
+      const handler = (timelines) => {
+        console.debug('requestTimelineClock SyncTimelinesAvailable', timelines);
+
+        // if a matching timeline is found, resolve to its id and stop listening.
+        // Otherwise, we may have to wait for the next event of this kind to find it.
+        const timeline = timelines.find(matchTimeline);
+        if (timeline !== undefined) {
+          const { timelineId } = timeline;
+          this._synchroniser.subscribeTimeline(timelineId).then((responseCode) => {
+            if (responseCode !== 0) {
+              reject(new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`));
             }
-          };
-          
-          this._synchroniser.on('SyncTimelinesAvailable', handler);
 
-          // request timelines available now, triggers SyncTimelinesAvailable event.
-          console.debug('requestTimelineClock calling getAvailableSyncTimelines');
-          this._synchroniser.getAvailableSyncTimelines().then(handler);
-        }))
-      .then((timelineId) => {
-        // TODO: it'd be amazing if this worked but I don't think so (it would save a lot of code if it did)
-        const timelineClock = new clocks.CorrelatedClock(this._synchroniser.wallclock);
-        timelineClock.id = `TimelineClock_${contentId}`;
-
-        return new Promise((resolve, reject) => {
-          this._synchroniser.subscribeTimeline(timelineId)
-            .then((responseCode) => {
-              console.debug('requestTimelineClock subscribed to timeline', timelineId);
-              if (responseCode !== 0) {
-                reject(new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`));
-              }
-
-              this._synchroniser.syncClockToThisTimeline(timelineClock, timelineId);
-              resolve(timelineClock);
-            });
-        });
-      })
-    /*
-      .then((timelineId) => {
-        // Then subscribe to the specific timeline id matching the content and type.
-        // return a promise resolving to the timeline clock when it becomes available.
-        console.debug('requestTimelineClock then got timelineId', timelineId);
-        return new Promise((resolve, reject) => {
-          console.debug('requestTimelineClock registering timelineavailablehandler');
-          this._synchroniser.on('TimelineAvailable', (id) => {
-            console.debug('requestTimelineClock TimelineAvailable event received', id, ' === ? ', timelineId);
-            if (id === timelineId) {
-              console.debug('requestTimelineClock resolving to clock.');
-              resolve(this._synchroniser.getTimelineClockById(id));
-            }
+            this._synchroniser.syncClockToThisTimeline(timelineClock, timelineId);
+            timelineClock.setAvailabilityFlag(true);
+            resolve(timelineClock);
           });
+        } else {
+          console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock unavailable.');
+          timelineClock.setAvailabilityFlag(false);
+        }
+      };
 
-          this._synchroniser.getAvailableTimelines().then((timelineInfo) => {
-            console.debug('requestTimelineClock getAvailableTimelines:', timelineInfo);
-          });
-
-          // subscribe to the timeline, creates a timeline shadow and triggers TimelineAvailable
-          // when the timeline shadow has been found.
-          console.debug('requestTimelineClock called subscribeTimeline');
-          this._synchroniser.subscribeTimeline(timelineId)
-            .then((responseCode) => {
-              console.debug('requestTimelineClock subscribed to timeline', timelineId);
-              if (responseCode !== 0) {
-                reject(new Error(`synchroniser.subscribeTimeline failed with code: ${responseCode}`));
-              }
-            });
-
-          this._synchroniser.getAvailableTimelines().then((timelineInfo) => {
-            console.debug('requestTimelineClock getAvailableTimelines (2):', timelineInfo);
-          });
-        });
-      })
-    */
-      .catch((e) => {
-        throw new Error(`cloud-sync-adapter: requestTimelineClock: ${e.message}`);
-      });
+      // request timelines available now, triggers SyncTimelinesAvailable event.
+      this._synchroniser.on('SyncTimelinesAvailable', handler);
+      this._synchroniser.getAvailableSyncTimelines().then(handler);
+    })).catch((e) => {
+      throw new Error(`cloud-sync-adapter: requestTimelineClock: ${e.message}`);
+    });
   }
 
   /**
