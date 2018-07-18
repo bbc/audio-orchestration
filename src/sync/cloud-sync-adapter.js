@@ -149,11 +149,13 @@ class CloudSyncAdapter extends SyncAdapter {
    *
    * @param {string} timelineType
    * @param {string} contentId
+   * @param {number} timeout in seconds, the promise will be rejected after thisunless the clock is
+   * available. Leave at 0 to not use a timeout.
    *
    * @return {Promise<CorrelatedClock>} resolving when the clock is available.
    * @public
    */
-  requestTimelineClock(timelineType, contentId) {
+  requestTimelineClock(timelineType, contentId, timeout = 0) {
     if (this._connectPromise === null) {
       throw new Error('CloudSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
     }
@@ -208,6 +210,10 @@ class CloudSyncAdapter extends SyncAdapter {
       // request timelines available now, triggers SyncTimelinesAvailable event.
       this._synchroniser.on('SyncTimelinesAvailable', handler);
       this._synchroniser.getAvailableSyncTimelines().then(handler);
+
+      if (timeout > 0) {
+        setTimeout(() => reject(new Error('cloud-sync-adapter: requestTimelineClock: timeout')), timeout);
+      }
     })).catch((e) => {
       throw new Error(`cloud-sync-adapter: requestTimelineClock: ${e.message}`);
     });
