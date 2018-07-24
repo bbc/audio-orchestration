@@ -72,10 +72,10 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 const orchestrationState = {
   initialised: false,
   sequences: [],
+  currentSequenceUrl: null,
   masterClock: null,
   syncClock: null,
   renderers: {},
-  activeSequenceUrl: null,
   audioContext: null,
   sysClock: null,
   sync: null,
@@ -159,6 +159,9 @@ const scheduleSequences = schedule => (dispatch) => {
       if (startSyncTime !== null) {
         console.debug(`starting sequence ${url}`, renderer.activeObjectIds);
         renderer.start(startSyncTime, startOffset);
+        orchestrationState.currentSequenceUrl = url;
+        // TODO: assumes only one sequence is active and the one most recently started becomes the
+        // active sequence - this is the one that will be stopped by transitionToSequence.
       }
 
       if (stopSyncTime !== null) {
@@ -170,6 +173,32 @@ const scheduleSequences = schedule => (dispatch) => {
       renderer.stop(syncClock.now());
     }
   });
+};
+
+export const transitionToSequence = sequenceUrl => (dispatch) => {
+  const {
+    mdoHelper,
+    syncClock,
+    currentSequenceUrl,
+    sequences,
+  } = orchestrationState;
+
+  console.debug(sequences);
+
+  const sequence = sequences.find(({ url }) => url === sequenceUrl);
+
+  if (sequence === undefined) {
+    throw new Error(`Requested sequence ${sequenceUrl} not loaded.`);
+  }
+
+  if (currentSequenceUrl === null) {
+    mdoHelper.startSequence(sequenceUrl, syncClock.now() + 1.0 * syncClock.tickRate);
+  } else {
+    const { renderer } = sequences.find(({ url }) => url === currentSequenceUrl);
+    const syncTime = renderer.stopAtOutPoint(1.0);
+    mdoHelper.stopSequence(currentSequenceUrl, syncTime);
+    mdoHelper.startSequence(sequenceUrl, syncTime);
+  }
 };
 
 export const initialiseOrchestration = (master, {
@@ -264,14 +293,14 @@ export const initialiseOrchestration = (master, {
       mdoHelper.start(sync);
 
       if (master) {
-        // give the sequence 2 seconds to load, TODO: use a user provided initial sequence
-        // or wait for first play click before starting.
-        mdoHelper.startSequence(SEQUENCE_URLS[0], syncClock.now() + 2 * syncClock.tickRate);
-
         // register the objects for all sequences.
         sequences.forEach(({ renderer, url }) => {
           mdoHelper.registerObjects(renderer.sequence.objects, url);
         });
+        
+        // give the sequence 2 seconds to load, TODO: use a user provided initial sequence
+        // or wait for first play click before starting.
+        dispatch(transitionToSequence(SEQUENCE_URLS[0]));
       }
 
       syncClock.on('change', () => {
