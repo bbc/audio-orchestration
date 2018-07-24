@@ -7,8 +7,12 @@ class MasterPage extends React.Component {
     const {
       sessionCode,
       connectedDeviceTypes,
+      playing,
       play,
       pause,
+      mute,
+      muted,
+      seek,
     } = this.props;
 
     return (
@@ -22,11 +26,17 @@ class MasterPage extends React.Component {
         </p>
 
         <p>
-          <button type="button" onClick={play}>
-            Play
+          <button type="button" onClick={playing ? pause : play}>
+            { playing ? 'Pause' : 'Play' }
           </button>
-          <button type="button" onClick={pause}>
-            Pause
+          <button type="button" onClick={() => mute(!muted)}>
+            { muted ? 'unmute' : 'mute' }
+          </button>
+          <button type="button" onClick={() => seek(-10.0)}>
+            -10
+          </button>
+          <button type="button" onClick={() => seek(10)}>
+            +10
           </button>
         </p>
 
@@ -49,6 +59,12 @@ MasterPage.defaultProps = {
 MasterPage.propTypes = {
   connectedDeviceTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   sessionCode: PropTypes.string,
+  playing: PropTypes.bool.isRequired,
+  muted: PropTypes.bool.isRequired,
+  play: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  mute: PropTypes.func.isRequired,
+  seek: PropTypes.func.isRequired,
 };
 
 export default MasterPage;

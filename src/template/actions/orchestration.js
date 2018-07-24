@@ -47,6 +47,16 @@ const setPrimaryObject = objectId => ({
   objectId,
 });
 
+const setMuted = muted => ({
+  type: 'SET_MUTED',
+  muted,
+});
+
+const setPlaying = playing => ({
+  type: 'SET_PLAYING',
+  playing,
+});
+
 const selectPrimaryObject = (contentId, activeObjectIds) => (dispatch) => {
   console.warn('selectPrimaryObject not implemented');
   // using some list and the orchestration state's list of running sequences,
@@ -71,6 +81,7 @@ const orchestrationState = {
   sync: null,
   deviceId: null,
   master: false,
+  volumeControl: null,
 };
 
 const requestSessionId = (userSessionCode) => {
@@ -97,6 +108,7 @@ const loadSequence = (url) => {
     audioContext,
     master,
     syncClock,
+    volumeControl,
   } = orchestrationState;
 
   return fetch(url)
@@ -117,7 +129,7 @@ const loadSequence = (url) => {
       );
 
       // connect renderer to output
-      renderer.output.connect(audioContext.destination);
+      renderer.output.connect(volumeControl);
 
       // add the sequence, its url, and its renderer, to the list of available sequences.
       const sequenceWrapper = {
@@ -173,6 +185,9 @@ export const initialiseOrchestration = (master, {
 
   const audioContext = new AudioContext();
   audioContext.resume();
+  const volumeControl = audioContext.createGain();
+  volumeControl.gain.value = 1.0;
+  volumeControl.connect(audioContext.destination);
   const sysClock = new AudioContextClock({}, audioContext);
   const sync = new Sync(new CloudSyncAdapter({ sysClock }));
   const masterClock = new CorrelatedClock(sync.wallClock, {
@@ -180,7 +195,7 @@ export const initialiseOrchestration = (master, {
       parentTime: sync.wallClock.now(),
       childTime: 0,
     },
-    speed: 0,
+    speed: 1, // TODO: initial speed appears to be ignored by cloud sync, and always set to 1.
     tickRate: TIMELINE_TYPE_TICK_RATE,
   });
   const deviceId = generateDeviceId();
@@ -188,6 +203,7 @@ export const initialiseOrchestration = (master, {
   Object.assign(orchestrationState, {
     master,
     audioContext,
+    volumeControl,
     sysClock,
     masterClock,
     sync,
@@ -257,6 +273,14 @@ export const initialiseOrchestration = (master, {
           mdoHelper.registerObjects(renderer.sequence.objects, url);
         });
       }
+
+      syncClock.on('change', () => {
+        if (syncClock.getEffectiveSpeed() === 0) {
+          dispatch(setPlaying(false));
+        } else {
+          dispatch(setPlaying(true));
+        }
+      });
     })
     .then(() => {
       dispatch(setLoading(false));
@@ -274,7 +298,12 @@ export const initialiseOrchestration = (master, {
 
 
 export const play = () => (dispatch) => {
-  const { masterClock, sync } = orchestrationState;
+  const { masterClock, sync, master } = orchestrationState;
+
+  if (!master) {
+    return;
+  }
+
   masterClock.setCorrelationAndSpeed({
     childTime: masterClock.now(),
     parentTime: sync.wallClock.now(),
@@ -282,19 +311,39 @@ export const play = () => (dispatch) => {
 };
 
 export const pause = () => (dispatch) => {
-  const { masterClock, sync } = orchestrationState;
+  const { masterClock, sync, master } = orchestrationState;
+
+  if (!master) {
+    return;
+  }
+
   masterClock.setCorrelationAndSpeed({
     childTime: masterClock.now(),
     parentTime: sync.wallClock.now(),
   }, 0);
 };
 
-export const seek = () => (dispatch) => {
+export const seek = (relativeSeconds) => (dispatch) => {
+  const { masterClock, sync, master } = orchestrationState;
 
+  if (!master) {
+    return;
+  }
+
+  masterClock.setCorrelationAndSpeed({
+    childTime: masterClock.now() + relativeSeconds * masterClock.tickRate,
+    parentTime: sync.wallClock.now(),
+  }, masterClock.speed);
 };
 
 export const mute = muted => (dispatch) => {
-
+  const { volumeControl } = orchestrationState;
+  if (muted) {
+    volumeControl.gain.value = 0.0;
+  } else {
+    volumeControl.gain.value = 1.0;
+  }
+  dispatch(setMuted(muted));
 };
 
 export const log = message => (dispatch) => {
