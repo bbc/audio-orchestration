@@ -120,11 +120,14 @@ const loadSequence = (url) => {
       renderer.output.connect(audioContext.destination);
 
       // add the sequence, its url, and its renderer, to the list of available sequences.
-      sequences.push({
+      const sequenceWrapper = {
         url,
         sequence,
         renderer,
-      });
+      };
+
+      sequences.push(sequenceWrapper);
+      return sequenceWrapper;
     });
 };
 
@@ -134,7 +137,7 @@ const loadSequence = (url) => {
  * startSyncTime and stopSyncTime refer to a syncClock time and are passed to the renderer as is.
  * startOffset is 0 by default and is a time in seconds within the media, passed to start().
  */
-const scheduleSequences = (schedule) => {
+const scheduleSequences = schedule => (dispatch) => {
   const { sequences, syncClock } = orchestrationState;
 
   sequences.forEach(({ renderer, url }) => {
@@ -142,13 +145,16 @@ const scheduleSequences = (schedule) => {
     if (sequenceSchedule) {
       const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
       if (startSyncTime !== null) {
+        console.debug(`starting sequence ${url}`, renderer.activeObjectIds);
         renderer.start(startSyncTime, startOffset);
       }
 
       if (stopSyncTime !== null) {
+        console.debug(`stopping sequence ${url}`);
         renderer.stop(stopSyncTime);
       }
     } else {
+      console.debug(`stopping unlisted sequence ${url}`);
       renderer.stop(syncClock.now());
     }
   });
@@ -220,12 +226,15 @@ export const initialiseOrchestration = (master, {
       throw e;
     })
     .then((sequences) => {
+      console.debug('loaded all sequences');
       if (master) {
         orchestrationState.mdoHelper = new MdoAllocator(deviceId);
       } else {
         orchestrationState.mdoHelper = new MdoReceiver(deviceId);
       }
-      orchestrationState.mdoHelper.on('change', ({ contentId, activeObjects }) => {
+
+      const { syncClock, mdoHelper } = orchestrationState;
+      mdoHelper.on('change', ({ contentId, activeObjects }) => {
         dispatch(selectPrimaryObject(contentId, activeObjects));
         sequences.forEach(({ url, renderer }) => {
           if (url === contentId) {
@@ -233,13 +242,23 @@ export const initialiseOrchestration = (master, {
           }
         });
       });
-      orchestrationState.mdoHelper.on('schedule', (schedule) => {
+      mdoHelper.on('schedule', (schedule) => {
         dispatch(scheduleSequences(schedule));
       });
-      orchestrationState.mdoHelper.start(sync);
+      mdoHelper.start(sync);
+
+      if (master) {
+        // give the sequence 2 seconds to load, TODO: use a user provided initial sequence
+        // or wait for first play click before starting.
+        mdoHelper.startSequence(SEQUENCE_URLS[0], syncClock.now() + 2 * syncClock.tickRate);
+
+        // register the objects for all sequences.
+        sequences.forEach(({ renderer, url }) => {
+          mdoHelper.registerObjects(renderer.sequence.objects, url);
+        });
+      }
     })
     .then(() => {
-      console.debug('loaded all sequences');
       dispatch(setLoading(false));
       sync.on('SyncServiceUnavailable', () => {
         console.error('SyncServiceUnavailable');
@@ -255,11 +274,19 @@ export const initialiseOrchestration = (master, {
 
 
 export const play = () => (dispatch) => {
-
+  const { masterClock, sync } = orchestrationState;
+  masterClock.setCorrelationAndSpeed({
+    childTime: masterClock.now(),
+    parentTime: sync.wallClock.now(),
+  }, 1);
 };
 
 export const pause = () => (dispatch) => {
-
+  const { masterClock, sync } = orchestrationState;
+  masterClock.setCorrelationAndSpeed({
+    childTime: masterClock.now(),
+    parentTime: sync.wallClock.now(),
+  }, 0);
 };
 
 export const seek = () => (dispatch) => {

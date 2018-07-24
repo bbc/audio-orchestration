@@ -7,6 +7,8 @@ class MasterPage extends React.Component {
     const {
       sessionCode,
       connectedDeviceTypes,
+      play,
+      pause,
     } = this.props;
 
     return (
@@ -20,7 +22,12 @@ class MasterPage extends React.Component {
         </p>
 
         <p>
-          Player controls could go here.
+          <button type="button" onClick={play}>
+            Play
+          </button>
+          <button type="button" onClick={pause}>
+            Pause
+          </button>
         </p>
 
         <ul>

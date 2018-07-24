@@ -1,0 +1,56 @@
+
+{
+  "duration": 32.0,
+  "loop": true,
+  "outPoints": [
+    6.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    24.0,
+    28.0,
+    32.0
+  ],
+  "objects": [
+    {
+      "objectId": "1-ClicksAndTone",
+      "items": [
+        {
+          "start": 0,
+          "duration": 32.0,
+          "source": {
+            "channelMapping": "mono",
+            "type": "buffer",
+            "url": "audio/clicks-and-tone/clicks-and-tone.m4a"
+          }
+        }
+      ],
+      "orchestration": {
+        "objectNumber": 1,
+        "label": "ClicksAndTone",
+        "group": 0,
+        "mdoThreshold": 0,
+        "mdoOnly": false,
+        "mdoMethod": 3,
+        "speakerNumber": null,
+        "diffuseness": 0,
+        "mdoSpread": true,
+        "mdoDynamic": 0,
+        "mdoGainDB": 0,
+        "muteIfObject": 0,
+        "exclusivity": false,
+        "nearFront": 2,
+        "nearSide": 2,
+        "nearRear": 2,
+        "farFront": 2,
+        "farSide": 2,
+        "farRear": 2,
+        "above": 2,
+        "onDropin": 1,
+        "onDropout": 1,
+        "minQuality": 1
+      }
+    }
+  ]
+}

@@ -4,6 +4,6 @@ export const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simpl
 export const TIMELINE_TYPE_TICK_RATE = 1000;
 export const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 export const SEQUENCE_URLS = [
-  'audio/clicks/sequence.json',
+  'audio/clicks-and-tone/sequence.json',
 ];
 export const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
