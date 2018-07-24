@@ -128,6 +128,32 @@ const loadSequence = (url) => {
     });
 };
 
+/**
+ * Interprets the schedule event to start or stop all loaded sequences.
+ *
+ * startSyncTime and stopSyncTime refer to a syncClock time and are passed to the renderer as is.
+ * startOffset is 0 by default and is a time in seconds within the media, passed to start().
+ */
+const scheduleSequences = (schedule) => {
+  const { sequences, syncClock } = orchestrationState;
+
+  sequences.forEach(({ renderer, url }) => {
+    const sequenceSchedule = schedule.find(({ contentId }) => contentId === url);
+    if (sequenceSchedule) {
+      const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
+      if (startSyncTime !== null) {
+        renderer.start(startSyncTime, startOffset);
+      }
+
+      if (stopSyncTime !== null) {
+        renderer.stop(stopSyncTime);
+      }
+    } else {
+      renderer.stop(syncClock.now());
+    }
+  });
+};
+
 export const initialiseOrchestration = (master, {
   joinSessionCode = undefined,
 } = {}) => (dispatch) => {
@@ -145,7 +171,7 @@ export const initialiseOrchestration = (master, {
   const sync = new Sync(new CloudSyncAdapter({ sysClock }));
   const masterClock = new CorrelatedClock(sync.wallClock, {
     correlation: {
-      parentTime: wallClock.now(),
+      parentTime: sync.wallClock.now(),
       childTime: 0,
     },
     speed: 0,
@@ -162,16 +188,15 @@ export const initialiseOrchestration = (master, {
     deviceId,
   });
 
-  // 1. Request/generate a full session id
-  // 2. Store the session ID and connect to cloud sync service
-  // 3. Create an MDO Helper for managing object allocations.
-  // 4. Download all the sequence descriptions and initialise renderers
-  // 5. If an initial sequence has been specified, start playing it.
-  // 6. Dispatch actions changing the user interface to indicate the connection is ready.
+  // - Request/generate a full sessionId
+  // - Connect to cloud sync service
+  // - Provide and/or subscribe to the session-wide syncClock
+  // - Load all sequences and create renderers
+  // - Create the MDO Helper, subscribe all sequence renderers to it
+  // - Update the user interface to indicate the connected state.
 
   orchestrationState.initPromise = requestSessionId(joinSessionCode)
     .then(({ sessionCode, sessionId }) => {
-      orchestrationState.sessionCode = sessionCode;
       dispatch(setSessionCode(sessionCode));
       return sync.connect(CLOUDSYNC_ENDPOINT, sessionId, deviceId);
     })
