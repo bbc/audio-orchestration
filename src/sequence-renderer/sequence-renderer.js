@@ -219,7 +219,7 @@ class SynchronisedSequenceRenderer {
     const syncClockTime = this._syncClock.fromRootTime(syncTime);
 
     this.stop(syncClockTime, true);
-    return syncTime;
+    return syncClockTime;
   }
 
   /**
