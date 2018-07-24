@@ -12,12 +12,25 @@ class MdoReceiver extends MdoHelper {
         enabled: true,
       }, metadata));
     }
-
-    // console.debug('MdoReceiver sending metadata update', metadata);
   }
 
   _handleRemoteAllocations({ allocations, contentId }) {
     this.setAllocations(allocations, contentId);
+  }
+
+  _handleRemoteSchedule({ schedule }) {
+    this.setSchedule(schedule);
+  }
+
+  start(sync) {
+    super.start(sync);
+    this._sendRequestScheduleAndAllocations();
+  }
+
+  _sendRequestScheduleAndAllocations() {
+    if (this._sync !== null) {
+      this._sync.sendMessage(TOPICS.REQUEST_ALLOCATIONS_AND_SCHEDULE, {});
+    }
   }
 }
 

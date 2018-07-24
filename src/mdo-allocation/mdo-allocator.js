@@ -61,7 +61,23 @@ class MdoAllocator extends MdoHelper {
       contentId,
     );
 
-    if (this._sync !== null) {
+    this._sendAllocations(contentId);
+  }
+
+  /**
+   * Broadcasts allocations for all registered contentIds.
+   */
+  _sendAllAllocations() {
+    Object.keys(this._allocations).forEach(contentId => this._sendAllocations(contentId));
+  }
+
+  /**
+   * Broadcasts the current object allocations for the given contentId.
+   *
+   * @param {string} contentId
+   */
+  _sendAllocations(contentId) {
+    if (this._sync !== null && this._allocations[contentId] !== undefined) {
       this._sync.sendMessage(TOPICS.ALLOCATIONS, {
         contentId,
         allocations: this._allocations[contentId],
@@ -146,6 +162,51 @@ class MdoAllocator extends MdoHelper {
       },
       ...this._devices.filter(d => d.deviceId !== deviceId),
     ];
+  }
+
+  _handleRemoteSchedule({ schedule }) {
+    this.setSchedule(schedule);
+  }
+
+  _handleRequestAllocationsAndSchedule() {
+    this._sendAllAllocations();
+    this._sendSchedule();
+  }
+
+  startSequence(contentId, startSyncTime, startOffset = 0) {
+    this.setSchedule([
+      {
+        contentId,
+        startSyncTime,
+        startOffset,
+        stopSyncTime: null,
+      },
+      ...this._schedule.filter(schedule => schedule.contentId !== contentId),
+    ]);
+  }
+
+  stopSequence(contentId, stopSyncTime) {
+    this.setSchedule([
+      {
+        contentId,
+        startSyncTime: null,
+        stopSyncTime,
+      },
+      ...this._schedule.filter(schedule => schedule.contentId !== contentId),
+    ]);
+  }
+
+  setSchedule(schedule) {
+    super.setSchedule(schedule);
+    this._sendSchedule();
+  }
+
+  _sendSchedule() {
+    if (this._sync !== null) {
+      this._sync.sendMessage(TOPICS.SCHEDULE, {
+        schedule: this._schedule,
+      });
+    }
   }
 }
 

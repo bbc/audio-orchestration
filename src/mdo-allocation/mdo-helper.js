@@ -18,6 +18,8 @@ export const DEVICE_STATUS = {
 export const TOPICS = {
   DEVICE_METADATA: 'mdo-device-metadata',
   ALLOCATIONS: 'mdo-allocations',
+  REQUEST_ALLOCATIONS_AND_SCHEDULE: 'mdo-request-allocations-and-schedule',
+  SCHEDULE: 'mdo-schedule',
 };
 
 export const DEFAULT_CONTENT_ID = 'default';
@@ -44,6 +46,7 @@ class MdoHelper extends EventEmitter {
       mainDevice: false,
     };
     this._allocations = [];
+    this._schedule = [];
     this._sync = null;
   }
 
@@ -101,6 +104,12 @@ class MdoHelper extends EventEmitter {
           break;
         case TOPICS.DEVICE_METADATA:
           this._handleRemoteDeviceMetadata(deviceId, content);
+          break;
+        case TOPICS.SCHEDULE:
+          this._handleRemoteSchedule(content);
+          break;
+        case TOPICS.REQUEST_ALLOCATIONS_AND_SCHEDULE:
+          this._handleRequestAllocationsAndSchedule();
           break;
         default:
       }
@@ -163,6 +172,16 @@ class MdoHelper extends EventEmitter {
   }
 
   /**
+   * set the schedule for the synchronised sequences.
+   *
+   * @param {Array<MdoSequenceSchedule>} schedule
+   */
+  setSchedule(schedule) {
+    this._schedule = schedule;
+    this.emit('schedule', schedule);
+  }
+
+  /**
    * Store changes to _this device's_ metadata.
    *
    * Sub-classes should extend this method and call super(metadata) to ensure that the local
@@ -179,6 +198,12 @@ class MdoHelper extends EventEmitter {
 
   // eslint-disable-next-line class-methods-use-this
   _handleRemoteAllocations() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  _handleRemoteSchedule() {}
+
+  // eslint-disable-next-line class-methods-use-this
+  _handleRequestAllocationsAndSchedule() {}
 
   // eslint-disable-next-line class-methods-use-this
   _handleRemoteDeviceMetadata() {}
