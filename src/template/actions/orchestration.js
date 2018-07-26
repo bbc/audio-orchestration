@@ -72,7 +72,7 @@ window.AudioContext = window.AudioContext || window.webkitAudioContext;
 const orchestrationState = {
   initialised: false,
   sequences: [],
-  currentSequenceUrl: null,
+  currentContentId: null,
   masterClock: null,
   syncClock: null,
   renderers: {},
@@ -132,8 +132,9 @@ const loadSequence = (url) => {
       renderer.output.connect(volumeControl);
 
       // add the sequence, its url, and its renderer, to the list of available sequences.
+      const contentId = url;
       const sequenceWrapper = {
-        url,
+        contentId,
         sequence,
         renderer,
       };
@@ -152,52 +153,52 @@ const loadSequence = (url) => {
 const scheduleSequences = schedule => (dispatch) => {
   const { sequences, syncClock } = orchestrationState;
 
-  sequences.forEach(({ renderer, url }) => {
-    const sequenceSchedule = schedule.find(({ contentId }) => contentId === url);
+  sequences.forEach(({ renderer, contentId }) => {
+    const sequenceSchedule = schedule.find(s => s.contentId === contentId);
     if (sequenceSchedule) {
       const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
       if (startSyncTime !== null) {
-        console.debug(`starting sequence ${url}`, renderer.activeObjectIds);
+        console.debug(`starting sequence ${contentId}`, renderer.activeObjectIds);
         renderer.start(startSyncTime, startOffset);
-        orchestrationState.currentSequenceUrl = url;
+        orchestrationState.currentContentId = contentId;
         // TODO: assumes only one sequence is active and the one most recently started becomes the
         // active sequence - this is the one that will be stopped by transitionToSequence.
       }
 
       if (stopSyncTime !== null) {
-        console.debug(`stopping sequence ${url}`);
+        console.debug(`stopping sequence ${contentId}`);
         renderer.stop(stopSyncTime);
       }
     } else {
-      console.debug(`stopping unlisted sequence ${url}`);
+      console.debug(`stopping unlisted sequence ${contentId}`);
       renderer.stop(syncClock.now());
     }
   });
 };
 
-export const transitionToSequence = sequenceUrl => (dispatch) => {
+export const transitionToSequence = contentId => (dispatch) => {
   const {
     mdoHelper,
     syncClock,
-    currentSequenceUrl,
+    currentContentId,
     sequences,
   } = orchestrationState;
 
   console.debug(sequences);
 
-  const sequence = sequences.find(({ url }) => url === sequenceUrl);
+  const sequence = sequences.find(s => s.contentId === contentId);
 
   if (sequence === undefined) {
-    throw new Error(`Requested sequence ${sequenceUrl} not loaded.`);
+    throw new Error(`Requested sequence ${contentId} not loaded.`);
   }
 
-  if (currentSequenceUrl === null) {
-    mdoHelper.startSequence(sequenceUrl, syncClock.now() + 1.0 * syncClock.tickRate);
+  if (currentContentId === null) {
+    mdoHelper.startSequence(contentId, syncClock.now() + 1.0 * syncClock.tickRate);
   } else {
-    const { renderer } = sequences.find(({ url }) => url === currentSequenceUrl);
+    const { renderer } = sequences.find(({ contentId }) => contentId === currentContentId);
     const syncTime = renderer.stopAtOutPoint(1.0);
-    mdoHelper.stopSequence(currentSequenceUrl, syncTime);
-    mdoHelper.startSequence(sequenceUrl, syncTime);
+    mdoHelper.stopSequence(currentContentId, syncTime);
+    mdoHelper.startSequence(contentId, syncTime);
   }
 };
 
@@ -281,9 +282,9 @@ export const initialiseOrchestration = (master, {
       const { syncClock, mdoHelper } = orchestrationState;
       mdoHelper.on('change', ({ contentId, activeObjects }) => {
         dispatch(selectPrimaryObject(contentId, activeObjects));
-        sequences.forEach(({ url, renderer }) => {
-          if (url === contentId) {
-            renderer.setActiveObjectIds(activeObjects);
+        sequences.forEach((s) => {
+          if (s.contentId === contentId) {
+            s.renderer.setActiveObjectIds(activeObjects);
           }
         });
       });
@@ -294,12 +295,11 @@ export const initialiseOrchestration = (master, {
 
       if (master) {
         // register the objects for all sequences.
-        sequences.forEach(({ renderer, url }) => {
-          mdoHelper.registerObjects(renderer.sequence.objects, url);
+        sequences.forEach((s) => {
+          mdoHelper.registerObjects(s.sequence.objects, s.contentId);
         });
-        
-        // give the sequence 2 seconds to load, TODO: use a user provided initial sequence
-        // or wait for first play click before starting.
+
+        // TODO: use a user provided initial sequence or wait for first play click before starting.
         dispatch(transitionToSequence(SEQUENCE_URLS[0]));
       }
 
@@ -376,9 +376,11 @@ export const mute = muted => (dispatch) => {
 };
 
 export const log = message => (dispatch) => {
-
+  console.debug(message);
 };
 
 export const setDeviceLocation = location => (dispatch) => {
+  const { mdoHelper } = orchestrationState;
 
+  mdoHelper.setLocation(location);
 };
