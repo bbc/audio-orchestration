@@ -381,6 +381,10 @@ export const log = message => (dispatch) => {
 
 export const setDeviceLocation = location => (dispatch) => {
   const { mdoHelper } = orchestrationState;
-
   mdoHelper.setLocation(location);
+
+  dispatch({
+    type: 'SET_DEVICE_LOCATION',
+    location,
+  });
 };

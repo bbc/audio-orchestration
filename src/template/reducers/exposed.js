@@ -1,6 +1,6 @@
 const initialState = {
   deviceMainDevice: false,
-  deviceLocation: null,
+  deviceLocation: {},
   deviceType: null,
   deviceQuality: 1,
   sessionId: null,
@@ -8,8 +8,8 @@ const initialState = {
   deviceFriendlyName: null,
   role: null,
   activeObjectIds: null,
-  activeSequenceId: null,
-  contentTime: 0,
+  currentContentId: null,
+  contentCorrelation: 0,
   playing: false,
   duration: 0,
   muted: false,
@@ -48,6 +48,10 @@ const exposed = (state = initialState, action) => {
     case 'SET_MUTED':
       return Object.assign({}, state, {
         muted: action.muted,
+      });
+    case 'SET_DEVICE_LOCATION':
+      return Object.assign({}, state, {
+        deviceLocation: Object.assign({}, state.deviceLocation, action.location),
       });
     default:
       return state;
