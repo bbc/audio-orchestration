@@ -26,6 +26,11 @@ const setLoading = loading => ({
   loading,
 });
 
+const setConnected = connected => ({
+  type: 'SET_CONNECTED',
+  connected,
+});
+
 const setSessionCode = sessionCode => ({
   type: 'SET_SESSION_CODE',
   sessionCode,
@@ -347,10 +352,20 @@ export const initialiseOrchestration = (master, {
       syncClock.on('change', () => {
         dispatch(updatePlaybackStatus());
       });
+
+      syncClock.on('unavailable', () => {
+        dispatch(setConnected(false));
+      });
+
+      syncClock.on('available', () => {
+        dispatch(setConnected(true));
+      });
+
+      dispatch(setConnected(syncClock.getAvailabilityFlag()));
     })
     .then(() => {
-      dispatch(setLoading(false));
       dispatch(setRole(master ? 'master' : 'slave'));
+      dispatch(setLoading(false));
 
       sync.on('SyncServiceUnavailable', () => {
         console.error('SyncServiceUnavailable');

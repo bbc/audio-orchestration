@@ -90,4 +90,3 @@ DurationClock.propTypes = {
 };
 
 export default DurationClock;
-

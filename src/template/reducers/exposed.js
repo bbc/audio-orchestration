@@ -20,6 +20,7 @@ const initialState = {
   canSeek: false,
   canPause: false,
   canDismissError: false,
+  connected: false,
 };
 
 const exposed = (state = initialState, action) => {
@@ -27,6 +28,10 @@ const exposed = (state = initialState, action) => {
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.loading,
+      });
+    case 'SET_CONNECTED':
+      return Object.assign({}, state, {
+        connected: action.connected,
       });
     case 'SET_SESSION_CODE':
       return Object.assign({}, state, {

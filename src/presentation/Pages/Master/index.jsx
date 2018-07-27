@@ -1,46 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SESSION_CODE_LENGTH } from '../../../config';
-import Player from '../../Components/Player';
 
-class MasterPage extends React.Component {
-  render() {
-    const {
-      sessionCode,
-      connectedDeviceTypes,
-    } = this.props;
+import MasterDisconnected from './master-disconnected';
+import MasterEnded from './master-ended';
+import MasterPlaying from './master-playing';
 
-    return (
-      <div className="page page-master">
-        <h1>
-          Master Device
-        </h1>
+const MasterPage = (props) => {
+  const {
+    connected,
+    ended,
+  } = props;
 
-        <p>
-          { `Join with code ${sessionCode}` }
-        </p>
-
-        <Player {...this.props} />
-
-        <ul>
-          { connectedDeviceTypes.map(t => (
-            <li>
-              {t}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+  if (!connected) {
+    return <MasterDisconnected {...props} />;
   }
-}
 
-MasterPage.defaultProps = {
-  sessionCode: '-'.repeat(SESSION_CODE_LENGTH),
+  if (ended) {
+    return <MasterEnded {...props} />;
+  }
+
+  return <MasterPlaying {...props} />;
 };
 
 MasterPage.propTypes = {
-  connectedDeviceTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
-  sessionCode: PropTypes.string,
+  connected: PropTypes.bool.isRequired,
+  ended: PropTypes.bool.isRequired,
 };
 
 export default MasterPage;
