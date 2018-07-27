@@ -1,18 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { SESSION_CODE_LENGTH } from '../../../config';
+import Player from '../../Components/Player';
 
 class MasterPage extends React.Component {
   render() {
     const {
       sessionCode,
       connectedDeviceTypes,
-      playing,
-      play,
-      pause,
-      mute,
-      muted,
-      seek,
     } = this.props;
 
     return (
@@ -25,20 +20,7 @@ class MasterPage extends React.Component {
           { `Join with code ${sessionCode}` }
         </p>
 
-        <p>
-          <button type="button" onClick={playing ? pause : play}>
-            { playing ? 'Pause' : 'Play' }
-          </button>
-          <button type="button" onClick={() => mute(!muted)}>
-            { muted ? 'unmute' : 'mute' }
-          </button>
-          <button type="button" onClick={() => seek(-10.0)}>
-            -10
-          </button>
-          <button type="button" onClick={() => seek(10)}>
-            +10
-          </button>
-        </p>
+        <Player {...this.props} />
 
         <ul>
           { connectedDeviceTypes.map(t => (
@@ -59,12 +41,6 @@ MasterPage.defaultProps = {
 MasterPage.propTypes = {
   connectedDeviceTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
   sessionCode: PropTypes.string,
-  playing: PropTypes.bool.isRequired,
-  muted: PropTypes.bool.isRequired,
-  play: PropTypes.func.isRequired,
-  pause: PropTypes.func.isRequired,
-  mute: PropTypes.func.isRequired,
-  seek: PropTypes.func.isRequired,
 };
 
 export default MasterPage;

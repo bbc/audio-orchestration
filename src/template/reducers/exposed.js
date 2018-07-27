@@ -5,13 +5,13 @@ const initialState = {
   deviceQuality: 1,
   sessionId: null,
   connectedDeviceTypes: [],
-  deviceFriendlyName: null,
   role: null,
   activeObjectIds: null,
   currentContentId: null,
-  contentCorrelation: 0,
+  contentCorrelation: { parentTime: 0, childTime: 0 },
+  contentSpeed: 0,
+  contentDuration: 0,
   playing: false,
-  duration: 0,
   muted: false,
   error: false,
   errorMessage: null,
@@ -41,10 +41,6 @@ const exposed = (state = initialState, action) => {
         error: action.error,
         errorMessage: action.errorMessage,
       });
-    case 'SET_PLAYING':
-      return Object.assign({}, state, {
-        playing: action.playing,
-      });
     case 'SET_MUTED':
       return Object.assign({}, state, {
         muted: action.muted,
@@ -52,6 +48,22 @@ const exposed = (state = initialState, action) => {
     case 'SET_DEVICE_LOCATION':
       return Object.assign({}, state, {
         deviceLocation: Object.assign({}, state.deviceLocation, action.location),
+      });
+    case 'SET_TRANSPORT_CAPABILITIES':
+      return Object.assign({}, state, {
+        canPause: action.canPause,
+        canSeek: action.canSeek,
+      });
+    case 'SET_PLAYBACK_STATUS':
+      return Object.assign({}, state, {
+        currentContentId: action.currentContentId,
+        contentDuration: action.duration,
+        contentSpeed: action.speed,
+        playing: (action.speed !== 0),
+        contentCorrelation: {
+          parentTime: action.parentTime,
+          childTime: action.childTime,
+        },
       });
     default:
       return state;

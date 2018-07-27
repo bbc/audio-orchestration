@@ -52,17 +52,11 @@ const setMuted = muted => ({
   muted,
 });
 
-const setPlaying = playing => ({
-  type: 'SET_PLAYING',
-  playing,
+const setTransportCapabilities = (canPause, canSeek) => ({
+  type: 'SET_TRANSPORT_CAPABILITIES',
+  canPause,
+  canSeek,
 });
-
-const selectPrimaryObject = (contentId, activeObjectIds) => (dispatch) => {
-  console.warn('selectPrimaryObject not implemented');
-  // using some list and the orchestration state's list of running sequences,
-  // pick an object id that has a picture associated with it (based on some priority?)
-  dispatch(setPrimaryObject(activeObjectIds[0]));
-};
 
 // Shim for safari
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -144,6 +138,42 @@ const loadSequence = (url) => {
     });
 };
 
+const selectPrimaryObject = (contentId, activeObjectIds) => (dispatch) => {
+  console.warn('selectPrimaryObject not implemented');
+  // using some list and the orchestration state's list of running sequences,
+  // pick an object id that has a picture associated with it (based on some priority?)
+  dispatch(setPrimaryObject(activeObjectIds[0]));
+};
+
+const updatePlaybackStatus = () => (dispatch) => {
+  const {
+    currentContentId,
+    sequences,
+    syncClock,
+  } = orchestrationState;
+
+  const sequenceWrapper = sequences.find(s => s.contentId === currentContentId);
+  if (sequenceWrapper === undefined) {
+    throw new Error(`currentContentId refers to unavailable sequence ${currentContentId}`);
+  }
+  const { renderer, sequence } = sequenceWrapper;
+
+  const parentTime = Date.now() / 1000;
+  const childTime = renderer.contentTime;
+  const { duration } = sequence;
+  const speed = syncClock.getEffectiveSpeed();
+
+  dispatch({
+    type: 'SET_PLAYBACK_STATUS',
+    currentContentId,
+    parentTime,
+    childTime,
+    duration,
+    speed,
+  });
+};
+
+
 /**
  * Interprets the schedule event to start or stop all loaded sequences.
  *
@@ -151,9 +181,9 @@ const loadSequence = (url) => {
  * startOffset is 0 by default and is a time in seconds within the media, passed to start().
  */
 const scheduleSequences = schedule => (dispatch) => {
-  const { sequences, syncClock } = orchestrationState;
+  const { master, sequences, syncClock } = orchestrationState;
 
-  sequences.forEach(({ renderer, contentId }) => {
+  sequences.forEach(({ renderer, sequence, contentId }) => {
     const sequenceSchedule = schedule.find(s => s.contentId === contentId);
     if (sequenceSchedule) {
       const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
@@ -161,6 +191,12 @@ const scheduleSequences = schedule => (dispatch) => {
         console.debug(`starting sequence ${contentId}`, renderer.activeObjectIds);
         renderer.start(startSyncTime, startOffset);
         orchestrationState.currentContentId = contentId;
+
+        // Only the master can pause or seek. Looped sequences can be paused, but not seeked in.
+        dispatch(setTransportCapabilities(
+          master, // canPause
+          master && !sequence.loop, // canSeek
+        ));
         // TODO: assumes only one sequence is active and the one most recently started becomes the
         // active sequence - this is the one that will be stopped by transitionToSequence.
       }
@@ -174,6 +210,7 @@ const scheduleSequences = schedule => (dispatch) => {
       renderer.stop(syncClock.now());
     }
   });
+  dispatch(updatePlaybackStatus());
 };
 
 export const transitionToSequence = contentId => (dispatch) => {
@@ -195,11 +232,13 @@ export const transitionToSequence = contentId => (dispatch) => {
   if (currentContentId === null) {
     mdoHelper.startSequence(contentId, syncClock.now() + 1.0 * syncClock.tickRate);
   } else {
-    const { renderer } = sequences.find(({ contentId }) => contentId === currentContentId);
+    const { renderer } = sequences.find(s => s.contentId === currentContentId);
     const syncTime = renderer.stopAtOutPoint(1.0);
     mdoHelper.stopSequence(currentContentId, syncTime);
     mdoHelper.startSequence(contentId, syncTime);
   }
+
+  dispatch(updatePlaybackStatus());
 };
 
 export const initialiseOrchestration = (master, {
@@ -211,7 +250,6 @@ export const initialiseOrchestration = (master, {
   orchestrationState.initialised = true;
 
   dispatch(setLoading(true));
-  dispatch(setRole(master ? 'master' : 'slave'));
 
   const audioContext = new AudioContext();
   audioContext.resume();
@@ -280,6 +318,7 @@ export const initialiseOrchestration = (master, {
       }
 
       const { syncClock, mdoHelper } = orchestrationState;
+
       mdoHelper.on('change', ({ contentId, activeObjects }) => {
         dispatch(selectPrimaryObject(contentId, activeObjects));
         sequences.forEach((s) => {
@@ -288,9 +327,11 @@ export const initialiseOrchestration = (master, {
           }
         });
       });
+
       mdoHelper.on('schedule', (schedule) => {
         dispatch(scheduleSequences(schedule));
       });
+
       mdoHelper.start(sync);
 
       if (master) {
@@ -304,15 +345,13 @@ export const initialiseOrchestration = (master, {
       }
 
       syncClock.on('change', () => {
-        if (syncClock.getEffectiveSpeed() === 0) {
-          dispatch(setPlaying(false));
-        } else {
-          dispatch(setPlaying(true));
-        }
+        dispatch(updatePlaybackStatus());
       });
     })
     .then(() => {
       dispatch(setLoading(false));
+      dispatch(setRole(master ? 'master' : 'slave'));
+
       sync.on('SyncServiceUnavailable', () => {
         console.error('SyncServiceUnavailable');
         dispatch(setError('Lost connection to synchronisation service.'));
