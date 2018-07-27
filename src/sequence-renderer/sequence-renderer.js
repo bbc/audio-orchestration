@@ -1,3 +1,4 @@
+import EventEmitter from 'events';
 import Clocks from 'dvbcss-clocks';
 import Sequence from './sequence';
 import ItemRendererFactory from './item-renderer';
@@ -12,13 +13,15 @@ const MUTE_GAIN = 1.0e-6;
  * The SynchronisedSequenceRenderer is responsible for orchestrating all audio sources related to a
  * {@link Sequence} on the device it is running on.
  */
-class SynchronisedSequenceRenderer {
+class SynchronisedSequenceRenderer extends EventEmitter {
   /**
    * @param {AudioContext} audioContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
    */
   constructor(audioContext, syncClock, sequence, isStereo) {
+    super();
+
     /**
      * @type {AudioContext}
      * @private
@@ -101,6 +104,12 @@ class SynchronisedSequenceRenderer {
      * @private
      */
     this._stopped = false;
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this._lastNotifyContentTime = 0;
 
     /**
      * @type {ItemRendererFactory}
@@ -278,6 +287,10 @@ class SynchronisedSequenceRenderer {
     // if (abandonedItemIds.length > 0) {
     //   console.debug(`Abandoned items: ${abandonedItemIds}`);
     // }
+    if (this.contentTime > this.sequence.duration && this._lastNotifyContentTime <= this.sequence.duration) {
+      this.emit('ended');
+    }
+    this._lastNotifyContentTime = this.contentTime;
   }
 
   /**
