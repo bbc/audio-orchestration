@@ -5308,8 +5308,8 @@ querystringify@^2.0.0:
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-2.0.0.tgz#fa3ed6e68eb15159457c89b37bc6472833195755"
 
 quickhull3d@^2.0.0:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/quickhull3d/-/quickhull3d-2.0.3.tgz#4166205c062194ccc06dd927c1327345342e2e8b"
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/quickhull3d/-/quickhull3d-2.0.4.tgz#beb4d988398c842486b4fbf13b21119cc2a5df0b"
   dependencies:
     debug "^3.1.0"
     get-plane-normal "^1.0.0"

@@ -1,7 +1,7 @@
 
 {
   "duration": 32.0,
-  "loop": true,
+  "loop": false,
   "outPoints": [
     6.0,
     8.0,

@@ -21,6 +21,7 @@ const initialState = {
   canPause: false,
   canDismissError: false,
   connected: false,
+  ended: false,
 };
 
 const exposed = (state = initialState, action) => {
@@ -45,6 +46,10 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         error: action.error,
         errorMessage: action.errorMessage,
+      });
+    case 'SET_ENDED':
+      return Object.assign({}, state, {
+        ended: action.ended,
       });
     case 'SET_MUTED':
       return Object.assign({}, state, {

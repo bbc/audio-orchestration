@@ -31,6 +31,11 @@ const setConnected = connected => ({
   connected,
 });
 
+const setEnded = ended => ({
+  type: 'SET_ENDED',
+  ended,
+});
+
 const setSessionCode = sessionCode => ({
   type: 'SET_SESSION_CODE',
   sessionCode,
@@ -193,17 +198,29 @@ const scheduleSequences = schedule => (dispatch) => {
     if (sequenceSchedule) {
       const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
       if (startSyncTime !== null) {
+        // TODO: assumes only one sequence is active and the one most recently started becomes the
+        // active sequence - this is the one that will be stopped by transitionToSequence.
         console.debug(`starting sequence ${contentId}`, renderer.activeObjectIds);
+
+        // Starting the sequence and saving the current content id.
         renderer.start(startSyncTime, startOffset);
         orchestrationState.currentContentId = contentId;
+
+        // Clear the ended flag because we just started playing a new sequence.
+        dispatch(setEnded(false));
 
         // Only the master can pause or seek. Looped sequences can be paused, but not seeked in.
         dispatch(setTransportCapabilities(
           master, // canPause
           master && !sequence.loop, // canSeek
         ));
-        // TODO: assumes only one sequence is active and the one most recently started becomes the
-        // active sequence - this is the one that will be stopped by transitionToSequence.
+
+        // Listen for the ended event to update the UI.
+        renderer.on('ended', () => {
+          if (orchestrationState.currentContentId === contentId) {
+            dispatch(setEnded(true));
+          }
+        });
       }
 
       if (stopSyncTime !== null) {
