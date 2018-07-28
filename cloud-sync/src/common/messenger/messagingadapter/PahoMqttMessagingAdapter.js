@@ -41,7 +41,8 @@ PahoMqttMessagingAdapter = function (host, port, user) {
     priv.client.onMessageArrived = handleMessage.bind(this);
     priv.client.connect({
         onSuccess: this.emit.bind(this, "connectionestablished"),
-        onFailure: this.emit.bind(this, "connectionfailure")
+        onFailure: this.emit.bind(this, "connectionfailure"),
+        useSSL: true
     });
 };
 

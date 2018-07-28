@@ -55,7 +55,7 @@ MqttMessagingAdapter = function (host, port, user, options) {
     lastWill.qos = 2;
     lastWill.retain = false;
 
-    if (typeof port !== undefined){
+    if (port !== undefined){
         priv.client = mqtt.connect({ host: host, port: port, keepalive: 60, clientId: user, will: lastWill });
     }else
     {
