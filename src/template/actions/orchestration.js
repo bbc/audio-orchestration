@@ -273,8 +273,17 @@ export const initialiseOrchestration = (master, {
 
   dispatch(setLoading(true));
 
-  const audioContext = new AudioContext();
-  audioContext.resume();
+  let audioContext;
+
+  try {
+    audioContext = new AudioContext();
+    audioContext.resume();
+  } catch (e) {
+    dispatch(setError(true, 'Could not create an AudioContext. Try restarting your device or browser.'));
+    console.error('failed to create AudioContext', e);
+    return;
+  }
+
   const volumeControl = audioContext.createGain();
   volumeControl.gain.value = 1.0;
   volumeControl.connect(audioContext.destination);
