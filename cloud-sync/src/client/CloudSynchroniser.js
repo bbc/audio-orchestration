@@ -768,7 +768,7 @@ CloudSynchroniser.prototype.sendApplicationBroadcast = function (topic, content)
     priv = PRIVATE.get(this);
 
     message = MessageFactory.create("ApplicationBroadcast", priv.sessionId, priv.deviceId, topic, content);
-    priv.messenger.send(message, priv.sessionApplicationBroadcastTopic);
+    priv.messenger.send(message, priv.sessionApplicationBroadcastTopic, { qos: 1 });
     console.log("Sent:", message);
 }
 
