@@ -4,7 +4,7 @@ const initialState = {
   deviceType: null,
   deviceQuality: 1,
   sessionId: null,
-  connectedDeviceTypes: [],
+  connectedDevices: [],
   role: null,
   activeObjectIds: null,
   currentContentId: null,
@@ -74,6 +74,10 @@ const exposed = (state = initialState, action) => {
           parentTime: action.parentTime,
           childTime: action.childTime,
         },
+      });
+    case 'SET_CONNECTED_DEVICES':
+      return Object.assign({}, state, {
+        connectedDevices: action.connectedDevices,
       });
     default:
       return state;

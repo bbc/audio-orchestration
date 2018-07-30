@@ -6,7 +6,7 @@ import Player from '../../Components/Player';
 const MasterPlaying = (props) => {
   const {
     sessionCode,
-    connectedDeviceTypes,
+    connectedDevices,
   } = props;
 
   return (
@@ -22,9 +22,9 @@ const MasterPlaying = (props) => {
       <Player {...props} />
 
       <ul>
-        { connectedDeviceTypes.map(t => (
-          <li>
-            {t}
+        { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (
+          <li key={deviceId}>
+            {`${deviceType} (${deviceLocation})`}
           </li>
         ))}
       </ul>
@@ -37,9 +37,8 @@ MasterPlaying.defaultProps = {
 };
 
 MasterPlaying.propTypes = {
-  connectedDeviceTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string,
 };
 
 export default MasterPlaying;
-

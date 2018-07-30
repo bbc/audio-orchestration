@@ -1061,7 +1061,7 @@ batch@0.6.1:
 
 "bbcat-orchestration@git+ssh://git@github.com:bbc/bbcat-orchestration.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#bef2e2f9e3bc5bf5de286007d2c7a58432857728"
+  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#5bc12bb07047bbba25ad3b85bf690c252376bc49"
   dependencies:
     bbcat "git+ssh://git@github.com:bbc/bbcat-js.git"
     dvbcss-clocks "^0.0.4"
@@ -6706,9 +6706,16 @@ url-join@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/url-join/-/url-join-4.0.0.tgz#4d3340e807d3773bda9991f8305acdcc2a665d2a"
 
-url-parse@^1.1.8, url-parse@^1.2.0, url-parse@~1.4.0:
+url-parse@^1.1.8, url-parse@~1.4.0:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.1.tgz#4dec9dad3dc8585f862fed461d2e19bbf623df30"
+  dependencies:
+    querystringify "^2.0.0"
+    requires-port "^1.0.0"
+
+url-parse@^1.2.0:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.4.3.tgz#bfaee455c889023219d757e045fa6a684ec36c15"
   dependencies:
     querystringify "^2.0.0"
     requires-port "^1.0.0"

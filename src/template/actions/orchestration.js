@@ -68,6 +68,11 @@ const setTransportCapabilities = (canPause, canSeek) => ({
   canSeek,
 });
 
+const setConnectedDevices = (connectedDevices) => ({
+  type: 'SET_CONNECTED_DEVICES',
+  connectedDevices,
+});
+
 // Shim for safari
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -351,12 +356,20 @@ export const initialiseOrchestration = (master, {
       const { syncClock, mdoHelper } = orchestrationState;
 
       mdoHelper.on('change', ({ contentId, activeObjects }) => {
+        // Select a new primary object
         dispatch(selectPrimaryObject(contentId, activeObjects));
+
+        // Update all sequence renderers with new allocations
         sequences.forEach((s) => {
           if (s.contentId === contentId) {
             s.renderer.setActiveObjectIds(activeObjects);
           }
         });
+
+        // Update master UI with device list
+        if (master) {
+          dispatch(setConnectedDevices(mdoHelper.getAuxiliaryDevices()));
+        }
       });
 
       mdoHelper.on('schedule', (schedule) => {
@@ -402,7 +415,6 @@ export const initialiseOrchestration = (master, {
       console.error('initialiseOrchestration', e);
       throw e;
     });
-  return orchestrationState.initPromise;
 };
 
 
@@ -432,7 +444,7 @@ export const pause = () => (dispatch) => {
   }, 0);
 };
 
-export const seek = (relativeSeconds) => (dispatch) => {
+export const seek = relativeSeconds => (dispatch) => {
   const { masterClock, sync, master } = orchestrationState;
 
   if (!master) {
