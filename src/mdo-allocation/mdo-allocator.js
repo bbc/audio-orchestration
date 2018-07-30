@@ -1,4 +1,4 @@
-import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS } from './mdo-helper';
+import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS, DEVICE_TYPE } from './mdo-helper';
 import allocate from './allocate';
 
 /**
@@ -158,6 +158,7 @@ class MdoAllocator extends MdoHelper {
         deviceId,
         location: {},
         quality: 1,
+        type: DEVICE_TYPE.UNKNOWN,
         mainDevice: false,
       },
       ...this._devices.filter(d => d.deviceId !== deviceId),
@@ -207,6 +208,24 @@ class MdoAllocator extends MdoHelper {
         schedule: this._schedule,
       });
     }
+  }
+
+  /**
+   * Get a list of all enabled devices registered with this allocator, excluding the main device.
+   *
+   * Device location is represented as a string of `distance-direction` format.
+   *
+   * @returns {Array<Object>}
+   */
+  getAuxiliaryDevices() {
+    return this._devices
+      .filter(({ mainDevice }) => mainDevice === false)
+      .filter(({ enabled }) => enabled === true)
+      .map(d => ({
+        deviceId: d.deviceId,
+        deviceType: d.type,
+        deviceLocation: `${d.location.distance}-${d.location.direction}`,
+      }));
   }
 }
 

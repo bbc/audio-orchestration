@@ -1,6 +1,7 @@
 import EventEmitter from 'events';
 
 export const DEVICE_TYPE = {
+  UNKNOWN: 'unknown',
   DESKTOP: 'desktop',
   LAPTOP: 'laptop',
   PHONE: 'phone',
@@ -26,7 +27,7 @@ export const DEFAULT_CONTENT_ID = 'default';
 
 /**
  * The MdoHelper is a base class defining the common interface for the {@link MdoAllocator}
- * and the {@link MdoSlaveHelper}.
+ * and the {@link MdoReceiver}.
  *
  * This class is not designed to be instantiated directly.
  *
