@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LargeButton from '../../Components/LargeButton';
 import LinkButton from '../../Components/LinkButton';
 
-class ConnectForm extends React.Component {
+class StartConnectionForm extends React.Component {
   constructor(props) {
     super(props);
     this.inputRef = React.createRef();
@@ -14,23 +14,12 @@ class ConnectForm extends React.Component {
   }
 
   componentDidMount() {
-    const { visible } = this.props;
-    if (visible) {
-      this.checkValid();
-      this.inputRef.current.focus();
-    }
+    this.checkValid();
+    this.inputRef.current.focus();
   }
 
-  componentDidUpdate(prevProps) {
-    const { visible } = this.props;
-    if (visible && !prevProps.visible) {
-      this.checkValid();
-      this.inputRef.current.focus();
-    } else if (!visible && prevProps.visible) {
-      this.checkValid();
-      this.inputRef.current.value = '';
-      this.inputRef.current.blur();
-    }
+  componentWillUnmount() {
+    this.inputRef.current.blur();
   }
 
   checkValid() {
@@ -44,12 +33,12 @@ class ConnectForm extends React.Component {
   }
 
   render() {
-    const { visible, onCancel, numChars } = this.props;
+    const { onCancel, numChars } = this.props;
 
     const { valid } = this.state;
 
     return (
-      <div className={`modal modal-connect ${visible ? 'modal-visible' : ''}`}>
+      <div className="page page-start">
         <div className="gel-layout">
           <div className="gel-1/1">
             <h1>
@@ -87,11 +76,10 @@ class ConnectForm extends React.Component {
   }
 }
 
-ConnectForm.propTypes = {
+StartConnectionForm.propTypes = {
   onSubmit: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
-  visible: PropTypes.bool.isRequired,
   numChars: PropTypes.number.isRequired,
 };
 
-export default ConnectForm;
+export default StartConnectionForm;

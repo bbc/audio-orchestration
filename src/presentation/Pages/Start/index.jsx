@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import LargeButton from '../../Components/LargeButton';
-import ConnectForm from './ConnectForm';
+import StartConnectionForm from './start-connection-form';
+import StartChoice from './start-choice';
 import { SESSION_CODE_LENGTH } from '../../../config';
 
 class StartPage extends React.Component {
@@ -44,47 +44,21 @@ class StartPage extends React.Component {
       connectVisible,
     } = this.state;
 
-    return (
-      <div className="page page-start">
-        <div className="gel-layout">
-          <div className="gel-1/1">
-            <h1>
-              bbcat-orchestration-template
-            </h1>
-
-            <p>
-              You can modify these components, and the main.scss stylesheet, to customise the
-              interface.
-            </p>
-          </div>
-        </div>
-
-        <div className="gel-layout">
-          <div className="gel-1/1">
-            <p>
-              <LargeButton
-                text="Create Session"
-                secondaryText="Start on the device with the best speakers."
-                onClick={startSession}
-              />
-            </p>
-            <p>
-              <LargeButton
-                text="Join"
-                secondaryText="Connect this device as an auxiliary speaker."
-                onClick={this.showConnect}
-              />
-            </p>
-          </div>
-        </div>
-
-        <ConnectForm
+    if (connectVisible) {
+      return (
+        <StartConnectionForm
           onCancel={this.cancelConnect}
           onSubmit={this.submitConnect}
-          visible={connectVisible}
           numChars={SESSION_CODE_LENGTH}
         />
-      </div>
+      );
+    }
+
+    return (
+      <StartChoice
+        startSession={startSession}
+        joinSession={() => this.showConnect()}
+      />
     );
   }
 }
