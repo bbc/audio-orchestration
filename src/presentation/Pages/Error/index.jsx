@@ -3,17 +3,13 @@ import PropTypes from 'prop-types';
 
 const ErrorPage = ({ errorMessage }) => (
   <div className="page page-error">
-    <div className="gel-layout">
-      <div className="gel-1/1">
-        <h1>
-          Error
-        </h1>
+    <h1>
+      Error
+    </h1>
 
-        <p>
-          { errorMessage }
-        </p>
-      </div>
-    </div>
+    <p>
+      { errorMessage }
+    </p>
   </div>
 );
 

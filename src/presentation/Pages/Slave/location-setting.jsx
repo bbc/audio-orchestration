@@ -7,34 +7,37 @@ const LocationSetting = ({
   direction,
   onChange,
 }) => (
-  <p>
-    <ToggleButton
-      onClick={() => onChange({ distance: 'near' })}
-      text="Near"
-      selected={distance === 'near'}
-    />
-    <ToggleButton
-      onClick={() => onChange({ distance: 'far' })}
-      text="Far"
-      selected={distance === 'far'}
-    />
-    <br />
-    <ToggleButton
-      onClick={() => onChange({ direction: 'front' })}
-      text="Front"
-      selected={direction === 'front'}
-    />
-    <ToggleButton
-      onClick={() => onChange({ direction: 'side' })}
-      text="Side"
-      selected={direction === 'side'}
-    />
-    <ToggleButton
-      onClick={() => onChange({ direction: 'rear' })}
-      text="Rear"
-      selected={direction === 'rear'}
-    />
-  </p>
+  <div>
+    <p>
+      <ToggleButton
+        onClick={() => onChange({ distance: 'near' })}
+        text="Near"
+        selected={distance === 'near'}
+      />
+      <ToggleButton
+        onClick={() => onChange({ distance: 'far' })}
+        text="Far"
+        selected={distance === 'far'}
+      />
+    </p>
+    <p>
+      <ToggleButton
+        onClick={() => onChange({ direction: 'front' })}
+        text="Front"
+        selected={direction === 'front'}
+      />
+      <ToggleButton
+        onClick={() => onChange({ direction: 'side' })}
+        text="Side"
+        selected={direction === 'side'}
+      />
+      <ToggleButton
+        onClick={() => onChange({ direction: 'rear' })}
+        text="Rear"
+        selected={direction === 'rear'}
+      />
+    </p>
+  </div>
 );
 
 LocationSetting.defaultProps = {

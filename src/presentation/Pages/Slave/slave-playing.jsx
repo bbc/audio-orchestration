@@ -14,35 +14,16 @@ const SlavePlaying = (props) => {
 
   return (
     <div className="page page-slave">
-      <div className="gel-layout">
-        <div className="gel-1/1">
-          <h1>
-            Slave Device
-          </h1>
-        </div>
-      </div>
-
-      <div className="gel-layout">
-        <div className="gel-1/1">
-          <Player {...props} />
-        </div>
-      </div>
-
-      <div className="gel-layout">
-        <div className="gel-1/1">
-          <LocationSetting
-            direction={deviceLocation.direction}
-            distance={deviceLocation.distance}
-            onChange={setDeviceLocation}
-          />
-        </div>
-      </div>
-
-      <div className="gel-layout">
-        <div className="gel-1/1">
-          <ConnectionInstructions {...{ sessionCode }} />
-        </div>
-      </div>
+      <h1>
+        Slave Device
+      </h1>
+      <Player {...props} />
+      <LocationSetting
+        direction={deviceLocation.direction}
+        distance={deviceLocation.distance}
+        onChange={setDeviceLocation}
+      />
+      <ConnectionInstructions {...{ sessionCode }} />
     </div>
   );
 };

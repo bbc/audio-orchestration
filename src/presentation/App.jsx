@@ -57,10 +57,24 @@ const App = (props) => {
     CurrentPage = ErrorPage;
   }
 
+  // Way too many divs to make the layout work. Every page is displayed in a single grid item
+  // to avoid etraneous repeated mark up in every page component.
   return (
-    <div className="gel-wrap">
-      <CurrentPage {...props} />
-      <Footer />
+    <div id="page-wrapper">
+      <div id="content-background">
+        <div className="wrap">
+          <div className="row">
+            <CurrentPage {...props} />
+          </div>
+        </div>
+      </div>
+      <div id="footer-background">
+        <div className="wrap">
+          <div className="row">
+            <Footer />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

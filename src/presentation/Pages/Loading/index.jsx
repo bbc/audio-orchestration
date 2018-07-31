@@ -2,13 +2,12 @@ import React from 'react';
 
 const Loading = () => (
   <div className="page page-loading">
-    <div className="gel-layout">
-      <div className="gel-1/1">
-        <h1>
-          Loading
-        </h1>
-      </div>
-    </div>
+    <h1>
+      Loading&hellip;
+    </h1>
+    <p>
+      &hellip;
+    </p>
   </div>
 );
 
