@@ -1,7 +1,11 @@
-@import "contrib/meyer-reset";
+$gel-grid-enable--markup-output: true;
+$gel-grid-enable--box-sizing: true;
 
-$fg: #111;
-$bg: #fff;
+@import 'node_modules/gel-sass-tools/sass-tools';
+@import 'node_modules/sass-mq/mq';
+@import 'node_modules/gel-grid/grid';
+
+@import './colours.scss';
 
 body {
   background-color: $bg;
@@ -10,42 +14,22 @@ body {
 }
 
 #app {
-  padding: 1em;
+  position: relative;
 }
 
-h1 {
-  font-weight: bold;
-  font-size: 2em;
-  margin: 0.5em 0;
-}
-
-p {
-  line-height: 120%;
-  margin: 0.5em 0;
+.page, .modal {
+  @include gel-wrap;
 }
 
 .modal {
   display: none;
-  background-color: #eee;
+  background-color: $bg;
 
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-
-  &>* {
-    margin-left: 1rem;
-    margin-right: 1rem;
-  }
-
-  &:first-child {
-    margin-top: 1rem;
-  }
-
-  &:last-child {
-    margin-bottom: 1rem;
-  }
 }
 
 .modal-visible {

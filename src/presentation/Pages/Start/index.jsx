@@ -46,28 +46,37 @@ class StartPage extends React.Component {
 
     return (
       <div className="page page-start">
-        <h1>
-          bbcat-orchestration-template
-        </h1>
+        <div className="gel-layout">
+          <div className="gel-1/1">
+            <h1>
+              bbcat-orchestration-template
+            </h1>
 
-        <p>
-          You can modify these components, and the main.scss stylesheet, to customise the interface.
-        </p>
+            <p>
+              You can modify these components, and the main.scss stylesheet, to customise the
+              interface.
+            </p>
+          </div>
+        </div>
 
-        <p>
-          <LargeButton
-            text="Create Session"
-            secondaryText="Start on the device with the best speakers."
-            onClick={startSession}
-          />
-        </p>
-        <p>
-          <LargeButton
-            text="Join"
-            secondaryText="Connect this device as an auxiliary speaker."
-            onClick={this.showConnect}
-          />
-        </p>
+        <div className="gel-layout">
+          <div className="gel-1/1">
+            <p>
+              <LargeButton
+                text="Create Session"
+                secondaryText="Start on the device with the best speakers."
+                onClick={startSession}
+              />
+            </p>
+            <p>
+              <LargeButton
+                text="Join"
+                secondaryText="Connect this device as an auxiliary speaker."
+                onClick={this.showConnect}
+              />
+            </p>
+          </div>
+        </div>
 
         <ConnectForm
           onCancel={this.cancelConnect}

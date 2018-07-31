@@ -11,23 +11,33 @@ const MasterPlaying = (props) => {
 
   return (
     <div className="page page-master">
-      <h1>
-        Master Device
-      </h1>
+      <div className="gel-layout">
+        <div className="gel-1/1">
+          <h1>
+            Master Device
+          </h1>
 
-      <p>
-        { `Join with code ${sessionCode}` }
-      </p>
-
-      <Player {...props} />
-
-      <ul>
-        { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (
-          <li key={deviceId}>
-            {`${deviceType} (${deviceLocation})`}
-          </li>
-        ))}
-      </ul>
+          <p>
+            { `Join with code ${sessionCode}` }
+          </p>
+        </div>
+      </div>
+      <div className="gel-layout">
+        <div className="gel-1/1">
+          <Player {...props} />
+        </div>
+      </div>
+      <div className="gel-layout">
+        <div className="gel-1/1">
+          <ul>
+            { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (
+              <li key={deviceId}>
+                {`${deviceType} (${deviceLocation})`}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };

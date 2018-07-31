@@ -50,32 +50,38 @@ class ConnectForm extends React.Component {
 
     return (
       <div className={`modal modal-connect ${visible ? 'modal-visible' : ''}`}>
-        <h1>
-          Connect your device
-        </h1>
-        <p>
-          { `Please enter the ${numChars}-digit code displayed on your main device.` }
-        </p>
-        <input
-          placeholder={'*'.repeat(numChars)}
-          autoComplete="off"
-          className="input-session-id"
-          type="tel"
-          maxLength={numChars}
-          ref={this.inputRef}
-          onKeyPress={(e) => {
-            if (e.key === 'Enter') {
-              this.submit();
-            }
-          }}
-          onChange={this.checkValid}
-        />
-        <p>
-          <LargeButton onClick={this.submit} disabled={!valid} text="Connect" />
-        </p>
-        <p>
-          <LinkButton onClick={onCancel} text="Cancel" />
-        </p>
+        <div className="gel-layout">
+          <div className="gel-1/1">
+            <h1>
+              Connect your device
+            </h1>
+            <p>
+              { `Please enter the ${numChars}-digit code displayed on your main device.` }
+            </p>
+            <p>
+              <input
+                placeholder={'*'.repeat(numChars)}
+                autoComplete="off"
+                className="input-session-id"
+                type="tel"
+                maxLength={numChars}
+                ref={this.inputRef}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    this.submit();
+                  }
+                }}
+                onChange={this.checkValid}
+              />
+            </p>
+            <p>
+              <LargeButton onClick={this.submit} disabled={!valid} text="Connect" />
+            </p>
+            <p>
+              <LinkButton onClick={onCancel} text="Cancel" />
+            </p>
+          </div>
+        </div>
       </div>
     );
   }
