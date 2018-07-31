@@ -17,23 +17,8 @@ body {
   position: relative;
 }
 
-.page, .modal {
+.page, .footer {
   @include gel-wrap;
-}
-
-.modal {
-  display: none;
-  background-color: $bg;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.modal-visible {
-  display: block;
 }
 
 button {

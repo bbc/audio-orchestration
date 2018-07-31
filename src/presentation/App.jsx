@@ -11,12 +11,21 @@ import Slave from './Pages/Slave';
 import Loading from './Pages/Loading';
 import ErrorPage from './Pages/Error';
 import Help from './Pages/Help';
+import Footer from './Footer';
 
 /**
  * The App is the top level presentational component.
  *
  * It selects the currently active page to render, and forwards all its props to the page. Each
  * page may contain further logic to show different screens depending on its props.
+ *
+ * The 'role' can be start, master, or slave. It typically does not change after the user's initial
+ * selection to create, or join a session.
+ *
+ * The loading, error, and help (and any other screens you may want to add) are boolean properties
+ * in the state. They change as these pages should become visible, or hidden.
+ *
+ * Finally, there is a footer that is common to all pages. This is included directly here.
  */
 const App = (props) => {
   const {
@@ -48,7 +57,12 @@ const App = (props) => {
     CurrentPage = ErrorPage;
   }
 
-  return <CurrentPage {...props} />;
+  return (
+    <div className="gel-wrap">
+      <CurrentPage {...props} />
+      <Footer />
+    </div>
+  );
 };
 
 App.propTypes = {
