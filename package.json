@@ -12,6 +12,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "dvbcss-clocks": "^0.0.4",
     "gel-grid": "^4.0.0",
+    "gel-typography": "^2.0.5",
     "html-webpack-plugin": "^3.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.1",

@@ -43,8 +43,8 @@ const Player = ({
   }
 
   return (
-    <div id="player">
-      <p id="player-controls">
+    <div className="player">
+      <p className="player-controls">
         { buttons }
       </p>
       <p>
