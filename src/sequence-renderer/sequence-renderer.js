@@ -71,7 +71,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
      * @type {Map<ItemRenderer>}
      * @private
      */
-    this._activeItemRenderers = new Map();
+    this._activeItemRenderers = [];
 
     /**
      * @type {number}
@@ -183,6 +183,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {number} offset - in seconds, where in the sequence playback should start.
    */
   start(syncClockTime, offset = 0) {
+    this._stopped = false;
     this._clock.setCorrelationAndSpeed({
       parentTime: syncClockTime,
       childTime: offset * this._syncClock.tickRate,
@@ -198,7 +199,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   stop(syncClockTime, fade = true) {
     const syncTime = this._syncClock.calcWhen(syncClockTime);
     this._stopped = true;
-    this._activeItemRenderers.forEach((renderer) => {
+    this._activeItemRenderers.forEach(({ renderer }) => {
       if (fade) {
         renderer.output.gain.setTargetAtTime(MUTE_GAIN, syncTime, this.fadeOutDuration / 3);
       } else {
@@ -212,6 +213,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
         1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
       );
     });
+    this._activeItemRenderers = [];
   }
 
   /**
@@ -237,6 +239,69 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     return syncClockTime;
   }
 
+
+  /**
+   * Gets all items active at the current time, or within the lookahead window.
+   *
+   * Returns every item at most once.
+   *
+   * @returns {Array<MdoItem>}
+   * @private
+   */
+  getActiveItems() {
+    // Object ids that are valid for the sequence (ensure this now to avoid error checking later)
+    const objectIds = this._activeObjectIds
+      .filter(objectId => this._sequence.objectIds.includes(objectId));
+
+    // items that are active at or after the current time (or all items for looping sequences)
+    const items = objectIds
+      .map(objectId => this._sequence.items(objectId, this._sequence.loop ? 0 : this.contentTime))
+      .reduce((acc, a) => acc.concat(a), []);
+
+    // those active items that start within the lookahead window. Also include those at the start
+    // of the sequence if contentTime + lookahead > duration.
+    const activeItems = items
+      .filter(item => item.start <= this.contentTime + this._lookaheadDuration
+        || item.start <= (this.contentTime + this._lookaheadDuration) % this._sequence.duration);
+
+    return activeItems;
+  }
+
+  /**
+   * schedules the given item, if it hasn't already been scheduled for the same time.
+   *
+   * @param {MdoItem} item
+   * @param {number} startTime in seconds
+   * @private
+   */
+  scheduleItem(item, startTime) {
+    const { itemId, duration, source } = item;
+
+    const existingRenderer = this._activeItemRenderers
+      .find(r => r.itemId === itemId && r.startTime === startTime);
+    if (existingRenderer !== undefined) {
+      // Already have this item scheduled for the same time.
+      return;
+    }
+
+    const clock = new CorrelatedClock(this._clock, {
+      correlation: [startTime * this._clock.tickRate, 0],
+      speed: 1,
+      tickRate: 1,
+    });
+
+    const renderer = this._itemRendererFactory.getInstance(source, clock);
+    renderer.output.connect(this._output);
+    renderer.start();
+
+    this._activeItemRenderers.push({
+      itemId,
+      renderer,
+      startTime,
+      duration,
+    });
+  }
+
   /**
    * Notify this object that something changed and requires attention.
    *
@@ -245,58 +310,57 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @private
    */
   notify() {
+    // do not schedule any new items after the renderer has been stopped.
+ 
+    if (this._stopped) {
+      return;
+    }
     // console.debug('SSR: notify', this._sequence, this._activeObjectIds);
+    const { contentTime } = this;
+    const now = this._clock.now() / this._clock.tickRate;
+    const sequenceStart = Math.floor(now / this._sequence.duration) * this._sequence.duration;
 
     // find all active items (active now up to lookaheadDuration) for all active and valid objects.
-    const activeItems = this._activeObjectIds
-      .filter(objectId => this._sequence.objectIds.includes(objectId))
-      .map(objectId => this._sequence.items(objectId, this.contentTime))
-      .reduce((acc, a) => acc.concat(a), [])
-      .filter(item => item.start <= this.contentTime + this._lookaheadDuration);
+    const activeItems = this.getActiveItems();
 
-    const activeItemIds = activeItems.map(item => item.itemId);
+    activeItems.forEach((item) => {
+      const { start, duration } = item;
 
-    activeItems.forEach(({
-      itemId,
-      start,
-      source,
-    }) => {
-      // Do nothing if the item has already been scheduled.
-      if (this._activeItemRenderers.has(itemId)) {
-        return;
+      // schedule item if it should have started before now and is still active
+      if (start <= contentTime && (start + duration) > contentTime) {
+        this.scheduleItem(item, sequenceStart + start);
       }
 
-      // otherwise create the clock, player, and sync controller.
-      const clock = new CorrelatedClock(this._clock, {
-        correlation: [start * this._clock.tickRate, 0],
-        speed: 1,
-        tickRate: 1,
+      // schedule item if it starts within lookahead window in the future. For looped sequences,
+      // also check for the lookahead window at the sequence start if near the end.
+      if (this._sequence.loop) {
+        if (start + this._sequence.duration < contentTime + this._lookaheadDuration) {
+          this.scheduleItem(item, sequenceStart + this._sequence.duration + start);
+        }
+      }
+    });
+
+
+    // deactivate all renderers for abandoned items: Those that have run to completion,
+    // and those for items not in the activeItems list.
+    this._activeItemRenderers
+      .filter(({ itemId, startTime, duration }) =>
+        (startTime + duration < now)
+          || (activeItems.find(item => item.itemId === itemId) === undefined))
+      .forEach((r) => {
+        r.renderer.stop();
       });
 
-      const renderer = this._itemRendererFactory.getInstance(source, clock);
-      renderer.output.connect(this._output);
-      renderer.start();
-      this._activeItemRenderers.set(itemId, renderer);
-    });
+    // delete references to all stopped item renderers
+    this._activeItemRenderers = this._activeItemRenderers
+      .filter(({ renderer }) => !renderer.stopped);
 
-    const abandonedItemIds = Array.from(this._activeItemRenderers.keys())
-      .filter(itemId => !activeItemIds.includes(itemId));
-
-    abandonedItemIds.forEach((itemId) => {
-      this._activeItemRenderers.get(itemId).stop()
-        .then(() => this._activeItemRenderers.delete(itemId));
-    });
-
-    // if (activeItemIds.filter(a => !this._activeItemRenderers.has(a.itemId)).length > 1) {
-    //   console.debug(`Active items: ${activeItemIds}.`);
-    // }
-    // if (abandonedItemIds.length > 0) {
-    //   console.debug(`Abandoned items: ${abandonedItemIds}`);
-    // }
-    if (this.contentTime > this.sequence.duration && this._lastNotifyContentTime <= this.sequence.duration) {
+    // Emit ended event some time after the end of the sequence duration
+    if (contentTime > this._sequence.duration
+        && this._lastNotifyContentTime <= this._sequence.duration) {
       this.emit('ended');
     }
-    this._lastNotifyContentTime = this.contentTime;
+    this._lastNotifyContentTime = contentTime;
   }
 
   /**
@@ -330,7 +394,11 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @returns {number}
    */
   get contentTime() {
-    return this._clock.now() / this._clock.tickRate;
+    const now = this._clock.now() / this._clock.tickRate;
+    if (this._sequence.loop) {
+      return now % this._sequence.duration;
+    }
+    return now;
   }
 }
 

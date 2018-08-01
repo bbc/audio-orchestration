@@ -25,6 +25,8 @@ class ItemRenderer {
 
     // TODO: replace with stereo panner in stereo case, or gain node otherwise.
     this._output = new OutputRouter(this._audioContext, this._stereoOutput);
+
+    this.stopped = false;
   }
 
   start() {
@@ -54,6 +56,7 @@ class ItemRenderer {
     this._clock.setSpeed(0);
     this._syncController.stop();
     this.output.disconnect();
+    this.stopped = true;
     return Promise.resolve();
   }
 
