@@ -8,8 +8,6 @@ const { Sequence, SynchronisedSequenceRenderer } = SequenceRenderer;
 const audioContext = new AudioContext();
 const sysClock = new AudioContextClock({}, audioContext);
 const clock = new Clocks.CorrelatedClock(sysClock, { correlation: [0, 0], speed: 0, tickRate: 1 });
-const loopClock = new Clocks.CorrelatedClock(clock, { correlation: [0, 0], speed: 1, tickRate: 1 });
-const mainClock = new Clocks.CorrelatedClock(clock, { correlation: [0, 0], speed: 0, tickRate: 1 });
 
 const isStereo = true;
 
@@ -34,6 +32,7 @@ function initControls(renderer, el) {
     const input = document.createElement('input');
     input.type = 'checkbox';
     input.value = objectId;
+    input.checked = renderer.activeObjectIds.includes(objectId);
 
     const label = document.createElement('label');
     label.appendChild(input);
@@ -59,8 +58,9 @@ function init() {
       }
       return response.json();
     })
-    .then(data => initRenderer(data, mainClock))
+    .then(data => initRenderer(data, clock))
     .then((renderer) => {
+      renderer.setActiveObjectIds(renderer.sequence.objectIds);
       initControls(renderer, document.getElementById('object-ids-main'));
       return renderer;
     });
@@ -72,8 +72,10 @@ function init() {
       }
       return response.json();
     })
-    .then(data => initRenderer(data, loopClock))
+    .then(data => initRenderer(data, clock))
     .then((renderer) => {
+      renderer.start(0);
+      renderer.setActiveObjectIds(renderer.sequence.objectIds);
       initControls(renderer, document.getElementById('object-ids-loop'));
       return renderer;
     });
@@ -83,20 +85,14 @@ function init() {
       document.getElementById('btn-transition').addEventListener('click', (e) => {
         e.target.disabled = true;
         loopRenderer.setActiveObjectIds(['music']);
-        const syncTime = loopRenderer.stopAtOutPoint(0.5);
-        const correlation = [clock.now() + (syncTime - audioContext.currentTime), 0];
-        console.debug(
-          `current: ${audioContext.currentTime}, sync: ${syncTime}`,
-          `new correlation: ${correlation}`,
-        );
-        mainClock.setCorrelationAndSpeed(correlation, 1);
+        const syncTime = loopRenderer.stopAtOutPoint(2);
+        mainRenderer.start(syncTime);
       });
     })
     .then(() => {
       const clickHandlers = {
         'btn-play': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 1),
         'btn-pause': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 0),
-        'btn-reset': () => clock.setCorrelationAndSpeed([sysClock.now(), 0], 1),
         'btn-skip': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now() + 10], 1),
       };
       Object.entries(clickHandlers).forEach(([id, cb]) => {
