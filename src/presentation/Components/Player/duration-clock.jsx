@@ -39,11 +39,14 @@ class DurationClock extends React.Component {
   }
 
   componentDidUpdate() {
-    this.setupForceUpdate();
+    if (this.updating) {
+      this.setupForceUpdate();
+    }
   }
 
   componentWillUnmount() {
     this.updating = false;
+    clearTimeout(this.updateTimeout);
   }
 
   setupForceUpdate() {
