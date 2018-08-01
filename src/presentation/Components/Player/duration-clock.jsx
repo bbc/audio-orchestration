@@ -70,9 +70,19 @@ class DurationClock extends React.Component {
   }
 
   render() {
-    const { speed, duration, correlation } = this.props;
+    const {
+      speed,
+      duration,
+      correlation,
+      loop,
+    } = this.props;
     const { parentTime, childTime } = correlation;
-    const displayTime = Math.max(0, Math.min(getDuration(parentTime, childTime, speed), duration));
+    let displayTime = getDuration(parentTime, childTime, speed);
+    if (loop) {
+      displayTime = Math.max(0, displayTime % duration);
+    } else {
+      displayTime = Math.max(0, Math.min(displayTime, duration));
+    }
     return (
       <span>
         {formatDuration(displayTime)}
@@ -90,6 +100,7 @@ DurationClock.propTypes = {
   }).isRequired,
   speed: PropTypes.number.isRequired,
   duration: PropTypes.number.isRequired,
+  loop: PropTypes.bool.isRequired,
 };
 
 export default DurationClock;

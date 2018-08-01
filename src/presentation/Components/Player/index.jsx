@@ -15,6 +15,7 @@ const Player = ({
   contentCorrelation,
   contentSpeed,
   contentDuration,
+  loop,
 }) => {
   const buttons = [];
   if (canPause) {
@@ -55,6 +56,7 @@ const Player = ({
           correlation={contentCorrelation}
           speed={contentSpeed}
           duration={contentDuration}
+          loop={loop}
         />
       </p>
     </div>
@@ -67,6 +69,7 @@ Player.propTypes = {
   mute: PropTypes.func.isRequired,
   seek: PropTypes.func.isRequired,
   playing: PropTypes.bool.isRequired,
+  loop: PropTypes.bool.isRequired,
   muted: PropTypes.bool.isRequired,
   canPause: PropTypes.bool.isRequired,
   canSeek: PropTypes.bool.isRequired,

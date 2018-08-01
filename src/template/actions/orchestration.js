@@ -179,10 +179,10 @@ const updatePlaybackStatus = () => (dispatch) => {
     return;
   }
   const { renderer, sequence } = sequenceWrapper;
+  const { duration, loop } = sequence;
 
   const parentTime = Date.now() / 1000;
   const childTime = renderer.contentTime;
-  const { duration } = sequence;
   const speed = syncClock.getEffectiveSpeed();
 
   dispatch({
@@ -192,6 +192,7 @@ const updatePlaybackStatus = () => (dispatch) => {
     childTime,
     duration,
     speed,
+    loop,
   });
 };
 

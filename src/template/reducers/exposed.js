@@ -12,6 +12,7 @@ const initialState = {
   contentSpeed: 0,
   contentDuration: 0,
   playing: false,
+  loop: false,
   muted: false,
   error: false,
   errorMessage: null,
@@ -23,6 +24,7 @@ const initialState = {
   canDismissError: false,
   connected: false,
   ended: false,
+  help: false,
 };
 
 const exposed = (state = initialState, action) => {
@@ -75,6 +77,7 @@ const exposed = (state = initialState, action) => {
         contentDuration: action.duration,
         contentSpeed: action.speed,
         playing: (action.speed !== 0),
+        loop: action.loop,
         contentCorrelation: {
           parentTime: action.parentTime,
           childTime: action.childTime,
