@@ -218,14 +218,20 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * Mutes all outputs from this renderer and stops all players at the next suitable time after the
    * given delay.  Renders this renderer useless.
    *
-   * @param {delay} in seconds
+   * @param {number} delay, in seconds
    * @returns {number} the context time when the output will be muted
    */
   stopAtOutPoint(delay = 0) {
     const out = this._sequence.nextOutPoint(this.contentTime + delay);
     console.debug('stopAtOutPoint:', this.contentTime, delay, out);
     const syncTime = this._clock.calcWhen(out * this._clock.tickRate);
-    const syncClockTime = this._syncClock.fromRootTime(syncTime);
+    let syncClockTime = this._syncClock.fromRootTime(syncTime);
+
+    // if this is called after the end of the sequence, we may have picked a stop time in the past
+    // (the end of the sequence). Avoid this by clamping the chosen time to the current time.
+    if (syncClockTime < this._syncClock.now()) {
+      syncClockTime = this._syncClock.now() + (delay * this._syncClock.tickRate);
+    }
 
     this.stop(syncClockTime, true);
     return syncClockTime;

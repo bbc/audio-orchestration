@@ -80,6 +80,7 @@ class CloudSyncAdapter extends SyncAdapter {
       });
 
       this._synchroniser.on('SyncServiceUnavailable', () => {
+        console.debug('CloudSyncSyncAdapter: disconnected');
         this.emit('disconnected', 'CloudSyncAdapter: connect failed.');
         reject();
       });
