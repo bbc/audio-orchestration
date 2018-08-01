@@ -14,6 +14,7 @@ import {
   SEQUENCE_URLS,
   SESSION_CODE_LENGTH,
   CONTENT_ID,
+  LOADING_TIMEOUT,
 } from '../../config';
 
 const { AudioContextClock } = SyncPlayers;
@@ -24,6 +25,11 @@ const { CorrelatedClock } = Clocks;
 const setLoading = loading => ({
   type: 'SET_LOADING',
   loading,
+});
+
+const setLoadingMessage = (loadingMessage) => ({
+  type: 'SET_LOADING_MESSAGE',
+  loadingMessage,
 });
 
 const setConnected = connected => ({
@@ -281,6 +287,7 @@ export const initialiseOrchestration = (master, {
 
   let audioContext;
 
+  dispatch(setLoadingMessage('Creating audio context.'));
   try {
     audioContext = new AudioContext();
     audioContext.resume();
@@ -293,7 +300,10 @@ export const initialiseOrchestration = (master, {
   const volumeControl = audioContext.createGain();
   volumeControl.gain.value = 1.0;
   volumeControl.connect(audioContext.destination);
+
   const sysClock = new AudioContextClock({}, audioContext);
+
+  dispatch(setLoadingMessage('Creating synchronisation client and local clocks.'));
   const sync = new Sync(new CloudSyncAdapter({ sysClock }));
   const masterClock = new CorrelatedClock(sync.wallClock, {
     correlation: {
@@ -314,7 +324,7 @@ export const initialiseOrchestration = (master, {
     sync,
     deviceId,
   });
-  
+
   // listen for disconnected event, to trigger UI message when connection is lost.
   sync.on('disconnected', () => {
     dispatch(setConnected(false));
@@ -327,95 +337,121 @@ export const initialiseOrchestration = (master, {
   // - Create the MDO Helper, subscribe all sequence renderers to it
   // - Update the user interface to indicate the connected state.
 
-  orchestrationState.initPromise = requestSessionId(joinSessionCode)
+  orchestrationState.initPromise = Promise.resolve()
+    .then(() => {
+      dispatch(setLoadingMessage('Requesting session.'));
+      return requestSessionId(joinSessionCode).catch((e) => {
+        dispatch(setError(`Could not ${master ? 'create' : 'join'} session ${joinSessionCode}.`));
+        throw e;
+      });
+    })
     .then(({ sessionCode, sessionId }) => {
+      dispatch(setLoadingMessage('Connecting to synchronisation system.'));
       dispatch(setSessionCode(sessionCode));
-      return sync.connect(CLOUDSYNC_ENDPOINT, sessionId, deviceId);
+      return sync.connect(CLOUDSYNC_ENDPOINT, sessionId, deviceId)
+        .catch((e) => {
+          dispatch(setError(`Could not ${master ? 'create' : 'join'} session ${joinSessionCode}.`));
+          throw e;
+        });
     })
     .then(() => {
+      dispatch(setLoadingMessage('Waiting for synchronised clock.'));
       if (master) {
         sync.provideTimelineClock(masterClock, TIMELINE_TYPE, CONTENT_ID);
       }
-
-      return sync.requestTimelineClock(TIMELINE_TYPE, CONTENT_ID);
+      return sync.requestTimelineClock(TIMELINE_TYPE, CONTENT_ID)
+        .then((timelineClock) => {
+          orchestrationState.syncClock = timelineClock;
+        })
+        .catch((e) => {
+          dispatch(setError('Failed to get a synchronised timeline clock.'));
+          throw e;
+        });
     })
-    .then((timelineClock) => {
-      orchestrationState.syncClock = timelineClock;
+    .then(() => {
+      dispatch(setLoadingMessage('Loading sequence metadata and initialising renderer.'));
+      return Promise.all(SEQUENCE_URLS.map(loadSequence))
+        .catch((e) => {
+          dispatch(setError('Downloading sequences failed.'));
+          throw e;
+        });
     })
-    .catch((e) => {
-      dispatch(setError(`Could not ${master ? 'create' : 'join'} session ${joinSessionCode}.`));
-      throw e;
-    })
-    .then(() => Promise.all(SEQUENCE_URLS.map(loadSequence)))
-    .catch((e) => {
-      dispatch(setError('Downloading sequences failed.'));
-      throw e;
-    })
-    .then(sequences => new Promise((resolve, reject) => {
-      // Create mdoHelper
-      if (master) {
-        orchestrationState.mdoHelper = new MdoAllocator(deviceId);
-      } else {
-        orchestrationState.mdoHelper = new MdoReceiver(deviceId);
-      }
-      const { syncClock, mdoHelper } = orchestrationState;
+    .then((sequences) => {
+      dispatch(setLoadingMessage('Waiting for schedule update.'));
+      return new Promise((resolve, reject) => {
+        // Create mdoHelper
+        if (master) {
+          orchestrationState.mdoHelper = new MdoAllocator(deviceId);
+        } else {
+          orchestrationState.mdoHelper = new MdoReceiver(deviceId);
+        }
+        const { syncClock, mdoHelper } = orchestrationState;
 
-      // Register syncClock events to update playback and connection status.
-      syncClock.on('change', () => {
-        dispatch(updatePlaybackStatus());
-      });
+        // Register syncClock events to update playback and connection status.
+        syncClock.on('change', () => {
+          dispatch(updatePlaybackStatus());
+        });
 
-      syncClock.on('unavailable', () => {
-        dispatch(setConnected(false));
-      });
+        syncClock.on('unavailable', () => {
+          dispatch(setConnected(false));
+        });
 
-      syncClock.on('available', () => {
-        dispatch(setConnected(true));
-      });
+        syncClock.on('available', () => {
+          dispatch(setConnected(true));
+        });
 
-      // Set initial availability.
-      dispatch(setConnected(syncClock.getAvailabilityFlag()));
+        // Set initial availability.
+        dispatch(setConnected(syncClock.getAvailabilityFlag()));
 
-      // Register helper change event to forward allocations to sequenceRenderer and UI.
-      mdoHelper.on('change', ({ contentId, activeObjects }) => {
-        // Select a new primary object
-        dispatch(selectPrimaryObject(contentId, activeObjects));
+        // Register helper change event to forward allocations to sequenceRenderer and UI.
+        mdoHelper.on('change', ({ contentId, activeObjects }) => {
+          // Select a new primary object
+          dispatch(selectPrimaryObject(contentId, activeObjects));
 
-        // Update all sequence renderers with new allocations
-        sequences.forEach((s) => {
-          if (s.contentId === contentId) {
-            s.renderer.setActiveObjectIds(activeObjects);
+          // Update all sequence renderers with new allocations
+          sequences.forEach((s) => {
+            if (s.contentId === contentId) {
+              s.renderer.setActiveObjectIds(activeObjects);
+            }
+          });
+
+          // Update master UI with device list
+          if (master) {
+            dispatch(setConnectedDevices(mdoHelper.getAuxiliaryDevices()));
           }
         });
 
-        // Update master UI with device list
-        if (master) {
-          dispatch(setConnectedDevices(mdoHelper.getAuxiliaryDevices()));
-        }
-      });
-
-      // resolve the promise once the schedule with the initial sequence has been received.
-      mdoHelper.on('schedule', (schedule) => {
-        dispatch(scheduleSequences(schedule));
-        resolve();
-      });
-
-      // Start listening for broadcast messages, send initial request for schedule and allocations.
-      mdoHelper.start(sync);
-
-      // Register the sequence objects and start playing the first one.
-      // The master device transitionToSequence causes a schedule event on all devices.
-      if (master) {
-        // register the objects for all sequences.
-        sequences.forEach((s) => {
-          mdoHelper.registerObjects(s.sequence.objects, s.contentId);
+        // resolve the promise once the schedule with the initial sequence has been received.
+        mdoHelper.on('schedule', (schedule) => {
+          dispatch(scheduleSequences(schedule));
+          resolve();
         });
 
-        // TODO: use a user provided initial sequence or wait for first play click before starting.
-        dispatch(transitionToSequence(SEQUENCE_URLS[0]));
-      }
-    }))
+        // Start listening for broadcast messages, send request for schedule and allocations.
+        mdoHelper.start(sync);
+
+        // Register the sequence objects and start playing the first one.
+        // The master device transitionToSequence causes a schedule event on all devices.
+        if (master) {
+          // register the objects for all sequences.
+          sequences.forEach((s) => {
+            mdoHelper.registerObjects(s.sequence.objects, s.contentId);
+          });
+
+          // TODO: use a user provided initial sequence or wait for first play click?
+          dispatch(transitionToSequence(SEQUENCE_URLS[0]));
+        }
+
+        setTimeout(() => {
+          reject(new Error('Timeout waiting for schedule event'));
+        }, LOADING_TIMEOUT);
+      }).catch((e) => {
+        dispatch(setError('Failed to set up scheduling system.'));
+        throw e;
+      });
+    })
     .then(() => {
+      dispatch(setLoadingMessage('Ready to go.'));
       dispatch(setRole(master ? 'master' : 'slave'));
       dispatch(setLoading(false));
     })
@@ -424,7 +460,6 @@ export const initialiseOrchestration = (master, {
       throw e;
     });
 };
-
 
 export const play = () => (dispatch) => {
   const { masterClock, sync, master } = orchestrationState;

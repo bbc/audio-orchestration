@@ -16,6 +16,7 @@ const initialState = {
   error: false,
   errorMessage: null,
   loading: false,
+  loadingMessage: false,
   canReplaceSequence: false,
   canSeek: false,
   canPause: false,
@@ -29,6 +30,10 @@ const exposed = (state = initialState, action) => {
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.loading,
+      });
+    case 'SET_LOADING_MESSAGE':
+      return Object.assign({}, state, {
+        loadingMessage: action.loadingMessage,
       });
     case 'SET_CONNECTED':
       return Object.assign({}, state, {

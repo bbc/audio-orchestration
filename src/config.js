@@ -7,3 +7,6 @@ export const SEQUENCE_URLS = [
   'audio/clicks-and-tone/sequence.json',
 ];
 export const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
+
+// Time in milliseconds. Report an error if any individual loading step takes longer than this.
+export const LOADING_TIMEOUT = 5 * 1000;
