@@ -13,6 +13,7 @@ export {
   mute,
   log,
   setDeviceLocation,
+  playAgain,
 } from './orchestration';
 
 export const startSession = () => (dispatch) => {

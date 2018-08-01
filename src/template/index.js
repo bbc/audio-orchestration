@@ -8,6 +8,7 @@ import {
   seek,
   log,
   dismissError,
+  playAgain,
 } from './actions';
 
 export { default as reducers } from './reducers';
@@ -44,6 +45,9 @@ function mapDispatchToProps(dispatch) {
     },
     dismissError: () => {
       dispatch(dismissError());
+    },
+    playAgain: () => {
+      dispatch(playAgain());
     },
   };
 }

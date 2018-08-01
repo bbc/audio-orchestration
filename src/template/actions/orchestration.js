@@ -510,6 +510,17 @@ export const mute = muted => (dispatch) => {
   dispatch(setMuted(muted));
 };
 
+export const playAgain = () => (dispatch) => {
+  const { master } = orchestrationState;
+
+  if (!master) {
+    return;
+  }
+
+  // TODO: use different way of identifying contentId
+  dispatch(transitionToSequence(SEQUENCE_URLS[0]));
+};
+
 export const log = message => (dispatch) => {
   console.debug(message);
 };

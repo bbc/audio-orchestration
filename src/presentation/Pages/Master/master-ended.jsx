@@ -1,23 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import LargeButton from '../../Components/LargeButton';
 
-const MasterEnded = () => (
+const MasterEnded = ({
+  playAgain,
+}) => (
   <div className="page page-master">
     <h1>
-      The end.
+      Thanks for listening.
     </h1>
 
     <p>
-      Could ask for feedback or advertise other onward journeys here.
+      This is the main device&apos;s end screen. It may contain feedback prompts or links to onward
+      journeys, such as background information or social sharing options.
     </p>
 
     <p>
-      Thanks for listening.
-    </p>
-
-    <p>
-      A button to return to the playing/setup sequence and clear the ended flag?
+      <LargeButton
+        text="Play again"
+        onClick={playAgain}
+      />
     </p>
   </div>
 );
+
+MasterEnded.propTypes = {
+  playAgain: PropTypes.func.isRequired,
+};
 
 export default MasterEnded;
