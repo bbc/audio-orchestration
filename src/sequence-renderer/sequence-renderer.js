@@ -183,6 +183,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {number} offset - in seconds, where in the sequence playback should start.
    */
   start(syncClockTime, offset = 0) {
+    // console.debug(`start sequencerenderer at ${syncClockTime.toFixed(1)} (loop ${this._sequence.loop})`);
     this._stopped = false;
     this._clock.setCorrelationAndSpeed({
       parentTime: syncClockTime,
@@ -208,7 +209,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       setTimeout(
         () => {
           renderer.stop();
-          console.debug(`renderer.stop at ${this._audioContext.currentTime}`);
+          // console.debug(`renderer.stop at ${this._audioContext.currentTime} (output cut at ${syncTime}).`);
         },
         1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
       );
@@ -218,16 +219,29 @@ class SynchronisedSequenceRenderer extends EventEmitter {
 
   /**
    * Mutes all outputs from this renderer and stops all players at the next suitable time after the
-   * given delay.  Renders this renderer useless.
+   * given delay.  Renders this renderer useless. If no out points are defined for the sequence,
+   * stop immediately at the delay.
    *
    * @param {number} delay, in seconds
    * @returns {number} the context time when the output will be muted
    */
   stopAtOutPoint(delay = 0) {
-    const out = this._sequence.nextOutPoint(this.contentTime + delay);
-    console.debug('stopAtOutPoint:', this.contentTime, delay, out);
-    const syncTime = this._clock.calcWhen(out * this._clock.tickRate);
-    let syncClockTime = this._syncClock.fromRootTime(syncTime);
+    let out = this._sequence.nextOutPoint(this.contentTime + delay);
+
+    if (this._sequence.outPoints.length === 0) {
+      out = this.contentTime + delay;
+    }
+    const diff = out - this.contentTime;
+    let syncClockTime = this._syncClock.now() + (diff * this._syncClock.tickRate);
+
+    // TODO: audio from sequence started at calculated out point sometimes starts too early.
+    // I think this is due to the sync clock changing and the sync-controller having decided
+    // that the change was too small to seek the audio of the first sequence.
+
+    // console.debug(`stopAtOutPoint delay ${delay} contentTime ${this.contentTime} out point ${out}\n` +
+    //               `syncClockTime: ${syncClockTime}\n` +
+    //               `syncClock now: ${this._syncClock.now()}\n` +
+    //              '');
 
     // if this is called after the end of the sequence, we may have picked a stop time in the past
     // (the end of the sequence). Avoid this by clamping the chosen time to the current time.
@@ -290,6 +304,10 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       tickRate: 1,
     });
 
+    // console.debug(`at ${startTime.toFixed(1)}\t start ${itemId} (new item renderer) (sequence loop: ${this._sequence.loop})\n` +
+    //               `syncClock.now: ${this._syncClock.now()}\n` +
+    //               `clock.now: ${clock.now()}`);
+
     const renderer = this._itemRendererFactory.getInstance(source, clock);
     renderer.output.connect(this._output);
     renderer.start();
@@ -311,13 +329,13 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    */
   notify() {
     // do not schedule any new items after the renderer has been stopped.
- 
+
     if (this._stopped) {
       return;
     }
     // console.debug('SSR: notify', this._sequence, this._activeObjectIds);
     const { contentTime } = this;
-    const now = this._clock.now() / this._clock.tickRate;
+    const now = Math.max(this._clock.now() / this._clock.tickRate, 0);
     const sequenceStart = Math.floor(now / this._sequence.duration) * this._sequence.duration;
 
     // find all active items (active now up to lookaheadDuration) for all active and valid objects.
@@ -326,13 +344,13 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     activeItems.forEach((item) => {
       const { start, duration } = item;
 
-      // schedule item if it should have started before now and is still active
-      if (start <= contentTime && (start + duration) > contentTime) {
+      // schedule item if it should have started before lookahead window and is still active
+      if (start <= contentTime + this._lookaheadDuration && (start + duration) > contentTime) {
         this.scheduleItem(item, sequenceStart + start);
       }
 
-      // schedule item if it starts within lookahead window in the future. For looped sequences,
-      // also check for the lookahead window at the sequence start if near the end.
+      // For looped sequences, also check for the lookahead window at the sequence start if near
+      // the end.
       if (this._sequence.loop) {
         if (start + this._sequence.duration < contentTime + this._lookaheadDuration) {
           this.scheduleItem(item, sequenceStart + this._sequence.duration + start);

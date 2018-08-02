@@ -67,6 +67,7 @@ class BufferPlayer extends Player {
    */
   play(when = this.audioContext.currentTime, offset = this.offset) {
     return this.prepare().then((buffer) => {
+      // console.debug(`bufferPlayer.play() when: ${when} offset: ${offset}`);
       // check that offset is valid
       if (offset < 0 || offset > this.buffer.duration) {
         throw new Error('offset must be >= 0 and < buffer.duration.');
