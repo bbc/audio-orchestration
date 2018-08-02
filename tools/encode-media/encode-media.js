@@ -87,6 +87,7 @@ function encodeDash(inputName, inputPath, outputPath, silencePath = null) {
     '-use_template', 1,
     '-use_timeline', 0,
     '-min_seg_duration', 1.0e6 * SEGMENT_DURATION,
+    '-hls_playlist', '1',
     '-f', 'dash',
     output,
   ];
