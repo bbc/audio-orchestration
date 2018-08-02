@@ -9,6 +9,7 @@ import {
   log,
   dismissError,
   playAgain,
+  transitionToSequence,
 } from './actions';
 
 export { default as reducers } from './reducers';
@@ -48,6 +49,9 @@ function mapDispatchToProps(dispatch) {
     },
     playAgain: () => {
       dispatch(playAgain());
+    },
+    transitionToSequence: (contentId) => {
+      dispatch(transitionToSequence(contentId));
     },
   };
 }

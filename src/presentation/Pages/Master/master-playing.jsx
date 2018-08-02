@@ -1,12 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { SESSION_CODE_LENGTH } from '../../../config';
+
 import Player from '../../Components/Player';
+import TransitionButton from './transition-button';
+
+import {
+  SEQUENCE_LOOP,
+  SEQUENCE_MAIN,
+} from '../../../config';
 
 const MasterPlaying = (props) => {
   const {
     sessionCode,
     connectedDevices,
+    currentContentId,
+    transitionToSequence,
   } = props;
 
   return (
@@ -21,6 +29,13 @@ const MasterPlaying = (props) => {
 
       <Player {...props} />
 
+      <TransitionButton
+        current={currentContentId}
+        from={SEQUENCE_LOOP}
+        to={SEQUENCE_MAIN}
+        transition={transitionToSequence}
+      />
+
       <ul>
         { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (
           <li key={deviceId}>
@@ -32,13 +47,11 @@ const MasterPlaying = (props) => {
   );
 };
 
-MasterPlaying.defaultProps = {
-  sessionCode: '-'.repeat(SESSION_CODE_LENGTH),
-};
-
 MasterPlaying.propTypes = {
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
-  sessionCode: PropTypes.string,
+  sessionCode: PropTypes.string.isRequired,
+  currentContentId: PropTypes.string.isRequired,
+  transitionToSequence: PropTypes.func.isRequired,
 };
 
 export default MasterPlaying;

@@ -14,6 +14,7 @@ export {
   log,
   setDeviceLocation,
   playAgain,
+  transitionToSequence,
 } from './orchestration';
 
 export const startSession = () => (dispatch) => {

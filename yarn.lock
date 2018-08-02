@@ -1061,7 +1061,7 @@ batch@0.6.1:
 
 "bbcat-orchestration@git+ssh://git@github.com:bbc/bbcat-orchestration.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#b2866dc37686acfa9e45adbe64420bfa8cbd7f5f"
+  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#81872e1b07673740285f23882155ed4aa8176fdb"
   dependencies:
     bbcat "git+ssh://git@github.com:bbc/bbcat-js.git"
     dvbcss-clocks "^0.0.4"
