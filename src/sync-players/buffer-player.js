@@ -74,8 +74,13 @@ class BufferPlayer extends Player {
       }
 
       // if we already have a playing source, stop it.
-      if (this.source !== null) {
-        this.source.stop();
+      if (this.source !== null && this.state === 'playing') {
+        try {
+          this.source.stop();
+          this.state = 'ready';
+        } catch (e) {
+          console.warn('bufferPlayer.pause():', e);
+        }
       }
 
       // save new start time and offset.
@@ -116,8 +121,13 @@ class BufferPlayer extends Player {
    * @returns {Promise} resolving when the stop has been scheduled.
    */
   pause() {
-    if (this.source !== null) {
-      this.source.stop();
+    if (this.source !== null && this.state === 'playing') {
+      try {
+        this.source.stop();
+        this.state = 'ready';
+      } catch (e) {
+        console.warn('bufferPlayer.pause():', e);
+      }
     }
 
     return Promise.resolve();
