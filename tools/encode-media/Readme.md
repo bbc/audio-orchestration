@@ -2,10 +2,10 @@
 
 ## Usage
 
-Read metadata from `sequence.json`, encode files stored in `input`, store encoded files in `output`:
+Read metadata from `sequence.json`, encode files stored in `input`, store encoded files and updated sequence.json in `output`:
 
 ```
-node encode-media.js sequence.json input output > sequence-distribution.json
+node encode-media.js sequence.json input/ output/ audio/base_url
 ```
 
 ## Requirements
