@@ -888,9 +888,9 @@ base@^0.11.1:
     mixin-deep "^1.2.0"
     pascalcase "^0.1.1"
 
-"bbcat@git+ssh://git@github.com:bbc/bbcat-js.git":
+"bbcat@git+ssh://git@github.com:bbc/bbcat-js.git#kh_mdo_vostok":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:bbc/bbcat-js.git#75c661bd72d527e08da3c2d1b5dc69608c55ad35"
+  resolved "git+ssh://git@github.com:bbc/bbcat-js.git#960d7987eabfe78b21bf091ffec6a1e5e855669d"
   dependencies:
     binauralfir "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages"
     fractional-delay "git+https://github.com/Ircam-RnD/fractional-delay.git#gh-pages"
@@ -4884,8 +4884,9 @@ supports-color@^5.3.0, supports-color@^5.4.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/symbol-tree/-/symbol-tree-3.2.2.tgz#ae27db38f660a7ae2e1c3b7d1bc290819b8519e6"
 
-"synckit-cloud@file:./cloud-sync":
+"synckit-cloud@git+ssh://git@github.com:bbc/cloud-synckit-js#kh-media-device-orchestration":
   version "2.0.0"
+  resolved "git+ssh://git@github.com:bbc/cloud-synckit-js#b789b3ef1228ce892bce98a0291ea964401b9ac9"
   dependencies:
     async "^2.5.0"
     bluebird "^3.5.1"

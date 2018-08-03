@@ -28,7 +28,7 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "bbcat": "git+ssh://git@github.com:bbc/bbcat-js.git",
+    "bbcat": "git+ssh://git@github.com:bbc/bbcat-js.git#kh_mdo_vostok",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
     "events": "^3.0.0",
