@@ -69,7 +69,11 @@ def analyse(p, gap):
     min_gap_samples = round(gap * sr)
 
     # load samples into a data frame
-    series = pd.Series(a.read_frames(dtype=np.int32))
+    try:
+        series = pd.Series(a.read_frames(dtype=np.int32))
+    except Exception as e:
+        print("Could not process audio data. The file may have too many channels (all files must be mono).\n\n")
+        raise e
 
     # close soundfile
     del a
