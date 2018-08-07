@@ -6,7 +6,8 @@ const initialState = {
   sessionId: null,
   connectedDevices: [],
   role: null,
-  activeObjectIds: null,
+  activeObjectIds: [],
+  primaryObject: null,
   currentContentId: null,
   contentCorrelation: { parentTime: 0, childTime: 0 },
   contentSpeed: 0,
@@ -86,6 +87,14 @@ const exposed = (state = initialState, action) => {
     case 'SET_CONNECTED_DEVICES':
       return Object.assign({}, state, {
         connectedDevices: action.connectedDevices,
+      });
+    case 'SET_PRIMARY_OBJECT':
+      return Object.assign({}, state, {
+        primaryObject: action.primaryObject,
+      });
+    case 'SET_ACTIVE_OBJECT_IDS':
+      return Object.assign({}, state, {
+        activeObjectIds: action.activeObjectIds,
       });
     default:
       return state;

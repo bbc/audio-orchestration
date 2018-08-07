@@ -27,7 +27,7 @@ const setLoading = loading => ({
   loading,
 });
 
-const setLoadingMessage = (loadingMessage) => ({
+const setLoadingMessage = loadingMessage => ({
   type: 'SET_LOADING_MESSAGE',
   loadingMessage,
 });
@@ -61,6 +61,11 @@ const setError = errorMessage => ({
 const setPrimaryObject = objectId => ({
   type: 'SET_PRIMARY_OBJECT',
   objectId,
+});
+
+const setActiveObjectIds = activeObjectIds => ({
+  type: 'SET_ACTIVE_OBJECT_IDS',
+  activeObjectIds,
 });
 
 const setMuted = muted => ({
@@ -159,11 +164,16 @@ const loadSequence = (url) => {
     });
 };
 
-const selectPrimaryObject = (contentId, activeObjectIds) => (dispatch) => {
-  console.warn('selectPrimaryObject not implemented');
-  // using some list and the orchestration state's list of running sequences,
-  // pick an object id that has a picture associated with it (based on some priority?)
-  dispatch(setPrimaryObject(activeObjectIds[0]));
+const updateDisplayedObjects = (contentId, activeObjectIds) => (dispatch) => {
+  const { currentContentId } = orchestrationState;
+
+  if (contentId === currentContentId) {
+    console.warn('selectPrimaryObject not implemented, choosing first active object.');
+    // using some list and the orchestration state's list of running sequences,
+    // pick an object id that has a picture associated with it (based on some priority?)
+    dispatch(setPrimaryObject(activeObjectIds[0]));
+    dispatch(setActiveObjectIds(activeObjectIds.slice()));
+  }
 };
 
 const updatePlaybackStatus = () => (dispatch) => {
@@ -213,11 +223,13 @@ const scheduleSequences = schedule => (dispatch) => {
       if (startSyncTime !== null) {
         // TODO: assumes only one sequence is active and the one most recently started becomes the
         // active sequence - this is the one that will be stopped by transitionToSequence.
-        console.debug(`starting sequence ${contentId}`, renderer.activeObjectIds);
+        console.debug(`starting sequence ${contentId}`);
 
         // Starting the sequence and saving the current content id.
         renderer.start(startSyncTime, startOffset);
         orchestrationState.currentContentId = contentId;
+
+        dispatch(updateDisplayedObjects(contentId, renderer.activeObjectIds));
 
         // Clear the ended flag because we just started playing a new sequence.
         dispatch(setEnded(false));
@@ -245,6 +257,7 @@ const scheduleSequences = schedule => (dispatch) => {
       renderer.stop(syncClock.now());
     }
   });
+
   dispatch(updatePlaybackStatus());
 };
 
@@ -407,7 +420,7 @@ export const initialiseOrchestration = (master, {
         // Register helper change event to forward allocations to sequenceRenderer and UI.
         mdoHelper.on('change', ({ contentId, activeObjects }) => {
           // Select a new primary object
-          dispatch(selectPrimaryObject(contentId, activeObjects));
+          dispatch(updateDisplayedObjects(contentId, activeObjects));
 
           // Update all sequence renderers with new allocations
           sequences.forEach((s) => {

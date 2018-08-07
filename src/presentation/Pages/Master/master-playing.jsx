@@ -14,6 +14,7 @@ const MasterPlaying = (props) => {
     sessionCode,
     connectedDevices,
     currentContentId,
+    activeObjectIds,
     transitionToSequence,
   } = props;
 
@@ -36,6 +37,20 @@ const MasterPlaying = (props) => {
         transition={transitionToSequence}
       />
 
+      <p>
+        Objects:
+
+        { activeObjectIds.map(objectId => (
+          <span key={objectId} style={{ display: 'inline-block', margin: '4px' }}>
+            {`${objectId}`}
+          </span>
+        ))}
+      </p>
+
+      <p>
+        Devices:
+      </p>
+
       <ul>
         { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (
           <li key={deviceId}>
@@ -52,6 +67,7 @@ MasterPlaying.propTypes = {
   sessionCode: PropTypes.string.isRequired,
   currentContentId: PropTypes.string.isRequired,
   transitionToSequence: PropTypes.func.isRequired,
+  activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default MasterPlaying;
