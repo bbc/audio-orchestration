@@ -1,26 +1,16 @@
-import uuidv4 from 'uuid/v4';
-
-import Clocks from 'dvbcss-clocks';
-import SyncPlayers from 'bbcat-orchestration/src/sync-players';
-import SequenceRenderer from 'bbcat-orchestration/src/sequence-renderer';
-import MdoAllocation from 'bbcat-orchestration/src/mdo-allocation';
-import CloudSyncAdapter from 'bbcat-orchestration/src/sync/cloud-sync-adapter';
-import Sync from 'bbcat-orchestration/src/sync/sync';
+import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestration-client';
 
 import {
-  CLOUDSYNC_ENDPOINT,
-  TIMELINE_TYPE,
-  TIMELINE_TYPE_TICK_RATE,
-  SEQUENCE_URLS,
   SESSION_CODE_LENGTH,
-  CONTENT_ID,
-  LOADING_TIMEOUT,
+  INITIAL_CONTENT_ID,
+  SEQUENCE_URLS,
 } from '../../config';
 
-const { AudioContextClock } = SyncPlayers;
-const { Sequence, SynchronisedSequenceRenderer } = SequenceRenderer;
-const { MdoAllocator, MdoReceiver } = MdoAllocation;
-const { CorrelatedClock } = Clocks;
+// ------------------------------------------------------------------------------------------------
+// private redux actions to expose state updates to the applications
+//
+const orchestration = new OrchestrationClient({
+});
 
 const setLoading = loading => ({
   type: 'SET_LOADING',
@@ -73,7 +63,7 @@ const setMuted = muted => ({
   muted,
 });
 
-const setTransportCapabilities = (canPause, canSeek) => ({
+const setTransportCapabilities = ({ canPause, canSeek }) => ({
   type: 'SET_TRANSPORT_CAPABILITIES',
   canPause,
   canSeek,
@@ -84,25 +74,25 @@ const setConnectedDevices = connectedDevices => ({
   connectedDevices,
 });
 
-// Shim for safari
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
+const setPlaybackStatus = ({
+  currentContentId,
+  duration,
+  loop,
+  speed,
+  parentTime,
+  childTime,
+}) => ({
+  type: 'SET_PLAYBACK_STATUS',
+  currentContentId,
+  duration,
+  speed,
+  loop,
+  parentTime,
+  childTime,
+});
 
-// global state holding references to orchestration and playback objects that need to be accessed
-// from these actions at some point.
-const orchestrationState = {
-  initialised: false,
-  sequences: [],
-  currentContentId: null,
-  masterClock: null,
-  syncClock: null,
-  renderers: {},
-  audioContext: null,
-  sysClock: null,
-  sync: null,
-  deviceId: null,
-  master: false,
-  volumeControl: null,
-};
+// ------------------------------------------------------------------------------------------------
+// private utility methods
 
 const requestSessionId = (userSessionCode) => {
   let sessionCode = userSessionCode;
@@ -119,430 +109,103 @@ const requestSessionId = (userSessionCode) => {
   });
 };
 
-const generateDeviceId = () => `bbcat-orchestration-device-${uuidv4()}`;
-
-const loadSequence = (url) => {
-  console.debug('loadSequence', url);
-  const {
-    sequences,
-    audioContext,
-    master,
-    syncClock,
-    volumeControl,
-  } = orchestrationState;
-
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(`Could not download sequence data from ${url} (${response.status}).`);
-      }
-      return response.json();
-    })
-    .then(data => new Sequence(data))
-    .then((sequence) => {
-      // create a renderer but don't start it yet.
-      const renderer = new SynchronisedSequenceRenderer(
-        audioContext,
-        syncClock,
-        sequence,
-        master, // isStereo
-      );
-
-      // connect renderer to output
-      renderer.output.connect(volumeControl);
-
-      // add the sequence, its url, and its renderer, to the list of available sequences.
-      const contentId = url;
-      const sequenceWrapper = {
-        contentId,
-        sequence,
-        renderer,
-      };
-
-      sequences.push(sequenceWrapper);
-      return sequenceWrapper;
-    });
-};
-
-const updateDisplayedObjects = (contentId, activeObjectIds) => (dispatch) => {
-  const { currentContentId } = orchestrationState;
-
-  if (contentId === currentContentId) {
-    console.warn('selectPrimaryObject not implemented, choosing first active object.');
-    // using some list and the orchestration state's list of running sequences,
-    // pick an object id that has a picture associated with it (based on some priority?)
-    dispatch(setPrimaryObject(activeObjectIds[0]));
-    dispatch(setActiveObjectIds(activeObjectIds.slice()));
-  }
-};
-
-const updatePlaybackStatus = () => (dispatch) => {
-  const {
-    currentContentId,
-    sequences,
-    syncClock,
-  } = orchestrationState;
-
-  const sequenceWrapper = sequences.find(s => s.contentId === currentContentId);
-  if (sequenceWrapper === undefined) {
-    console.error(`currentContentId refers to unavailable sequence ${currentContentId}`);
-    return;
-  }
-  const { renderer, sequence } = sequenceWrapper;
-  const { duration, loop } = sequence;
-
-  const parentTime = Date.now() / 1000;
-  const childTime = renderer.contentTime;
-  const speed = syncClock.getEffectiveSpeed();
-
-  dispatch({
-    type: 'SET_PLAYBACK_STATUS',
-    currentContentId,
-    parentTime,
-    childTime,
-    duration,
-    speed,
-    loop,
-  });
-};
-
-
-/**
- * Interprets the schedule event to start or stop all loaded sequences.
- *
- * startSyncTime and stopSyncTime refer to a syncClock time and are passed to the renderer as is.
- * startOffset is 0 by default and is a time in seconds within the media, passed to start().
- */
-const scheduleSequences = schedule => (dispatch) => {
-  const { master, sequences, syncClock } = orchestrationState;
-
-  sequences.forEach(({ renderer, sequence, contentId }) => {
-    const sequenceSchedule = schedule.find(s => s.contentId === contentId);
-    if (sequenceSchedule) {
-      const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
-      if (startSyncTime !== null) {
-        // TODO: assumes only one sequence is active and the one most recently started becomes the
-        // active sequence - this is the one that will be stopped by transitionToSequence.
-        console.debug(`starting sequence ${contentId}`);
-
-        // Starting the sequence and saving the current content id.
-        renderer.start(startSyncTime, startOffset);
-        orchestrationState.currentContentId = contentId;
-
-        dispatch(updateDisplayedObjects(contentId, renderer.activeObjectIds));
-
-        // Clear the ended flag because we just started playing a new sequence.
-        dispatch(setEnded(false));
-
-        // Only the master can pause or seek. Looped sequences can be paused, but not seeked in.
-        dispatch(setTransportCapabilities(
-          master, // canPause
-          master && !sequence.loop, // canSeek
-        ));
-
-        // Listen for the ended event to update the UI.
-        renderer.on('ended', () => {
-          if (orchestrationState.currentContentId === contentId) {
-            dispatch(setEnded(true));
-          }
-        });
-      }
-
-      if (stopSyncTime !== null) {
-        console.debug(`stopping sequence ${contentId}`);
-        renderer.stop(stopSyncTime);
-      }
-    } else {
-      console.debug(`stopping unlisted sequence ${contentId}`);
-      renderer.stop(syncClock.now());
-    }
-  });
-
-  dispatch(updatePlaybackStatus());
-};
-
-export const transitionToSequence = contentId => (dispatch) => {
-  const {
-    mdoHelper,
-    syncClock,
-    currentContentId,
-    sequences,
-  } = orchestrationState;
-
-  console.debug(sequences);
-
-  const sequence = sequences.find(s => s.contentId === contentId);
-
-  if (sequence === undefined) {
-    throw new Error(`Requested sequence ${contentId} not loaded.`);
-  }
-
-  if (currentContentId === null) {
-    mdoHelper.startSequence(contentId, syncClock.now() + 1.0 * syncClock.tickRate);
-  } else {
-    const { renderer } = sequences.find(s => s.contentId === currentContentId);
-    const syncTime = renderer.stopAtOutPoint(1.0);
-    mdoHelper.stopSequence(currentContentId, syncTime);
-    mdoHelper.startSequence(contentId, syncTime);
-  }
-
-  dispatch(updatePlaybackStatus());
-};
-
+// ------------------------------------------------------------------------------------------------
+// Public redux-thunk actions to notify the orchestration system of user actions
+//
 export const initialiseOrchestration = (master, {
   joinSessionCode = undefined,
 } = {}) => (dispatch) => {
-  if (orchestrationState.initialised === true) {
-    throw new Error('Orchestration system has already been initialised.');
-  }
-  orchestrationState.initialised = true;
+  SEQUENCE_URLS.forEach(({ contentId, url }) => {
+    orchestration.registerSequence(contentId, url);
+  });
+
+  orchestration.on('loading', (message) => {
+    console.debug(message);
+    if (message !== false) {
+      dispatch(setLoadingMessage(message));
+    }
+  });
+
+  orchestration.on('status', (e) => {
+    dispatch(setPlaybackStatus({
+      currentContentId: e.currentContentId,
+      duration: e.duration,
+      loop: e.loop,
+      speed: e.speed,
+      parentTime: e.dateNowTime,
+      childTime: e.contentTime,
+    }));
+    dispatch(setTransportCapabilities({
+      canSeek: master && !e.loop,
+      canPause: master,
+    }));
+  });
+
+  orchestration.on('devices', (e) => {
+    dispatch(setConnectedDevices(e));
+  });
+
+  orchestration.on('objects', (e) => {
+    dispatch(setActiveObjectIds(e.activeObjectIds));
+    dispatch(setPrimaryObject(e.primaryObjectId, e.primaryObjectImageUrl));
+  });
+
+  orchestration.on('mute', muted => dispatch(setMuted(muted)));
+
+  orchestration.on('connected', () => dispatch(setConnected(true)));
+
+  orchestration.on('disconnected', () => dispatch(setConnected(false)));
+
+  orchestration.on('error', (e) => {
+    dispatch(setError(e.message));
+  });
+
+  orchestration.on('ended', (ended) => {
+    dispatch(setEnded(ended));
+  });
 
   dispatch(setLoading(true));
 
-  let audioContext;
-
-  dispatch(setLoadingMessage('Creating audio context.'));
-  try {
-    audioContext = new AudioContext();
-    audioContext.resume();
-  } catch (e) {
-    dispatch(setError(true, 'Could not create an AudioContext. Try restarting your device or browser.'));
-    console.error('failed to create AudioContext', e);
-    return;
-  }
-
-  const volumeControl = audioContext.createGain();
-  volumeControl.gain.value = 1.0;
-  volumeControl.connect(audioContext.destination);
-
-  const sysClock = new AudioContextClock({}, audioContext);
-
-  dispatch(setLoadingMessage('Creating synchronisation client and local clocks.'));
-  const sync = new Sync(new CloudSyncAdapter({ sysClock }));
-  const masterClock = new CorrelatedClock(sync.wallClock, {
-    correlation: {
-      parentTime: sync.wallClock.now(),
-      childTime: 0,
-    },
-    speed: 1, // TODO: initial speed appears to be ignored by cloud sync, and always set to 1.
-    tickRate: TIMELINE_TYPE_TICK_RATE,
-  });
-  const deviceId = generateDeviceId();
-
-  Object.assign(orchestrationState, {
-    master,
-    audioContext,
-    volumeControl,
-    sysClock,
-    masterClock,
-    sync,
-    deviceId,
-  });
-
-  // listen for disconnected event, to trigger UI message when connection is lost.
-  sync.on('disconnected', () => {
-    dispatch(setConnected(false));
-  });
-
-  // - Request/generate a full sessionId
-  // - Connect to cloud sync service
-  // - Provide and/or subscribe to the session-wide syncClock
-  // - Load all sequences and create renderers
-  // - Create the MDO Helper, subscribe all sequence renderers to it
-  // - Update the user interface to indicate the connected state.
-
-  orchestrationState.initPromise = Promise.resolve()
-    .then(() => {
-      dispatch(setLoadingMessage('Requesting session.'));
-      return requestSessionId(joinSessionCode).catch((e) => {
-        dispatch(setError(`Could not ${master ? 'create' : 'join'} session ${joinSessionCode}.`));
-        throw e;
-      });
-    })
-    .then(({ sessionCode, sessionId }) => {
-      dispatch(setLoadingMessage('Connecting to synchronisation system.'));
+  requestSessionId(joinSessionCode)
+    .then(({ sessionId, sessionCode }) => {
       dispatch(setSessionCode(sessionCode));
-      return sync.connect(CLOUDSYNC_ENDPOINT, sessionId, deviceId)
-        .catch((e) => {
-          dispatch(setError(`Could not ${master ? 'create' : 'join'} session ${joinSessionCode}.`));
-          throw e;
-        });
+      return orchestration.start(master, sessionId);
     })
     .then(() => {
-      dispatch(setLoadingMessage('Waiting for synchronised clock.'));
-      if (master) {
-        sync.provideTimelineClock(masterClock, TIMELINE_TYPE, CONTENT_ID);
-      }
-      return sync.requestTimelineClock(TIMELINE_TYPE, CONTENT_ID)
-        .then((timelineClock) => {
-          orchestrationState.syncClock = timelineClock;
-        })
-        .catch((e) => {
-          dispatch(setError('Failed to get a synchronised timeline clock.'));
-          throw e;
-        });
-    })
-    .then(() => {
-      dispatch(setLoadingMessage('Loading sequence metadata and initialising renderer.'));
-      return Promise.all(SEQUENCE_URLS.map(loadSequence))
-        .catch((e) => {
-          dispatch(setError('Downloading sequences failed.'));
-          throw e;
-        });
-    })
-    .then((sequences) => {
-      dispatch(setLoadingMessage('Waiting for schedule update.'));
-      return new Promise((resolve, reject) => {
-        // Create mdoHelper
-        if (master) {
-          orchestrationState.mdoHelper = new MdoAllocator(deviceId);
-        } else {
-          orchestrationState.mdoHelper = new MdoReceiver(deviceId);
-        }
-        const { syncClock, mdoHelper } = orchestrationState;
-
-        // Register syncClock events to update playback and connection status.
-        syncClock.on('change', () => {
-          dispatch(updatePlaybackStatus());
-        });
-
-        syncClock.on('unavailable', () => {
-          dispatch(setConnected(false));
-        });
-
-        syncClock.on('available', () => {
-          dispatch(setConnected(true));
-        });
-
-        // Set initial availability.
-        dispatch(setConnected(syncClock.getAvailabilityFlag()));
-
-        // Register helper change event to forward allocations to sequenceRenderer and UI.
-        mdoHelper.on('change', ({ contentId, activeObjects }) => {
-          // Select a new primary object
-          dispatch(updateDisplayedObjects(contentId, activeObjects));
-
-          // Update all sequence renderers with new allocations
-          sequences.forEach((s) => {
-            if (s.contentId === contentId) {
-              s.renderer.setActiveObjectIds(activeObjects);
-            }
-          });
-
-          // Update master UI with device list
-          if (master) {
-            dispatch(setConnectedDevices(mdoHelper.getAuxiliaryDevices()));
-          }
-        });
-
-        // resolve the promise once the schedule with the initial sequence has been received.
-        mdoHelper.on('schedule', (schedule) => {
-          dispatch(scheduleSequences(schedule));
-          resolve();
-        });
-
-        // Start listening for broadcast messages, send request for schedule and allocations.
-        mdoHelper.start(sync);
-
-        // Register the sequence objects and start playing the first one.
-        // The master device transitionToSequence causes a schedule event on all devices.
-        if (master) {
-          // register the objects for all sequences.
-          sequences.forEach((s) => {
-            mdoHelper.registerObjects(s.sequence.objects, s.contentId);
-          });
-
-          // TODO: use a user provided initial sequence or wait for first play click?
-          dispatch(transitionToSequence(SEQUENCE_URLS[0]));
-        }
-
-        setTimeout(() => {
-          reject(new Error('Timeout waiting for schedule event'));
-        }, LOADING_TIMEOUT);
-      }).catch((e) => {
-        dispatch(setError('Failed to set up scheduling system.'));
-        throw e;
-      });
-    })
-    .then(() => {
-      dispatch(setLoadingMessage('Ready to go.'));
       dispatch(setRole(master ? 'master' : 'slave'));
       dispatch(setLoading(false));
     })
     .catch((e) => {
       console.error('initialiseOrchestration', e);
-      throw e;
     });
 };
 
-export const play = () => (dispatch) => {
-  const { masterClock, sync, master } = orchestrationState;
-
-  if (!master) {
-    return;
-  }
-
-  masterClock.setCorrelationAndSpeed({
-    childTime: masterClock.now(),
-    parentTime: sync.wallClock.now(),
-  }, 1);
+export const transitionToSequence = contentId => () => {
+  orchestration.transitionToSequence(contentId);
 };
 
-export const pause = () => (dispatch) => {
-  const { masterClock, sync, master } = orchestrationState;
-
-  if (!master) {
-    return;
-  }
-
-  masterClock.setCorrelationAndSpeed({
-    childTime: masterClock.now(),
-    parentTime: sync.wallClock.now(),
-  }, 0);
+export const play = () => () => {
+  orchestration.play();
 };
 
-export const seek = relativeSeconds => (dispatch) => {
-  const { masterClock, sync, master } = orchestrationState;
-
-  if (!master) {
-    return;
-  }
-
-  masterClock.setCorrelationAndSpeed({
-    childTime: masterClock.now() + relativeSeconds * masterClock.tickRate,
-    parentTime: sync.wallClock.now(),
-  }, masterClock.speed);
+export const pause = () => () => {
+  orchestration.pause();
 };
 
-export const mute = muted => (dispatch) => {
-  const { volumeControl } = orchestrationState;
-  if (muted) {
-    volumeControl.gain.value = 0.0;
-  } else {
-    volumeControl.gain.value = 1.0;
-  }
-  dispatch(setMuted(muted));
+export const seek = relativeOffset => () => {
+  orchestration.seek(relativeOffset);
 };
 
-export const playAgain = () => (dispatch) => {
-  const { master } = orchestrationState;
-
-  if (!master) {
-    return;
-  }
-
-  // TODO: use different way of identifying contentId
-  dispatch(transitionToSequence(SEQUENCE_URLS[0]));
+export const mute = muted => () => {
+  orchestration.mute(muted);
 };
 
-export const log = message => (dispatch) => {
-  console.debug(message);
+export const playAgain = () => () => {
+  orchestration.transitionToSequence(INITIAL_CONTENT_ID);
 };
 
 export const setDeviceLocation = location => (dispatch) => {
-  const { mdoHelper } = orchestrationState;
-  mdoHelper.setLocation(location);
-
+  orchestration.setDeviceLocation(location);
   dispatch({
     type: 'SET_DEVICE_LOCATION',
     location,

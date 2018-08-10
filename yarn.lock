@@ -1061,17 +1061,17 @@ batch@0.6.1:
 
 "bbcat-orchestration@git+ssh://git@github.com:bbc/bbcat-orchestration.git":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#81872e1b07673740285f23882155ed4aa8176fdb"
+  resolved "git+ssh://git@github.com:bbc/bbcat-orchestration.git#aff8518ed1bb7ac9e03fd5122025a5f75f612fdb"
   dependencies:
-    bbcat "git+ssh://git@github.com:bbc/bbcat-js.git"
+    bbcat "git+ssh://git@github.com:bbc/bbcat-js.git#kh_mdo_vostok"
     dvbcss-clocks "^0.0.4"
     dvbcss-protocols "^0.0.2"
     events "^3.0.0"
     synckit-cloud "git+ssh://git@github.com:bbc/cloud-synckit-js#kh-media-device-orchestration"
 
-"bbcat@git+ssh://git@github.com:bbc/bbcat-js.git":
+"bbcat@git+ssh://git@github.com:bbc/bbcat-js.git#kh_mdo_vostok":
   version "0.0.1"
-  resolved "git+ssh://git@github.com:bbc/bbcat-js.git#0ff97fa367b44da30a32d446d60e56538382dee8"
+  resolved "git+ssh://git@github.com:bbc/bbcat-js.git#960d7987eabfe78b21bf091ffec6a1e5e855669d"
   dependencies:
     binauralfir "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages"
     fractional-delay "git+https://github.com/Ircam-RnD/fractional-delay.git#gh-pages"

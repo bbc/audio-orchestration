@@ -18,7 +18,7 @@ const initialState = {
   error: false,
   errorMessage: null,
   loading: false,
-  loadingMessage: false,
+  loadingMessage: '',
   canReplaceSequence: false,
   canSeek: false,
   canPause: false,

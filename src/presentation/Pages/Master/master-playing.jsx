@@ -5,8 +5,8 @@ import Player from '../../Components/Player';
 import TransitionButton from './transition-button';
 
 import {
-  SEQUENCE_LOOP,
-  SEQUENCE_MAIN,
+  CONTENT_ID_LOOP,
+  CONTENT_ID_MAIN,
 } from '../../../config';
 
 const MasterPlaying = (props) => {
@@ -32,8 +32,8 @@ const MasterPlaying = (props) => {
 
       <TransitionButton
         current={currentContentId}
-        from={SEQUENCE_LOOP}
-        to={SEQUENCE_MAIN}
+        from={CONTENT_ID_LOOP}
+        to={CONTENT_ID_MAIN}
         transition={transitionToSequence}
       />
 

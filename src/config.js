@@ -18,9 +18,12 @@ export const LOADING_TIMEOUT = 5 * 1000;
 
 // Sequence URLs double as content-id; export convenient names for use in UI, and a list of all
 // of them to preload.
-export const SEQUENCE_LOOP = 'audio/clicks-and-tone/loop.json';
-export const SEQUENCE_MAIN = 'audio/clicks-and-tone/sequence.json';
+export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
+export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
+
 export const SEQUENCE_URLS = [
-  SEQUENCE_LOOP,
-  SEQUENCE_MAIN,
+  { contentId: CONTENT_ID_LOOP, url: 'audio/clicks-and-tone/loop.json' },
+  { contentId: CONTENT_ID_MAIN, url: 'audio/clicks-and-tone/sequence.json' },
 ];
+
+export const INITIAL_CONTENT_ID = SEQUENCE_URLS[0].contentId;
