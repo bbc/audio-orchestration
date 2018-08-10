@@ -210,10 +210,14 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     const syncTime = this._syncClock.calcWhen(syncClockTime);
     this._stopped = true;
     this._activeItemRenderers.forEach(({ renderer }) => {
-      if (fade) {
-        renderer.output.gain.setTargetAtTime(MUTE_GAIN, syncTime, this.fadeOutDuration / 3);
-      } else {
-        renderer.output.gain.setValueAtTime(MUTE_GAIN, syncTime);
+      try {
+        if (fade) {
+          renderer.output.gain.setTargetAtTime(MUTE_GAIN, syncTime, this.fadeOutDuration / 3);
+        } else {
+          renderer.output.gain.setValueAtTime(MUTE_GAIN, syncTime);
+        }
+      } catch (e) {
+        // TODO nothing to do here (reached when trying to stop a non-running renderer)
       }
       setTimeout(
         () => {

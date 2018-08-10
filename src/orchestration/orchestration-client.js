@@ -9,7 +9,7 @@ import MdoReceiver from '../mdo-allocation/mdo-receiver';
 import CloudSyncAdapter from '../sync/cloud-sync-adapter';
 import Sync from '../sync/sync';
 
-const { CorrelatedClock, OffsetClock } = Clocks;
+const { CorrelatedClock } = Clocks;
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
@@ -32,8 +32,8 @@ const SEQUENCE_TRANSITION_DELAY = 1.0;
  * @example
  * import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestration-client';
  *
- * // Create the client as a master device, and register sequences to load:
- * const orchestration = new OrchestrationClient(true, {});
+ * const orchestration = new OrchestrationClient({});
+ *
  * orchestration.registerSequence(contentId, sequenceUrl);
  * orchestration.registerSequence(otherContentId, otherSequenceUrl);
  * orchestration.setInitialSequence(contentId);
@@ -45,7 +45,7 @@ const SEQUENCE_TRANSITION_DELAY = 1.0;
  * orchestration.on('change', (e) => { console.log('playback status changed.', e); });
  * orchestration.on('ready', () => { console.log('ready to interact'); });
  *
- * orchestration.start(sessionId, deviceId).then(() => {
+ * orchestration.start(true, sessionId).then(() => {
  *   nextBtn.on('click', () => orchestration.transitionToSequence(otherContentId));
  *   skipBtn.on('click', () => orchestration.seek(30));
  * });
@@ -75,48 +75,82 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Emits a 'change' event with all available information about the current playback state.
+   * Emits a 'status' event with all information about the current playhead status. This is fired
+   * frequently, on changes to the renderer clock or the current contentId.
    *
-   * @fires 'change'
+   * @private
+   *
+   * @fires 'status'
    */
-  _publishChangeEvent() {
+  _publishStatusEvent() {
     try {
       const currentContentId = this._currentContentId;
       const sequenceWrapper = this._sequences[currentContentId];
 
+      if (sequenceWrapper === undefined) {
+        return;
+      }
+
       const { renderer, sequence } = sequenceWrapper;
 
       const dateNowTime = Date.now() / 1000;
-      const { contentTime, activeObjectIds, activeItemIds } = renderer;
-      const contentSpeed = this._syncClock.getEffectiveSpeed();
+      const { contentTime } = renderer;
+      const speed = this._syncClock.getEffectiveSpeed();
 
       const { duration, loop } = sequence;
 
-      const {
-        primaryObjectId,
-        primaryObjectImageUrl,
-      } = sequence.getPrimaryObjectInfo(activeObjectIds);
 
-      const ended = renderer.currentTime > duration;
-
-      this.emit('change', {
+      this.emit('status', {
         currentContentId,
         dateNowTime,
         contentTime,
-        contentSpeed,
+        speed,
         duration,
         loop,
-        activeObjectIds,
-        activeItemIds,
-        primaryObjectId,
-        primaryObjectImageUrl,
-        ended,
       });
     } catch (e) {
       console.error(e);
     }
   }
 
+  /**
+   * Emits an 'objects' event with information about the currently active objects,
+   * and the selected primary object if available.
+   *
+   * @private
+   *
+   * @fires 'objects'
+   */
+  _publishObjectsEvent() {
+    const currentContentId = this._currentContentId;
+    const sequenceWrapper = this._sequences[currentContentId];
+
+    if (sequenceWrapper === undefined) {
+      return;
+    }
+
+    const { renderer, sequence } = sequenceWrapper;
+    const { activeObjectIds } = renderer;
+
+    const {
+      primaryObjectId,
+      primaryObjectImageUrl,
+    } = sequence.getPrimaryObjectInfo(activeObjectIds);
+
+    this.emit('objects', {
+      currentContentId,
+      activeObjectIds,
+      primaryObjectId,
+      primaryObjectImageUrl,
+    });
+  }
+
+  /**
+   * Parses and acts on a sequence schedule received from the [@link MdoHelper]. Schedules audio
+   * playback for this local device in response.
+   *
+   * @param {Array<Object>} schedule
+   */
   _scheduleSequences(schedule) {
     this._contentIds
       .map(contentId => this._sequences[contentId])
@@ -128,6 +162,7 @@ class OrchestrationClient extends EventEmitter {
           if (startSyncTime !== null) {
             renderer.start(startSyncTime, startOffset);
             this._currentContentId = contentId;
+            this.emit('ended', false);
           }
 
           if (stopSyncTime !== null) {
@@ -137,7 +172,8 @@ class OrchestrationClient extends EventEmitter {
           renderer.stop(this._syncClock.now());
         }
       });
-    this._publishChangeEvent();
+    this._publishStatusEvent();
+    this._publishObjectsEvent();
   }
 
   /**
@@ -222,6 +258,11 @@ class OrchestrationClient extends EventEmitter {
    */
   _connectToSync() {
     this.emit('loading', 'connecting to synchronisation server');
+    this._sync.on('connected', () => this.emit('connected'));
+    this._sync.on('disconnected', () => {
+      this.emit('disconnected');
+      this.pause();
+    });
     return this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId);
   }
 
@@ -246,6 +287,9 @@ class OrchestrationClient extends EventEmitter {
       setTimeout(() => {
         reject(new Error('Timeout waiting for synchronised clock.'));
       }, LOADING_TIMEOUT);
+    }).then((syncClock) => {
+      syncClock.on('change', () => this._publishStatusEvent());
+      return syncClock;
     });
   }
 
@@ -280,6 +324,12 @@ class OrchestrationClient extends EventEmitter {
             this._master, // isStereo
           );
 
+          renderer.on('ended', () => {
+            if (contentId === this.currentContentId) {
+              this.emit('ended', true);
+            }
+          });
+
           // connect renderer to output
           renderer.output.connect(this._volumeControl);
           return renderer;
@@ -306,20 +356,22 @@ class OrchestrationClient extends EventEmitter {
       // Create mdoHelper
       if (this._master) {
         this._mdoHelper = new MdoAllocator(this._deviceId);
+
+        this._mdoHelper.on('change', () => {
+          this.emit('devices', this._mdoHelper.getAuxiliaryDevices());
+        });
       } else {
         this._mdoHelper = new MdoReceiver(this._deviceId);
       }
 
-      // Register helper change event to forward allocations to sequenceRenderer and UI.
       this._mdoHelper.on('change', ({ contentId, activeObjects }) => {
         // Update all sequence renderers with new allocations
-        this._sequences.forEach((s) => {
-          if (s.contentId === contentId) {
-            s.renderer.setActiveObjectIds(activeObjects);
-          }
-        });
+        const sequenceWrapper = this._sequences[contentId];
+        if (sequenceWrapper !== undefined) {
+          sequenceWrapper.renderer.setActiveObjectIds(activeObjects);
+        }
 
-        this._publishChangeEvent();
+        this._publishObjectsEvent();
       });
 
       // resolve the promise once the schedule with the initial sequence has been received.
@@ -329,18 +381,18 @@ class OrchestrationClient extends EventEmitter {
       });
 
       // Start listening for broadcast messages, send request for schedule and allocations.
-      this._mdoHelper.start(this.sync);
+      this._mdoHelper.start(this._sync);
 
       // Register the sequence objects and start playing the first one.
       // The master device transitionToSequence causes a schedule event on all devices.
       if (this._master) {
         // register the objects for all sequences.
-        this._sequences.forEach((s) => {
+        Object.values(this._sequences).forEach((s) => {
           this._mdoHelper.registerObjects(s.sequence.objects, s.contentId);
         });
 
         // Trigger a transition to the initial sequence, needed to guarantee a schedule event.
-        this._transitionToSequence(this.initialSequence);
+        this.transitionToSequence(this._initialContentId);
       }
 
       setTimeout(() => {
@@ -378,13 +430,14 @@ class OrchestrationClient extends EventEmitter {
       .then(() => this._requestSyncClock())
       .then(() => this._prepareSequences())
       .then(() => this._createHelper())
+      .catch((e) => {
+        console.error(e);
+        this.emit('error', e);
+      })
       .then(() => {
         this.emit('loaded');
         this._ready = true;
         return this;
-      })
-      .catch((e) => {
-        this.emit('error', e);
       });
   }
 
@@ -409,6 +462,11 @@ class OrchestrationClient extends EventEmitter {
       contentId,
       url,
     };
+
+    // by default use the first registered sequence as the initial contentId.
+    if (this._initialContentId === null) {
+      this._initialContentId = contentId;
+    }
   }
 
   /**
@@ -452,10 +510,10 @@ class OrchestrationClient extends EventEmitter {
       return;
     }
 
-    this._masterClock.setCorrelationAndSpeed({
+    this._masterClock.setCorrelation({
       childTime: this._masterClock.now() + (relativeOffset * this._masterClock.tickRate),
       parentTime: this._sync.wallClock.now(),
-    }, 0);
+    });
   }
 
   /**
@@ -465,7 +523,8 @@ class OrchestrationClient extends EventEmitter {
    * @param {string} contentId
    */
   transitionToSequence(contentId) {
-    if (!this._ready || !this._master) {
+    // used internally, during startup, so cannot test for _ready here.
+    if (!this._master || !this._initialised) {
       return;
     }
 
@@ -509,6 +568,8 @@ class OrchestrationClient extends EventEmitter {
     } else {
       this._volumeControl.gain.value = 1.0;
     }
+
+    this.emit('mute', muted);
   }
 
   /**
@@ -523,6 +584,14 @@ class OrchestrationClient extends EventEmitter {
       return;
     }
     this._mdoHelper.setLocation(location);
+  }
+
+  get master() {
+    return this._master;
+  }
+
+  get currentContentId() {
+    return this._currentContentId;
   }
 }
 

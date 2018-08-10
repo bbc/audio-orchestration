@@ -293,7 +293,7 @@ class Sequence {
         primaryObjectId: objectId,
         primaryObjectImageUrl: orchestration.imageUrl,
       }))
-      .find(true);
+      .find(() => true);
   }
 }
 
