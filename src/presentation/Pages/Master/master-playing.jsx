@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Player from '../../Components/Player';
+import ObjectList from '../../Components/ObjectList';
 import TransitionButton from './transition-button';
 
 import {
@@ -21,11 +22,16 @@ const MasterPlaying = (props) => {
   return (
     <div className="page page-master">
       <h1>
-        Master Device
+        Main Device
       </h1>
 
       <p>
-        { `Join with code ${sessionCode}` }
+        This is the main device. Join with code
+        {' '}
+        <b>
+          {sessionCode}
+        </b>
+        .
       </p>
 
       <Player {...props} />
@@ -37,19 +43,7 @@ const MasterPlaying = (props) => {
         transition={transitionToSequence}
       />
 
-      <p>
-        Objects:
-
-        { activeObjectIds.map(objectId => (
-          <span key={objectId} style={{ display: 'inline-block', margin: '4px' }}>
-            {`${objectId}`}
-          </span>
-        ))}
-      </p>
-
-      <p>
-        Devices:
-      </p>
+      <ObjectList objectIds={activeObjectIds} />
 
       <ul>
         { connectedDevices.map(({ deviceId, deviceType, deviceLocation }) => (

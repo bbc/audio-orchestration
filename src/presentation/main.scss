@@ -112,3 +112,9 @@ button {
   }
 }
 
+.object-list span {
+  display: inline-block;
+  margin: $gel-spacing-unit;
+  padding: $gel-spacing-unit;
+  background-color: #fc3;
+}
