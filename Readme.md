@@ -1,23 +1,23 @@
 # bbcat-orchestration
 
-This repository contains browser components for building synchronised object
-based audio experiences.
-
-__This is currently a work in progress, and most of the packages below do not exist yet.__
+This repository contains Javascript components for building synchronised object based audio
+experiences.
 
 ## Components Overview
 
 * [sync-players](src/sync-players/):
   Controlled audio players with synchronisation based on `bbcat-js` DASH and buffer sources.
 * [sync](src/sync/):
-  Wrapper for communicating with synchronisation and message exchange services. Contains adapters
-  for synchronising with the `cloud-sync` service.
+  Wrapper for communicating with different synchronisation and message exchange services. Currently
+  implements an adapter for the `cloud-sync` service.
 * [mdo-allocation](src/mdo-allocation/):
-  A rule set for allocating individual objects to synchronised devices, based on
-  knowledge about available objects and devices.
-* [renderer](src/renderer/):
-  A renderer for managing playback of multiple audio sources scheduled on a
-  synchronised timeline.
+  A rule set for allocating individual objects to synchronised devices, based on knowledge about
+  available objects and devices.
+* [renderer](src/sequence-renderer/):
+  A renderer for managing playback of multiple audio sources scheduled on a synchronised timeline.
+* [in progress] [orchestration](src/orchestration/):
+  A single class managing all the above components to expose a single interface. Mainly manages the
+  multi-step setup process, provides user input methods, and exposes state-change events.
 
 ## Setup
 
@@ -29,7 +29,7 @@ Install all dependencies for the main library:
 yarn install
 ```
 
-## cloud-sync
+### cloud-sync
 
 The `cloud-sync` client library is used to connect to a hosted synchronisation
 service. For development, it is recommended to use the `dvbcss-sync-adapter`
@@ -42,9 +42,19 @@ to setup git remotes for developing it.
 
 ## Development
 
-The examples and the test suite, may be used to develop the library.
+The examples may be used to manually test the library components as they are developed.
 
 ### Examples
+
+ * [players](examples/players/) plain audio playback
+ * [cloud-sync-client](examples/cloud-sync-client/) synchronisation to cloud sync service
+ * [not maintained] [dvbcss-services](examples//) synchronisation to dvbcss services
+ * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised timeline
+ * [sequence-renderer-loop](examples/sequence-renderer-loop/) rendering a looping timeline
+ * [mdo-allocation](examples/mdo-allocation/) demonstrating allocation rules
+
+A complete integration can also be found in the [bbcat-orchestration-template](https://github.com/bbc/bbcat-orchestration-template)
+repository, which implements a user interface template recommended for starting new projects.
 
 To develop the library together with an example, first install the example's
 dependencies and link this development version into its `node_modules`. The
@@ -78,13 +88,7 @@ yarn install
 yarn link bbcat-orchestration
 yarn link synckit-cloud
 cd ../../
-
-
 ```
 
 Then follow the example's instructions, usually simply run `yarn dev` to start a
 web server with hot-reloading on changes to the example or library code.
-
-### Tests
-
-Run `yarn tests` to run the tests.

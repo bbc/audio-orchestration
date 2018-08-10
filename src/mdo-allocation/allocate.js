@@ -5,11 +5,11 @@ import Rules from './rules';
  *
  * @param {Array<MdoObject>} objects
  * @param {Array<MdoDevice>} devices
- * @param {Object} previousAllocations, mapping objectId => [deviceId].
+ * @param {Object} [previousAllocations] - mapping of objectId => [deviceId].
  *
  * TODO: previousAllocations are not currently used, but will be required for dropIn/dropOut rules.
  *
- * @return {Object} allocations, mapping objectId => [deviceId]
+ * @return {Object} allocations, mapping of objectId => [deviceId]
  */
 function allocate(objects, devices, previousAllocations = {}) {
   // define domains, starting out with all objects being able to go into all devices.

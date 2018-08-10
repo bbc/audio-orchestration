@@ -222,8 +222,8 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * given delay.  Renders this renderer useless. If no out points are defined for the sequence,
    * stop immediately at the delay.
    *
-   * @param {number} delay, in seconds
-   * @returns {number} the context time when the output will be muted
+   * @param {number} [delay = 0] - delay in seconds
+   * @returns {number} the sync clock time when the output will be muted
    */
   stopAtOutPoint(delay = 0) {
     let out = this._sequence.nextOutPoint(this.contentTime + delay);
