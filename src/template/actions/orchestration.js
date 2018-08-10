@@ -48,9 +48,10 @@ const setError = errorMessage => ({
   errorMessage,
 });
 
-const setPrimaryObject = objectId => ({
+const setPrimaryObject = ({ primaryObjectId, primaryObjectImageUrl }) => ({
   type: 'SET_PRIMARY_OBJECT',
-  objectId,
+  primaryObjectId,
+  primaryObjectImageUrl,
 });
 
 const setActiveObjectIds = activeObjectIds => ({

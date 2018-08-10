@@ -27,3 +27,5 @@ export const SEQUENCE_URLS = [
 ];
 
 export const INITIAL_CONTENT_ID = SEQUENCE_URLS[0].contentId;
+
+export const DEFAULT_IMAGE_URL = 'images/default.png';

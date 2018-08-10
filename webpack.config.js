@@ -39,6 +39,7 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'audio'), to: 'audio', toType: 'dir' },
+      { from: path.resolve(__dirname, 'images'), to: 'images', toType: 'dir' },
     ]),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output

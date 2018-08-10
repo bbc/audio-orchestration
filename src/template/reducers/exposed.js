@@ -7,7 +7,8 @@ const initialState = {
   connectedDevices: [],
   role: null,
   activeObjectIds: [],
-  primaryObject: null,
+  primaryObjectId: '',
+  primaryObjectImageUrl: null,
   currentContentId: null,
   contentCorrelation: { parentTime: 0, childTime: 0 },
   contentSpeed: 0,
@@ -90,7 +91,8 @@ const exposed = (state = initialState, action) => {
       });
     case 'SET_PRIMARY_OBJECT':
       return Object.assign({}, state, {
-        primaryObject: action.primaryObject,
+        primaryObjectId: action.primaryObjectId,
+        primaryObjectImageUrl: action.primaryObjectImageUrl,
       });
     case 'SET_ACTIVE_OBJECT_IDS':
       return Object.assign({}, state, {

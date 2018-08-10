@@ -118,3 +118,13 @@ button {
   padding: $gel-spacing-unit;
   background-color: #fc3;
 }
+
+.player {
+  text-align: center;
+
+  .player-image img {
+    width: 75%;
+    max-width: 400px;
+    height: auto;
+  }
+}
