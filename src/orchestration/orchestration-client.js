@@ -70,7 +70,74 @@ class OrchestrationClient extends EventEmitter {
     this._audioContext = null;
     this._sequences = {};
     this._contentIds = [];
+    this._currentContentId = null;
     this._syncEndpoint = CLOUDSYNC_ENDPOINT;
+  }
+
+  /**
+   * Emits a 'change' event with all available information about the current playback state.
+   *
+   * @fires 'change'
+   */
+  _publishChangeEvent() {
+    try {
+      const currentContentId = this._currentContentId;
+      const sequenceWrapper = this._sequences[currentContentId];
+
+      const { renderer, sequence } = sequenceWrapper;
+
+      const dateNowTime = Date.now() / 1000;
+      const { contentTime, activeObjectIds, activeItemIds } = renderer;
+      const contentSpeed = this._syncClock.getEffectiveSpeed();
+
+      const { duration, loop } = sequence;
+
+      const {
+        primaryObjectId,
+        primaryObjectImageUrl,
+      } = sequence.getPrimaryObjectInfo(activeObjectIds);
+
+      const ended = renderer.currentTime > duration;
+
+      this.emit('change', {
+        currentContentId,
+        dateNowTime,
+        contentTime,
+        contentSpeed,
+        duration,
+        loop,
+        activeObjectIds,
+        activeItemIds,
+        primaryObjectId,
+        primaryObjectImageUrl,
+        ended,
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  _scheduleSequences(schedule) {
+    this._contentIds
+      .map(contentId => this._sequences[contentId])
+      .forEach(({ renderer, contentId }) => {
+        const sequenceSchedule = schedule.find(s => s.contentId === contentId);
+
+        if (sequenceSchedule) {
+          const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
+          if (startSyncTime !== null) {
+            renderer.start(startSyncTime, startOffset);
+            this._currentContentId = contentId;
+          }
+
+          if (stopSyncTime !== null) {
+            renderer.stop(stopSyncTime);
+          }
+        } else {
+          renderer.stop(this._syncClock.now());
+        }
+      });
+    this._publishChangeEvent();
   }
 
   /**
@@ -251,6 +318,8 @@ class OrchestrationClient extends EventEmitter {
             s.renderer.setActiveObjectIds(activeObjects);
           }
         });
+
+        this._publishChangeEvent();
       });
 
       // resolve the promise once the schedule with the initial sequence has been received.
@@ -310,7 +379,7 @@ class OrchestrationClient extends EventEmitter {
       .then(() => this._prepareSequences())
       .then(() => this._createHelper())
       .then(() => {
-        this.emit('loading', false);
+        this.emit('loaded');
         this._ready = true;
         return this;
       })
@@ -320,7 +389,31 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * continue playing the current sequence from the current time.
+   * Registers a sequence url matched to its contentId. The contentId is used to identify the
+   * currently playing sequence in change events, and to schedule the transition to another
+   * sequence.
+   *
+   * Register all sequences before calling [@link start]. The sequence metadata is downloaded as
+   * part of the start process.
+   *
+   * @param {string} contentId - a unique (among registered sequences) reference string.
+   * @param {string} url - the url to the sequence.json metadata file.
+   */
+  registerSequence(contentId, url) {
+    this._contentIds = [
+      ...this._contentIds.filter(c => c !== contentId),
+      contentId,
+    ];
+
+    this._sequences[contentId] = {
+      contentId,
+      url,
+    };
+  }
+
+  /**
+   * Continues playing the current sequence from the current time. Can only be used on the master
+   * device.
    */
   play() {
     if (!this._ready || !this._master) {
@@ -333,6 +426,10 @@ class OrchestrationClient extends EventEmitter {
     }, 1);
   }
 
+  /**
+   * Pauses the experience timeline and any content currently playing. Can only be used on the
+   * master device.
+   */
   pause() {
     if (!this._ready || !this._master) {
       return;
@@ -344,6 +441,12 @@ class OrchestrationClient extends EventEmitter {
     }, 0);
   }
 
+  /**
+   * Seeks in the experience timeline by a relative amount of seconds. Can only be used on the
+   * master device.
+   *
+   * @param {number} relativeOffset - relative seek offset in seconds
+   */
   seek(relativeOffset) {
     if (!this._ready || !this._master) {
       return;
@@ -355,6 +458,12 @@ class OrchestrationClient extends EventEmitter {
     }, 0);
   }
 
+  /**
+   * Schedules a transition from the current sequence to the given contentId. Can only be used
+   * on the master device.
+   *
+   * @param {string} contentId
+   */
   transitionToSequence(contentId) {
     if (!this._ready || !this._master) {
       return;
@@ -385,6 +494,11 @@ class OrchestrationClient extends EventEmitter {
     }
   }
 
+  /**
+   * Mutes the output locally on this device.
+   *
+   * @param {boolean} muted
+   */
   mute(muted) {
     if (!this._ready) {
       return;
@@ -397,6 +511,13 @@ class OrchestrationClient extends EventEmitter {
     }
   }
 
+  /**
+   * Sets the device location for this device.
+   *
+   * @param {Object} location
+   * @param {string} location.distance - use 'near' or 'far'
+   * @param {string} location.direction - use 'front', 'side', or 'rear'
+   */
   setDeviceLocation(location) {
     if (!this._ready) {
       return;

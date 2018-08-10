@@ -272,6 +272,29 @@ class Sequence {
     }
     return [];
   }
+
+  /**
+   * Finds the primary object from objects present in the list of given objects.
+   *
+   * TODO: The primary object is currently defined as the first (highest priority) active object
+   * that has an imageUrl set.
+   *
+   * @param {Array<string>} objectIds - ids of objects to be considered in the search
+   *
+   * @returns {Object} ret
+   * @returns {string} ret.primaryObjectId
+   * @returns {string} ret.primaryObjectImageUrl
+   */
+  getPrimaryObjectInfo(objectIds) {
+    return this._sequence.objects
+      .filter(({ objectId }) => objectIds.includes(objectId))
+      .filter(({ orchestration }) => orchestration.imageUrl !== null)
+      .map(({ objectId, orchestration }) => ({
+        primaryObjectId: objectId,
+        primaryObjectImageUrl: orchestration.imageUrl,
+      }))
+      .find(true);
+  }
 }
 
 export default Sequence;

@@ -158,6 +158,15 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   }
 
   /**
+   * Get a list of currently rendered item ids.
+   *
+   * @returns {Array<string>}
+   */
+  get activeItemIds() {
+    return this._activeItemRenderers.map(({ itemId }) => itemId);
+  }
+
+  /**
    * Get a copy of the sequence being played by this Renderer
    *
    * @returns {Sequence}
