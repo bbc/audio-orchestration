@@ -160,12 +160,14 @@ class OrchestrationClient extends EventEmitter {
         if (sequenceSchedule) {
           const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
           if (startSyncTime !== null) {
+            // console.debug(`start ${contentId} at ${startSyncTime}.`);
             renderer.start(startSyncTime, startOffset);
             this._currentContentId = contentId;
             this.emit('ended', false);
           }
 
           if (stopSyncTime !== null) {
+            // console.debug(`stop ${contentId} at ${stopSyncTime}.`);
             renderer.stop(stopSyncTime);
           }
         } else {
@@ -528,6 +530,8 @@ class OrchestrationClient extends EventEmitter {
       return;
     }
 
+    // console.debug('transitioning from currentContentId:', this._currentContentId);
+
     const sequenceWrapper = this._sequences[contentId];
     if (sequenceWrapper === undefined) {
       this.emit(
@@ -538,6 +542,7 @@ class OrchestrationClient extends EventEmitter {
     }
 
     if (this._currentContentId === null) {
+      // console.debug('transition now.');
       // no sequence is currently playing.
       this._mdoHelper.startSequence(
         contentId,
@@ -545,8 +550,9 @@ class OrchestrationClient extends EventEmitter {
       );
     } else {
       // find a suitable transition point in the currently playing sequence.
-      const { renderer } = sequenceWrapper;
+      const { renderer } = this._sequences[this._currentContentId];
       const syncTime = renderer.stopAtOutPoint(SEQUENCE_TRANSITION_DELAY);
+      // console.debug(`transition outPoint at ${syncTime}, now: ${this._syncClock.now()}`);
 
       this._mdoHelper.stopSequence(this._currentContentId, syncTime);
       this._mdoHelper.startSequence(contentId, syncTime);
