@@ -432,14 +432,14 @@ class OrchestrationClient extends EventEmitter {
       .then(() => this._requestSyncClock())
       .then(() => this._prepareSequences())
       .then(() => this._createHelper())
-      .catch((e) => {
-        console.error(e);
-        this.emit('error', e);
-      })
       .then(() => {
         this.emit('loaded');
         this._ready = true;
         return this;
+      })
+      .catch((e) => {
+        this.emit('error', e);
+        throw e;
       });
   }
 
