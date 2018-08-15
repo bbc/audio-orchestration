@@ -3,13 +3,14 @@
 // interfacing with the sync services, object allocation, and media players.
 
 export {
-  play,
-  pause,
-  seek,
-  mute,
-  setDeviceLocation,
-  playAgain,
-  transitionToSequence,
+  requestPlay,
+  requestPause,
+  requestSeek,
+  requestMute,
+  requestSetDeviceLocation,
+  requestSetVolume,
+  requestPlayAgain,
+  requestTransitionToSequence,
 } from './orchestration';
 
 export const startSession = () => ({

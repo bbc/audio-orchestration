@@ -6,15 +6,8 @@ import {
   fork,
 } from 'redux-saga/effects';
 
-import {
-  initialiseOrchestration,
-  play,
-  pause,
-  mute,
-  seek,
-  playAgain,
-  setDeviceLocation,
-} from './template/actions/orchestration';
+import { orchestrationWatcherSaga, connectOrchestration } from './template/orchestration';
+import { createSession, validateSession } from './session';
 
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
@@ -34,7 +27,7 @@ function* validateSessionCode(action) {
   try {
     yield put({ type: 'SESSION_CODE_VALIDATING' });
 
-    const { sessionId, sessionCode, valid } = yield call(getSessionId, action.sessionCode);
+    const { sessionId, sessionCode, valid } = yield call(validateSession, action.sessionCode);
 
     if (!valid) {
       throw new Error('SessionCode invalid.');
@@ -82,8 +75,9 @@ function* masterFlow() {
 
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
   try {
-    yield call(initialiseOrchestration, true, {});
-    console.debug('initialised orchestration');
+    const { sessionId, sessionCode } = yield call(createSession);
+    yield put({ type: 'SET_SESSION_CODE', sessionCode });
+    const result = yield call(connectOrchestration, true, sessionId);
   } catch (e) {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
     yield take('CLICK_ERROR_RETRY');
@@ -176,20 +170,19 @@ function* startFlow() {
 function* watcherSaga() {
   // In the connection form, the connect button dispatches this action:
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
-
-  // Player and orchestration controls
-  yield takeEvery('REQUEST_PLAY', play);
-  yield takeEvery('REQUEST_PAUSE', pause);
-  yield takeEvery('REQUEST_SEEK', seek);
-  yield takeEvery('REQUEST_PLAY_AGAIN', playAgain);
-  // yield takeEvery('REQUEST_SET_VOLUME', ...);
-  yield takeEvery('REQUEST_MUTE_LOCAL', mute);
-  yield takeEvery('REQUEST_CHANGE_LOCATION', setDeviceLocation);
 }
 
-function* rootSaga() {
+function* rootSaga(join = false, sessionCode = null) {
   yield fork(watcherSaga);
-  yield call(startFlow);
+  yield fork(orchestrationWatcherSaga);
+
+  if (join && sessionCode !== null) {
+    yield call(directJoinFlow);
+  } else if (join) {
+    yield call(joinFlow);
+  } else {
+    yield call(startFlow);
+  }
 }
 
 export default rootSaga;

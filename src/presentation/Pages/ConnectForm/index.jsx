@@ -66,7 +66,7 @@ class ConnectFormPage extends React.Component {
         </p>
         { !sessionCodeIsValid
           ? (
-            <p style={{color: 'red'}}>
+            <p style={{ color: 'red' }}>
               Invalid code entered. Please check you have entered the correct code, or start a
               new session on your main device; it may have expired.
             </p>

@@ -22,8 +22,8 @@ import {
 import thunk from 'redux-thunk';
 import 'regenerator-runtime/runtime';
 import createSagaMiddleware from 'redux-saga';
-
 import rootSaga from './sagas';
+import { initialiseOrchestration } from './template/orchestration';
 
 // wrap() initialises all the required orchestration state: It interfaces with the media renderer,
 // the synchronisation service, and the allocation of audio objects to device. It provides the
@@ -51,10 +51,13 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk), applyMiddleware(sagaMiddleware)),
 );
 
-sagaMiddleware.run(rootSaga);
+// Initialise the orchestration object and connect its events to the redux store.
+initialiseOrchestration(store.dispatch);
 
 // TODO: decide on where to start based on initial URL here.
-// store.dispatch({ type: 'START_WITH_SOMETHING' });
+// pass join, sessionCode to rootSaga
+sagaMiddleware.run(rootSaga, false);
+
 
 // Connect the App to the redux store, and add the state and handlers managed by the template.
 // - hot() allows the module to be hot-reloaded in development mode.

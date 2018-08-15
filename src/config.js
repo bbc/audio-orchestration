@@ -26,6 +26,7 @@ export const SEQUENCE_URLS = [
   { contentId: CONTENT_ID_MAIN, url: 'audio/clicks-and-tone/sequence.json' },
 ];
 
-export const INITIAL_CONTENT_ID = SEQUENCE_URLS[0].contentId;
+export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
+export const PLAY_AGAIN_CONTENT_ID = CONTENT_ID_MAIN;
 
 export const DEFAULT_IMAGE_URL = 'images/default.png';
