@@ -1,3 +1,4 @@
+/*eslint no-use-before-define: ["error", { "functions": false }]*/
 import {
   takeEvery,
   take,
@@ -77,7 +78,7 @@ function* masterFlow() {
   try {
     const { sessionId, sessionCode } = yield call(createSession);
     yield put({ type: 'SET_SESSION_CODE', sessionCode });
-    const result = yield call(connectOrchestration, true, sessionId);
+    yield call(connectOrchestration, true, sessionId);
   } catch (e) {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
     yield take('CLICK_ERROR_RETRY');
@@ -103,8 +104,9 @@ function* slaveFlow(sessionId) {
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
   try {
-    yield call(initialiseOrchestration, false, { joinSessionId: sessionId });
+    yield call(connectOrchestration, false, sessionId);
   } catch (e) {
+    yield put({ type: 'SET_ERROR', errorMessage: e.message });
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
     yield take('CLICK_ERROR_RETRY');
     yield call(joinFlow);

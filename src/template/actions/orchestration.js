@@ -30,9 +30,8 @@ export const setRole = role => ({
   role,
 });
 
-export const setError = errorMessage => ({
+export const setErrorMessage = errorMessage => ({
   type: 'SET_ERROR',
-  error: true,
   errorMessage,
 });
 

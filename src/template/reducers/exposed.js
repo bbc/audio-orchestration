@@ -21,9 +21,7 @@ const initialState = {
   playing: false,
   loop: false,
   muted: false,
-  error: false,
   errorMessage: null,
-  loading: false,
   loadingMessage: '',
   canReplaceSequence: false,
   canSeek: false,
@@ -81,7 +79,6 @@ const exposed = (state = initialState, action) => {
       });
     case 'SET_ERROR':
       return Object.assign({}, state, {
-        error: action.error,
         errorMessage: action.errorMessage,
       });
     case 'SET_ENDED':

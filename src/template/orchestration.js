@@ -4,7 +4,7 @@ import {
   setLoadingMessage,
   setConnected,
   setEnded,
-  setError,
+  setErrorMessage,
   setPrimaryObject,
   setActiveObjectIds,
   setMuted,
@@ -70,7 +70,7 @@ export const initialiseOrchestration = (dispatch) => {
   globalOrchestrationClient.on('disconnected', () => dispatch(setConnected(false)));
 
   globalOrchestrationClient.on('error', (e) => {
-    dispatch(setError(e.message));
+    dispatch(setErrorMessage(e.message));
   });
 
   globalOrchestrationClient.on('ended', (ended) => {
@@ -83,7 +83,7 @@ export const connectOrchestration = (master, sessionId) => {
   return globalOrchestrationClient.start(master, sessionId)
     .then(() => ({ success: true }))
     .catch((e) => {
-      console.error('initialiseOrchestration', e);
+      console.error('connectOrchestration error:', e);
       throw e;
     });
 };
