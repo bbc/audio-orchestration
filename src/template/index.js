@@ -10,6 +10,8 @@ import {
   dismissError,
   playAgain,
   transitionToSequence,
+  connectFormOnCancel,
+  connectFormOnSubmit,
 } from './actions';
 
 export { default as reducers } from './reducers';
@@ -52,6 +54,12 @@ function mapDispatchToProps(dispatch) {
     },
     transitionToSequence: (contentId) => {
       dispatch(transitionToSequence(contentId));
+    },
+    connectFormOnCancel: () => {
+      dispatch(connectFormOnCancel);
+    },
+    connectFormOnSubmit: (sessionCode) => {
+      dispatch(connectFormOnSubmit(sessionCode));
     },
   };
 }

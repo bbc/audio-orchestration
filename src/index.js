@@ -53,6 +53,9 @@ const store = createStore(
 
 sagaMiddleware.run(rootSaga);
 
+// TODO: decide on where to start based on initial URL here.
+// store.dispatch({ type: 'START_WITH_SOMETHING' });
+
 // Connect the App to the redux store, and add the state and handlers managed by the template.
 // - hot() allows the module to be hot-reloaded in development mode.
 // - connect() ensures the component is refreshed when any state changes are recorded. It

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import StepProgressIndicator from '../../Components/StepProgressIndicator';
 
 const Loading = ({
   loadingMessage,
@@ -11,6 +12,7 @@ const Loading = ({
     <p>
       {loadingMessage}
     </p>
+    <StepProgressIndicator step={2} numSteps={3} />
   </div>
 );
 

@@ -167,7 +167,7 @@ export const initialiseOrchestration = (master, {
 
   dispatch(setLoading(true));
 
-  requestSessionId(joinSessionCode)
+  return requestSessionId(joinSessionCode)
     .then(({ sessionId, sessionCode }) => {
       dispatch(setSessionCode(sessionCode));
       return orchestration.start(master, sessionId);

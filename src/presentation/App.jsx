@@ -4,13 +4,30 @@ import PropTypes from 'prop-types';
 // Import the style sheet
 import './main.scss';
 
+import {
+  PAGE_START,
+  PAGE_LOADING,
+  PAGE_ERROR,
+  PAGE_MASTER_SETUP,
+  PAGE_MASTER_PLAYING,
+  PAGE_CONNECT_FORM,
+  PAGE_CONNECT_DIRECT,
+  PAGE_SLAVE_SETUP_LOCATION,
+  PAGE_SLAVE_PLAYING,
+  PAGE_SLAVE_PLAYING_LOCATION,
+} from '../sagas';
+
 // Import the pages: only one of these is used at a time.
-import Start from './Pages/Start';
-import Master from './Pages/Master';
-import Slave from './Pages/Slave';
-import Loading from './Pages/Loading';
+import StartPage from './Pages/Start';
+import LoadingPage from './Pages/Loading';
 import ErrorPage from './Pages/Error';
-import Help from './Pages/Help';
+import MasterSetupPage from './Pages/MasterSetup';
+import MasterPlayingPage from './Pages/MasterPlaying';
+import ConnectFormPage from './Pages/ConnectForm';
+import ConnectDirectPage from './Pages/ConnectDirect';
+import SlaveSetupLocationPage from './Pages/SlaveSetupLocation';
+import SlavePlayingPage from './Pages/SlavePlaying';
+import SlavePlayingLocationPage from './Pages/SlavePlayingLocation';
 import Footer from './Footer';
 
 /**
@@ -29,32 +46,44 @@ import Footer from './Footer';
  */
 const App = (props) => {
   const {
-    role,
-    loading,
-    error,
-    help,
+    page,
   } = props;
 
-  // The role decides which base page would be shown, unless a special condition is set.
-  let CurrentPage = Start;
-  if (role === 'master') {
-    CurrentPage = Master;
-  } else if (role === 'slave') {
-    CurrentPage = Slave;
-  }
+  let CurrentPage;
 
-  // The base page can be replaced by a higher priority message, such as help, loading, or error.
-  // The order here is important, e.g. an error may occur during loading and should be visible.
-  if (help) {
-    CurrentPage = Help;
-  }
-
-  if (loading) {
-    CurrentPage = Loading;
-  }
-
-  if (error) {
-    CurrentPage = ErrorPage;
+  switch (page) {
+    case PAGE_START:
+      CurrentPage = StartPage;
+      break;
+    case PAGE_LOADING:
+      CurrentPage = LoadingPage;
+      break;
+    case PAGE_ERROR:
+      CurrentPage = ErrorPage;
+      break;
+    case PAGE_MASTER_SETUP:
+      CurrentPage = MasterSetupPage;
+      break;
+    case PAGE_MASTER_PLAYING:
+      CurrentPage = MasterPlayingPage;
+      break;
+    case PAGE_CONNECT_FORM:
+      CurrentPage = ConnectFormPage;
+      break;
+    case PAGE_CONNECT_DIRECT:
+      CurrentPage = ConnectDirectPage;
+      break;
+    case PAGE_SLAVE_SETUP_LOCATION:
+      CurrentPage = SlaveSetupLocationPage;
+      break;
+    case PAGE_SLAVE_PLAYING:
+      CurrentPage = SlavePlayingPage;
+      break;
+    case PAGE_SLAVE_PLAYING_LOCATION:
+      CurrentPage = SlavePlayingLocationPage;
+      break;
+    default:
+      CurrentPage = ErrorPage;
   }
 
   // Way too many divs to make the layout work. Every page is displayed in a single grid item
@@ -79,15 +108,12 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  role: PropTypes.string,
-  loading: PropTypes.bool.isRequired,
-  error: PropTypes.bool.isRequired,
-  help: PropTypes.bool.isRequired,
+App.defaultProps = {
+  page: PAGE_LOADING,
 };
 
-App.defaultProps = {
-  role: 'none',
+App.propTypes = {
+  page: PropTypes.string,
 };
 
 export default App;

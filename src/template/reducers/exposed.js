@@ -1,11 +1,16 @@
 const initialState = {
+  role: null,
+  page: null,
+  connectFormCanCancel: false,
+  sessionCodeIsValidating: false,
+  sessionCodeIsValid: true,
+
   deviceMainDevice: false,
   deviceLocation: {},
   deviceType: null,
   deviceQuality: 1,
   sessionId: null,
   connectedDevices: [],
-  role: null,
   activeObjectIds: [],
   primaryObjectId: '',
   primaryObjectImageUrl: null,
@@ -31,6 +36,33 @@ const initialState = {
 
 const exposed = (state = initialState, action) => {
   switch (action.type) {
+    case 'SET_PAGE':
+      return Object.assign({}, state, {
+        page: action.page,
+      });
+    case 'SET_ROLE':
+      return Object.assign({}, state, {
+        role: action.role,
+      });
+    case 'SET_CONNECT_FORM_CAN_CANCEL':
+      return Object.assign({}, state, {
+        connectFormCanCancel: action.canCancel,
+      });
+    case 'SESSION_CODE_VALID':
+      return Object.assign({}, state, {
+        sessionCodeIsValid: true,
+        sessionCodeIsValidating: false,
+      });
+    case 'SESSION_CODE_INVALID':
+      return Object.assign({}, state, {
+        sessionCodeIsValid: false,
+        sessionCodeIsValidating: false,
+      });
+    case 'SESSION_CODE_VALIDATING':
+      return Object.assign({}, state, {
+        sessionCodeIsValidating: true,
+      });
+
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.loading,
@@ -46,10 +78,6 @@ const exposed = (state = initialState, action) => {
     case 'SET_SESSION_CODE':
       return Object.assign({}, state, {
         sessionCode: action.sessionCode,
-      });
-    case 'SET_ROLE':
-      return Object.assign({}, state, {
-        role: action.role,
       });
     case 'SET_ERROR':
       return Object.assign({}, state, {

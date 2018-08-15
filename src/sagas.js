@@ -3,6 +3,7 @@ import {
   take,
   call,
   put,
+  fork,
 } from 'redux-saga/effects';
 
 import {
@@ -15,23 +16,23 @@ import {
   setDeviceLocation,
 } from './template/actions/orchestration';
 
-const PAGE_START = 'start';
-const PAGE_LOADING = 'loading';
-const PAGE_ERROR = 'error';
-const PAGE_MASTER_SETUP = 'master-setup';
-const PAGE_MASTER_PLAYING = 'master-playing';
-const PAGE_CONNECT_FORM = 'connect-form';
-const PAGE_CONNECT_DIRECT = 'connect-direct';
-const PAGE_SLAVE_SETUP_LOCATION = 'slave-setup-location';
-const PAGE_SLAVE_PLAYING = 'slave-playing';
-const PAGE_SLAVE_PLAYING_LOCATION = 'slave-playing-location';
+export const PAGE_START = 'start';
+export const PAGE_LOADING = 'loading';
+export const PAGE_ERROR = 'error';
+export const PAGE_MASTER_SETUP = 'master-setup';
+export const PAGE_MASTER_PLAYING = 'master-playing';
+export const PAGE_CONNECT_FORM = 'connect-form';
+export const PAGE_CONNECT_DIRECT = 'connect-direct';
+export const PAGE_SLAVE_SETUP_LOCATION = 'slave-setup-location';
+export const PAGE_SLAVE_PLAYING = 'slave-playing';
+export const PAGE_SLAVE_PLAYING_LOCATION = 'slave-playing-location';
 
-const ROLE_MASTER = 'master';
-const ROLE_SLAVE = 'slave';
+export const ROLE_MASTER = 'master';
+export const ROLE_SLAVE = 'slave';
 
 function* validateSessionCode(action) {
   try {
-    yield put({ type: 'VALIDATING_SESSION_CODE' });
+    yield put({ type: 'SESSION_CODE_VALIDATING' });
 
     const { sessionId, sessionCode, valid } = yield call(getSessionId, action.sessionCode);
 
@@ -39,9 +40,9 @@ function* validateSessionCode(action) {
       throw new Error('SessionCode invalid.');
     }
 
-    yield put({ type: 'VALID_SESSION_CODE', sessionCode, sessionId });
+    yield put({ type: 'SESSION_CODE_VALID', sessionCode, sessionId });
   } catch (e) {
-    yield put({ type: 'INVALID_SESSION_CODE' });
+    yield put({ type: 'SESSION_CODE_INVALID' });
   }
 }
 
@@ -82,6 +83,7 @@ function* masterFlow() {
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
   try {
     yield call(initialiseOrchestration, true, {});
+    console.debug('initialised orchestration');
   } catch (e) {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
     yield take('CLICK_ERROR_RETRY');
@@ -186,7 +188,7 @@ function* watcherSaga() {
 }
 
 function* rootSaga() {
-  yield call(watcherSaga);
+  yield fork(watcherSaga);
   yield call(startFlow);
 }
 

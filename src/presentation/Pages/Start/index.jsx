@@ -1,67 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import StartConnectionForm from './start-connection-form';
-import StartChoice from './start-choice';
-import { SESSION_CODE_LENGTH } from '../../../config';
+import LargeButton from '../../Components/LargeButton';
+import StepProgressIndicator from '../../Components/StepProgressIndicator';
 
-class StartPage extends React.Component {
-  constructor(props) {
-    super(props);
+const StartPage = ({
+  startSession,
+  joinSession,
+}) => (
+  <div className="page page-start">
+    <h1>
+      bbcat-orchestration-template
+    </h1>
 
-    this.state = {
-      connectVisible: false,
-    };
+    <p>
+      You can modify these components, and the main.scss stylesheet, to customise the
+      interface.
+    </p>
 
-    this.showConnect = this.showConnect.bind(this);
-    this.cancelConnect = this.cancelConnect.bind(this);
-    this.submitConnect = this.submitConnect.bind(this);
-  }
-
-  showConnect() {
-    this.setState({
-      connectVisible: true,
-    });
-  }
-
-  cancelConnect() {
-    this.setState({
-      connectVisible: false,
-    });
-  }
-
-  submitConnect(sessionCode) {
-    const { joinSession } = this.props;
-    joinSession(sessionCode);
-    this.cancelConnect();
-  }
-
-  render() {
-    const {
-      startSession,
-    } = this.props;
-
-    const {
-      connectVisible,
-    } = this.state;
-
-    if (connectVisible) {
-      return (
-        <StartConnectionForm
-          onCancel={this.cancelConnect}
-          onSubmit={this.submitConnect}
-          numChars={SESSION_CODE_LENGTH}
-        />
-      );
-    }
-
-    return (
-      <StartChoice
-        startSession={startSession}
-        joinSession={() => this.showConnect()}
+    <p>
+      <LargeButton
+        text="Create Session"
+        secondaryText="Start on the device with the best speakers."
+        onClick={startSession}
       />
-    );
-  }
-}
+    </p>
+    <p>
+      <LargeButton
+        text="Join"
+        secondaryText="Connect this device as an auxiliary speaker."
+        onClick={joinSession}
+      />
+    </p>
+    <StepProgressIndicator step={1} numSteps={3} />
+  </div>
+);
 
 StartPage.propTypes = {
   startSession: PropTypes.func.isRequired,
