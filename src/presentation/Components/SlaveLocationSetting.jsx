@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ToggleButton from '../../Components/ToggleButton';
+import ToggleButton from './ToggleButton';
 
 const LocationSetting = ({
   distance,

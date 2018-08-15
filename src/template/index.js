@@ -1,17 +1,18 @@
 import {
   startSession,
   joinSession,
-  setDeviceLocation,
-  play,
-  pause,
-  mute,
-  seek,
-  log,
-  dismissError,
-  playAgain,
-  transitionToSequence,
+  requestSetDeviceLocation,
+  requestPlay,
+  requestPause,
+  requestMute,
+  requestSeek,
+  requestPlayAgain,
+  requestTransitionToSequence,
   connectFormOnCancel,
   connectFormOnSubmit,
+  masterSetupOnContinue,
+  slaveLocationOnClose,
+  slaveLocationOnOpen,
 } from './actions';
 
 export { default as reducers } from './reducers';
@@ -29,37 +30,40 @@ function mapDispatchToProps(dispatch) {
       dispatch(joinSession(sessionCode));
     },
     setDeviceLocation: (location) => {
-      dispatch(setDeviceLocation(location));
+      dispatch(requestSetDeviceLocation(location));
     },
     play: () => {
-      dispatch(play());
+      dispatch(requestPlay());
     },
     pause: () => {
-      dispatch(pause());
+      dispatch(requestPause());
     },
     mute: (muted) => {
-      dispatch(mute(muted));
+      dispatch(requestMute(muted));
     },
     seek: (seekTime) => {
-      dispatch(seek(seekTime));
-    },
-    log: (message) => {
-      dispatch(log(message));
-    },
-    dismissError: () => {
-      dispatch(dismissError());
+      dispatch(requestSeek(seekTime));
     },
     playAgain: () => {
-      dispatch(playAgain());
+      dispatch(requestPlayAgain());
     },
     transitionToSequence: (contentId) => {
-      dispatch(transitionToSequence(contentId));
+      dispatch(requestTransitionToSequence(contentId));
     },
     connectFormOnCancel: () => {
       dispatch(connectFormOnCancel);
     },
     connectFormOnSubmit: (sessionCode) => {
       dispatch(connectFormOnSubmit(sessionCode));
+    },
+    masterSetupOnContinue: () => {
+      dispatch(masterSetupOnContinue());
+    },
+    slaveLocationOnClose: () => {
+      dispatch(slaveLocationOnClose());
+    },
+    slaveLocationOnOpen: () => {
+      dispatch(slaveLocationOnOpen());
     },
   };
 }

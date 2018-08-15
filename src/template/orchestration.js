@@ -89,31 +89,31 @@ export const connectOrchestration = (master, sessionId) => {
 };
 
 function* transitionToSequence({ contentId }) {
-  yield call(globalOrchestrationClient.transitionToSequence, contentId);
+  yield call(() => globalOrchestrationClient.transitionToSequence(contentId));
 }
 
 function* play() {
-  yield call(globalOrchestrationClient.play);
+  yield call(() => globalOrchestrationClient.play());
 }
 
 function* pause() {
-  yield call(globalOrchestrationClient.pause);
+  yield call(() => globalOrchestrationClient.pause());
 }
 
 function* seek({ relativeOffset }) {
-  yield call(globalOrchestrationClient.seek, relativeOffset);
+  yield call(() => globalOrchestrationClient.seek(relativeOffset));
 }
 
-function* mute() {
-  yield call(globalOrchestrationClient.mute);
+function* mute({ muted }) {
+  yield call(() => globalOrchestrationClient.mute(muted));
 }
 
 function* playAgain() {
-  yield call(globalOrchestrationClient.transitionToSequence, PLAY_AGAIN_CONTENT_ID);
+  yield call(() => globalOrchestrationClient.transitionToSequence(PLAY_AGAIN_CONTENT_ID));
 }
 
 function* setDeviceLocation({ location }) {
-  yield call(globalOrchestrationClient.setDeviceLocation, location);
+  yield call(() => globalOrchestrationClient.setDeviceLocation(location));
 }
 
 export const orchestrationWatcherSaga = function* () {

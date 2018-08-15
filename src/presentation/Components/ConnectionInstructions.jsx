@@ -5,7 +5,12 @@ const ConnectionInstructions = ({
   sessionCode,
 }) => (
   <p>
-    {`Connected to ${sessionCode}.`}
+    QR code and short URL go here. Visit this page on all your devices, and join with this code:
+    { ' ' }
+    <b>
+      {sessionCode}
+    </b>
+    .
   </p>
 );
 

@@ -29,3 +29,15 @@ export const connectFormOnSubmit = sessionCode => ({
   type: 'REQUEST_VALIDATE_SESSION_CODE',
   sessionCode,
 });
+
+export const masterSetupOnContinue = () => ({
+  type: 'CLICK_MASTER_SETUP_CONTINUE',
+});
+
+export const slaveLocationOnClose = () => ({
+  type: 'REQUEST_CLOSE_SLAVE_LOCATION',
+});
+
+export const slaveLocationOnOpen = () => ({
+  type: 'REQUEST_OPEN_SLAVE_LOCATION',
+});

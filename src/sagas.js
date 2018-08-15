@@ -73,8 +73,8 @@ function* connectForm(canCancel = false) {
  */
 function* masterFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MASTER });
-
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
+
   try {
     const { sessionId, sessionCode } = yield call(createSession);
     yield put({ type: 'SET_SESSION_CODE', sessionCode });
@@ -99,7 +99,8 @@ function* masterFlow() {
  * After having decided that this device is a slave, a session code is requested from the user.
  * If this succeeds, we move on to the location screen and then the playing screen.
  */
-function* slaveFlow(sessionId) {
+function* slaveFlow({ sessionCode, sessionId }) {
+  yield put({ type: 'SET_SESSION_CODE', sessionCode });
   yield put({ type: 'SET_ROLE', role: ROLE_SLAVE });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
@@ -127,8 +128,8 @@ function* slaveFlow(sessionId) {
  * Entry point for /join, go directly to the form to enter a session code.
  */
 function* joinFlow() {
-  const { sessionId } = yield call(connectForm);
-  yield call(slaveFlow, sessionId);
+  const { sessionCode, sessionId } = yield call(connectForm);
+  yield call(slaveFlow, { sessionCode, sessionId });
 }
 
 /**
@@ -144,7 +145,7 @@ function* directJoinFlow(sessionCode) {
 
   if (result.type === 'SESSION_CODE_VALID') {
     const { sessionId } = result;
-    yield call(slaveFlow, sessionId);
+    yield call(slaveFlow, { sessionId, sessionCode });
   } else {
     yield call(joinFlow);
   }
@@ -172,6 +173,9 @@ function* startFlow() {
 function* watcherSaga() {
   // In the connection form, the connect button dispatches this action:
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
+
+  // TODO: listen for disconnected event and show error page and stop audio.
+  // TODO: listen for ended event (somewhere)
 }
 
 function* rootSaga(join = false, sessionCode = null) {

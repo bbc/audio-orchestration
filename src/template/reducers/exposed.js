@@ -89,7 +89,7 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         muted: action.muted,
       });
-    case 'SET_DEVICE_LOCATION':
+    case 'REQUEST_SET_DEVICE_LOCATION':
       return Object.assign({}, state, {
         deviceLocation: Object.assign({}, state.deviceLocation, action.location),
       });

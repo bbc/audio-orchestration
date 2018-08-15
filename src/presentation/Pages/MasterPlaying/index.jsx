@@ -1,30 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import MasterDisconnected from './master-disconnected';
-import MasterEnded from './master-ended';
-import MasterPlaying from './master-playing';
+import Player from '../../Components/Player';
+import ObjectList from '../../Components/ObjectList';
+import DeviceList from '../../Components/DeviceList';
 
-const MasterPage = (props) => {
+const MasterPlayingPage = (props) => {
   const {
-    connected,
-    ended,
+    sessionCode,
+    connectedDevices,
+    activeObjectIds,
   } = props;
 
-  if (!connected) {
-    return <MasterDisconnected {...props} />;
-  }
+  return (
+    <div className="page page-master">
+      <h1>
+        Main Device
+      </h1>
 
-  if (ended) {
-    return <MasterEnded {...props} />;
-  }
+      <p>
+        This is the main device. Join with code
+        {' '}
+        <b>
+          {sessionCode}
+        </b>
+        .
+      </p>
 
-  return <MasterPlaying {...props} />;
+      <Player {...props} />
+
+      <DeviceList
+        showInstructions
+        devices={connectedDevices}
+      />
+
+      <ObjectList objectIds={activeObjectIds} />
+    </div>
+  );
 };
 
-MasterPage.propTypes = {
-  connected: PropTypes.bool.isRequired,
-  ended: PropTypes.bool.isRequired,
+MasterPlayingPage.propTypes = {
+  connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
+  sessionCode: PropTypes.string.isRequired,
+  currentContentId: PropTypes.string.isRequired,
+  transitionToSequence: PropTypes.func.isRequired,
+  activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
-export default MasterPage;
+export default MasterPlayingPage;
