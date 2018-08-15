@@ -10,6 +10,7 @@
 
 // Import React and ReactDOM, to render React components to the page.
 import React from 'react';
+import { hot } from 'react-hot-loader';
 import { render } from 'react-dom';
 import { Provider, connect } from 'react-redux';
 import {
@@ -19,7 +20,10 @@ import {
   compose,
 } from 'redux';
 import thunk from 'redux-thunk';
-import { hot } from 'react-hot-loader';
+import 'regenerator-runtime/runtime';
+import createSagaMiddleware from 'redux-saga';
+
+import rootSaga from './sagas';
 
 // wrap() initialises all the required orchestration state: It interfaces with the media renderer,
 // the synchronisation service, and the allocation of audio objects to device. It provides the
@@ -38,13 +42,16 @@ import App from './presentation/App';
 // The redux devtools are also enabled: https://github.com/zalmoxisus/redux-devtools-extension
 // eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   combineReducers({
     template: reducers,
     // Add your own reducers here if you wish to use custom reducers.
   }),
-  composeEnhancers(applyMiddleware(thunk)),
+  composeEnhancers(applyMiddleware(thunk), applyMiddleware(sagaMiddleware)),
 );
+
+sagaMiddleware.run(rootSaga);
 
 // Connect the App to the redux store, and add the state and handlers managed by the template.
 // - hot() allows the module to be hot-reloaded in development mode.
