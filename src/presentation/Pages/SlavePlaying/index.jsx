@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
-import LinkButton from '../../Components/LinkButton';
-import { CONTENT_ID_MAIN } from '../../../config';
+import LargeButton from '../../Components/LargeButton';
+import { CONTENT_ID_MAIN, DEBUG_UI } from '../../../config';
 
 const SlavePlayingPage = (props) => {
   const {
@@ -12,11 +12,11 @@ const SlavePlayingPage = (props) => {
     activeObjectIds,
     slaveLocationOnOpen,
     currentContentId,
+    deviceLocation,
   } = props;
 
   return (
     <div className="page page-slave-playing">
-
       <Player {...props} />
 
       { currentContentId !== CONTENT_ID_MAIN
@@ -29,13 +29,23 @@ const SlavePlayingPage = (props) => {
       }
 
       <p>
-        <LinkButton
+        <LargeButton
           text="Change Device Location"
+          secondaryText={`${deviceLocation.distance}-${deviceLocation.direction}`}
           onClick={() => slaveLocationOnOpen()}
         />
       </p>
 
-      <ObjectList objectIds={activeObjectIds} />
+      { DEBUG_UI
+        ? (
+          <ObjectList objectIds={activeObjectIds} />
+        )
+        : null
+      }
+
+      <p style={{ textAlign: 'center' }}>
+        {`${sessionCode}`}
+      </p>
     </div>
   );
 };
@@ -46,6 +56,7 @@ SlavePlayingPage.propTypes = {
   currentContentId: PropTypes.string.isRequired,
   slaveLocationOnOpen: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
 export default SlavePlayingPage;
