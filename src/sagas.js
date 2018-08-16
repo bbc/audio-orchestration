@@ -1,4 +1,4 @@
-/*eslint no-use-before-define: ["error", { "functions": false }]*/
+/* eslint no-use-before-define: ["error", { "functions": false }] */
 import {
   takeEvery,
   take,
@@ -174,8 +174,9 @@ function* watcherSaga() {
   // In the connection form, the connect button dispatches this action:
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
 
-  // TODO: listen for disconnected event and show error page and stop audio.
-  // TODO: listen for ended event (somewhere)
+  yield takeEvery('SET_ERROR', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+  });
 }
 
 function* rootSaga(join = false, sessionCode = null) {

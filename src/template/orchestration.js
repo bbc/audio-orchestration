@@ -67,9 +67,12 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('connected', () => dispatch(setConnected(true)));
 
-  globalOrchestrationClient.on('disconnected', () => dispatch(setConnected(false)));
+  globalOrchestrationClient.on('disconnected', () => {
+    dispatch(setErrorMessage('Disconnected.'));
+  });
 
   globalOrchestrationClient.on('error', (e) => {
+    globalOrchestrationClient.mute(true);
     dispatch(setErrorMessage(e.message));
   });
 
