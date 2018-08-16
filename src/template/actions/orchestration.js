@@ -35,7 +35,7 @@ export const setErrorMessage = errorMessage => ({
   errorMessage,
 });
 
-export const setPrimaryObject = ({ primaryObjectId, primaryObjectImageUrl }) => ({
+export const setPrimaryObject = (primaryObjectId, primaryObjectImageUrl) => ({
   type: 'SET_PRIMARY_OBJECT',
   primaryObjectId,
   primaryObjectImageUrl,

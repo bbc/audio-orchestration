@@ -15,19 +15,7 @@ const SlavePlayingPage = (props) => {
   } = props;
 
   return (
-    <div className="page page-master">
-      <h1>
-        Slave Device
-      </h1>
-
-      <p>
-        This is a slave device. Join with code
-        {' '}
-        <b>
-          {sessionCode}
-        </b>
-        .
-      </p>
+    <div className="page page-slave-playing">
 
       <Player {...props} />
 

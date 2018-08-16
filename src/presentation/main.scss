@@ -113,10 +113,13 @@ button {
 }
 
 .object-list span {
+  @include gel-typography('pica');
+
   display: inline-block;
   margin: $gel-spacing-unit;
   padding: $gel-spacing-unit;
-  background-color: #fc3;
+  color: $button-foreground-disabled;
+  background-color: $button-background-disabled;
 }
 
 .player {
