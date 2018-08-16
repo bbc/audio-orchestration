@@ -174,6 +174,7 @@ class OrchestrationClient extends EventEmitter {
           renderer.stop(this._syncClock.now());
         }
       });
+    this.play();
     this._publishStatusEvent();
     this._publishObjectsEvent();
   }
@@ -287,10 +288,13 @@ class OrchestrationClient extends EventEmitter {
           resolve(this._syncClock);
         });
       setTimeout(() => {
-        reject(new Error('Timeout waiting for synchronised clock.'));
+        reject(new Error('Timeout waiting for synchronised clock. Session code may have been incorrect or main device may have gone away.'));
       }, LOADING_TIMEOUT);
     }).then((syncClock) => {
       syncClock.on('change', () => this._publishStatusEvent());
+      syncClock.on('unavailable', () => {
+        this.emit('unavailable');
+      });
       return syncClock;
     });
   }
@@ -329,6 +333,7 @@ class OrchestrationClient extends EventEmitter {
           renderer.on('ended', () => {
             if (contentId === this.currentContentId) {
               this.emit('ended', true);
+              this.pause();
             }
           });
 
