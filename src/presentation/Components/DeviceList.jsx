@@ -47,7 +47,7 @@ DeviceList.defaultProps = {
 DeviceList.propTypes = {
   placeholderText: PropTypes.string,
   showInstructions: PropTypes.bool,
-  devices: PropTypes.arrayOf(PropTypes.string).isRequired,
+  devices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string,
   baseUrl: PropTypes.string,
 };

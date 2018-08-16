@@ -4,12 +4,15 @@ import PropTypes from 'prop-types';
 import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import DeviceList from '../../Components/DeviceList';
+import LinkButton from '../../Components/LinkButton';
 
 const MasterPlayingPage = (props) => {
   const {
     sessionCode,
     connectedDevices,
     activeObjectIds,
+    playAgain,
+    ended,
   } = props;
 
   return (
@@ -29,6 +32,16 @@ const MasterPlayingPage = (props) => {
 
       <Player {...props} />
 
+      { ended
+        ? (
+          <p>
+            <LinkButton text="Play again" onClick={playAgain} />
+          </p>
+        )
+        : null
+      }
+
+
       <DeviceList
         showInstructions
         devices={connectedDevices}
@@ -45,6 +58,8 @@ MasterPlayingPage.propTypes = {
   currentContentId: PropTypes.string.isRequired,
   transitionToSequence: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
+  playAgain: PropTypes.func.isRequired,
+  ended: PropTypes.bool.isRequired,
 };
 
 export default MasterPlayingPage;

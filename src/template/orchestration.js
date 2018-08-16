@@ -71,8 +71,11 @@ export const initialiseOrchestration = (dispatch) => {
     dispatch(setErrorMessage('Disconnected.'));
   });
 
+  globalOrchestrationClient.on('unavailable', () => {
+    dispatch(setErrorMessage('Synchronised clock has become unavailable.'));
+  });
+
   globalOrchestrationClient.on('error', (e) => {
-    globalOrchestrationClient.mute(true);
     dispatch(setErrorMessage(e.message));
   });
 

@@ -86,6 +86,10 @@ function* masterFlow() {
     return;
   }
 
+  yield takeEvery('SET_ERROR', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+  });
+
   yield put({ type: 'SET_PAGE', page: PAGE_MASTER_SETUP });
 
   yield take('CLICK_MASTER_SETUP_CONTINUE');
@@ -115,6 +119,10 @@ function* slaveFlow({ sessionCode, sessionId }) {
   }
 
   yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_SETUP_LOCATION });
+
+  yield takeEvery('SET_ERROR', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+  });
 
   while (true) {
     yield take('REQUEST_CLOSE_SLAVE_LOCATION');
@@ -173,10 +181,6 @@ function* startFlow() {
 function* watcherSaga() {
   // In the connection form, the connect button dispatches this action:
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
-
-  yield takeEvery('SET_ERROR', function* () {
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
-  });
 }
 
 function* rootSaga(join = false, sessionCode = null) {
