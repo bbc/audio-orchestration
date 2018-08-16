@@ -19,17 +19,11 @@ import {
   combineReducers,
   compose,
 } from 'redux';
-import thunk from 'redux-thunk';
 import 'regenerator-runtime/runtime';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
 import { initialiseOrchestration } from './template/orchestration';
 
-// wrap() initialises all the required orchestration state: It interfaces with the media renderer,
-// the synchronisation service, and the allocation of audio objects to device. It provides the
-// component it wraps (the App, below) with properties and event handlers. The app uses these to
-// represent the current state to the end user, and to pass user actions back to the template
-// handlers.
 import { reducers, mapTemplateStateToProps, mapTemplateDispatchToProps } from './template';
 
 // The App is the top level presentational component. You may add, remove, or edit components used
@@ -38,7 +32,6 @@ import App from './presentation/App';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
-// The redux-thunk middleware, adds a way of processing actions that don't have an immediate effect.
 // The redux devtools are also enabled: https://github.com/zalmoxisus/redux-devtools-extension
 // eslint-disable-next-line no-underscore-dangle
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -48,7 +41,7 @@ const store = createStore(
     template: reducers,
     // Add your own reducers here if you wish to use custom reducers.
   }),
-  composeEnhancers(applyMiddleware(thunk), applyMiddleware(sagaMiddleware)),
+  composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 
 // Initialise the orchestration object and connect its events to the redux store.
