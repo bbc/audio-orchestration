@@ -1,41 +1,76 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LinkButton from './LinkButton';
 
 // TODO add toggle to show device addition instructions on + click
 import ConnectionInstructions from './ConnectionInstructions';
 
-const DeviceList = ({
-  placeholderText,
-  showInstructions,
-  devices,
-}) => (
-  <div>
-    { (devices.length === 0 && placeholderText !== '')
-      ? (
-        <p>
-          { placeholderText }
-        </p>
-      )
-      : (
-        <ul>
+class DeviceList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      instructionsVisible: false,
+    };
+  }
+
+  toggleInstructions(instructionsVisible) {
+    this.setState(state => Object.assign({}, state, { instructionsVisible }));
+  }
+
+  render() {
+    const {
+      placeholderText,
+      showInstructions,
+      devices,
+      sessionCode,
+      baseUrl,
+    } = this.props;
+    const {
+      instructionsVisible,
+    } = this.state;
+
+    return (
+      <div>
+        <ul className="device-list">
+          { (devices.length === 0 && placeholderText !== '')
+            ? (
+              <li className="device-list-placeholder">
+                { placeholderText }
+              </li>
+            )
+            : null
+          }
           { devices.map(({ deviceId, deviceType, deviceLocation }) => (
-            <li key={deviceId}>
+            <li key={deviceId} className={`device-icon ${deviceType} ${deviceLocation}`}>
               {`${deviceType} (${deviceLocation})`}
             </li>
           ))}
           { showInstructions
             ? (
-              <li>
-                +
+              <li className="device-list-add-button">
+                <LinkButton
+                  onClick={() => this.toggleInstructions(!instructionsVisible)}
+                  text={instructionsVisible ? 'x' : '+'}
+                />
               </li>
             )
             : null
           }
         </ul>
-      )
-    }
-  </div>
-);
+        { instructionsVisible
+          ? (
+            <ConnectionInstructions
+              sessionCode={sessionCode}
+              baseUrl={baseUrl}
+            />
+          )
+          : null
+        }
+      </div>
+    );
+  }
+}
 
 DeviceList.defaultProps = {
   placeholderText: '',

@@ -5,7 +5,7 @@ import LargeButton from '../../Components/LargeButton';
 import LinkButton from '../../Components/LinkButton';
 import ConnectionInstructions from '../../Components/ConnectionInstructions';
 import DeviceList from '../../Components/DeviceList';
-import { CONTENT_ID_MAIN } from '../../../config';
+import { JOIN_URL, CONTENT_ID_MAIN } from '../../../config';
 
 const MasterSetupPage = ({
   masterSetupOnContinue,
@@ -26,7 +26,7 @@ const MasterSetupPage = ({
 
       <ConnectionInstructions
         sessionCode={sessionCode}
-        baseUrl="http://localhost:8080/"
+        baseUrl={JOIN_URL}
       />
 
       <DeviceList

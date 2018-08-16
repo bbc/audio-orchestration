@@ -6,6 +6,8 @@ import ObjectList from '../../Components/ObjectList';
 import DeviceList from '../../Components/DeviceList';
 import LinkButton from '../../Components/LinkButton';
 
+import { JOIN_URL } from '../../../config';
+
 const MasterPlayingPage = (props) => {
   const {
     sessionCode,
@@ -45,6 +47,8 @@ const MasterPlayingPage = (props) => {
       <DeviceList
         showInstructions
         devices={connectedDevices}
+        baseUrl={JOIN_URL}
+        sessionCode={sessionCode}
       />
 
       <ObjectList objectIds={activeObjectIds} />

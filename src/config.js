@@ -30,3 +30,4 @@ export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
 export const PLAY_AGAIN_CONTENT_ID = CONTENT_ID_MAIN;
 
 export const DEFAULT_IMAGE_URL = 'images/default.png';
+export const JOIN_URL = 'http://localhost:8080/join';
