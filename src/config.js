@@ -33,3 +33,6 @@ export const DEFAULT_IMAGE_URL = 'images/default.png';
 export const JOIN_URL = 'http://localhost:8080/join';
 
 export const DEBUG_UI = true;
+
+export const MDO_COMPRESSOR_RATIO = 4;
+export const MDO_COMPRESSOR_THRESHOLD = -40;

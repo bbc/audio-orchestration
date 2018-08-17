@@ -16,6 +16,8 @@ import {
 import {
   SEQUENCE_URLS,
   PLAY_AGAIN_CONTENT_ID,
+  MDO_COMPRESSOR_RATIO,
+  MDO_COMPRESSOR_THRESHOLD,
 } from '../config';
 
 // global orchestration object - this is the only instance of it.
@@ -87,6 +89,12 @@ export const initialiseOrchestration = (dispatch) => {
 export const connectOrchestration = (master, sessionId) => {
   console.debug('connectOrchestration', sessionId);
   return globalOrchestrationClient.start(master, sessionId)
+    .then(() => {
+      if (!master) {
+        globalOrchestrationClient.setCompressorRatio(MDO_COMPRESSOR_RATIO);
+        globalOrchestrationClient.setCompressorThreshold(MDO_COMPRESSOR_THRESHOLD);
+      }
+    })
     .then(() => ({ success: true }))
     .catch((e) => {
       console.error('connectOrchestration error:', e);
@@ -132,4 +140,9 @@ export const orchestrationWatcherSaga = function* () {
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
   yield takeEvery('REQUEST_SET_DEVICE_LOCATION', setDeviceLocation);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
+
+  yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* (action) {
+    yield call(() => globalOrchestrationClient.setCompressorRatio(action.ratio));
+    yield call(() => globalOrchestrationClient.setCompressorThreshold(action.threshold));
+  });
 };
