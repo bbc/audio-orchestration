@@ -207,12 +207,14 @@ class OrchestrationClient extends EventEmitter {
     this._audioContext = new AudioContext();
     this._audioContext.resume();
 
+    this._rendererOutput = this._audioContext.createGain();
+
     return this._audioContext;
   }
 
   /**
-   * Creates a global volume control and connects it to the context destination. Other sources
-   * should connect to this instead of the context destination.
+   * Creates a global volume control and connects it to the context destination.
+   * Also creates a dynamics compressor initially disabled.
    *
    * @private
    *
@@ -224,6 +226,15 @@ class OrchestrationClient extends EventEmitter {
     this._volumeControl = this._audioContext.createGain();
     this._volumeControl.gain.value = 1.0;
     this._volumeControl.connect(this._audioContext.destination);
+
+    this._compressor = this._audioContext.createDynamicsCompressor();
+    this._compressor.threshold.value = 0;
+    this._compressor.ratio.value = 8;
+
+    this._compressor.connect(this._volumeControl);
+
+    this._rendererOutput.connect(this._compressor);
+
     return this._volumeControl;
   }
 
@@ -338,7 +349,7 @@ class OrchestrationClient extends EventEmitter {
           });
 
           // connect renderer to output
-          renderer.output.connect(this._volumeControl);
+          renderer.output.connect(this._rendererOutput);
           return renderer;
         })
         .then((renderer) => {
@@ -603,6 +614,24 @@ class OrchestrationClient extends EventEmitter {
 
   get currentContentId() {
     return this._currentContentId;
+  }
+
+  /**
+   * Sets the dynamics compressor ratio value.
+   *
+   * @param {number} ratio - between 1 and 20
+   */
+  setCompressorRatio(ratio) {
+    this._compressor.ratio.value = ratio;
+  }
+
+  /**
+   * Sets the dynamics compressor threshold value. Set it to 0 to disable the compressor.
+   *
+   * @param {number} threshold - decibel threshold above which the compression will take effect.
+   */
+  setCompressorThreshold(threshold = -50) {
+    this._compressor.threshold.value = threshold;
   }
 }
 
