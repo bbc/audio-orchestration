@@ -207,6 +207,17 @@ class OrchestrationClient extends EventEmitter {
     this._audioContext = new AudioContext();
     this._audioContext.resume();
 
+    // create a dummy source that is imperceptably quiet and always playing to keep the page alive.
+    const dummySource = this._audioContext.createOscillator();
+    dummySource.frequency.value = 50;
+    const dummyGain = this._audioContext.createGain();
+    dummyGain.gain.value = 1.0e-10;
+    dummySource.connect(dummyGain);
+    dummyGain.connect(this._audioContext.destination);
+    dummySource.start();
+
+    // create a unity-gain node that the renderer output will be connected to. This can be
+    // connected to further processing, such as compression and volume controls.
     this._rendererOutput = this._audioContext.createGain();
 
     return this._audioContext;
