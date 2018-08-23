@@ -46,12 +46,34 @@ class Allocations extends React.Component {
     });
   }
 
+  resetPreviousAllocations() {
+    this.setState((prevState, props) => {
+      const { objects } = props;
+      const { devices } = prevState;
+      const allocations = MdoAllocation.allocate(objects, devices, {});
+
+      // merge previous state and updated properties
+      return Object.assign({}, prevState, {
+        allocations,
+      });
+    });
+  }
+
   render() {
     const { devices, allocations } = this.state;
     const { visibleObjects, setObjectVisible } = this.props;
 
     return (
       <table>
+        <thead>
+          <tr>
+            <td colSpan="5">
+              <button type="button" onClick={() => this.resetPreviousAllocations()}>
+                Reset previous allocations
+              </button>
+            </td>
+          </tr>
+        </thead>
         <tbody>
           { devices.map(d => (
             <Device

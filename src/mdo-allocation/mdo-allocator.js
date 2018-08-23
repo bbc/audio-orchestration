@@ -43,6 +43,8 @@ class MdoAllocator extends MdoHelper {
    * contentId. Publishes the allocations to all other devices if a sync adapter has been set.
    *
    * @param {string} contentId
+   * @param {bool} ignorePrevious - resets all previous allocation, treats all currently registered
+   * devies as if they joined simultaneously.
    */
   allocate(contentId, ignorePrevious = false) {
     if (!(contentId in this._objects)) {
@@ -92,8 +94,8 @@ class MdoAllocator extends MdoHelper {
   /**
    * Triggers the allocation process for every contentId registered with {@link registerObjects}.
    */
-  allocateAll() {
-    Object.keys(this._objects).forEach(contentId => this.allocate(contentId));
+  allocateAll(reset = false) {
+    Object.keys(this._objects).forEach(contentId => this.allocate(contentId, reset));
   }
 
   /**
@@ -203,6 +205,7 @@ class MdoAllocator extends MdoHelper {
 
   setSchedule(schedule) {
     super.setSchedule(schedule);
+    this.allocateAll(true);
     this._sendSchedule();
   }
 
