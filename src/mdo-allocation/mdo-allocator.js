@@ -44,7 +44,7 @@ class MdoAllocator extends MdoHelper {
    *
    * @param {string} contentId
    */
-  allocate(contentId) {
+  allocate(contentId, ignorePrevious = false) {
     if (!(contentId in this._objects)) {
       return;
     }
@@ -53,11 +53,15 @@ class MdoAllocator extends MdoHelper {
       'calling allocate()',
       this._objects[contentId],
       this._devices,
-      this._allocations[contentId],
+      ignorePrevious ? {} : this._allocations[contentId],
     );
 
     this.setAllocations(
-      allocate(this._objects[contentId], this._devices, this._allocations[contentId]),
+      allocate(
+        this._objects[contentId],
+        this._devices,
+        ignorePrevious ? {} : this._allocations[contentId],
+      ),
       contentId,
     );
 

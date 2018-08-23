@@ -21,6 +21,7 @@ function allocate(objects, devices, previousAllocations = {}) {
   const domains = objects.map(({ objectId }) => ({
     objectId,
     domain: new Set(availableDeviceIds),
+    preferred: (previousAllocations[objectId] || [])[0],
   }));
 
   // Apply rules for reducing the domains:
@@ -29,6 +30,7 @@ function allocate(objects, devices, previousAllocations = {}) {
     Rules.mdoThreshold, // remove mdo devices if too few devices available
     Rules.zonesNever, // remove mdo devices in 'never' zones
     Rules.minQuality, // remove mdo devices of too low quality
+    Rules.updatePreferred, // set a preferred speaker from remaining set, if not already set.
     Rules.exclusivity, // assign exclusive objects, remove their devices from all other objects
     Rules.muteIf, // remove all devices if the referenced object has potential devices
     Rules.chooseOrSpread, // assign to best remaining device, or all remaining devices for spread

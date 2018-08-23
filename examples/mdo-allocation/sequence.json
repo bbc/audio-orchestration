@@ -114,7 +114,7 @@
         "farSide": 1,
         "farRear": 1,
         "above": 1,
-        "onDropin": 1,
+        "onDropin": 2,
         "onDropout": 1,
         "minQuality": 1
       }

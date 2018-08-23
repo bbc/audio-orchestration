@@ -41,6 +41,9 @@ const NEVER = 1;
 const COULD = 2;
 const SHOULD = 3;
 
+const SOFT_STAY = 1;
+const HARD_STAY = 2;
+
 /**
  * @param {MdoLocation} location
  * @returns {Array<string>} zones
@@ -95,9 +98,15 @@ function domainDevicesByZoneFlag(domain, orchestration, devices, zonePriority) {
  * Selects the best deviceId remaining in the domain, based on it having a matching should or could
  * zone. Returns null if no MDO device matches. In this case, the main device may be selected.
  */
-function bestInDomainByZone(domain, orchestration, devices) {
+function bestInDomainByZone(domain, orchestration, devices, preferred = undefined) {
   const should = domainDevicesByZoneFlag(domain, orchestration, devices, SHOULD);
   const could = domainDevicesByZoneFlag(domain, orchestration, devices, COULD);
+
+  // if already in a should device, or no should devices available, stay in the same:
+  if (should.includes(preferred) || (should.length === 0 && could.includes(preferred))) {
+    return preferred;
+  }
+
   if (should.length > 0) {
     return randomElement(should);
   } else if (could.length > 0) {
@@ -169,18 +178,78 @@ export default {
     });
   },
   /*
+   * updatePreferred: The preferred speaker is normally the object's previous allocation. If this
+   * is not set, or no longer available due to previous rules, replace it with one from the current
+   * domain.
+   */
+  updatePreferred: (domains, objects, devices) => {
+    domains.forEach((objectState) => {
+      const { objectId, domain, preferred } = objectState;
+      const { orchestration } = objects.find(o => o.objectId === objectId);
+
+      // mdo spread objects do not need a preferred allocation, they always go to all available.
+      if (orchestration.mdoSpread) {
+        objectState.preferred = undefined;
+        return;
+      }
+
+      // if preferred is the main device, always attempt moving to an MDO device.
+      if ((devices.find(d => d.deviceId === preferred) || {}).mainDevice === true) {
+        objectState.preferred = undefined;
+        return;
+      }
+
+      // if preferred is set, still available, and object is a soft-stay, only reassign if a better
+      // device is available
+      if (preferred !== undefined && domain.has(preferred) && objectState.onDropin === SOFT_STAY) {
+        objectState.preferred = bestInDomainByZone(domain, orchestration, devices, preferred);
+      }
+
+      // if the previous allocation hasn't been set, or is no longer available, choose the best.
+      if (preferred === undefined || !(domain.has(preferred))) {
+        objectState.preferred = bestInDomainByZone(domain, orchestration, devices);
+      }
+    });
+  },
+  /*
    * exclusivity: An exclusive object commands control of the entire device. This rule chooses the
    * 'best' device for each exclusive object if possible, and then removes that device from every
    * other object's domain.
    *
    * TODO: Confirm that exclusive objects must always have mdoOnly (or that exclusive applies to
    * mainDevice). Currently assume that exclusive implies it can never be in mainDevice.
+   *
+   * TODO: take into account every other object's preferred allocation, if it is higher priority
+   * or has the hard-stay flag.
    */
   exclusivity: (domains, objects, devices) => {
-    domains.forEach(({ objectId, domain }) => {
+    domains.forEach(({ objectId, domain, preferred }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.exclusivity) {
-        const bestDeviceId = bestInDomainByZone(domain, orchestration, devices);
+        // Remove any devices from this exclusive object's domain if it is protected by a higher
+        // priority object or a hard-stay object.
+        const protectedDomain = new Set();
+        domain.forEach((deviceId) => {
+          // for all objects that are not this one,
+          // and tentatively in the device we are considering,
+          // and that are HARD_STAY or higher priority,
+          // if any of those exist, mark the current device as protected
+          const isProtected = domains
+            .filter(other => other.preferred === deviceId && other.objectId !== objectId)
+            .some((other) => {
+              const otherObject = objects.find(o => o.objectId === other.objectId);
+              const otherOrchestration = otherObject.orchestration;
+              return otherOrchestration.onDropin === HARD_STAY
+                || otherOrchestration.objectNumber < orchestration.objectNumber;
+            });
+          if (isProtected) {
+            protectedDomain.add(deviceId);
+          }
+        });
+        protectedDomain.forEach(d => domain.delete(d));
+
+        const bestDeviceId = bestInDomainByZone(domain, orchestration, devices, preferred);
+
         if (bestDeviceId !== null) {
           // console.debug(`EXCLUSIVITY: ${objectId} is exclusive in device ${bestDeviceId}`);
           // remove all unselected device ids from this exclusive object's domain
@@ -226,13 +295,17 @@ export default {
    * back to a could-zone device. mdoSpread objects retain their domains unchanged.
    */
   chooseOrSpread: (domains, objects, devices) => {
-    domains.forEach(({ objectId, domain }) => {
+    domains.forEach(({ objectId, domain, preferred }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.mdoSpread || domain.size <= 1) {
         return;
       }
 
-      const bestDevice = bestInDomainByZone(domain, orchestration, devices);
+      let bestDevice = preferred;
+      if (!(domain.has(bestDevice))) {
+        bestDevice = bestInDomainByZone(domain, orchestration, devices);
+      }
+
       if (bestDevice !== null) {
         // delete all but the best (should, or maybe could) device.
         devices.forEach(({ deviceId }) => {
@@ -248,7 +321,6 @@ export default {
           }
         });
       }
-
     });
   },
 };
