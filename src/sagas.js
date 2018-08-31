@@ -75,20 +75,21 @@ function* masterFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MASTER });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
+  yield takeEvery('SET_ERROR', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+  });
+
   try {
     const { sessionId, sessionCode } = yield call(createSession);
     yield put({ type: 'SET_SESSION_CODE', sessionCode });
     yield call(connectOrchestration, true, sessionId);
   } catch (e) {
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+    console.error(e);
+    yield put({ type: 'SET_ERROR', errorMessage: e.message });
     yield take('CLICK_ERROR_RETRY');
     window.location.reload(); // TODO okay to do that here?
     return;
   }
-
-  yield takeEvery('SET_ERROR', function* () {
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
-  });
 
   yield put({ type: 'SET_PAGE', page: PAGE_MASTER_SETUP });
 
@@ -108,21 +109,20 @@ function* slaveFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_ROLE', role: ROLE_SLAVE });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
+  yield takeEvery('SET_ERROR', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+  });
+
   try {
     yield call(connectOrchestration, false, sessionId);
   } catch (e) {
     yield put({ type: 'SET_ERROR', errorMessage: e.message });
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
     yield take('CLICK_ERROR_RETRY');
     yield call(joinFlow);
     return;
   }
 
   yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_SETUP_LOCATION });
-
-  yield takeEvery('SET_ERROR', function* () {
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
-  });
 
   while (true) {
     yield take('REQUEST_CLOSE_SLAVE_LOCATION');

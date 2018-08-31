@@ -11,7 +11,7 @@ export const TIMELINE_TYPE_TICK_RATE = 1000;
 export const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 
 // number of digits in the session code, used for placeholders and validity check
-export const SESSION_CODE_LENGTH = 4;
+export const SESSION_CODE_LENGTH = 6;
 
 // Time in milliseconds. Report an error if any individual loading step takes longer than this.
 export const LOADING_TIMEOUT = 5 * 1000;
@@ -36,3 +36,6 @@ export const DEBUG_UI = true;
 
 export const MDO_COMPRESSOR_RATIO = 4;
 export const MDO_COMPRESSOR_THRESHOLD = -40;
+
+export const VALIDATE_SESSION_IDS = false;
+export const SESSION_ID_URL = `//${window.location.hostname}:5000`;

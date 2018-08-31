@@ -1,4 +1,8 @@
-import { SESSION_CODE_LENGTH } from './config';
+import {
+  SESSION_CODE_LENGTH,
+  VALIDATE_SESSION_IDS,
+  SESSION_ID_URL,
+} from './config';
 
 const generateSessionId = (userSessionCode) => {
   let sessionCode = userSessionCode;
@@ -18,23 +22,60 @@ const generateSessionId = (userSessionCode) => {
 /**
  * Request a new session code.
  *
- * This implementation returns a randomly generated code and id.
- *
- * In practice, an API should be used to ensure the codes are unique.
+ * Depending on the configuration, generates a random code and session-id locally, or requests it
+ * from the session-id-service.
  *
  * @returns {Promise<Object>}
  */
-export const createSession = () => Promise.resolve(generateSessionId());
+export const createSession = () => {
+  if (!VALIDATE_SESSION_IDS) {
+    return Promise.resolve(generateSessionId());
+  }
+
+  return fetch(`${SESSION_ID_URL}/session`, { method: 'POST' })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Failed to create a session on the server.');
+      }
+
+      return response.json();
+    })
+    .then(({ sessionCode, sessionId }) => ({
+      sessionCode,
+      sessionId,
+    }));
+};
 
 /**
  * Validate a session code and get the corresponding id.
  *
- * This implementation accepts all session codes and locally generates an ID.
+ * Depending on configuration, may either accept all session codes and locally generate an ID, or
+ * use the session-id-service to validate the session code and return the session id.
  *
- * In practice, an API should be used to ensure the code has previously been registered.
- *
- * @returns {Promise<Object>}
+ * @returns {Promise<Object>} - { valid, sessionCode, sessionId }
  */
-export const validateSession = sessionCode => Promise.resolve(
-  Object.assign({ valid: true }, generateSessionId(sessionCode)),
-);
+export const validateSession = (sessionCode) => {
+  if (!VALIDATE_SESSION_IDS) {
+    return Promise.resolve(Object.assign({ valid: true }, generateSessionId(sessionCode)));
+  }
+
+  return fetch(`${SESSION_ID_URL}/session/${sessionCode}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Could not validate the session.');
+      }
+
+      return response.json();
+    })
+    .then((result) => {
+      if (result.sessionCode !== sessionCode) {
+        throw new Error('Could not validate the session code, invalid session code returned.');
+      }
+
+      return {
+        sessionCode,
+        sessionId: result.sessionId,
+        valid: !!result.valid,
+      };
+    });
+};
