@@ -22,9 +22,10 @@ class ConnectFormPage extends React.Component {
     this.inputRef.current.focus();
   }
 
-  componentDidUpdate() {
-    const { sessionCodeIsValid, sessionCodeIsValidating } = this.props;
-    if (!sessionCodeIsValid && !sessionCodeIsValidating) {
+  componentDidUpdate(prevProps) {
+    const { sessionCodeIsValidating } = this.props;
+    // if the code has just been validated.
+    if (prevProps.sessionCodeIsValidating && !sessionCodeIsValidating) {
       this.inputRef.current.value = '';
       this.inputRef.current.focus();
     }
@@ -35,10 +36,12 @@ class ConnectFormPage extends React.Component {
   }
 
   checkValid() {
-    const currentValue = this.inputRef.current.value;
+    const userInput = this.inputRef.current.value;
+    const sanitised = userInput.replace(/[^0-9]/g, '');
+    this.inputRef.current.value = sanitised;
     this.setState({
-      valid: (currentValue.length === SESSION_CODE_LENGTH)
-          && (currentValue.match(this.validRegex) !== null),
+      valid: (sanitised.length === SESSION_CODE_LENGTH)
+          && (sanitised.match(this.validRegex) !== null),
     });
   }
 
