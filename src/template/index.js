@@ -51,7 +51,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(requestTransitionToSequence(contentId));
     },
     connectFormOnCancel: () => {
-      dispatch(connectFormOnCancel);
+      dispatch(connectFormOnCancel());
     },
     connectFormOnSubmit: (sessionCode) => {
       dispatch(connectFormOnSubmit(sessionCode));

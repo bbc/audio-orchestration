@@ -50,14 +50,14 @@ function* validateSessionCode(action) {
  * @returns {string} ret.sessionCode - validated sessionCode
  * @returns {string} ret.sessionId - validated sessionId
  */
-function* connectForm(canCancel = false) {
+function* connectForm(canCancel = true) {
   yield put({ type: 'SET_CONNECT_FORM_CAN_CANCEL', canCancel });
   yield put({ type: 'SET_PAGE', page: PAGE_CONNECT_FORM });
 
   // wait for a session code valid action (user presses button, and validation is positive)
   const action = yield take(['SESSION_CODE_VALID', 'CLOSE_CONNECT_FORM']);
 
-  if (action === 'CLOSE_CONNECT_FORM') {
+  if (action.type === 'CLOSE_CONNECT_FORM') {
     return { cancelled: true };
   }
 
@@ -136,8 +136,13 @@ function* slaveFlow({ sessionCode, sessionId }) {
  * Entry point for /join, go directly to the form to enter a session code.
  */
 function* joinFlow() {
-  const { sessionCode, sessionId } = yield call(connectForm);
-  yield call(slaveFlow, { sessionCode, sessionId });
+  const { cancelled, sessionCode, sessionId } = yield call(connectForm);
+
+  if (cancelled) {
+    yield call(startFlow);
+  } else {
+    yield call(slaveFlow, { sessionCode, sessionId });
+  }
 }
 
 /**

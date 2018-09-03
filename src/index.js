@@ -49,7 +49,7 @@ initialiseOrchestration(store.dispatch);
 
 // TODO: decide on where to start based on initial URL here.
 // pass join, sessionCode to rootSaga
-sagaMiddleware.run(rootSaga, false);
+sagaMiddleware.run(rootSaga, window.location.hash.startsWith('#!/join'));
 
 
 // Connect the App to the redux store, and add the state and handlers managed by the template.
