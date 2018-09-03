@@ -51,6 +51,14 @@ var // Prototype inheritance
     parseUrl = require("url-parse"),
     CloudSynchroniser;
 
+var ENABLE_LOGGING = false;
+
+function log() {
+  if (ENABLE_LOGGING) {
+    console.log(arguments);
+  }
+}
+
 // Old versions of the "dvbcss-clocks" library have a incorrect
 // implementation method of the toJSON method, which leads to errors
 // when serialising a Correlation with JSON.stringify, thus we remove
@@ -292,7 +300,7 @@ function setupSyncServiceConnection () {
 }
 
 function onMessageReceived (message) {
-    console.log("Received message", message);
+    log("Received message", message);
     switch (message.type) {
         case "TimelineUpdate":
             handleTimelineUpdate.call(this, message);
@@ -312,7 +320,7 @@ function onMessageReceived (message) {
 }
 
 function onRequestReceived (request) {
-    console.log("Received request", request);
+    log("Received request", request);
     switch (request.type) {
         case "TimelineUpdateREQ":
             handleTimelineUpdateRequest.call(this, request);
@@ -363,7 +371,7 @@ function joinSession () {
 function handleJoinResponse (res) {
 
     var priv = PRIVATE.get(this);
-    console.log("Handling JoinRESP", res);
+    log("Handling JoinRESP", res);
 
     return new Promise(function (resolve, reject) {
 
@@ -418,7 +426,7 @@ function performWallclockSync () {
 }
 
 function handleResponse (response, resolve, reject) {
-    console.log("Handling reponse:", response);
+    log("Handling reponse:", response);
     if (response.responseCode === 0) {
         resolve(response);
     } else {
@@ -595,7 +603,7 @@ CloudSynchroniser.prototype.setContentId = function (contentId) {
     );
 
     priv.messenger.send(message, priv.reqTopic);
-    console.log("Sent:", message);
+    log("Sent:", message);
 }
 
 /**
@@ -652,13 +660,13 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
     priv.ownTimelines.add(timeline);
     
     self = this;
-    console.log("Wallclocktime: ", priv.wallclock.now(), " clocktime:" , clock.now());
+    log("Wallclocktime: ", priv.wallclock.now(), " clocktime:" , clock.now());
 
     return new Promise(function (resolve, reject) {
 
         var wallclockNow = priv.wallclock.now();
         var clockNow = clock.now();
-        console.log(clock.getNanos());
+        log(clock.getNanos());
         var errorNow = priv.wallclock.dispersionAtTime(wallclockNow);
 
         var correlation = new Clocks.Correlation(priv.wallclock.now(), clock.now(), errorNow, 0);
@@ -670,7 +678,7 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
             speed: clock.getEffectiveSpeed()
         };
 
-        console.log(corr);
+        log(corr);
 
         var message = sendRequest.call(self,
             "TimelineRegistrationREQ",
@@ -699,12 +707,12 @@ function handleTimelineRegistrationResponse(resolve, reject, timelineId, respons
 }
 
 function handleSyncTimelinesAvailable (message) {
-    console.log("[CloudSynchroniser.js]:", "SyncTimelinesAvailable", message.timelineInfo);
+    log("[CloudSynchroniser.js]:", "SyncTimelinesAvailable", message.timelineInfo);
     this.emit("SyncTimelinesAvailable", message.timelineInfo);
 }
 
 function handleApplicationBroadcast (message) {
-    console.log("[CloudSynchroniser.js]:", "ApplicationBroadcast", message.broadcastTopic, message.broadcastContent);
+    log("[CloudSynchroniser.js]:", "ApplicationBroadcast", message.broadcastTopic, message.broadcastContent);
     this.emit("ApplicationBroadcast", {
       deviceId: message.deviceId,
       topic: message.broadcastTopic,
@@ -713,7 +721,7 @@ function handleApplicationBroadcast (message) {
 }
 
 function handleDeviceStatus (message) {
-    console.log("[CloudSynchroniser.js]:", "DeviceStatus");
+    log("[CloudSynchroniser.js]:", "DeviceStatus");
     this.emit("DeviceStatus", {
       deviceId: message.deviceId,
       status: message.status,
@@ -729,10 +737,10 @@ function handleTimelineUpdateRequest (request) {
     if (timeline !== null) {
         // Check if this listener is already set
         if (timeline.clock.listeners("change").indexOf(sendTimelineUpdate.bind(this, timeline)) > -1) {
-            console.log("'change' listener for clock", timeline.clock.id, "already set");
+            log("'change' listener for clock", timeline.clock.id, "already set");
         } else {
             timeline.clock.on("change", function (timeline) {
-                console.log("Timeline clock", timeline.clock.id, "changed");
+                log("Timeline clock", timeline.clock.id, "changed");
                 if (
                     timeline.syncTimeline === null ||
                     Math.abs(timeline.clock.now() - timeline.syncTimeline.clock.now()) > 40 ||
@@ -740,10 +748,10 @@ function handleTimelineUpdateRequest (request) {
                 ) {
                     sendTimelineUpdate.call(this, timeline);
                 } else {
-                    console.log("Timeline-clock change does not cause significant change of corresponding sync timeline --> do not report");
+                    log("Timeline-clock change does not cause significant change of corresponding sync timeline --> do not report");
                 }
             }.bind(this, timeline));
-            console.log("Set 'change' listener for clock", timeline.clock.id);
+            log("Set 'change' listener for clock", timeline.clock.id);
         }
         sendTimelineUpdateRESP.call(this, request);
         sendTimelineUpdate.call(this, timeline);
@@ -760,7 +768,7 @@ function sendTimelineUpdateRESP (request) {
     priv = PRIVATE.get(this);
     message = MessageFactory.create("TimelineUpdateRESP", priv.sessionId, 0, request.id, priv.version);
     priv.messenger.send(message, request.responseChannel);
-    console.log("Sent:", message);
+    log("Sent:", message);
 }
 
 CloudSynchroniser.prototype.sendApplicationBroadcast = function (topic, content) {
@@ -769,7 +777,7 @@ CloudSynchroniser.prototype.sendApplicationBroadcast = function (topic, content)
 
     message = MessageFactory.create("ApplicationBroadcast", priv.sessionId, priv.deviceId, topic, content);
     priv.messenger.send(message, priv.sessionApplicationBroadcastTopic, { qos: 1 });
-    console.log("Sent:", message);
+    log("Sent:", message);
 }
 
 function handleStopTimelineUpdateRequest () {
@@ -807,7 +815,7 @@ function sendTimelineUpdate(timeline) {
     );
 
     priv.messenger.send(message, timeline.updateChannel);
-    console.log("Sent:", message);
+    log("Sent:", message);
 }
 
 
@@ -900,7 +908,7 @@ function handleTimelineSubscriptionResponse (resolve, reject, timelineId, respon
     var priv, timeline;
     
     priv = PRIVATE.get(this);
-    console.log("Received 'TimelineSubscriptionRESP':", response);
+    log("Received 'TimelineSubscriptionRESP':", response);
 
     if (response.responseCode === 0) {
         resolve(0); 
@@ -921,7 +929,7 @@ function handleTimelineSubscriptionResponse (resolve, reject, timelineId, respon
 
 function handleTimelineUpdate (message) {
     updateTimelineShadow.call(this, message.timelineId, message.presentationTimestamp);
-    console.log("Received timeline update", message);
+    log("Received timeline update", message);
 }
 
 function getTimelineShadow (timelineId) {
@@ -936,7 +944,7 @@ function getTimelineShadow (timelineId) {
         timeline.clock.id = timelineId;
         timeline.clock.setAvailabilityFlag(false);
         timeline.clock.on("available", this.emit.bind(this, "TimelineAvailable", timelineId));
-        console.log("Set 'available' listener on clock", timeline.clock.id);
+        log("Set 'available' listener on clock", timeline.clock.id);
         
         priv.timelineShadows.add(timeline);
     }
@@ -950,7 +958,7 @@ function updateTimelineShadow (timelineId, presentationTimestamp) {
     timeline = getTimelineShadow.call(this, timelineId);
     timeline.update(presentationTimestamp.actual);
     timeline.clock.setAvailabilityFlag(true);
-    console.log("Update timeline ID:", timelineId, "PTS:", presentationTimestamp);
+    log("Update timeline ID:", timelineId, "PTS:", presentationTimestamp);
 }
 
 CloudSynchroniser.prototype.synchronise = function (clock, timelineType, contentId) {
@@ -978,7 +986,7 @@ function pairTimeline (timeline, syncTimelines) {
             stlShadow = getTimelineShadow.call(self, syncTimeline.timelineId);
             stlShadow.update(syncTimeline.lastTimestamp);
             stlShadow.clock.setAvailabilityFlag(true);
-            console.log("%c Created STL shadow from timestamp", "background-color:blue; color:white", syncTimeline.lastTimestamp);
+            log("%c Created STL shadow from timestamp", "background-color:blue; color:white", syncTimeline.lastTimestamp);
 
             self.syncClockToThisTimeline(timeline.clock, syncTimeline.timelineId);
             self.subscribeTimeline(syncTimeline.timelineId);
@@ -986,7 +994,7 @@ function pairTimeline (timeline, syncTimelines) {
             timeline.syncTimeline = stlShadow;
             timeline.pairingState = 2; // paired
 
-            console.log("[CloudSynchroniser.js]: Paired TL ", timeline, "and STL", stlShadow);
+            log("[CloudSynchroniser.js]: Paired TL ", timeline, "and STL", stlShadow);
         }
     });
 }
@@ -1009,7 +1017,7 @@ CloudSynchroniser.prototype.syncClockToThisTimeline = function (clock, timelineI
         clock.setCorrelationAndSpeed(timeline.clock.getCorrelation(), timeline.clock.speed);
     });
     
-    console.log("Synchronising clock ID:", clock.id, "to timeline ID:", timelineId);
+    log("Synchronising clock ID:", clock.id, "to timeline ID:", timelineId);
 };
 
 
@@ -1038,7 +1046,7 @@ function handlePingRequest (request) {
     priv = PRIVATE.get(this);
     message = MessageFactory.create("PingRESP", priv.sessionId, 0, request.id, priv.version);
     priv.messenger.send(message, request.responseChannel);
-    console.log("Sent:", message);
+    log("Sent:", message);
 }
 
 function sendRequest (type, channel, onresponse, options) {
@@ -1069,7 +1077,7 @@ function sendRequest (type, channel, onresponse, options) {
     request = MessageFactory.create.apply(null, args);
     priv.messenger.sendRequest(request, channel, onresponse, options);
 
-    console.log("Sent:", request);
+    log("Sent:", request);
 
     return request;
 }
