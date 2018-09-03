@@ -7,7 +7,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: [
+    path.resolve(__dirname, 'src/index.js'),
+  ],
   output: {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),

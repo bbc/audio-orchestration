@@ -8,6 +8,10 @@
  * components, images, and stylesheets in presentation/.
  */
 
+// Import polyfills to patch features not natively supported in older browsers
+import '@babel/polyfill';
+import 'whatwg-fetch';
+
 // Import React and ReactDOM, to render React components to the page.
 import React from 'react';
 import { hot } from 'react-hot-loader';
