@@ -285,8 +285,10 @@ class OrchestrationClient extends EventEmitter {
     this.emit('loading', 'connecting to synchronisation server');
     this._sync.on('connected', () => this.emit('connected'));
     this._sync.on('disconnected', () => {
+      // console.debug('disconnected - pausing and muting output');
       this.emit('disconnected');
       this.pause();
+      this.mute(true);
     });
     return this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId);
   }
@@ -466,6 +468,9 @@ class OrchestrationClient extends EventEmitter {
       })
       .catch((e) => {
         this.emit('error', e);
+        // console.debug('error (in start) - pausing and muting output');
+        this.pause();
+        this.mute(true);
         throw e;
       });
   }
@@ -591,7 +596,7 @@ class OrchestrationClient extends EventEmitter {
    *
    * @param {boolean} muted
    */
-  mute(muted) {
+  mute(muted = false) {
     if (!this._ready) {
       return;
     }
