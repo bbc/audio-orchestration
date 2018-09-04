@@ -13,10 +13,12 @@ const { CorrelatedClock } = Clocks;
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
-const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
-const TIMELINE_TYPE_TICK_RATE = 1000;
+
 const LOADING_TIMEOUT = 5000;
 const SEQUENCE_TRANSITION_DELAY = 1.0;
+
+const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
+const TIMELINE_TYPE_TICK_RATE = 1000;
 
 /**
  * @class OrchestrationClient
@@ -71,7 +73,11 @@ class OrchestrationClient extends EventEmitter {
     this._sequences = {};
     this._contentIds = [];
     this._currentContentId = null;
-    this._syncEndpoint = CLOUDSYNC_ENDPOINT;
+    this._contentId = options.contentId || CONTENT_ID;
+    this._syncEndpoint = options.cloudSyncEndpoint || CLOUDSYNC_ENDPOINT;
+    this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
+    this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
+    this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
   }
 
   /**
@@ -182,14 +188,10 @@ class OrchestrationClient extends EventEmitter {
   /**
    * Generates random deviceId string based on a UUID.
    *
-   * @private
-   *
    * @returns {string} deviceId
    */
-  _createDeviceId() {
-    this.emit('loading', 'creating device ID');
-    this._deviceId = `bbcat-orchestration-device:${uuidv4()}`;
-    return this._deviceId;
+  static generateDeviceId() {
+    return `bbcat-orchestration-device:${uuidv4()}`;
   }
 
   /**
@@ -302,18 +304,18 @@ class OrchestrationClient extends EventEmitter {
   _requestSyncClock() {
     this.emit('loading', 'synchronising clocks');
     if (this._master) {
-      this._sync.provideTimelineClock(this._masterClock, TIMELINE_TYPE, CONTENT_ID);
+      this._sync.provideTimelineClock(this._masterClock, TIMELINE_TYPE, this._contentId);
     }
 
     return new Promise((resolve, reject) => {
-      this._sync.requestTimelineClock(TIMELINE_TYPE, CONTENT_ID)
+      this._sync.requestTimelineClock(TIMELINE_TYPE, this._contentId)
         .then((syncClock) => {
           this._syncClock = syncClock;
           resolve(this._syncClock);
         });
       setTimeout(() => {
         reject(new Error('Timeout waiting for synchronised clock. Session code may have been incorrect or main device may have gone away.'));
-      }, LOADING_TIMEOUT);
+      }, this._loadingTimeout);
     }).then((syncClock) => {
       syncClock.on('change', () => this._publishStatusEvent());
       syncClock.on('unavailable', () => {
@@ -428,7 +430,7 @@ class OrchestrationClient extends EventEmitter {
 
       setTimeout(() => {
         reject(new Error('Timeout waiting for schedule update'));
-      }, LOADING_TIMEOUT);
+      }, this._loadingTimeout);
     });
   }
 
@@ -447,13 +449,10 @@ class OrchestrationClient extends EventEmitter {
         throw new Error('Orchestration client is already initialised.');
       }
       this._initialised = true;
+      this._master = master;
+      this._sessionId = sessionId;
       resolve();
     })
-      .then(() => {
-        this._master = master;
-        this._sessionId = sessionId;
-        return this._createDeviceId();
-      })
       .then(() => this._createAudioContext())
       .then(() => this._createVolumeControl())
       .then(() => this._createSynchronisedClocks())
@@ -578,12 +577,12 @@ class OrchestrationClient extends EventEmitter {
       // no sequence is currently playing.
       this._mdoHelper.startSequence(
         contentId,
-        this._syncClock.now() + (SEQUENCE_TRANSITION_DELAY * this._syncClock.tickRate),
+        this._syncClock.now() + (this._sequenceTransitionDelay * this._syncClock.tickRate),
       );
     } else {
       // find a suitable transition point in the currently playing sequence.
       const { renderer } = this._sequences[this._currentContentId];
-      const syncTime = renderer.stopAtOutPoint(SEQUENCE_TRANSITION_DELAY);
+      const syncTime = renderer.stopAtOutPoint(this._sequenceTransitionDelay);
       // console.debug(`transition outPoint at ${syncTime}, now: ${this._syncClock.now()}`);
 
       this._mdoHelper.stopSequence(this._currentContentId, syncTime);
@@ -648,6 +647,13 @@ class OrchestrationClient extends EventEmitter {
    */
   setCompressorThreshold(threshold = -50) {
     this._compressor.threshold.value = threshold;
+  }
+
+  /**
+   * Returns the deviceId assigned to this instance.
+   */
+  get deviceId() {
+    return this._deviceId;
   }
 }
 

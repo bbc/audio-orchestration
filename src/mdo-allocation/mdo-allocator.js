@@ -51,12 +51,12 @@ class MdoAllocator extends MdoHelper {
       return;
     }
 
-    console.debug(
-      'calling allocate()',
-      this._objects[contentId],
-      this._devices,
-      ignorePrevious ? {} : this._allocations[contentId],
-    );
+    // console.debug(
+    //   'calling allocate()',
+    //   this._objects[contentId],
+    //   this._devices,
+    //   ignorePrevious ? {} : this._allocations[contentId],
+    // );
 
     this.setAllocations(
       allocate(
@@ -118,7 +118,7 @@ class MdoAllocator extends MdoHelper {
    * @param {object} metadata
    */
   _handleRemoteDeviceMetadata(deviceId, metadata) {
-    console.debug('remote device metadata', deviceId, metadata);
+    // console.debug('remote device metadata', deviceId, metadata);
 
     if (this._devices.find(d => d.deviceId === deviceId) === undefined) {
       this._addDevice(deviceId);

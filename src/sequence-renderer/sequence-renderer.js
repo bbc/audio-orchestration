@@ -304,8 +304,9 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   scheduleItem(item, startTime) {
     const { itemId, duration, source } = item;
 
+    // define 'starting at the same time' to be within one milliseconds (10^-3)
     const existingRenderer = this._activeItemRenderers
-      .find(r => r.itemId === itemId && r.startTime === startTime);
+      .find(r => r.itemId === itemId && Math.abs(r.startTime - startTime) < 1.0e-3);
     if (existingRenderer !== undefined) {
       // Already have this item scheduled for the same time.
       return;
