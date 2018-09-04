@@ -11,17 +11,25 @@ import {
   setTransportCapabilities,
   setConnectedDevices,
   setPlaybackStatus,
-  setSessionCode,
 } from './actions/orchestration';
 import {
   SEQUENCE_URLS,
   PLAY_AGAIN_CONTENT_ID,
   MDO_COMPRESSOR_RATIO,
   MDO_COMPRESSOR_THRESHOLD,
+  CLOUDSYNC_ENDPOINT,
+  SEQUENCE_TRANSITION_DELAY,
+  LOADING_TIMEOUT,
+  CONTENT_ID,
 } from '../config';
 
 // global orchestration object - this is the only instance of it.
-const globalOrchestrationClient = new OrchestrationClient({});
+const globalOrchestrationClient = new OrchestrationClient({
+  cloudSyncEndpoint: CLOUDSYNC_ENDPOINT,
+  sequenceTransitionDelay: SEQUENCE_TRANSITION_DELAY,
+  loadingTimeout: LOADING_TIMEOUT,
+  contentId: CONTENT_ID,
+});
 
 /**
  * Initialise the orchestration object by registering the sequences to load and setting up
@@ -29,6 +37,8 @@ const globalOrchestrationClient = new OrchestrationClient({});
  * user interface, via the redux state.
  *
  * @param {function} dispatch - the redux store's dispatch method.
+ *
+ * @returns {string} deviceId
  */
 export const initialiseOrchestration = (dispatch) => {
   SEQUENCE_URLS.forEach(({ contentId, url }) => {
@@ -84,6 +94,8 @@ export const initialiseOrchestration = (dispatch) => {
   globalOrchestrationClient.on('ended', (ended) => {
     dispatch(setEnded(ended));
   });
+
+  return globalOrchestrationClient.deviceId;
 };
 
 export const connectOrchestration = (master, sessionId) => {

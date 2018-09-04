@@ -49,11 +49,14 @@ const store = createStore(
 );
 
 // Initialise the orchestration object and connect its events to the redux store.
-initialiseOrchestration(store.dispatch);
+const deviceId = initialiseOrchestration(store.dispatch);
 
 // TODO: decide on where to start based on initial URL here.
 // pass join, sessionCode to rootSaga
-sagaMiddleware.run(rootSaga, window.location.hash.startsWith('#!/join'));
+sagaMiddleware.run(rootSaga, {
+  join: window.location.hash.startsWith('#!/join'),
+  deviceId,
+});
 
 
 // Connect the App to the redux store, and add the state and handlers managed by the template.

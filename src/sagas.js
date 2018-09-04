@@ -81,7 +81,7 @@ function* masterFlow() {
 
   try {
     const { sessionId, sessionCode } = yield call(createSession);
-    yield put({ type: 'SET_SESSION_CODE', sessionCode });
+    yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
     yield call(connectOrchestration, true, sessionId);
   } catch (e) {
     console.error(e);
@@ -105,7 +105,7 @@ function* masterFlow() {
  * If this succeeds, we move on to the location screen and then the playing screen.
  */
 function* slaveFlow({ sessionCode, sessionId }) {
-  yield put({ type: 'SET_SESSION_CODE', sessionCode });
+  yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
   yield put({ type: 'SET_ROLE', role: ROLE_SLAVE });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
@@ -188,7 +188,12 @@ function* watcherSaga() {
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
 }
 
-function* rootSaga(join = false, sessionCode = null) {
+function* rootSaga({
+  join = false,
+  sessionCode = null,
+  deviceId,
+} = {}) {
+  yield put({ type: 'SET_DEVICE_ID', deviceId });
   yield fork(watcherSaga);
   yield fork(orchestrationWatcherSaga);
 

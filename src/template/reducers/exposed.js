@@ -4,7 +4,9 @@ const initialState = {
   connectFormCanCancel: false,
   sessionCodeIsValidating: false,
   sessionCodeIsValid: true,
-
+  sessionCode: null,
+  sessionId: null,
+  deviceId: null,
   deviceLocation: {},
   deviceType: null,
   deviceQuality: 1,
@@ -71,9 +73,14 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         connected: action.connected,
       });
+    case 'SET_DEVICE_ID':
+      return Object.assign({}, state, {
+        deviceId: action.deviceId,
+      });
     case 'SET_SESSION_CODE':
       return Object.assign({}, state, {
         sessionCode: action.sessionCode,
+        sessionId: action.sessionId,
       });
     case 'SET_ERROR':
       return Object.assign({}, state, {

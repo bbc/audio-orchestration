@@ -39,3 +39,6 @@ export const MDO_COMPRESSOR_THRESHOLD = -40;
 
 export const VALIDATE_SESSION_IDS = false;
 export const SESSION_ID_URL = `//${window.location.hostname}:5000`;
+
+// Time in seconds between request and scheduled transition to next sequence.
+export const SEQUENCE_TRANSITION_DELAY = 1.0;
