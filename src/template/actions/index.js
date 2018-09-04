@@ -7,6 +7,7 @@ export {
   requestPause,
   requestSeek,
   requestMute,
+  requestUnmute,
   requestSetDeviceLocation,
   requestSetVolume,
   requestPlayAgain,

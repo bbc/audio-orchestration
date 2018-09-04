@@ -9,6 +9,7 @@ const Player = ({
   play,
   pause,
   mute,
+  unmute,
   seek,
   canPause,
   canSeek,
@@ -28,11 +29,20 @@ const Player = ({
       </button>,
     );
   }
-  buttons.push(
-    <button key="mute" type="button" onClick={() => mute(!muted)}>
-      { muted ? 'unmute' : 'mute' }
-    </button>,
-  );
+
+  if (muted) {
+    buttons.push(
+      <button key="unmute" type="button" onClick={() => unmute()}>
+        unmute
+      </button>,
+    );
+  } else {
+    buttons.push(
+      <button key="mute" type="button" onClick={() => mute()}>
+        mute
+      </button>,
+    );
+  }
 
   if (canSeek) {
     // TODO: seek functionality should use absolute media times and use duration, contentId?
@@ -78,6 +88,7 @@ Player.propTypes = {
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   mute: PropTypes.func.isRequired,
+  unmute: PropTypes.func.isRequired,
   seek: PropTypes.func.isRequired,
   playing: PropTypes.bool.isRequired,
   loop: PropTypes.bool.isRequired,

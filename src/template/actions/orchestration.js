@@ -109,6 +109,11 @@ export const requestMute = muted => ({
   muted,
 });
 
+export const requestUnmute = muted => ({
+  type: 'REQUEST_UNMUTE_LOCAL',
+  muted,
+});
+
 export const requestSetDeviceLocation = location => ({
   type: 'REQUEST_SET_DEVICE_LOCATION',
   location,

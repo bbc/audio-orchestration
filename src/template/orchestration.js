@@ -118,8 +118,12 @@ function* seek({ relativeOffset }) {
   yield call(() => globalOrchestrationClient.seek(relativeOffset));
 }
 
-function* mute({ muted }) {
-  yield call(() => globalOrchestrationClient.mute(muted));
+function* mute() {
+  yield call(() => globalOrchestrationClient.mute(true));
+}
+
+function* unmute() {
+  yield call(() => globalOrchestrationClient.mute(false));
 }
 
 function* playAgain() {
@@ -138,6 +142,7 @@ export const orchestrationWatcherSaga = function* () {
   yield takeEvery('REQUEST_PLAY_AGAIN', playAgain);
   // yield takeEvery('REQUEST_SET_VOLUME', ...);
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
+  yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);
   yield takeEvery('REQUEST_SET_DEVICE_LOCATION', setDeviceLocation);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
 

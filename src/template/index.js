@@ -5,6 +5,7 @@ import {
   requestPlay,
   requestPause,
   requestMute,
+  requestUnmute,
   requestSeek,
   requestPlayAgain,
   requestTransitionToSequence,
@@ -38,8 +39,11 @@ function mapDispatchToProps(dispatch) {
     pause: () => {
       dispatch(requestPause());
     },
-    mute: (muted) => {
-      dispatch(requestMute(muted));
+    mute: () => {
+      dispatch(requestMute());
+    },
+    unmute: () => {
+      dispatch(requestUnmute());
     },
     seek: (seekTime) => {
       dispatch(requestSeek(seekTime));
