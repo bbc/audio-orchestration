@@ -7,7 +7,16 @@ $gel-grid-enable--box-sizing: true;
 
 @import './colours.scss';
 
+@mixin reith-sans {
+  font-family: Helvetica, Arial, sans-serif;
+
+  .reith-sans-loaded &, &.reith-sans-loaded {
+    font-family: 'ReithSans';
+  }
+}
+
 html, body {
+  @include reith-sans;
   background-color: $bg;
   color: $fg;
   font-family: BBC-Reith-Sans, Helvetica, Arial, sans-serif;
@@ -15,6 +24,7 @@ html, body {
   margin: 0;
   height: 100%;
 }
+
 
 #app {
   height: 100%;

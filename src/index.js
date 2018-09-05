@@ -12,6 +12,9 @@
 import '@babel/polyfill';
 import 'whatwg-fetch';
 
+// Import Reith Sans font files
+import '@bbc/reith-fonts-npm';
+
 // Import React and ReactDOM, to render React components to the page.
 import React from 'react';
 import { hot } from 'react-hot-loader';

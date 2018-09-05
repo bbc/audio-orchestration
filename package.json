@@ -9,6 +9,7 @@
   "private": true,
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
+    "@bbc/reith-fonts-npm": "bbc/reith-fonts-npm",
     "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git",
     "dvbcss-clocks": "^0.0.4",
     "gel-grid": "^4.0.0",
