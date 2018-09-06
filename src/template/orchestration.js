@@ -3,6 +3,7 @@ import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestra
 import {
   setLoadingMessage,
   setConnected,
+  setDisconnected,
   setEnded,
   setErrorMessage,
   setPrimaryObject,
@@ -77,14 +78,14 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('mute', muted => dispatch(setMuted(muted)));
 
-  globalOrchestrationClient.on('connected', () => dispatch(setConnected(true)));
+  globalOrchestrationClient.on('connected', () => dispatch(setConnected()));
 
   globalOrchestrationClient.on('disconnected', () => {
-    dispatch(setErrorMessage('Disconnected.'));
+    dispatch(setDisconnected());
   });
 
   globalOrchestrationClient.on('unavailable', () => {
-    dispatch(setErrorMessage('Synchronised clock has become unavailable.'));
+    dispatch(setDisconnected());
   });
 
   globalOrchestrationClient.on('error', (e) => {

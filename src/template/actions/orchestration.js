@@ -10,9 +10,12 @@ export const setLoadingMessage = loadingMessage => ({
   loadingMessage,
 });
 
-export const setConnected = connected => ({
+export const setConnected = () => ({
   type: 'SET_CONNECTED',
-  connected,
+});
+
+export const setDisconnected = () => ({
+  type: 'SET_DISCONNECTED',
 });
 
 export const setEnded = ended => ({

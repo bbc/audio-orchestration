@@ -15,6 +15,7 @@ import {
   PAGE_SLAVE_SETUP_LOCATION,
   PAGE_SLAVE_PLAYING,
   PAGE_SLAVE_PLAYING_LOCATION,
+  PAGE_SLAVE_DISCONNECTED,
 } from '../sagas';
 
 // Import the pages: only one of these is used at a time.
@@ -28,6 +29,7 @@ import ConnectDirectPage from './Pages/ConnectDirect';
 import SlaveSetupLocationPage from './Pages/SlaveSetupLocation';
 import SlavePlayingPage from './Pages/SlavePlaying';
 import SlavePlayingLocationPage from './Pages/SlavePlayingLocation';
+import SlaveDisconnectedPage from './Pages/SlaveDisconnected';
 import Footer from './Footer';
 
 /**
@@ -81,6 +83,9 @@ const App = (props) => {
       break;
     case PAGE_SLAVE_PLAYING_LOCATION:
       CurrentPage = SlavePlayingLocationPage;
+      break;
+    case PAGE_SLAVE_DISCONNECTED:
+      CurrentPage = SlaveDisconnectedPage;
       break;
     default:
       CurrentPage = ErrorPage;

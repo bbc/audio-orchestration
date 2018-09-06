@@ -71,7 +71,11 @@ const exposed = (state = initialState, action) => {
       });
     case 'SET_CONNECTED':
       return Object.assign({}, state, {
-        connected: action.connected,
+        connected: true,
+      });
+    case 'SET_DISCONNECTED':
+      return Object.assign({}, state, {
+        connected: false,
       });
     case 'SET_DEVICE_ID':
       return Object.assign({}, state, {

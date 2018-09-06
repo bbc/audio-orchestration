@@ -20,6 +20,7 @@ export const PAGE_CONNECT_DIRECT = 'connect-direct';
 export const PAGE_SLAVE_SETUP_LOCATION = 'slave-setup-location';
 export const PAGE_SLAVE_PLAYING = 'slave-playing';
 export const PAGE_SLAVE_PLAYING_LOCATION = 'slave-playing-location';
+export const PAGE_SLAVE_DISCONNECTED = 'slave-disconnected';
 
 export const ROLE_MASTER = 'master';
 export const ROLE_SLAVE = 'slave';
@@ -113,9 +114,14 @@ function* slaveFlow({ sessionCode, sessionId }) {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
   });
 
+  yield takeEvery('SET_DISCONNECTED', function* () {
+    yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_DISCONNECTED });
+  });
+
   try {
     yield call(connectOrchestration, false, sessionId);
   } catch (e) {
+    console.error(e);
     yield put({ type: 'SET_ERROR', errorMessage: e.message });
     yield take('CLICK_ERROR_RETRY');
     yield call(joinFlow);
