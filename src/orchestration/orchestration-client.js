@@ -292,7 +292,14 @@ class OrchestrationClient extends EventEmitter {
       this.pause();
       this.mute(true);
     });
-    return this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId);
+    return new Promise((resolve, reject) => {
+      this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId)
+        .then(resolve)
+        .catch(reject);
+      setTimeout(() => {
+        reject(new Error('Timeout connecting to the synchronisation server.'));
+      }, this._loadingTimeout);
+    });
   }
 
   /**
