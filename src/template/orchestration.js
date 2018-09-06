@@ -96,6 +96,19 @@ export const initialiseOrchestration = (dispatch) => {
     dispatch(setEnded(ended));
   });
 
+  globalOrchestrationClient.on('unavailable', () => {
+    globalOrchestrationClient.mute(true);
+    globalOrchestrationClient.pause();
+  });
+
+  globalOrchestrationClient.on('available', () => {
+    globalOrchestrationClient.mute(false);
+  });
+
+  globalOrchestrationClient.on('disconnected', () => {
+    globalOrchestrationClient.mute(true);
+  });
+
   return globalOrchestrationClient.deviceId;
 };
 
@@ -111,7 +124,7 @@ export const connectOrchestration = (master, sessionId) => {
     .then(() => ({ success: true }))
     .catch((e) => {
       console.error('connectOrchestration error:', e);
-      throw e;
+      throw e || new Error('unknown error');
     });
 };
 
