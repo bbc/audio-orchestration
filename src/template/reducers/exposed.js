@@ -22,7 +22,7 @@ const initialState = {
   loop: false,
   muted: false,
   errorMessage: null,
-  loadingMessage: '',
+  loadingMessages: [],
   canReplaceSequence: false,
   canSeek: false,
   canPause: false,
@@ -64,10 +64,11 @@ const exposed = (state = initialState, action) => {
     case 'SET_LOADING':
       return Object.assign({}, state, {
         loading: action.loading,
+        loadingMessages: [],
       });
-    case 'SET_LOADING_MESSAGE':
+    case 'ADD_LOADING_MESSAGE':
       return Object.assign({}, state, {
-        loadingMessage: action.loadingMessage,
+        loadingMessages: [...state.loadingMessages, action.loadingMessage],
       });
     case 'SET_CONNECTED':
       return Object.assign({}, state, {

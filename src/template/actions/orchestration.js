@@ -5,8 +5,8 @@ export const setLoading = loading => ({
   loading,
 });
 
-export const setLoadingMessage = loadingMessage => ({
-  type: 'SET_LOADING_MESSAGE',
+export const addLoadingMessage = loadingMessage => ({
+  type: 'ADD_LOADING_MESSAGE',
   loadingMessage,
 });
 

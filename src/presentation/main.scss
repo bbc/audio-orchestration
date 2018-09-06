@@ -141,3 +141,20 @@ button {
     height: auto;
   }
 }
+
+.loading-message-log {
+  @include reith-sans;
+  @include gel-typography('brevier');
+  text-align: left;
+  opacity: 0.5;
+  &::after {
+    content: '.';
+  }
+}
+
+.loading-message-log:last-child {
+  opacity: 0.8;
+  &::after {
+    content: '\2026';
+  }
+}

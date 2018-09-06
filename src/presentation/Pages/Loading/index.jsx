@@ -3,25 +3,29 @@ import PropTypes from 'prop-types';
 import StepProgressIndicator from '../../Components/StepProgressIndicator';
 
 const Loading = ({
-  loadingMessage,
+  loadingMessages,
 }) => (
   <div className="page page-loading">
     <h1>
       Loading&hellip;
     </h1>
-    <p>
-      {loadingMessage}
-    </p>
+    <div>
+      { loadingMessages.map(m => (
+        <p key={m} className="loading-message-log">
+          {m}
+        </p>
+      ))}
+    </div>
     <StepProgressIndicator step={2} numSteps={3} />
   </div>
 );
 
 Loading.defaultProps = {
-  loadingMessage: 'Preparing...',
+  loadingMessages: ['Preparing'],
 };
 
 Loading.propTypes = {
-  loadingMessage: PropTypes.string,
+  loadingMessages: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Loading;

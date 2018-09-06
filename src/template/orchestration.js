@@ -1,7 +1,7 @@
 import { takeEvery, call } from 'redux-saga/effects';
 import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestration-client';
 import {
-  setLoadingMessage,
+  addLoadingMessage,
   setConnected,
   setDisconnected,
   setEnded,
@@ -48,7 +48,7 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('loading', (message) => {
     if (message !== false) {
-      dispatch(setLoadingMessage(message));
+      dispatch(addLoadingMessage(message));
     }
   });
 
