@@ -109,9 +109,18 @@ def analyse(p, gap):
                     objects += [(object_start, last_transition)]
                 object_start = t
 
+    print(len(objects))
+    print(object_start);
+    print(last_transition);
+
     if len(objects) == 0:
         # no gaps found at all, assume a single object for the entire file.
-        objects += [(object_start, last_transition)]
+        # objects += [(object_start, last_transition)]
+        # TODO hack to make it work on new loop - no silent sample at end of file? only works in this case where there is exactly one object.
+        if (series[len(series) - 1] != 0):
+            objects += [(object_start, len(series) - 1)]
+        else:
+            objects += [(object_start, last_transition)]
     else:
         # Add the last object if it was left incomplete (ended by a transition to silence after the object start)
         # TODO: assuming the file starts and ends with at least one sample of silence.
