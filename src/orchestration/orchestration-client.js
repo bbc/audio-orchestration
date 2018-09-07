@@ -140,14 +140,14 @@ class OrchestrationClient extends EventEmitter {
 
     const {
       primaryObjectId,
-      primaryObjectImageUrl,
+      primaryObjectImage,
     } = (sequence.getPrimaryObjectInfo(activeObjectIds) || {});
 
     this.emit('objects', {
       currentContentId,
       activeObjectIds,
       primaryObjectId,
-      primaryObjectImageUrl,
+      primaryObjectImage,
     });
   }
 
