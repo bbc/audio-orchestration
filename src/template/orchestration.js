@@ -1,3 +1,4 @@
+import bowser from 'bowser';
 import { takeEvery, call } from 'redux-saga/effects';
 import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestration-client';
 import {
@@ -23,6 +24,9 @@ import {
   LOADING_TIMEOUT,
   CONTENT_ID,
 } from '../config';
+
+// global browser detection object
+const browser = bowser.getParser(window.navigator.userAgent);
 
 // global orchestration object - this is the only instance of it.
 const globalOrchestrationClient = new OrchestrationClient({
@@ -107,6 +111,10 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('disconnected', () => {
     globalOrchestrationClient.mute(true);
+  });
+
+  globalOrchestrationClient.on('loaded', () => {
+    globalOrchestrationClient.setDeviceType(browser.getPlatform().type);
   });
 
   return globalOrchestrationClient.deviceId;

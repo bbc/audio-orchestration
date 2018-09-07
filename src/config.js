@@ -1,4 +1,5 @@
 /* eslint-disable import/prefer-default-export */
+import bowser from 'bowser';
 
 // Content ID for session-wide sync clock
 export const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
@@ -16,14 +17,21 @@ export const SESSION_CODE_LENGTH = 6;
 // Time in milliseconds. Report an error if any individual loading step takes longer than this.
 export const LOADING_TIMEOUT = 5 * 1000;
 
-// Sequence URLs double as content-id; export convenient names for use in UI, and a list of all
-// of them to preload.
+// Content IDs are used to identify the playing sequence.
 export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
 export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
+// Detect safari, it may require differently encoded audio, and thus a different sequence URL.
+// const browser = bowser.getParser(window.navigator.userAgent);
+// const isSafari = browser.is('Safari') || browser.is('iOS');
+
+// Sequence URLs point to the sequence.json metadata file.
+const SEQUENCE_LOOP = 'audio/clicks-and-tone/loop.json';
+const SEQUENCE_MAIN = 'audio/clicks-and-tone/sequence.json';
+
 export const SEQUENCE_URLS = [
-  { contentId: CONTENT_ID_LOOP, url: 'audio/clicks-and-tone/loop.json' },
-  { contentId: CONTENT_ID_MAIN, url: 'audio/clicks-and-tone/sequence.json' },
+  { contentId: CONTENT_ID_LOOP, url: SEQUENCE_LOOP },
+  { contentId: CONTENT_ID_MAIN, url: SEQUENCE_MAIN },
 ];
 
 export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
