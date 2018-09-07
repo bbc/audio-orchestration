@@ -27,11 +27,25 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
+        test: /\.(eot|ttf|woff|woff2)$/,
         loader: 'url-loader',
         options: {
           limit: 1000,
         },
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1000,
+            },
+          },
+          {
+            loader: 'image-webpack-loader',
+          },
+        ],
       },
       {
         test: [/\.jsx?$/],
@@ -50,7 +64,6 @@ module.exports = {
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'audio'), to: 'audio', toType: 'dir' },
-      { from: path.resolve(__dirname, 'images'), to: 'images', toType: 'dir' },
     ]),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
