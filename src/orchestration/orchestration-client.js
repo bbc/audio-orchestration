@@ -468,8 +468,8 @@ class OrchestrationClient extends EventEmitter {
       .then(() => this._prepareSequences())
       .then(() => this._createHelper())
       .then(() => {
-        this.emit('loaded');
         this._ready = true;
+        this.emit('loaded');
         return this;
       })
       .catch((e) => {
@@ -628,6 +628,18 @@ class OrchestrationClient extends EventEmitter {
       return;
     }
     this._mdoHelper.setLocation(location);
+  }
+
+  /**
+   * Sets the device type
+   *
+   * @param {string} deviceType - should be one of 'mobile', 'tablet', or 'desktop'
+   */
+  setDeviceType(deviceType) {
+    if (!this._ready) {
+      return;
+    }
+    this._mdoHelper.setDeviceType(deviceType);
   }
 
   get master() {

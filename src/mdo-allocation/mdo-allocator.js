@@ -164,7 +164,7 @@ class MdoAllocator extends MdoHelper {
         deviceId,
         location: {},
         quality: 1,
-        type: DEVICE_TYPE.UNKNOWN,
+        deviceType: DEVICE_TYPE.UNKNOWN,
         mainDevice: false,
       },
       ...this._devices.filter(d => d.deviceId !== deviceId),
@@ -230,7 +230,7 @@ class MdoAllocator extends MdoHelper {
       .filter(({ enabled }) => enabled === true)
       .map(d => ({
         deviceId: d.deviceId,
-        deviceType: d.type,
+        deviceType: d.deviceType,
         deviceLocation: `${d.location.distance}-${d.location.direction}`,
       }));
   }

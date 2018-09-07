@@ -4,7 +4,7 @@ export const DEVICE_TYPE = {
   UNKNOWN: 'unknown',
   DESKTOP: 'desktop',
   LAPTOP: 'laptop',
-  PHONE: 'phone',
+  PHONE: 'mobile',
   TABLET: 'tablet',
   TV: 'tv',
   SMART_SPEAKER: 'smart-speaker',
