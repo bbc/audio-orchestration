@@ -155,7 +155,7 @@ function formatPT(seconds) {
  *
  * @param outputPath directory the outputs are collected in
  * @param outputBasename base name of this output to use for the manifest name
- * @param baseUrl baseUrl to where the media is hosted on the server
+ * @param baseUrl baseUrl to where the media is hosted on the server, no trailing slash!
  * @param duration duration of the encoded media to use in the manifest
  *
  * @returns {string} the url to use in the sequence description (including baseUrl).
@@ -163,6 +163,10 @@ function formatPT(seconds) {
 function generateDashManifest(outputPath, outputBasename, baseUrl, duration) {
   const manifestName = `${outputBasename}.mpd`;
   const manifestPath = path.join(outputPath, manifestName);
+
+  if (baseUrl.endsWith('/')) {
+    throw new Error('baseUrl must not end with /.');
+  }
 
   const minBufferTime = formatPT(2 * SEGMENT_DURATION);
   const durationPT = formatPT(duration);
@@ -183,7 +187,7 @@ function generateDashManifest(outputPath, outputBasename, baseUrl, duration) {
     `  mediaPresentationDuration="${durationPT}"`,
     `  maxSegmentDuration="${segmentDurationPT}"`,
     '>',
-    `  <BaseURL>${baseUrl}</BaseURL>`,
+    `  <BaseURL>${baseUrl}/</BaseURL>`,
     `  <Period start="${periodStartPT}" duration="${durationPT}">`,
     `    <AdaptationSet id="${adaptationSetId}" contentType="audio" segmentAlignment="true" mimeType="audio/mp4">`,
     `      <Representation id="0" mimeType="audio/mp4" codecs="mp4a.40.2" bandwidth="${representationBandwidth}" audioSamplingRate="${representationAudioSamplingRate}" />`,
