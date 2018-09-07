@@ -44,6 +44,7 @@ const conversions = {
   onDropin: toInt,
   onDropout: toInt,
   minQuality: toInt,
+  image: toString,
 };
 
 function transformOrchestration(data) {
