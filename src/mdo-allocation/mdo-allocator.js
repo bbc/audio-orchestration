@@ -160,6 +160,7 @@ class MdoAllocator extends MdoHelper {
    */
   _addDevice(deviceId) {
     this._devices = [
+      ...this._devices.filter(d => d.deviceId !== deviceId),
       {
         deviceId,
         location: {},
@@ -167,7 +168,6 @@ class MdoAllocator extends MdoHelper {
         deviceType: DEVICE_TYPE.UNKNOWN,
         mainDevice: false,
       },
-      ...this._devices.filter(d => d.deviceId !== deviceId),
     ];
   }
 
