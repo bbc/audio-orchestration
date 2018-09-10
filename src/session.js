@@ -2,21 +2,79 @@ import {
   SESSION_CODE_LENGTH,
   VALIDATE_SESSION_IDS,
   SESSION_ID_URL,
+  USE_FALLBACK_SESSION_CODES,
+  SESSION_CODE_CHECK_DIGITS,
+  LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET,
+  LOCAL_SESSION_ID_PREFIX,
 } from './config';
 
 const generateSessionId = (userSessionCode) => {
   let sessionCode = userSessionCode;
   if (userSessionCode === undefined) {
     console.warn('Generating random session id, not guaranteed to be unique.');
-    sessionCode = [...Array(SESSION_CODE_LENGTH).keys()]
-      .map(() => `${Math.floor(Math.random() * 10)}`)
-      .join('');
+    const numCheckDigits = SESSION_CODE_CHECK_DIGITS;
+    const numDigits = SESSION_CODE_LENGTH - numCheckDigits;
+
+    const digits = [...Array(numDigits).keys()]
+      .map(() => Math.floor(Math.random() * 10));
+
+    // TODO - copied from generate-session-code in session-id-service
+    // should be shared module and directly imported
+    for (let i = 0; i < numCheckDigits; i += 1) {
+      let sum = LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
+      // offset is 0 in server-generated check sums
+      digits.forEach((d) => {
+        sum += d;
+      });
+      digits.push(Math.floor(sum % 10));
+    }
+
+    sessionCode = digits.join('');
   }
 
   return {
     sessionCode,
-    sessionId: `bbcat-orchestration-${sessionCode}`,
+    sessionId: `${LOCAL_SESSION_ID_PREFIX}-${sessionCode}`,
   };
+};
+
+/**
+ * Check if the given code is valid as a locally generated session code.
+ *
+ * @param {string} sessionCode
+ */
+const isValidLocalSessionCode = (sessionCode) => {
+  if (!USE_FALLBACK_SESSION_CODES) {
+    return false;
+  }
+
+  const numCheckDigits = SESSION_CODE_CHECK_DIGITS;
+  const numDigits = SESSION_CODE_LENGTH - numCheckDigits;
+
+  // parse digits to numbers
+  let digits;
+  try {
+    digits = sessionCode.split('').map(d => parseInt(d, 10));
+  } catch (e) {
+    return false;
+  }
+
+  // take only the non-check part of the code
+  const testDigits = digits.slice(0, numDigits);
+
+  // generate the full code including check digits
+  // TODO: copied code again, should be a function
+  for (let i = 0; i < numCheckDigits; i += 1) {
+    let sum = LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
+    testDigits.forEach((d) => {
+      sum += d;
+    });
+    testDigits.push(Math.floor(sum % 10));
+  }
+
+  // check they are the same
+  console.log(sessionCode, testDigits.join(''));
+  return testDigits.join('') === sessionCode;
 };
 
 /**
@@ -35,7 +93,10 @@ export const createSession = () => {
   return window.fetch(`${SESSION_ID_URL}/session`, { method: 'POST' })
     .then((response) => {
       if (!response.ok) {
-        throw new Error('Failed to create a session on the server.');
+        if (USE_FALLBACK_SESSION_CODES) {
+          return generateSessionId();
+        }
+        throw new Error('Failed to create a session on the server and local fallback disabled.');
       }
 
       return response.json();
@@ -55,7 +116,7 @@ export const createSession = () => {
  * @returns {Promise<Object>} - { valid, sessionCode, sessionId }
  */
 export const validateSession = (sessionCode) => {
-  if (!VALIDATE_SESSION_IDS) {
+  if (!VALIDATE_SESSION_IDS || isValidLocalSessionCode(sessionCode)) {
     return Promise.resolve(Object.assign({ valid: true }, generateSessionId(sessionCode)));
   }
 

@@ -45,8 +45,16 @@ export const DEBUG_UI = true;
 export const MDO_COMPRESSOR_RATIO = 4;
 export const MDO_COMPRESSOR_THRESHOLD = -40;
 
+// check against session-id service
 export const VALIDATE_SESSION_IDS = false;
 export const SESSION_ID_URL = `//${window.location.hostname}:5000`;
+
+// if session id service returns an error, may generate local codes
+// and verify locally if they match the check digit pattern.
+export const USE_FALLBACK_SESSION_CODES = true;
+export const SESSION_CODE_CHECK_DIGITS = 1;
+export const LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET = 3;
+export const LOCAL_SESSION_ID_PREFIX = 'vostok-orchestration-fallback';
 
 // Time in seconds between request and scheduled transition to next sequence.
 export const SEQUENCE_TRANSITION_DELAY = 1.0;

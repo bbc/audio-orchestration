@@ -70,8 +70,7 @@ class ConnectFormPage extends React.Component {
         { !sessionCodeIsValid
           ? (
             <p style={{ color: 'red' }}>
-              Invalid code entered. Please check you have entered the correct code, or start a
-              new session on your main device; it may have expired.
+              Invalid code entered, please try again.
             </p>
           )
           : null
@@ -82,7 +81,7 @@ class ConnectFormPage extends React.Component {
             autoComplete="off"
             className="input-session-id"
             type="tel"
-            maxLength={SESSION_CODE_LENGTH}
+            maxLength={SESSION_CODE_LENGTH + 1}
             ref={this.inputRef}
             disabled={sessionCodeIsValidating}
             onKeyPress={(e) => {
