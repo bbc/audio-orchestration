@@ -48,12 +48,25 @@ echo ""
 ) || error
 
 echo ""
-echo "### Encoding Audio ###"
+echo "### Encoding Audio for safari ###"
 echo ""
+
+mkdir -p $DEST/safari || error
 
 (
   cd encode-media
-  node encode-media $SPLIT_DEST/sequence.json $SPLIT_DEST $DEST $BASE_URL
+  node encode-media $SPLIT_DEST/sequence.json $SPLIT_DEST $DEST/safari $BASE_URL/safari
+) || error
+
+echo ""
+echo "### Encoding Audio for headerless streams ###"
+echo ""
+
+mkdir -p $DEST/headerless || error
+
+(
+  cd encode-media
+  node encode-media-headerless $SPLIT_DEST/sequence.json $SPLIT_DEST $DEST/headerless $BASE_URL/headerless
 ) || error
 
 echo ""
