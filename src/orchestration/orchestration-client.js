@@ -81,6 +81,32 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
+   * Creates an audio context. Should be called from a user gesture event (e.g. click) to pass
+   * browser restrictions on playing audio only after user interaction.
+   *
+   * The returned audio context can then be passed into start().
+   *
+   * @returns {AudioContext} - a running audio context.
+   */
+  static createAudioContext() {
+    window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+    const audioContext = new AudioContext();
+    audioContext.resume();
+
+    // create a dummy source that is imperceptably quiet and always playing to keep the page alive.
+    const dummySource = audioContext.createOscillator();
+    dummySource.frequency.value = 50;
+    const dummyGain = audioContext.createGain();
+    dummyGain.gain.value = 1.0e-10;
+    dummySource.connect(dummyGain);
+    dummyGain.connect(audioContext.destination);
+    dummySource.start();
+
+    return audioContext;
+  }
+
+  /**
    * Emits a 'status' event with all information about the current playhead status. This is fired
    * frequently, on changes to the renderer clock or the current contentId.
    *
@@ -195,47 +221,18 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Creates an audio context. Should be called from a user gesture event (e.g. click) to pass
-   * browser restrictions on playing audio only after user interaction.
-   *
-   * @private
-   *
-   * @returns {AudioContext} - a running audio context.
-   */
-  _createAudioContext() {
-    this.emit('loading', 'creating audio context');
-    window.AudioContext = window.AudioContext || window.webkitAudioContext;
-
-    this._audioContext = new AudioContext();
-    this._audioContext.resume();
-
-    // create a dummy source that is imperceptably quiet and always playing to keep the page alive.
-    const dummySource = this._audioContext.createOscillator();
-    dummySource.frequency.value = 50;
-    const dummyGain = this._audioContext.createGain();
-    dummyGain.gain.value = 1.0e-10;
-    dummySource.connect(dummyGain);
-    dummyGain.connect(this._audioContext.destination);
-    dummySource.start();
-
-    // create a unity-gain node that the renderer output will be connected to. This can be
-    // connected to further processing, such as compression and volume controls.
-    this._rendererOutput = this._audioContext.createGain();
-
-    return this._audioContext;
-  }
-
-  /**
    * Creates a global volume control and connects it to the context destination.
    * Also creates a dynamics compressor initially disabled.
    *
+   * The audio graph is [renderer] -> rendererOutput -> compressor -> volumeControl -> destination.
+   *
    * @private
    *
-   * @returns {GainNode} - A gain node connected directly to the audio context destination with the
-   * current gain set to 1.0.
+   * @returns {GainNode} - A gain node connected, via some additional routing, to the audio
+   * context destination.
    */
-  _createVolumeControl() {
-    this.emit('loading', 'creating volume control');
+  _createAudioGraph() {
+    this.emit('loading', 'connecting audio output');
     this._volumeControl = this._audioContext.createGain();
     this._volumeControl.gain.value = 1.0;
     this._volumeControl.connect(this._audioContext.destination);
@@ -243,12 +240,12 @@ class OrchestrationClient extends EventEmitter {
     this._compressor = this._audioContext.createDynamicsCompressor();
     this._compressor.threshold.value = 0;
     this._compressor.ratio.value = 8;
-
     this._compressor.connect(this._volumeControl);
 
+    this._rendererOutput = this._audioContext.createGain();
     this._rendererOutput.connect(this._compressor);
 
-    return this._volumeControl;
+    return this._rendererOutput;
   }
 
   /**
@@ -450,18 +447,24 @@ class OrchestrationClient extends EventEmitter {
    *
    * @returns {Promise}
    */
-  start(master, sessionId) {
+  start(master, sessionId, audioContext = null) {
     return new Promise((resolve) => {
       if (this._initialised) {
         throw new Error('Orchestration client is already initialised.');
       }
+
+      if (audioContext !== null) {
+        this._audioContext = audioContext;
+      } else {
+        this._audioContext = OrchestrationClient.createAudioContext();
+      }
+
       this._initialised = true;
       this._master = master;
       this._sessionId = sessionId;
       resolve();
     })
-      .then(() => this._createAudioContext())
-      .then(() => this._createVolumeControl())
+      .then(() => this._createAudioGraph())
       .then(() => this._createSynchronisedClocks())
       .then(() => this._connectToSync())
       .then(() => this._requestSyncClock())
