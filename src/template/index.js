@@ -16,6 +16,9 @@ import {
   slaveLocationOnOpen,
 } from './actions';
 
+// TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
+import { ensureAudioContext } from './orchestration';
+
 export { default as reducers } from './reducers';
 
 function mapStateToProps(state) {
@@ -25,6 +28,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     startSession: () => {
+      ensureAudioContext();
       dispatch(startSession());
     },
     joinSession: (sessionCode) => {
@@ -58,6 +62,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(connectFormOnCancel());
     },
     connectFormOnSubmit: (sessionCode) => {
+      ensureAudioContext();
       dispatch(connectFormOnSubmit(sessionCode));
     },
     masterSetupOnContinue: () => {

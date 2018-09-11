@@ -25,16 +25,32 @@ import {
   CONTENT_ID,
 } from '../config';
 
-// global browser detection object
+// A global browser detection object
 const browser = bowser.getParser(window.navigator.userAgent);
 
-// global orchestration object - this is the only instance of it.
+// A global reference to the audio context. It has to be created on a user action and then passed
+// into OrchestrationClient.start().
+let globalAudioContext = null;
+
+// A global orchestration object - this is the only instance of it. It is started with a sessionId,
+// deviceId, and audioContext reference in connectOrchestration.
 const globalOrchestrationClient = new OrchestrationClient({
   cloudSyncEndpoint: CLOUDSYNC_ENDPOINT,
   sequenceTransitionDelay: SEQUENCE_TRANSITION_DELAY,
   loadingTimeout: LOADING_TIMEOUT,
   contentId: CONTENT_ID,
 });
+
+/**
+ * Ensure an audio context exists.
+ */
+export const ensureAudioContext = () => {
+  if (globalAudioContext !== null) {
+    globalAudioContext.resume();
+  } else {
+    globalAudioContext = OrchestrationClient.createAudioContext();
+  }
+};
 
 /**
  * Initialise the orchestration object by registering the sequences to load and setting up
@@ -120,21 +136,22 @@ export const initialiseOrchestration = (dispatch) => {
   return globalOrchestrationClient.deviceId;
 };
 
-export const connectOrchestration = (master, sessionId) => {
-  console.debug('connectOrchestration', sessionId);
-  return globalOrchestrationClient.start(master, sessionId)
-    .then(() => {
-      if (!master) {
-        globalOrchestrationClient.setCompressorRatio(MDO_COMPRESSOR_RATIO);
-        globalOrchestrationClient.setCompressorThreshold(MDO_COMPRESSOR_THRESHOLD);
-      }
-    })
-    .then(() => ({ success: true }))
-    .catch((e) => {
-      console.error('connectOrchestration error:', e);
-      throw e || new Error('unknown error');
-    });
-};
+export const connectOrchestration = (master, sessionId) => globalOrchestrationClient.start(
+  master,
+  sessionId,
+  globalAudioContext,
+)
+  .then(() => {
+    if (!master) {
+      globalOrchestrationClient.setCompressorRatio(MDO_COMPRESSOR_RATIO);
+      globalOrchestrationClient.setCompressorThreshold(MDO_COMPRESSOR_THRESHOLD);
+    }
+  })
+  .then(() => ({ success: true }))
+  .catch((e) => {
+    console.error('connectOrchestration error:', e);
+    throw e || new Error('Unknown error in connectOrchestration');
+  });
 
 function* transitionToSequence({ contentId }) {
   yield call(() => globalOrchestrationClient.transitionToSequence(contentId));
