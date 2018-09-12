@@ -59,11 +59,20 @@ class CloudSyncAdapter extends SyncAdapter {
     if (this._connectPromise !== null) {
       return this._connectPromise;
     }
-    this._syncUrl = syncUrl;
+
+    // for backwards compatibility - accept a hostname string instead of an object
+    if (typeof syncUrl === 'string') {
+      this._syncUrl = { hostname: syncUrl };
+    } else {
+      this._syncUrl = {
+        hostname: syncUrl.hostname,
+        port: syncUrl.port,
+      };
+    }
 
     this._connectPromise = new Promise((resolve, reject) => {
       this._synchroniser = cloudSyncKit.getCloudSynchroniser(
-        { hostname: syncUrl },
+        syncUrl,
         sessionId,
         'default',
         deviceId,

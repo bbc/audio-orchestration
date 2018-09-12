@@ -53,15 +53,15 @@ class Sync extends EventEmitter {
   /**
    * Initialises the adapter connection, and registers this device to join the given session.
    *
-   * @param {string} endpoint - depending on the chosen adapter, the URL or hostname to connect to.
+   * @param {string || object} endpoint - depending on the chosen adapter, the URL or { hostname, port } to connect to.
    * @param {string} sessionId - the session to join
    * @param {string} deviceId - the device-id to register as
    *
    * @returns {Promise}
    */
   connect(endpoint, sessionId, deviceId) {
-    if (typeof endpoint !== 'string') {
-      throw new Error('endpoint must be set and must be a string.');
+    if (typeof endpoint !== 'string' && typeof endpoint !== 'object') {
+      throw new Error('endpoint must be set and must be a string or object.');
     }
 
     if (typeof sessionId !== 'string') {
