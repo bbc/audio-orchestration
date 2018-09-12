@@ -80,7 +80,7 @@ class CloudSyncAdapter extends SyncAdapter {
       });
 
       this._synchroniser.on('SyncServiceUnavailable', () => {
-        console.debug('CloudSyncSyncAdapter: disconnected');
+        // console.debug('CloudSyncSyncAdapter: disconnected');
         this.emit('disconnected', 'CloudSyncAdapter: connect failed.');
         reject();
       });
@@ -165,7 +165,7 @@ class CloudSyncAdapter extends SyncAdapter {
     const matchTimeline = tl => tl.timelineType === timelineType &&
                                 tl.contentId === contentId;
 
-    console.warn('called requestTimelineClock');
+    // console.warn('called requestTimelineClock');
 
     // create the clock object to return. It will become unavailable if the sync timeline goes away.
     const timelineClock = new clocks.CorrelatedClock(this.wallClock, {
@@ -176,11 +176,11 @@ class CloudSyncAdapter extends SyncAdapter {
     return this._connectPromise.then(() => new Promise((resolve, reject) => {
       // Listen for new timelines being registered, and return a
       // promise resolving when it is found.
-      console.debug('requestTimelineClock registering SyncTimelinesAvailable handler');
+      // console.debug('requestTimelineClock registering SyncTimelinesAvailable handler');
 
       // listen for timelines becoming available, resolve if one matches
       const handler = (timelines) => {
-        console.debug('requestTimelineClock SyncTimelinesAvailable', timelines);
+        // console.debug('requestTimelineClock SyncTimelinesAvailable', timelines);
 
         // if a matching timeline is found, resolve to its id and stop listening.
         // Otherwise, we may have to wait for the next event of this kind to find it.
@@ -199,11 +199,11 @@ class CloudSyncAdapter extends SyncAdapter {
             this._synchroniser.syncClockToThisTimeline(intermediateClock, timelineId);
             timelineClock.setParent(intermediateClock);
             timelineClock.setAvailabilityFlag(true);
-            console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock available.');
+            // console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock available.');
             resolve(timelineClock);
           });
         } else {
-          console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock unavailable.');
+          // console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock unavailable.');
           timelineClock.setAvailabilityFlag(false);
         }
       };
