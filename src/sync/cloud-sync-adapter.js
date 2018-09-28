@@ -72,7 +72,7 @@ class CloudSyncAdapter extends SyncAdapter {
 
     this._connectPromise = new Promise((resolve, reject) => {
       this._synchroniser = cloudSyncKit.getCloudSynchroniser(
-        syncUrl,
+        this._syncUrl,
         sessionId,
         'default',
         deviceId,
