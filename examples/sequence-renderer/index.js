@@ -13,9 +13,8 @@ const isStereo = true;
 function initRenderer(sequenceData) {
   const sequence = new Sequence(sequenceData);
   const renderer = new SynchronisedSequenceRenderer(audioContext, clock, sequence, isStereo);
+  renderer.start(0);
   renderer.output.connect(audioContext.destination);
-
-  console.log(renderer);
 
   return renderer;
 }
@@ -42,7 +41,10 @@ function initControls(renderer) {
   });
 
   const clickHandlers = {
-    'btn-play': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 1),
+    'btn-play': () => {
+      audioContext.resume();
+      clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 1);
+    },
     'btn-pause': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 0),
     'btn-reset': () => clock.setCorrelationAndSpeed([sysClock.now(), 0], 1),
     'btn-skip': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now() + 10], 1),
