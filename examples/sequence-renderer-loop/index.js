@@ -21,8 +21,6 @@ function initRenderer(sequenceData, rendererClock) {
   );
   renderer.output.connect(audioContext.destination);
 
-  console.log(renderer);
-
   return renderer;
 }
 

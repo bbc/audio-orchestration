@@ -1,6 +1,6 @@
 # sequence-renderer example
 
-This example shows the usage of the 
+This example shows the usage of the `SynchroniseSequenceRenderer` component.
 
 ## Setup
 
