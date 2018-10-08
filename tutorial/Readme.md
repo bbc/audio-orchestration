@@ -64,6 +64,8 @@ successfully_ you can open your browser at [localhost:8080](http://localhost:808
 
 Well done! You now have a local copy of the template that you can modify as you like.
 
+![Screenshot of the terminal and browser after creating a working copy of the template](working-copy.png)
+
 ## Create your audio files and MDO metadata table
 
 
