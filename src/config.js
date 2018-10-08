@@ -8,8 +8,9 @@ export const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock
 export const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
 export const TIMELINE_TYPE_TICK_RATE = 1000;
 
-// hostname of cloud sync service endpoint
-export const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
+// cloud sync service websockets endpoint, specified as { hostname } for standard wss:// connection
+// on default port, also specify a { port } number to use a plain ws:// connection on that port.
+export const CLOUDSYNC_ENDPOINT = { hostname: 'mqttbroker.edge.platform.2immerse.eu' };
 
 // number of digits in the session code, used for placeholders and validity check
 export const SESSION_CODE_LENGTH = 6;
