@@ -32,7 +32,7 @@ export const createSession = () => {
     return Promise.resolve(generateSessionId());
   }
 
-  return fetch(`${SESSION_ID_URL}/session`, { method: 'POST' })
+  return window.fetch(`${SESSION_ID_URL}/session`, { method: 'POST' })
     .then((response) => {
       if (!response.ok) {
         throw new Error('Failed to create a session on the server.');
@@ -59,7 +59,7 @@ export const validateSession = (sessionCode) => {
     return Promise.resolve(Object.assign({ valid: true }, generateSessionId(sessionCode)));
   }
 
-  return fetch(`${SESSION_ID_URL}/session/${sessionCode}`)
+  return window.fetch(`${SESSION_ID_URL}/session/${sessionCode}`)
     .then((response) => {
       if (!response.ok) {
         throw new Error('Could not validate the session.');
