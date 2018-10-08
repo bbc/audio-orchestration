@@ -5,11 +5,9 @@ const initialState = {
   sessionCodeIsValidating: false,
   sessionCodeIsValid: true,
 
-  deviceMainDevice: false,
   deviceLocation: {},
   deviceType: null,
   deviceQuality: 1,
-  sessionId: null,
   connectedDevices: [],
   activeObjectIds: [],
   primaryObjectId: '',
