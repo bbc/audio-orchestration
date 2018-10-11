@@ -11,6 +11,11 @@ You should only need to modify this template in three places:
 * [src/config.js](src/config.js) contains configuration parameters, such as paths to audio files.
 * [audio/](audio/) contains the encoded audio files and metadata files describing it.
 
+## Tutorial
+
+A detailed tutorial for using this template, including setting up the required tools on a new machine,
+is included in the [tutorial/](tutorial/) directory.
+
 ## Installation and Usage
 
 The development machine should have NodeJS and the yarn package manager (npm may work) installed.
