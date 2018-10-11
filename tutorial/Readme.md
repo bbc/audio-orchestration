@@ -66,6 +66,141 @@ Well done! You now have a local copy of the template that you can modify as you 
 
 ![Screenshot of the terminal and browser after creating a working copy of the template](working-copy.png)
 
-## Create your audio files and MDO metadata table
+For example, try changing the title on the front page by editing `src/presentation/Pages/Start/index.jsx`
+in a text editor. The page should automatically reload a few seconds after you saved the file. More
+pointers to where certain changes can be made will be included later on in this tutorial.
 
+## Prepare your audio files and metadata table
 
+The audio for each object must be prepared as a mono `.wav` file. Note that even left and right
+legs of a stereo track should be exported as separate mono objects. As common in digital audio
+workstation exports, all these files should be the same length. Place all these `.wav` files in
+one directory.
+
+The metadata table lists all objects, and for each includes fields instructing the system where to
+place the object. This can be generated from production metadata you may already have, or created
+manually in a spreadsheet editor like Microsoft Excel. Either way, a number of columns must be added
+to the plain MDO metadata, to link the object data to the exported files, and identify the left and
+right files for any stereo objects.
+
+Here is the header row for the metadata table. Below this, add a row for every object:
+
+```csv
+objectNumber,panning,filename,mdoObjectLabel,image,mdoThreshold,mdoOnly,mdoSpread,muteIfObject,exclusivity,nearFront,nearSide,nearRear,farFront,farSide,farRear,above,onDropin,onDropout,minQuality
+```
+
+In addition to the data produced by the S3A plugin, you will need to fill in the filename and panning
+(30 for left, -30 for right) columns. Note that the script currently expects the filename to be the
+third column. For other columns, the labels in the first row are used so their order matters less.
+An example file that can be edited in Excel is provided in [example-loop.csv](example-loop.csv).
+When saving from Excel, select _Comma Separated Values(.csv)_ as the file format.
+
+Place the `.csv` file in the same directory as the audio `.wav` files.
+
+## Install and run the packaging tools
+
+The scripts used to package your audio and metadata are included in the
+[bbcat-orchestration repository](https://github.com/bbc/bbcat-orchestration) repository.
+
+Clone the `bbcat-orchestration` repository to get the scripts and `cd` into it:
+
+```sh
+git clone git@github.com:bbc/bbcat-orchestration.git
+cd bbcat-orchestration
+```
+
+The following tools and utilities are required: `python2` and `virtualenv`, `ffmpeg` with the fdk
+AAC encoder, and the `realpath` and `parallel` utilities. You should already have `node` from the
+previous section. Here's how to install any that may be missing using Homebrew (if you already
+have working versions of the tools, you don't need to run these):
+
+```sh
+brew install python@3 # probably already installed
+brew install ffmpeg --with-fdk-aac
+brew install realpath
+brew install parallel
+brew install node # already installed previously
+```
+
+Now set up a `python3` virtual environment named `env` in `tools/split-tracks` and install the python dependencies:
+
+```sh
+cd tools/split-tracks
+python3 -m venv env
+. env/bin/activate
+pip install numpy
+pip install pandas
+pip install pysndfile
+cd ..
+```
+
+Now that we have all the tools, and the metadata and audio files in one place, we can run the 
+packaging script. The arguments to it are: the path to the `.csv` metadata file, the path to
+where the results should be stored, and the public path where they will appear on the web server.
+
+Assuming your audio is stored in `~/my-mdo-audio/` and you've created your repository in
+`~/my-mdo-experience`, this command would look like this:
+
+```sh
+./prepare.sh ~/my-mdo-audio/metadata.csv ~/my-mdo-experience/audio/my-mdo-audio audio/my-mdo-audio
+```
+
+Depending on the number and duration of audio objects, this may take a few minutes. Two sets of
+files are created, in the `headerless` and `safari` directories within the output directory you
+specified.
+
+## Configure the application to use your audio
+
+We are going to replace the initial audio, the loading loop, with the new audio we have just
+packaged up.
+
+Open `src/config.js` (in your `~/my-mdo-experience/` repository) in a text editor, and change the
+`SEQUENCE_LOOP` URL setting to point to the new metadata files created in the previous section:
+
+```javascript
+const SEQUENCE_LOOP = isSafari ? 'audio/my-mdo-audio/safari/sequence.json' : 'audio/my-mdo-audio/headerless/sequence.json';
+```
+
+To set the sequence to actually loop, edit both `sequence.json` files and set the `loop` value to
+`true`. You may also want to define custom `outPoints`, which define the time in seconds since the
+start where the system may transition away from the sequence to move to the main content. If you
+don't define these, it will cut about a second after you press the button to continue.
+
+```json
+{
+  "duration": 29.03998,
+  "loop": true,
+  "outPoints": [
+    2.1,
+    4.4,
+    5.7,
+    9.3,
+    11.6,
+    14.6,
+    19.0,
+    21.0,
+    25.3,
+    29.0
+  ],
+  "objects": [
+  ...
+  ]
+}
+```
+
+When you now go back to your browser (you might have to CTRL-C and restart the `yarn dev` process)
+and start a session, you should hear your new audio.
+
+## Customise the user interface text labels and colour scheme
+
+You can edit the colours used in the default interface in `src/colours.scss` and `src/main.scss`,
+and the text in the corresponding `.jsx` file under `src/presentation`.
+
+## Add per-object images
+
+Some changes to the template code are required to make this happen more easily - stay tuned for the
+next template update.
+
+## Troubleshooting
+
+TODO
