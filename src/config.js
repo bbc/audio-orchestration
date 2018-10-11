@@ -23,8 +23,8 @@ export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
 export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
 // Detect safari, it may require differently encoded audio, and thus a different sequence URL.
-// const browser = bowser.getParser(window.navigator.userAgent);
-// const isSafari = browser.is('Safari') || browser.is('iOS');
+const browser = bowser.getParser(window.navigator.userAgent);
+const isSafari = browser.is('Safari') || browser.is('iOS');
 
 // Sequence URLs point to the sequence.json metadata file.
 const SEQUENCE_LOOP = 'audio/clicks-and-tone/loop.json';
