@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Loading = () => (
+const Footer = () => (
   <div className="footer">
     <p>
       <a
@@ -25,4 +25,4 @@ const Loading = () => (
   </div>
 );
 
-export default Loading;
+export default Footer;
