@@ -1,8 +1,13 @@
 import OutputRouter from './output-router';
-import SyncPlayers from '../sync-players';
+import {
+  SyncController,
+  BufferPlayer,
+  DashPlayer,
+} from '../sync-players';
 
-const { SyncController, BufferPlayer, DashPlayer } = SyncPlayers;
-
+/**
+ * @private
+ */
 class ItemRenderer {
   constructor(
     audioContext,

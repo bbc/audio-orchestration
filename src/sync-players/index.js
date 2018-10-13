@@ -3,7 +3,7 @@ import BufferPlayer from './buffer-player';
 import DashPlayer from './dash-player';
 import SyncController from './sync-controller';
 
-export default {
+export {
   AudioContextClock,
   BufferPlayer,
   DashPlayer,

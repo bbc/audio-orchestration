@@ -444,6 +444,8 @@ class OrchestrationClient extends EventEmitter {
    * @param {boolean} master - whether this client acts as a master, controlling the experience, or
    * a slave, synchronising to a master running on another device.
    * @param {string} sessionId - a unique session id.
+   * @param {AudioContext?} audioContext - an AudioContext to use, if one has already been created
+   * by the application.
    *
    * @returns {Promise}
    */
