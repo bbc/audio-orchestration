@@ -1,9 +1,7 @@
 import EventEmitter from 'events';
-import Clocks from 'dvbcss-clocks';
+import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Sequence from './sequence';
 import ItemRendererFactory from './item-renderer';
-
-const { CorrelatedClock } = Clocks;
 
 const MUTE_GAIN = 1.0e-6;
 
