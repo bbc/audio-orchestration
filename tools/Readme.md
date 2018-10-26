@@ -2,9 +2,9 @@
 
 The `prepare.sh` script brings together the different tools, it is usually sufficient to just use this. The components are:
 
-* `split-tracks`: removes silence from the input `.wav` files and creates an initial metadata file describing timings of the rendering items.
-* `encode-media`: runs `ffmpeg` to create the DASH streams and manifests. There are currently two versions, one for safari and one for all other browsers.
-* `generate-sequence`: creates the final `sequence.json` metadata file.
+* `split-tracks`: removes silence from the input `.wav` files and stores some metadata about timings.
+* `generate-sequence`: creates an intermediate `sequence.json` metadata file based on the output from `split-tracks`.
+* `encode-media`: runs `ffmpeg` to create the DASH streams and manifests, and the final `sequence.json` metadata file, including paths to the encoded audio. There are currently two versions, one for Safari and one for all other browsers, because a slightly different DASH format is required.
 
 ## Dependencies
 
