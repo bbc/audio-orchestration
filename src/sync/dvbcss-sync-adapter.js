@@ -1,5 +1,6 @@
 import dvbcss from 'dvbcss-protocols';
-import clocks from 'dvbcss-clocks';
+import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
+import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
 import SyncAdapter from './sync-adapter';
 
 /**
@@ -30,7 +31,7 @@ class DvbcssSyncAdapter extends SyncAdapter {
     super();
     this._sysClock = sysClock;
     if (this._sysClock === null) {
-      this._sysClock = new clocks.DateNowClock();
+      this._sysClock = new DateNowClock();
     }
     this._connected = false;
     this._wcPromise = null;
@@ -39,7 +40,7 @@ class DvbcssSyncAdapter extends SyncAdapter {
      * Create a wall clock (units milliseconds)
      * @type {CorrelatedClock}
      */
-    this._wallClock = new clocks.CorrelatedClock(this._sysClock, { tickRate: 1000 });
+    this._wallClock = new CorrelatedClock(this._sysClock, { tickRate: 1000 });
   }
 
   /**

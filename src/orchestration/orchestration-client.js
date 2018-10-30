@@ -1,6 +1,6 @@
 import EventEmitter from 'events';
 import uuidv4 from 'uuid/v4';
-import Clocks from 'dvbcss-clocks';
+import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import AudioContextClock from '../sync-players/audio-context-clock';
 import Sequence from '../sequence-renderer/sequence';
 import SynchronisedSequenceRenderer from '../sequence-renderer/sequence-renderer';
@@ -8,8 +8,6 @@ import MdoAllocator from '../mdo-allocation/mdo-allocator';
 import MdoReceiver from '../mdo-allocation/mdo-receiver';
 import CloudSyncAdapter from '../sync/cloud-sync-adapter';
 import Sync from '../sync/sync';
-
-const { CorrelatedClock } = Clocks;
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
@@ -444,6 +442,8 @@ class OrchestrationClient extends EventEmitter {
    * @param {boolean} master - whether this client acts as a master, controlling the experience, or
    * a slave, synchronising to a master running on another device.
    * @param {string} sessionId - a unique session id.
+   * @param {AudioContext?} audioContext - an AudioContext to use, if one has already been created
+   * by the application.
    *
    * @returns {Promise}
    */

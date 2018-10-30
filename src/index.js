@@ -1,11 +1,13 @@
 import Sync from './sync';
-import SyncPlayers from './sync-players';
-import SequenceRenderer from './sequence-renderer';
-import MdoAllocation from './mdo-allocation';
+import * as SyncPlayers from './sync-players';
+import * as SequenceRenderer from './sequence-renderer';
+import * as MdoAllocation from './mdo-allocation';
+import OrchestrationClient from './orchestration';
 
-export default {
+export {
   Sync,
   SyncPlayers,
   SequenceRenderer,
   MdoAllocation,
+  OrchestrationClient,
 };

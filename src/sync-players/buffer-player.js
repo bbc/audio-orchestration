@@ -1,4 +1,4 @@
-import bbcat from 'bbcat';
+import bbcat from 'bbcat/src/bbcat.js';
 import Player from './player';
 
 class BufferPlayer extends Player {

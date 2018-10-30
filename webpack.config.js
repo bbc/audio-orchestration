@@ -1,4 +1,4 @@
-const nodeExternals = require('webpack-node-externals');
+//const nodeExternals = require('webpack-node-externals');
 
 const path = require('path');
 
@@ -7,10 +7,12 @@ module.exports = {
   entry: path.resolve(__dirname, 'src/index.js'),
   devtool: 'source-map',
   output: {
-    filename: 'bbcat-orchestration.js',
     path: path.resolve(__dirname, 'dist'),
+    filename: 'bbcat-orchestration.js',
+    library: 'bbcatOrchestration',
+    libraryTarget: 'umd',
   },
-  externals: nodeExternals(),
+  // externals: nodeExternals(),
   module: {
     rules: [
       {

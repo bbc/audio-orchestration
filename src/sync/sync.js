@@ -53,7 +53,8 @@ class Sync extends EventEmitter {
   /**
    * Initialises the adapter connection, and registers this device to join the given session.
    *
-   * @param {string || object} endpoint - depending on the chosen adapter, the URL or { hostname, port } to connect to.
+   * @param {string | object} endpoint - depending on the chosen adapter, the URL or
+   * { hostname, port } to connect to.
    * @param {string} sessionId - the session to join
    * @param {string} deviceId - the device-id to register as
    *

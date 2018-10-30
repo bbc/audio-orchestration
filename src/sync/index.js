@@ -1,5 +1,3 @@
 import Sync from './sync';
 
-export default {
-  Sync,
-};
+export default Sync;
