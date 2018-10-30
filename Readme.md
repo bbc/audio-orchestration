@@ -25,13 +25,15 @@ experiences.
 
 ## Setup
 
-[Node.js](https://nodejs.org/en/) 8 and [yarn](https://yarnpkg.com/en/) are recommended.
+[Node.js](https://nodejs.org/en/) 8+ a is recommended.
 
-Install all dependencies for the main library:
+Install all dependencies for development of the main library:
 
 ```
-yarn install
+npm install
 ```
+
+NB: `yarn install` currently fails on some cloud-sync dependencies, so using plain old `npm` is recommended for now.
 
 ### cloud-sync
 
@@ -44,56 +46,15 @@ A version of the client library with our local patches is included in this
 repository in the [cloud-sync/](cloud-sync/) directory. See [subtree.md](subtree.md)
 to setup git remotes for developing it.
 
-## Development
+## Examples
 
-The examples may be used to manually test the library components as they are developed.
-
-### Examples
-
- * [players](examples/players/) plain audio playback
- * [cloud-sync-client](examples/cloud-sync-client/) synchronisation to cloud sync service
- * [not maintained] [dvbcss-services](examples/dvbcss-services/) synchronisation to dvbcss services
- * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised timeline
+ * [players](examples/players/) DASH and buffer source audio players
+ * [cloud-sync-client](examples/cloud-sync-client/) synchronisation to 2-IMMERSE cloud-sync service
+ * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised timeline using cloud-sync
  * [sequence-renderer-loop](examples/sequence-renderer-loop/) rendering a looping timeline
  * [mdo-allocation](examples/mdo-allocation/) demonstrating allocation rules
+ * [not maintained] [dvbcss-services](examples/dvbcss-services/) synchronisation to dvbcss services, incomplete implementation
 
 A complete integration can also be found in the
 [bbcat-orchestration-template](https://github.com/bbc/bbcat-orchestration-template)
-repository, which implements a React user interface template recommended for starting new projects.
-
-To develop the library together with an example, first install the example's
-dependencies and link this development version into its `node_modules`. The
-examples will try to install their own version of `bbcat-orchestration` from
-GitHub, linking the local version can make changes to the library immediately
-visible in the example.
-
-```
-# start in this folder, bbcat-orchestration/:
-yarn install
-yarn link
-
-# do the same for cloud sync:
-cd cloud-sync
-npm install
-yarn link
-cd ..
-
-# use local copy of synckit cloud
-yarn link synckit-cloud
-
-# now install the dependencies for an example:
-cd example/dvbcss-services
-yarn install
-yarn link bbcat-orchestration
-cd ../../
-
-# or a cloud sync example requiring synckit-cloud
-cd example/cloud-sync-client
-yarn install
-yarn link bbcat-orchestration
-yarn link synckit-cloud
-cd ../../
-```
-
-Then follow the example's instructions, usually simply run `yarn dev` to start a
-web server with hot-reloading on changes to the example or library code.
+repository, which implements a React.js user interface template recommended for starting new projects.
