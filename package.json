@@ -12,7 +12,6 @@
     "@bbc/reith-fonts-npm": "bbc/reith-fonts-npm",
     "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git",
     "bowser": "^2.0.0-beta.1",
-    "dvbcss-clocks": "^0.0.4",
     "gel-grid": "^4.0.0",
     "gel-typography": "^2.0.5",
     "prop-types": "^15.6.2",

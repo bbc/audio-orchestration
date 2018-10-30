@@ -33,10 +33,9 @@ into individual mono wav files.
 You'll also need a spreadsheet or text editor that can export to plain-text `csv` files (e.g.
 Microsoft Excel or Google Docs) to create the metadata table.
 
-This template is written mostly in JavaScript, and you'll need `nodejs` (with the package manager
-`yarn` recommended) to compile it before you can view it in the browser. You'll also need `ffmpeg`
-and `python2` to encode the media and convert the metadata files. We recommend you use `git` to
-checkout this repository.
+This template is written mostly in JavaScript, and you'll need `nodejs` to compile it before you
+can view it in the browser. You'll also need `ffmpeg` and `python2` to encode the media and convert
+the metadata files. We recommend you use `git` to checkout this repository.
 
 _These instructions assume you're on a Mac and comfortable installing software using homebrew.
 Other operating systems and installation methods are available, but the required steps might
@@ -44,11 +43,10 @@ differ slightly._
 
 ## Create your working copy of the template
 
-Make sure `node` and `yarn` are installed. If you use Homebrew, run `brew install yarn` to install
-both in one go.
+Make sure `node` is installed. If you use Homebrew, it can be installed with `brew install node`,
+or via the link below:
 
 * [Node.js](https://nodejs.org/en/)
-* [Yarn](https://yarnpkg.com/en/)
 
 Run `git init my-mdo-experience` to create a new Git repository. Go into the directory with
 `cd my-mdo-experience`.
@@ -56,10 +54,10 @@ Run `git init my-mdo-experience` to create a new Git repository. Go into the dir
 Run `git pull git@github.com:bbc/bbcat-orchestration-template.git` to get the current version of
 the template and add it to your empty repository. 
 
-Run `yarn install` to download all dependencies, including the various build tools. They are
+Run `npm install` to download all dependencies, including the various build tools. They are
 installed into the `node_modules` directory, this may take a few minutes the first time round.
 
-Run `yarn dev` to compile the template and start a development server. When it says _Compiled
+Run `npm run dev` to compile the template and start a development server. When it says _Compiled
 successfully_ you can open your browser at [localhost:8080](http://localhost:8080) to see it.
 
 Well done! You now have a local copy of the template that you can modify as you like.
@@ -188,7 +186,7 @@ don't define these, it will cut about a second after you press the button to con
 }
 ```
 
-When you now go back to your browser (you might have to CTRL-C and restart the `yarn dev` process)
+When you now go back to your browser (you might have to CTRL-C and restart the `npm run dev` process)
 and start a session, you should hear your new audio.
 
 ## Customise the user interface text labels and colour scheme
