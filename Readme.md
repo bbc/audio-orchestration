@@ -25,9 +25,9 @@ experiences.
 
 ## Usage
 
-The recommended way to use the library is to include it as part of a webpack build. It is written in ES6 JavaScript, and requires babel to build. Individual classes can be imported by referencing the ES6 modules from `src/` as e.g. `import OrchestrationClient from 'bbcat-orchestration/src/orchestration/orchestration-client'` or `import { OrchestrationClient } from 'bbcat-orchestration'`.
+The recommended way to use the library is to include it as part of a webpack build. You can take advantage of tree-shaking (de-duplicating common dependencies) by importing individual ES6 modules directly from `src/`:  For example, use `import OrchestrationClient from 'bbcat-orchestration/src/orchestration'`. For convenience, the top-level classes are also available as `import { OrchestrationClient } from 'bbcat-orchestration'`.
 
-Alternatively, a webpack bundle including all dependencies can be created by running `npm run build`, this creates a single file as a Common-JS module in `dist/` that works even when included as a `<script>` tag, exposing the global `bbcatOrchestration` object.
+Alternatively, a webpack bundle including all dependencies can be created by running `npm run build`. This creates a single large file using a Universal Module Definition (UMD) in `dist/` that works when included as a `<script>` tag, exposing the global `bbcatOrchestration` object. Its properties are defined in `src/index.js`.
 
 ## Examples
 
