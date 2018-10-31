@@ -1,0 +1,12 @@
+{
+  "env": {
+    "jasmine": true
+  },
+  "plugins": [
+    "jasmine"
+  ],
+  "extends": [
+    "airbnb/base",
+    "plugin:jasmine/recommended"
+  ]
+}
