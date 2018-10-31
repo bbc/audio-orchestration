@@ -179,7 +179,7 @@ class CloudSyncAdapter extends SyncAdapter {
     // console.warn('called requestTimelineClock');
 
     // create the clock object to return. It will become unavailable if the sync timeline goes away.
-    const timelineClock = new clocks.CorrelatedClock(this.wallClock, {
+    const timelineClock = new CorrelatedClock(this.wallClock, {
       available: false,
     });
     timelineClock.id = `timelineClock_${contentId}`;
@@ -206,7 +206,7 @@ class CloudSyncAdapter extends SyncAdapter {
             // Create a dummy clock synchronised to the cloud-sync timeline,
             // and set this as the parent to the returned timelineClock.
             // Now we can change the timeline synchronised to without ending up with two parents.
-            const intermediateClock = new clocks.CorrelatedClock(this.wallClock);
+            const intermediateClock = new CorrelatedClock(this.wallClock);
             this._synchroniser.syncClockToThisTimeline(intermediateClock, timelineId);
             timelineClock.setParent(intermediateClock);
             timelineClock.setAvailabilityFlag(true);
