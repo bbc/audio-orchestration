@@ -26,4 +26,25 @@ Push changes to a branch (not master!) to open a pull request:
 git subtree push --prefix cloud-sync cloud-synckit-js kh-media-device-orchestration
 ```
 
+## bbcat-js
 
+Initial setup:
+
+```sh
+git remote add -f bbcat-js git@github.com:bbc/bbcat-js.git
+git subtree add --prefix bbcat-js bbcat-js kh_mdo_vostok --squash
+
+```
+
+Pull changes from the upstream branch:
+
+```sh
+git fetch bbcat-js kh_mdo_vostok
+git subtree pull --prefix bbcat-js bbcat-js kh_mdo_vostok --squash
+```
+
+Push changes to a branch (not master!) to open a pull request:
+
+```sh
+git subtree push --prefix bbcat-js bbcat-js kh_mdo_vostok
+```
