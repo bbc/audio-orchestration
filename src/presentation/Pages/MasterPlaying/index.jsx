@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import DeviceList from '../../Components/DeviceList';
-import LinkButton from '../../Components/LinkButton';
+import LargeButton from '../../Components/LargeButton';
 
 import { JOIN_URL } from '../../../config';
 
@@ -37,12 +37,11 @@ const MasterPlayingPage = (props) => {
       { ended
         ? (
           <p>
-            <LinkButton text="Play again" onClick={playAgain} />
+            <LargeButton text="Play again" onClick={playAgain} />
           </p>
         )
         : null
       }
-
 
       <DeviceList
         showInstructions

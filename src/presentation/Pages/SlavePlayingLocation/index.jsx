@@ -10,12 +10,12 @@ const SlavePlayingLocationPage = ({
 }) => (
   <div className="page page-slave-playing-location">
     <h1>
-      Slave Playing Location
+      Change Location
     </h1>
 
-    <p>
-      Tell us where you put this device and the sound it plays may change.
-    </p>
+    <p>This is the auxiliary device playing location page.</p>
+
+    <p>Select a location below.</p>
 
     <LocationSetting
       distance={deviceLocation.distance}
@@ -25,7 +25,7 @@ const SlavePlayingLocationPage = ({
 
     <LargeButton
       text="Close"
-      secondaryText="return to the player"
+      secondaryText="Return to the player."
       onClick={() => slaveLocationOnClose()}
     />
   </div>

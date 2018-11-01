@@ -17,16 +17,26 @@ const SlavePlayingPage = (props) => {
 
   return (
     <div className="page page-slave-playing">
-      <Player {...props} />
+      <h1>Auxiliary Device</h1>
+
+      <p>This is the auxiliary device playing page.</p>
+
+      <p>
+        { 'You are connected to ' }
+        <b>{sessionCode}</b>
+        .
+      </p>
 
       { currentContentId !== CONTENT_ID_MAIN
         ? (
           <p>
-            Press start on your main device to begin listening.
+            { 'Click continue on your main device to proceed when you\'re ready.' }
           </p>
         )
         : null
       }
+
+      <Player {...props} />
 
       <p>
         <LargeButton
@@ -43,9 +53,6 @@ const SlavePlayingPage = (props) => {
         : null
       }
 
-      <p style={{ textAlign: 'center' }}>
-        {`${sessionCode}`}
-      </p>
     </div>
   );
 };

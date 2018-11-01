@@ -9,12 +9,21 @@ const StartPage = ({
 }) => (
   <div className="page page-start">
     <h1>
-      bbcat-orchestration-template
+      Orchestration template
     </h1>
 
     <p>
-      You can modify these components, and the main.scss stylesheet, to customise the
-      interface.
+      This is the starting page.
+    </p>
+
+    <p>
+      { 'You can replace the text in these components by editing the '}
+      <code>JSX</code>
+      { ' files in the '}
+      <code>src/presentation/</code>
+      { ' directory, and change the colour scheme by editing '}
+      <code>colours.scss</code>
+      .
     </p>
 
     <p>

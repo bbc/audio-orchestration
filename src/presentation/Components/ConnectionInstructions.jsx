@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 const ConnectionInstructions = ({
   sessionCode,
+  baseUrl,
 }) => (
   <p>
-    QR code and short URL go here. Visit this page on all your devices, and join with this code:
-    { ' ' }
+    { ' These are the connection instructions: go to ' }
+    <code>{baseUrl}</code>
+    { ' on all your devices, and use this code: ' }
     <b>
       {sessionCode}
     </b>
@@ -16,6 +18,7 @@ const ConnectionInstructions = ({
 
 ConnectionInstructions.propTypes = {
   sessionCode: PropTypes.string.isRequired,
+  baseUrl: PropTypes.string.isRequired,
 };
 
 export default ConnectionInstructions;

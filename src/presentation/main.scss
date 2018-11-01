@@ -123,14 +123,23 @@ button {
   }
 }
 
-.object-list span {
-  @include gel-typography('pica');
+.object-list, .device-list {
+  padding: 0;
+  list-style: none;
 
-  display: inline-block;
-  margin: $gel-spacing-unit;
-  padding: $gel-spacing-unit;
-  color: $button-foreground-disabled;
-  background-color: $button-background-disabled;
+  li {
+    @include gel-typography('pica');
+
+    display: inline-block;
+    margin: $gel-spacing-unit;
+    padding: $gel-spacing-unit;
+    color: $button-foreground-disabled;
+    background-color: $button-background-disabled;
+  }
+
+  li.device-list-add-button {
+    padding: 0;
+  }
 }
 
 .player {

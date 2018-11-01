@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 const ObjectList = ({
   objectIds,
 }) => (
-  <p className="object-list">
+  <ul className="object-list">
     { objectIds.map(objectId => (
-      <span key={objectId} style={{ display: 'inline-block', margin: '4px' }}>
+      <li key={objectId}>
         {`${objectId}`}
-      </span>
+      </li>
     ))}
-  </p>
+  </ul>
 );
 
 ObjectList.propTypes = {

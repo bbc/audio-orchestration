@@ -11,12 +11,12 @@ const SlaveSetupLocationPage = ({
 }) => (
   <div className="page page-slave-setup-location">
     <h1>
-      Slave Setup Location
+      Set Location
     </h1>
 
-    <p>
-      Tell us where you are going to put this device so we can give you the best sound.
-    </p>
+    <p>This is the auxiliary device setup location page.</p>
+
+    <p>Select a location below.</p>
 
     <LocationSetting
       distance={deviceLocation.distance}
@@ -25,8 +25,8 @@ const SlaveSetupLocationPage = ({
     />
 
     <LargeButton
-      text="Okay"
-      secondaryText="Close the settings page"
+      text="Continue"
+      secondaryText="Close the location page."
       disabled={!(deviceLocation.distance && deviceLocation.direction)}
       onClick={() => slaveLocationOnClose()}
     />
