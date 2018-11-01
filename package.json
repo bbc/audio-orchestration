@@ -10,7 +10,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@bbc/reith-fonts-npm": "bbc/reith-fonts-npm",
-    "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git",
+    "bbcat-orchestration": "git+ssh://git@github.com/bbc/bbcat-orchestration.git",
     "bowser": "^2.0.0-beta.1",
     "gel-grid": "^4.0.0",
     "gel-typography": "^2.0.5",
@@ -56,6 +56,7 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack-dev-server --hot --host 0.0.0.0"
+    "dev": "webpack-dev-server --hot --host 0.0.0.0",
+    "lint": "eslint src/"
   }
 }
