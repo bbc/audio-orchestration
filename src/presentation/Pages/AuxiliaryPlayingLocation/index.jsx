@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LargeButton from '../../Components/LargeButton';
-import LocationSetting from '../../Components/SlaveLocationSetting';
+import LocationSetting from '../../Components/AuxiliaryLocationSetting';
 
-const SlavePlayingLocationPage = ({
-  slaveLocationOnClose,
+const AuxiliaryPlayingLocationPage = ({
+  auxiliaryLocationOnClose,
   setDeviceLocation,
   deviceLocation,
 }) => (
-  <div className="page page-slave-playing-location">
+  <div className="page page-auxiliary-playing-location">
     <h1>
       Change Location
     </h1>
@@ -26,15 +26,15 @@ const SlavePlayingLocationPage = ({
     <LargeButton
       text="Close"
       secondaryText="Return to the player."
-      onClick={() => slaveLocationOnClose()}
+      onClick={() => auxiliaryLocationOnClose()}
     />
   </div>
 );
 
-SlavePlayingLocationPage.propTypes = {
-  slaveLocationOnClose: PropTypes.func.isRequired,
+AuxiliaryPlayingLocationPage.propTypes = {
+  auxiliaryLocationOnClose: PropTypes.func.isRequired,
   setDeviceLocation: PropTypes.func.isRequired,
   deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default SlavePlayingLocationPage;
+export default AuxiliaryPlayingLocationPage;

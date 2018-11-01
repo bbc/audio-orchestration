@@ -13,17 +13,17 @@ import { createSession, validateSession } from './session';
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
 export const PAGE_ERROR = 'error';
-export const PAGE_MASTER_SETUP = 'master-setup';
-export const PAGE_MASTER_PLAYING = 'master-playing';
+export const PAGE_MAIN_SETUP = 'main-setup';
+export const PAGE_MAIN_PLAYING = 'main-playing';
 export const PAGE_CONNECT_FORM = 'connect-form';
 export const PAGE_CONNECT_DIRECT = 'connect-direct';
-export const PAGE_SLAVE_SETUP_LOCATION = 'slave-setup-location';
-export const PAGE_SLAVE_PLAYING = 'slave-playing';
-export const PAGE_SLAVE_PLAYING_LOCATION = 'slave-playing-location';
-export const PAGE_SLAVE_DISCONNECTED = 'slave-disconnected';
+export const PAGE_AUXILIARY_SETUP_LOCATION = 'auxiliary-setup-location';
+export const PAGE_AUXILIARY_PLAYING = 'auxiliary-playing';
+export const PAGE_AUXILIARY_PLAYING_LOCATION = 'auxiliary-playing-location';
+export const PAGE_AUXILIARY_DISCONNECTED = 'auxiliary-disconnected';
 
-export const ROLE_MASTER = 'master';
-export const ROLE_SLAVE = 'slave';
+export const ROLE_MAIN = 'main';
+export const ROLE_AUXILIARY = 'auxiliary';
 
 function* validateSessionCode(action) {
   try {
@@ -67,13 +67,13 @@ function* connectForm(canCancel = true) {
 }
 
 /**
- * Main flow for the master device.
+ * Main flow for the main device.
  *
- * After deciding the device is the master, we try to create a session. Then the setup screen is
+ * After deciding the device is the main, we try to create a session. Then the setup screen is
  * shown, before moving on to the main playing screen.
  */
-function* masterFlow() {
-  yield put({ type: 'SET_ROLE', role: ROLE_MASTER });
+function* mainFlow() {
+  yield put({ type: 'SET_ROLE', role: ROLE_MAIN });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
   yield takeEvery('SET_ERROR', function* () {
@@ -92,22 +92,22 @@ function* masterFlow() {
     return;
   }
 
-  yield put({ type: 'SET_PAGE', page: PAGE_MASTER_SETUP });
+  yield put({ type: 'SET_PAGE', page: PAGE_MAIN_SETUP });
 
-  yield take('CLICK_MASTER_SETUP_CONTINUE');
+  yield take('CLICK_MAIN_SETUP_CONTINUE');
 
-  yield put({ type: 'SET_PAGE', page: PAGE_MASTER_PLAYING });
+  yield put({ type: 'SET_PAGE', page: PAGE_MAIN_PLAYING });
 }
 
 /**
- * Main flow for a slave device.
+ * Main flow for a auxiliary device.
  *
- * After having decided that this device is a slave, a session code is requested from the user.
+ * After having decided that this device is a auxiliary, a session code is requested from the user.
  * If this succeeds, we move on to the location screen and then the playing screen.
  */
-function* slaveFlow({ sessionCode, sessionId }) {
+function* auxiliaryFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
-  yield put({ type: 'SET_ROLE', role: ROLE_SLAVE });
+  yield put({ type: 'SET_ROLE', role: ROLE_AUXILIARY });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
   yield takeEvery('SET_ERROR', function* () {
@@ -115,7 +115,7 @@ function* slaveFlow({ sessionCode, sessionId }) {
   });
 
   yield takeEvery('SET_DISCONNECTED', function* () {
-    yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_DISCONNECTED });
+    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_DISCONNECTED });
   });
 
   try {
@@ -128,13 +128,13 @@ function* slaveFlow({ sessionCode, sessionId }) {
     return;
   }
 
-  yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_SETUP_LOCATION });
+  yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_SETUP_LOCATION });
 
   while (true) {
-    yield take('REQUEST_CLOSE_SLAVE_LOCATION');
-    yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_PLAYING });
-    yield take('REQUEST_OPEN_SLAVE_LOCATION');
-    yield put({ type: 'SET_PAGE', page: PAGE_SLAVE_PLAYING_LOCATION });
+    yield take('REQUEST_CLOSE_AUXILIARY_LOCATION');
+    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING });
+    yield take('REQUEST_OPEN_AUXILIARY_LOCATION');
+    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING_LOCATION });
   }
 }
 
@@ -147,7 +147,7 @@ function* joinFlow() {
   if (cancelled) {
     yield call(startFlow);
   } else {
-    yield call(slaveFlow, { sessionCode, sessionId });
+    yield call(auxiliaryFlow, { sessionCode, sessionId });
   }
 }
 
@@ -164,7 +164,7 @@ function* directJoinFlow(sessionCode) {
 
   if (result.type === 'SESSION_CODE_VALID') {
     const { sessionId } = result;
-    yield call(slaveFlow, { sessionId, sessionCode });
+    yield call(auxiliaryFlow, { sessionId, sessionCode });
   } else {
     yield call(joinFlow);
   }
@@ -179,7 +179,7 @@ function* startFlow() {
   const action = yield take(['CLICK_CREATE_SESSION', 'CLICK_JOIN_SESSION']);
 
   if (action.type === 'CLICK_CREATE_SESSION') {
-    yield call(masterFlow);
+    yield call(mainFlow);
   } else {
     yield call(joinFlow);
   }

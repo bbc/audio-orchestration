@@ -6,17 +6,17 @@ import ObjectList from '../../Components/ObjectList';
 import LargeButton from '../../Components/LargeButton';
 import { CONTENT_ID_MAIN, DEBUG_UI } from '../../../config';
 
-const SlavePlayingPage = (props) => {
+const AuxiliaryPlayingPage = (props) => {
   const {
     sessionCode,
     activeObjectIds,
-    slaveLocationOnOpen,
+    auxiliaryLocationOnOpen,
     currentContentId,
     deviceLocation,
   } = props;
 
   return (
-    <div className="page page-slave-playing">
+    <div className="page page-auxiliary-playing">
       <h1>Auxiliary Device</h1>
 
       <p>This is the auxiliary device playing page.</p>
@@ -42,7 +42,7 @@ const SlavePlayingPage = (props) => {
         <LargeButton
           text="Change Device Location"
           secondaryText={`${deviceLocation.distance}-${deviceLocation.direction}`}
-          onClick={() => slaveLocationOnOpen()}
+          onClick={() => auxiliaryLocationOnOpen()}
         />
       </p>
 
@@ -57,13 +57,13 @@ const SlavePlayingPage = (props) => {
   );
 };
 
-SlavePlayingPage.propTypes = {
+AuxiliaryPlayingPage.propTypes = {
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string.isRequired,
   currentContentId: PropTypes.string.isRequired,
-  slaveLocationOnOpen: PropTypes.func.isRequired,
+  auxiliaryLocationOnOpen: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
   deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default SlavePlayingPage;
+export default AuxiliaryPlayingPage;

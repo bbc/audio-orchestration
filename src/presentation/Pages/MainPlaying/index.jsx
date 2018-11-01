@@ -8,7 +8,7 @@ import LargeButton from '../../Components/LargeButton';
 
 import { JOIN_URL } from '../../../config';
 
-const MasterPlayingPage = (props) => {
+const MainPlayingPage = (props) => {
   const {
     sessionCode,
     connectedDevices,
@@ -18,7 +18,7 @@ const MasterPlayingPage = (props) => {
   } = props;
 
   return (
-    <div className="page page-master">
+    <div className="page page-main">
       <h1>
         Main Device
       </h1>
@@ -55,7 +55,7 @@ const MasterPlayingPage = (props) => {
   );
 };
 
-MasterPlayingPage.propTypes = {
+MainPlayingPage.propTypes = {
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string.isRequired,
   currentContentId: PropTypes.string.isRequired,
@@ -65,4 +65,4 @@ MasterPlayingPage.propTypes = {
   ended: PropTypes.bool.isRequired,
 };
 
-export default MasterPlayingPage;
+export default MainPlayingPage;

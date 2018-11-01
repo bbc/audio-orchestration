@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StepProgressIndicator from '../../Components/StepProgressIndicator';
 import LargeButton from '../../Components/LargeButton';
-import LocationSetting from '../../Components/SlaveLocationSetting';
+import LocationSetting from '../../Components/AuxiliaryLocationSetting';
 
-const SlaveSetupLocationPage = ({
-  slaveLocationOnClose,
+const AuxiliarySetupLocationPage = ({
+  auxiliaryLocationOnClose,
   setDeviceLocation,
   deviceLocation,
 }) => (
-  <div className="page page-slave-setup-location">
+  <div className="page page-auxiliary-setup-location">
     <h1>
       Set Location
     </h1>
@@ -28,17 +28,17 @@ const SlaveSetupLocationPage = ({
       text="Continue"
       secondaryText="Close the location page."
       disabled={!(deviceLocation.distance && deviceLocation.direction)}
-      onClick={() => slaveLocationOnClose()}
+      onClick={() => auxiliaryLocationOnClose()}
     />
 
     <StepProgressIndicator step={3} numSteps={3} />
   </div>
 );
 
-SlaveSetupLocationPage.propTypes = {
-  slaveLocationOnClose: PropTypes.func.isRequired,
+AuxiliarySetupLocationPage.propTypes = {
+  auxiliaryLocationOnClose: PropTypes.func.isRequired,
   setDeviceLocation: PropTypes.func.isRequired,
   deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
 };
 
-export default SlaveSetupLocationPage;
+export default AuxiliarySetupLocationPage;

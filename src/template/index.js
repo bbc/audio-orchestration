@@ -11,9 +11,9 @@ import {
   requestTransitionToSequence,
   connectFormOnCancel,
   connectFormOnSubmit,
-  masterSetupOnContinue,
-  slaveLocationOnClose,
-  slaveLocationOnOpen,
+  mainSetupOnContinue,
+  auxiliaryLocationOnClose,
+  auxiliaryLocationOnOpen,
 } from './actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
@@ -65,14 +65,14 @@ function mapDispatchToProps(dispatch) {
       ensureAudioContext();
       dispatch(connectFormOnSubmit(sessionCode));
     },
-    masterSetupOnContinue: () => {
-      dispatch(masterSetupOnContinue());
+    mainSetupOnContinue: () => {
+      dispatch(mainSetupOnContinue());
     },
-    slaveLocationOnClose: () => {
-      dispatch(slaveLocationOnClose());
+    auxiliaryLocationOnClose: () => {
+      dispatch(auxiliaryLocationOnClose());
     },
-    slaveLocationOnOpen: () => {
-      dispatch(slaveLocationOnOpen());
+    auxiliaryLocationOnOpen: () => {
+      dispatch(auxiliaryLocationOnOpen());
     },
   };
 }

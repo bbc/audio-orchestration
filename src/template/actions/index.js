@@ -31,14 +31,14 @@ export const connectFormOnSubmit = sessionCode => ({
   sessionCode,
 });
 
-export const masterSetupOnContinue = () => ({
-  type: 'CLICK_MASTER_SETUP_CONTINUE',
+export const mainSetupOnContinue = () => ({
+  type: 'CLICK_MAIN_SETUP_CONTINUE',
 });
 
-export const slaveLocationOnClose = () => ({
-  type: 'REQUEST_CLOSE_SLAVE_LOCATION',
+export const auxiliaryLocationOnClose = () => ({
+  type: 'REQUEST_CLOSE_AUXILIARY_LOCATION',
 });
 
-export const slaveLocationOnOpen = () => ({
-  type: 'REQUEST_OPEN_SLAVE_LOCATION',
+export const auxiliaryLocationOnOpen = () => ({
+  type: 'REQUEST_OPEN_AUXILIARY_LOCATION',
 });

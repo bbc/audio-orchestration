@@ -8,9 +8,9 @@ import ConnectionInstructions from '../../Components/ConnectionInstructions';
 import DeviceList from '../../Components/DeviceList';
 import { JOIN_URL, CONTENT_ID_MAIN } from '../../../config';
 
-const MasterSetupPage = (props) => {
+const MainSetupPage = (props) => {
   const {
-    masterSetupOnContinue,
+    mainSetupOnContinue,
     sessionCode,
     connectedDevices,
     transitionToSequence,
@@ -18,11 +18,11 @@ const MasterSetupPage = (props) => {
 
   const onContinue = () => {
     transitionToSequence(CONTENT_ID_MAIN);
-    masterSetupOnContinue();
+    mainSetupOnContinue();
   };
 
   return (
-    <div className="page page-master">
+    <div className="page page-main">
       <h1>
         Main Device Setup
       </h1>
@@ -48,7 +48,7 @@ const MasterSetupPage = (props) => {
         text="Continue"
         secondaryText="Proceed to the main sequence."
         disabled={connectedDevices.length === 0}
-        onClick={masterSetupOnContinue}
+        onClick={onContinue}
       />
 
       { connectedDevices.length === 0
@@ -69,11 +69,11 @@ const MasterSetupPage = (props) => {
   );
 };
 
-MasterSetupPage.propTypes = {
-  masterSetupOnContinue: PropTypes.func.isRequired,
+MainSetupPage.propTypes = {
+  mainSetupOnContinue: PropTypes.func.isRequired,
   transitionToSequence: PropTypes.func.isRequired,
   sessionCode: PropTypes.string.isRequired,
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
 };
 
-export default MasterSetupPage;
+export default MainSetupPage;

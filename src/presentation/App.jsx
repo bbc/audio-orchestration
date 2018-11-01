@@ -8,28 +8,28 @@ import {
   PAGE_START,
   PAGE_LOADING,
   PAGE_ERROR,
-  PAGE_MASTER_SETUP,
-  PAGE_MASTER_PLAYING,
+  PAGE_MAIN_SETUP,
+  PAGE_MAIN_PLAYING,
   PAGE_CONNECT_FORM,
   PAGE_CONNECT_DIRECT,
-  PAGE_SLAVE_SETUP_LOCATION,
-  PAGE_SLAVE_PLAYING,
-  PAGE_SLAVE_PLAYING_LOCATION,
-  PAGE_SLAVE_DISCONNECTED,
+  PAGE_AUXILIARY_SETUP_LOCATION,
+  PAGE_AUXILIARY_PLAYING,
+  PAGE_AUXILIARY_PLAYING_LOCATION,
+  PAGE_AUXILIARY_DISCONNECTED,
 } from '../sagas';
 
 // Import the pages: only one of these is used at a time.
 import StartPage from './Pages/Start';
 import LoadingPage from './Pages/Loading';
 import ErrorPage from './Pages/Error';
-import MasterSetupPage from './Pages/MasterSetup';
-import MasterPlayingPage from './Pages/MasterPlaying';
+import MainSetupPage from './Pages/MainSetup';
+import MainPlayingPage from './Pages/MainPlaying';
 import ConnectFormPage from './Pages/ConnectForm';
 import ConnectDirectPage from './Pages/ConnectDirect';
-import SlaveSetupLocationPage from './Pages/SlaveSetupLocation';
-import SlavePlayingPage from './Pages/SlavePlaying';
-import SlavePlayingLocationPage from './Pages/SlavePlayingLocation';
-import SlaveDisconnectedPage from './Pages/SlaveDisconnected';
+import AuxiliarySetupLocationPage from './Pages/AuxiliarySetupLocation';
+import AuxiliaryPlayingPage from './Pages/AuxiliaryPlaying';
+import AuxiliaryPlayingLocationPage from './Pages/AuxiliaryPlayingLocation';
+import AuxiliaryDisconnectedPage from './Pages/AuxiliaryDisconnected';
 import Footer from './Footer';
 
 /**
@@ -38,7 +38,7 @@ import Footer from './Footer';
  * It selects the currently active page to render, and forwards all its props to the page. Each
  * page may contain further logic to show different screens depending on its props.
  *
- * The 'role' can be start, master, or slave. It typically does not change after the user's initial
+ * The 'role' can be start, main, or auxiliary. It typically does not change after the user's initial
  * selection to create, or join a session.
  *
  * The loading, error, and help (and any other screens you may want to add) are boolean properties
@@ -63,11 +63,11 @@ const App = (props) => {
     case PAGE_ERROR:
       CurrentPage = ErrorPage;
       break;
-    case PAGE_MASTER_SETUP:
-      CurrentPage = MasterSetupPage;
+    case PAGE_MAIN_SETUP:
+      CurrentPage = MainSetupPage;
       break;
-    case PAGE_MASTER_PLAYING:
-      CurrentPage = MasterPlayingPage;
+    case PAGE_MAIN_PLAYING:
+      CurrentPage = MainPlayingPage;
       break;
     case PAGE_CONNECT_FORM:
       CurrentPage = ConnectFormPage;
@@ -75,17 +75,17 @@ const App = (props) => {
     case PAGE_CONNECT_DIRECT:
       CurrentPage = ConnectDirectPage;
       break;
-    case PAGE_SLAVE_SETUP_LOCATION:
-      CurrentPage = SlaveSetupLocationPage;
+    case PAGE_AUXILIARY_SETUP_LOCATION:
+      CurrentPage = AuxiliarySetupLocationPage;
       break;
-    case PAGE_SLAVE_PLAYING:
-      CurrentPage = SlavePlayingPage;
+    case PAGE_AUXILIARY_PLAYING:
+      CurrentPage = AuxiliaryPlayingPage;
       break;
-    case PAGE_SLAVE_PLAYING_LOCATION:
-      CurrentPage = SlavePlayingLocationPage;
+    case PAGE_AUXILIARY_PLAYING_LOCATION:
+      CurrentPage = AuxiliaryPlayingLocationPage;
       break;
-    case PAGE_SLAVE_DISCONNECTED:
-      CurrentPage = SlaveDisconnectedPage;
+    case PAGE_AUXILIARY_DISCONNECTED:
+      CurrentPage = AuxiliaryDisconnectedPage;
       break;
     default:
       CurrentPage = ErrorPage;
