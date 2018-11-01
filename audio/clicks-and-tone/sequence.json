@@ -40,7 +40,8 @@
         "above": 2,
         "onDropin": 1,
         "onDropout": 1,
-        "minQuality": 1
+        "minQuality": 1,
+        "image": "tone"
       }
     }
   ]

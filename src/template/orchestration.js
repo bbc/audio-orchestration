@@ -93,7 +93,7 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('objects', (e) => {
     dispatch(setActiveObjectIds(e.activeObjectIds));
-    dispatch(setPrimaryObject(e.primaryObjectId, e.primaryObjectImageUrl));
+    dispatch(setPrimaryObject(e.primaryObjectId, e.primaryObjectImage));
   });
 
   globalOrchestrationClient.on('mute', muted => dispatch(setMuted(muted)));

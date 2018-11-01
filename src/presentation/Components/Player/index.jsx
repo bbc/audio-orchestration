@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DurationClock from './duration-clock';
-import { DEFAULT_IMAGE_URL } from '../../../config';
+import PlayerImage from './PlayerImage';
+import { DEFAULT_IMAGE } from '../../../config';
 
 const Player = ({
   playing,
@@ -18,8 +19,7 @@ const Player = ({
   contentSpeed,
   contentDuration,
   loop,
-  primaryObjectImageUrl,
-  primaryObjectId,
+  primaryObjectImage,
 }) => {
   const buttons = [];
   if (canPause) {
@@ -58,9 +58,7 @@ const Player = ({
 
   return (
     <div className="player">
-      <p className="player-image">
-        <img src={primaryObjectImageUrl} width="400" height="400" alt={primaryObjectId} />
-      </p>
+      <PlayerImage image={primaryObjectImage} />
       <p className="player-controls">
         { buttons }
       </p>
@@ -80,8 +78,7 @@ const Player = ({
 };
 
 Player.defaultProps = {
-  primaryObjectImageUrl: DEFAULT_IMAGE_URL,
-  primaryObjectId: '',
+  primaryObjectImage: DEFAULT_IMAGE,
 };
 
 Player.propTypes = {
@@ -99,8 +96,7 @@ Player.propTypes = {
   contentCorrelation: PropTypes.objectOf(PropTypes.number).isRequired,
   contentSpeed: PropTypes.number.isRequired,
   contentDuration: PropTypes.number.isRequired,
-  primaryObjectImageUrl: PropTypes.string,
-  primaryObjectId: PropTypes.string,
+  primaryObjectImage: PropTypes.string,
 };
 
 export default Player;

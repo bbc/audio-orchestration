@@ -6,6 +6,7 @@ $gel-grid-enable--box-sizing: true;
 @import 'node_modules/gel-typography/typography';
 
 @import './colours.scss';
+@import './images.scss';
 
 @mixin reith-sans {
   font-family: Helvetica, Arial, sans-serif;
@@ -133,13 +134,33 @@ button {
 }
 
 .player {
+  margin: $gel-spacing-unit auto;
   text-align: center;
+  width: 250px;
 
-  .player-image img {
-    width: 75%;
-    max-width: 400px;
-    height: auto;
+  @media screen and (min-width: 600px) {
+    width: 400px;
   }
+}
+
+
+.player-image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  overflow: hidden;
+}
+
+.player-image {
+  top: 0;
+  left: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
 }
 
 .loading-message-log {

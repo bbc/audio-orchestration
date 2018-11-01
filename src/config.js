@@ -38,7 +38,7 @@ export const SEQUENCE_URLS = [
 export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
 export const PLAY_AGAIN_CONTENT_ID = CONTENT_ID_MAIN;
 
-export const DEFAULT_IMAGE_URL = 'images/default.png';
+export const DEFAULT_IMAGE = 'default';
 export const JOIN_URL = 'http://localhost:8080/join';
 
 export const DEBUG_UI = true;
