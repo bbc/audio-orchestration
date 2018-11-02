@@ -48,25 +48,53 @@ or via the link below:
 
 * [Node.js](https://nodejs.org/en/)
 
-Run `git init my-mdo-experience` to create a new Git repository. Go into the directory with
-`cd my-mdo-experience`.
+Create a new Git repository, change into the directory, and pull in the latest version of the template.  
 
-Run `git pull git@github.com:bbc/bbcat-orchestration-template.git` to get the current version of
-the template and add it to your empty repository. 
+```sh
+git init my-mdo-experience
+cd my-mdo-experience
+git pull git@github.com:bbc/bbcat-orchestration-template.git
+```
 
-Run `npm install` to download all dependencies, including the various build tools. They are
-installed into the `node_modules` directory, this may take a few minutes the first time round.
+This creates a local _fork_ of the template you can then build on, that is not linked to this GitHub
+repository.
 
-Run `npm run dev` to compile the template and start a development server. When it says _Compiled
-successfully_ you can open your browser at [localhost:8080](http://localhost:8080) to see it.
+Then, install all the Node.js dependencies and build tools.
 
-Well done! You now have a local copy of the template that you can modify as you like.
+```sh
+npm install
+```
+
+The dependencies defined in `package.json` (and their dependencies) are installed into the
+`node_modules` directory. This may take a few minutes the first time around.
+
+You can now start the development server included with the template.
+
+```sh
+npm run dev
+```
+
+The `dev` script uses the `webpack` and `babel` tools to transpile the template and library
+JavaScript code and package it all up nicely with the images and stylesheets, ready for the
+browser to use. The development server also watches for changes, so it rebuilds and reloads
+the page when you change a file. When it says _Compiled successfully_ you can open your
+browser at [localhost:8080](http://localhost:8080) to see it.
 
 ![Screenshot of the terminal and browser after creating a working copy of the template](working-copy.png)
 
+## Customise the text and colour scheme
+
+Well done! You now have a local copy of the template that you can modify as you like.
+
+The page should automatically reload a few seconds after you save the files.
+
 For example, try changing the title on the front page by editing `src/presentation/Pages/Start/index.jsx`
-in a text editor. The page should automatically reload a few seconds after you saved the file. More
-pointers to where certain changes can be made will be included later on in this tutorial.
+in a text editor. The bits in the JSX files that look like HTML are usually safe to edit; and your
+text editor will have an undo button, so experiment!
+
+You can also change the button colours by editing `src/presentation/colours.scss`.
+
+![Screenshot of a text editor and browser after editing the presentation files](edit-presentation.png)
 
 ## Prepare your audio files and metadata table
 

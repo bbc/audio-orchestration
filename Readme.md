@@ -1,8 +1,8 @@
-# BBC Audio Toolbox: Device Orchestration Template
+# Orchestration Template
 
 This project is an example you can modify to suit your application. Fork this repository, and build
 your own orchestrated audio experiences using [React](https://reactjs.org/) and our
-[bbcat-orchestration](https://github.com/bbc/bbcat-orchestration) tools.
+[bbcat-orchestration](https://github.com/bbc/bbcat-orchestration) tools. Follow the [tutorial](tutorial/) for step-by-step instructions.
 
 You should only need to modify this template in three places:
 
