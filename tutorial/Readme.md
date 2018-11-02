@@ -34,7 +34,7 @@ You'll also need a spreadsheet or text editor that can export to plain-text `csv
 Microsoft Excel or Google Docs) to create the metadata table.
 
 This template is written mostly in JavaScript, and you'll need `nodejs` to compile it before you
-can view it in the browser. You'll also need `ffmpeg` and `python2` to encode the media and convert
+can view it in the browser. You'll also need `ffmpeg` and `python3` to encode the media and convert
 the metadata files. We recommend you use `git` to checkout this repository.
 
 _These instructions assume you're on a Mac and comfortable installing software using homebrew.
@@ -135,7 +135,7 @@ git clone git@github.com:bbc/bbcat-orchestration.git
 cd bbcat-orchestration
 ```
 
-The following tools and utilities are required: `python2` and `virtualenv`, `ffmpeg` with the fdk
+The following tools and utilities are required: `python3` and `ffmpeg` with the fdk
 AAC encoder, and the `realpath` and `parallel` utilities. You should already have `node` from the
 previous section. Here's how to install any that may be missing using Homebrew (if you already
 have working versions of the tools, you don't need to run these):
@@ -145,10 +145,11 @@ brew install python@3 # probably already installed
 brew install ffmpeg --with-fdk-aac
 brew install realpath
 brew install parallel
-brew install node # already installed previously
+brew install node # already installed in previous step
 ```
 
-Now set up a `python3` virtual environment named `env` in `tools/split-tracks` and install the python dependencies:
+Now set up a `python3` virtual environment named `env` in `tools/split-tracks`, activate it, and
+install the python dependencies:
 
 ```sh
 cd tools/split-tracks
@@ -217,16 +218,26 @@ don't define these, it will cut about a second after you press the button to con
 When you now go back to your browser (you might have to CTRL-C and restart the `npm run dev` process)
 and start a session, you should hear your new audio.
 
-## Customise the user interface text labels and colour scheme
-
-You can edit the colours used in the default interface in `src/colours.scss` and `src/main.scss`,
-and the text in the corresponding `.jsx` file under `src/presentation`.
-
 ## Add per-object images
 
-Some changes to the template code are required to make this happen more easily - stay tuned for the
-next template update.
+Each object in your metadata table can have an `image` property. This is a short identifier to
+reference the image later, not a file name.
+
+Images are stored in `src/presentation/images` and the mapping from name to file is defined in
+the `src/presentation/images.scss` file. Register your images there: for example, to add one
+referred to as `my-object-image` in the metadata file, add the following line to the end of
+`images.scss`:
+
+```css
+.player-image-my-object-image { background-image: url('./images/my-object-image.png'); }
+```
+
+This defines a CSS class referencing your image file as a background image. Images are assumed to
+be square and around 400 by 400 pixels in size. The class name always begins with `.player-image-`,
+and ends with the name you defined in the metadata table's image column.
 
 ## Troubleshooting
 
-TODO
+* Python installed via _Anaconda_ may cause errors during `npm install` process. In this case, the
+  system python (`python` comman) should be set to Python 2, and the `$PYTHON_HOME` environment
+  variable may also need to be adjusted to match this setting.
