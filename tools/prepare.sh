@@ -6,14 +6,13 @@ if [ $# '!=' 3 ]; then
   exit 1
 fi
 
-# Requries realpath and gnu parallel to be installed on the system
 
 SRC_OBJECTS_CSV=$1
 DEST=$2
 BASE_URL=$3
 GAP=0.1
 
-SRC=$(dirname $(realpath $SRC_OBJECTS_CSV))
+SRC=$(cd $(dirname "$SRC_OBJECTS_CSV") && pwd -P)
 SRC_FILES=$(cat $SRC_OBJECTS_CSV | tail -n +2 | awk -v dir="$SRC/" -F "," '{print dir$3}')
 SPLIT_DEST=$(mktemp -d)
 
