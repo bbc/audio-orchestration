@@ -136,14 +136,13 @@ cd bbcat-orchestration
 ```
 
 The following tools and utilities are required: `python3` and `ffmpeg` with the fdk
-AAC encoder, and the `realpath` and `parallel` utilities. You should already have `node` from the
+AAC encoder, and the `parallel` utility. You should already have `node` from the
 previous section. Here's how to install any that may be missing using Homebrew (if you already
 have working versions of the tools, you don't need to run these):
 
 ```sh
-brew install python@3 # probably already installed
+brew install python # probably already installed
 brew install ffmpeg --with-fdk-aac
-brew install realpath
 brew install parallel
 brew install node # already installed in previous step
 ```
@@ -160,6 +159,8 @@ pip install pandas
 pip install pysndfile
 cd ..
 ```
+
+_NB: See the troubleshooting notes below if `pysndfile` installation fails._
 
 Now that we have all the tools, and the metadata and audio files in one place, we can run the 
 packaging script. The arguments to it are: the path to the `.csv` metadata file, the path to
@@ -238,6 +239,9 @@ and ends with the name you defined in the metadata table's image column.
 
 ## Troubleshooting
 
+* `pip install pysndfile` may fail if the `sndfile` headers are not found on the system. In this case,
+  get them with e.g. `brew install libsndfile`.
+  * As of version 1.3.2, `pysndfile` does not seem to be compatible with Python 3.7 (MacOS High Sierra default).
 * Python installed via _Anaconda_ may cause errors during `npm install` process. In this case, the
   system python (`python` comman) should be set to Python 2, and the `$PYTHON_HOME` environment
   variable may also need to be adjusted to match this setting.
