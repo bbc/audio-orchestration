@@ -47,7 +47,7 @@ for including in a webpage) then do this:
 
 The resulting JS client library is placed in `dist/browser/Cloud-SyncKit.js`.
 
-**Usage instructions for the client library can be found in [src/client/readme.md](src/client/readme.md)**
+**Usage instructions for the client library can be found in [client-api.md](client-api.md)**
 
 
 ### OR: build the synchronisation service and run it on a server machine or cloud platform
