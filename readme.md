@@ -17,7 +17,7 @@ as a software clock  object.
 Cloud-Sync supports the following features:
 * LAN-local interdevice and inter-destination media synchronisation with frame synchronisation accuracy  
 * *Synchronisation Maestro*, *Distributed*, *Latest Master* timing control schemes
-* * A lightweight time synchronisation scheme that can run in browser environments
+* A lightweight time synchronisation scheme that can run in browser environments
 * Dynamic master node election
 * Dynamic sync error monitoring and alerts
 * Arbitratry timing sources (media players,  artificial clocks, broadcast timelines)
