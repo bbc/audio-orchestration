@@ -19,9 +19,9 @@ Version `2.0.0`
 * MQTT Client library : [paho-mqtt](https://www.npmjs.com/package/paho-mqtt)   v1.0.3 (Available as an NPM package)
 
 
-### Sync Service Endpoints
+### Sync Service Endpoints (for testing)
 
-* Sync Service Edge (v2.0.0): mqttbroker.edge.platform.2immerse.eu
+* Sync Service (v2.0.0): 
 
 
 ### Build the Synchronisation Service Client Library
