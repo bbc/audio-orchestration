@@ -1,5 +1,9 @@
 # Cloud-Sync Media Synchronisation Service 
 
+<img src="https://2immerse.eu/wp-content/uploads/2016/04/2-IMM_150x50.png" align="left"/><em>This project was originally developed as part of the <a href="https://2immerse.eu/">2-IMMERSE</a> project, co-funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> Research Programme</em>
+
+## Overview
+
 **An implementation of a Media Synchronisation Service in Node and its client library JS (intended for use in the browser).**
 
 Cloud-Sync is a frame-accurate inter-destination media synchronisation service that supports a number of timing control schemes and asynchrony reduction algorithms:
@@ -22,6 +26,8 @@ Cloud-Sync supports the following features:
 * Arbitratry timing sources (e.g. media players,  artificial clocks, broadcast timelines)
 * Sync protocols over multiple transports: WebSockets, UDP, TCP 
 * Client Sync-Controllers for local media playback adaptation
+
+The documentation for the API and usage instructions for the client library can be found in [client-api.md](client-api.md)
 
 
 ## Cloud-Sync Service Endpoints
@@ -129,8 +135,16 @@ Unit tests are written using the jasmine unit test framework.
     $ grunt test
 
 
+## Licence and Authors
 
-## Authors
+All code and documentation is licensed by the original author and contributors under the Apache License v2.0:
 
- * Rajiv Ramdhany (BBC)
- * Christoph Ziegler (IRT)
+* [British Broadcasting Corporation](http://www.bbc.co.uk/rd) (original author)
+* [Centrum Wiskunde & Informatica](http://www.cwi.nl/)
+
+See AUTHORS.md file for a full list of individuals and organisations that have
+contributed to this code.
+
+## Contributing
+
+If you wish to contribute to this project, please get in touch with the authors.

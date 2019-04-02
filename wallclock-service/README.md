@@ -1,6 +1,9 @@
 
 # WallClock Service
 
+<img src="https://2immerse.eu/wp-content/uploads/2016/04/2-IMM_150x50.png" align="left"/><em>This project was originally developed as part of the <a href="https://2immerse.eu/">2-IMMERSE</a> project, co-funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> Research Programme</em>
+
+## Overview
 A time synchronisation service based on the WallClock synchronisation protocol from DVB-CSS. This service supports both UDP and WebSocket clients. For WebSocket clients, both JSON and binary message formats are supported.
 
 
