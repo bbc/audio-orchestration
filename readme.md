@@ -4,7 +4,7 @@
 
 ## Overview
 
-**An implementation of a Media Synchronisation Service in Node and its client library JS (intended for use in the browser).**
+**An implementation of a Media Synchronisation Service and its client library (intended for use in the browser).**
 
 Cloud-Sync is a frame-accurate inter-destination media synchronisation service that supports a number of timing control schemes and asynchrony reduction algorithms:
 1. Synchronisation Master (or Maestro)
