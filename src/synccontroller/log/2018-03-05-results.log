@@ -1,0 +1,9 @@
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered Wallclock Service {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered Wallclock Service {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered Mosquitto Service: {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"Discovered Redis Service: {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}
+{"level":"info","message":"connected to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"17:08:04"}

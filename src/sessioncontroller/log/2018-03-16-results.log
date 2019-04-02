@@ -1,0 +1,82 @@
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:02:45"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.243\"}","timestamp":"14:02:45"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.243\"}","timestamp":"14:02:45"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.243\"}","timestamp":"14:02:45"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.243\"}","timestamp":"14:02:45"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:02:45"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.243\"}","timestamp":"14:02:45"}
+{"level":"info","message":"connected to redis.","timestamp":"14:02:45"}
+{"redis":{"host":"192.168.1.243","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.243","port":3000},"level":"info","message":"","timestamp":"14:02:45"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:02:45"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.243:1883","timestamp":"14:02:45"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"5f59702a-0dea-4350-907c-b8dfcc3fcea1\",\"responseChannel\":\"Sessions/rajiv_session/5f59702a-0dea-4350-907c-b8dfcc3fcea1/RESP\",\"requestChannel\":\"Sessions/rajiv_session/5f59702a-0dea-4350-907c-b8dfcc3fcea1/RESP\",\"id\":\"MTUyMTIxMTMxNTAyNC0x\",\"version\":\"0.0.1\"}","timestamp":"14:42:13"}
+{"level":"info","message":"Received JoinREQ from device: 5f59702a-0dea-4350-907c-b8dfcc3fcea1","timestamp":"14:42:13"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"14:42:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"14:42:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"14:42:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"14:42:13"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"5f59702a-0dea-4350-907c-b8dfcc3fcea1\",\"responseChannel\":\"Sessions/rajiv_session/5f59702a-0dea-4350-907c-b8dfcc3fcea1/RESP\",\"correlation\":{\"parentTime\":1521211349677,\"childTime\":4,\"initialError\":0.028966453,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:living_room:5f59702a-0dea-4350-907c-b8dfcc3fcea1:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMTIxMTMxNTAyNC0y\",\"version\":\"0.0.1\"}","timestamp":"14:42:13"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 5f59702a-0dea-4350-907c-b8dfcc3fcea1","timestamp":"14:42:13"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"f6733d90-fc80-4bac-a677-f24956f1d42b\",\"responseChannel\":\"Sessions/rajiv_session/f6733d90-fc80-4bac-a677-f24956f1d42b/RESP\",\"requestChannel\":\"Sessions/rajiv_session/f6733d90-fc80-4bac-a677-f24956f1d42b/RESP\",\"id\":\"MTUyMTIxMTM1MDc3Ny0x\",\"version\":\"0.0.1\"}","timestamp":"14:42:40"}
+{"level":"info","message":"Received JoinREQ from device: f6733d90-fc80-4bac-a677-f24956f1d42b","timestamp":"14:42:40"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"f6733d90-fc80-4bac-a677-f24956f1d42b\",\"responseChannel\":\"Sessions/rajiv_session/f6733d90-fc80-4bac-a677-f24956f1d42b/RESP\",\"correlation\":{\"parentTime\":1521211376420.5,\"childTime\":2,\"initialError\":0.0074594929968,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:living_room:f6733d90-fc80-4bac-a677-f24956f1d42b:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMTIxMTM1MDc3Ny0y\",\"version\":\"0.0.1\"}","timestamp":"14:42:40"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: f6733d90-fc80-4bac-a677-f24956f1d42b","timestamp":"14:42:40"}
+{"level":"info","message":"Device  f6733d90-fc80-4bac-a677-f24956f1d42b  has left the session  rajiv_session","timestamp":"14:43:15"}
+{"level":"info","message":"Device f6733d90-fc80-4bac-a677-f24956f1d42b  removed from session  rajiv_session","timestamp":"14:43:15"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"785136aa-7802-4d87-b9d5-8f53e05fa489\",\"responseChannel\":\"Sessions/rajiv_session/785136aa-7802-4d87-b9d5-8f53e05fa489/RESP\",\"requestChannel\":\"Sessions/rajiv_session/785136aa-7802-4d87-b9d5-8f53e05fa489/RESP\",\"id\":\"MTUyMTIxMTQwMTc1MS0x\",\"version\":\"0.0.1\"}","timestamp":"14:43:37"}
+{"level":"info","message":"Received JoinREQ from device: 785136aa-7802-4d87-b9d5-8f53e05fa489","timestamp":"14:43:37"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session\",\"contextId\":\"living_room\",\"deviceId\":\"785136aa-7802-4d87-b9d5-8f53e05fa489\",\"responseChannel\":\"Sessions/rajiv_session/785136aa-7802-4d87-b9d5-8f53e05fa489/RESP\",\"correlation\":{\"parentTime\":1521211433087.5,\"childTime\":3,\"initialError\":0.0054583929968000005,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:living_room:785136aa-7802-4d87-b9d5-8f53e05fa489:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMTIxMTQwMTc1MS0y\",\"version\":\"0.0.1\"}","timestamp":"14:43:37"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 785136aa-7802-4d87-b9d5-8f53e05fa489","timestamp":"14:43:37"}
+{"level":"info","message":"Device  785136aa-7802-4d87-b9d5-8f53e05fa489  has left the session  rajiv_session","timestamp":"15:15:05"}
+{"level":"info","message":"Device 785136aa-7802-4d87-b9d5-8f53e05fa489  removed from session  rajiv_session","timestamp":"15:15:05"}
+{"level":"info","message":"Device  5f59702a-0dea-4350-907c-b8dfcc3fcea1  has left the session  rajiv_session","timestamp":"15:15:08"}
+{"level":"info","message":"Device 5f59702a-0dea-4350-907c-b8dfcc3fcea1  removed from session  rajiv_session","timestamp":"15:15:08"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"15:15:08"}
+{"level":"error","message":"Redis connection Error : AbortError: Ready check failed: Redis connection lost and command aborted. It might have been processed.","timestamp":"15:15:43"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.243:6379 failed - connect ECONNREFUSED 192.168.1.243:6379","timestamp":"15:15:43"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.243:6379 failed - connect ECONNREFUSED 192.168.1.243:6379","timestamp":"15:15:43"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.243:6379 failed - connect ECONNREFUSED 192.168.1.243:6379","timestamp":"15:15:44"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.243:6379 failed - connect ECONNREFUSED 192.168.1.243:6379","timestamp":"15:15:45"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:15:46"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:16:27"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:27"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:27"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:29"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:31"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:33"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:35"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:37"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:39"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:41"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:43"}
+{"level":"error","message":"Query for service wallclockservice-6677   failed.","timestamp":"15:16:45"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:47"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:49"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:51"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:53"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:55"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:57"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:16:59"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:17:01"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:17:03"}
+{"level":"error","message":"Query for service wallclockservice-6676   failed.","timestamp":"15:17:05"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:07"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:09"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:11"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:13"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:15"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:17"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:19"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:21"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:23"}
+{"level":"error","message":"Query for service mosquitto-1883   failed.","timestamp":"15:17:25"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:27"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:29"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:31"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:33"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:35"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:37"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:39"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:41"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:43"}
+{"level":"error","message":"Query for service redis   failed.","timestamp":"15:17:45"}

@@ -1,0 +1,34 @@
+# svn
+.svn
+
+# Mac OS X
+.DS_STORE
+.DS_Store
+
+# build/packaging/dependencies
+build/
+dist/
+sdist/
+node_modules/
+doc/
+.grunt/
+*~
+**/*~
+
+# eclipse
+.metadata
+org.nodeclipse.debug/bin
+org.nodeclipse.ui/bin
+*.DS_Store
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
+# Eclipse Core
+.project

@@ -1,0 +1,41 @@
+{
+  "name": "wallclock-service",
+  "version": "0.0.1",
+  "description": "WallClock synchronisation microservice",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "./node_modules/.bin/jasmine-node ./tests/specs",
+    "start": "node src/main.js"
+  },
+  "repository": "",
+  "keywords": [
+    "node.js",
+    "eclipse",
+    "nodeclipse"
+  ],
+  "author": {
+    "name": "Rajiv Ramdhany",
+    "email": "rajiv.ramdhany@bbc.co.uk"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "dvbcss-clocks": "^0.0.4",
+    "events": "^1.1.1",
+    "express": "^4.14.0",
+    "inherits": "^2.0.1",
+    "js-object-clone": "^0.4.2",
+    "request": "^2.74.0",
+    "dvbcss-protocols": "^0.0.2",
+    "weakmap": "0.0.6",
+    "ws": "^1.1.1"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-copy": "^0.8.2",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jsdoc": "^2.1.0"
+  }
+}

@@ -1,0 +1,282 @@
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"10:41:21"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"10:41:21"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"10:41:21"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"10:41:21"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"10:41:21"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"10:41:21"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"10:41:21"}
+{"level":"info","message":"connected to redis.","timestamp":"10:41:21"}
+{"redis":{"host":"192.168.1.115"},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true},"level":"info","message":"","timestamp":"10:41:21"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"10:41:21"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:21"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:23"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:25"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:27"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:29"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:31"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:33"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:35"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:37"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:39"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:41:41"}
+{"level":"info","message":"stopped listening to channels","timestamp":"10:41:42"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"10:43:20"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"10:43:20"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"10:43:20"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"10:43:20"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"10:43:20"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"10:43:20"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"10:43:20"}
+{"level":"info","message":"connected to redis.","timestamp":"10:43:20"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"10:43:20"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"10:43:20"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"10:43:20"}
+{"level":"info","message":"stopped listening to channels","timestamp":"10:43:38"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:51:30"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"11:51:30"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"11:51:30"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"11:51:30"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:51:30"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:51:30"}
+{"level":"info","message":"connected to redis.","timestamp":"11:51:30"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"11:51:30"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:56:17"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"11:56:18"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"11:56:18"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"11:56:18"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:56:18"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:56:18"}
+{"level":"info","message":"connected to redis.","timestamp":"11:56:18"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"11:56:18"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:57:49"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"11:57:49"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"11:57:49"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"11:57:49"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:57:49"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:57:49"}
+{"level":"info","message":"connected to redis.","timestamp":"11:57:49"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"11:57:49"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:59:09"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"11:59:09"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"11:59:09"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"11:59:09"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:59:09"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"11:59:10"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"11:59:09"}
+{"level":"info","message":"connected to redis.","timestamp":"11:59:09"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"11:59:09"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"11:59:10"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"11:59:10"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:00:23"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:08:49"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"12:08:49"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"12:08:49"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"12:08:49"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:08:49"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:08:49"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:08:49"}
+{"level":"info","message":"connected to redis.","timestamp":"12:08:49"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"12:08:49"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:08:49"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"12:08:49"}
+{"level":"info","message":"Received JoinREQ from device: 299f9be6-5fae-4b3b-b9d7-1ec68713d04d","timestamp":"12:09:27"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"12:09:27"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"12:09:27"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"12:09:27"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"12:09:27"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 299f9be6-5fae-4b3b-b9d7-1ec68713d04d","timestamp":"12:09:28"}
+{"level":"info","message":"Received TimelineREQ from device: 299f9be6-5fae-4b3b-b9d7-1ec68713d04d","timestamp":"12:09:28"}
+{"level":"info","message":"Received JoinREQ from device: 2400fbba-e697-4401-969d-2ef743ae1e75","timestamp":"12:10:03"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 2400fbba-e697-4401-969d-2ef743ae1e75","timestamp":"12:10:03"}
+{"level":"info","message":"Received TimelineREQ from device: 2400fbba-e697-4401-969d-2ef743ae1e75","timestamp":"12:10:03"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 2400fbba-e697-4401-969d-2ef743ae1e75","timestamp":"12:10:04"}
+{"level":"info","message":"Device  2400fbba-e697-4401-969d-2ef743ae1e75  has left the session  rajiv_session","timestamp":"12:10:48"}
+{"level":"info","message":"Device 2400fbba-e697-4401-969d-2ef743ae1e75  removed from session  rajiv_session","timestamp":"12:10:48"}
+{"level":"info","message":"Device  299f9be6-5fae-4b3b-b9d7-1ec68713d04d  has left the session  rajiv_session","timestamp":"12:10:51"}
+{"level":"info","message":"Device 299f9be6-5fae-4b3b-b9d7-1ec68713d04d  removed from session  rajiv_session","timestamp":"12:10:51"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"12:10:51"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:13:40"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:13:51"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"12:13:51"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"12:13:51"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"12:13:51"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:13:51"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:13:51"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:13:51"}
+{"level":"info","message":"connected to redis.","timestamp":"12:13:51"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"12:13:51"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:13:51"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"12:13:51"}
+{"level":"info","message":"Received JoinREQ from device: ae2ad297-4952-4f84-82b9-dbb656b5100f","timestamp":"12:14:02"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"12:14:02"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"12:14:02"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"12:14:02"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"12:14:02"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: ae2ad297-4952-4f84-82b9-dbb656b5100f","timestamp":"12:14:02"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:14:02"}
+{"level":"info","message":"Enqueued SyncController event:  {\"event\":{\"0\":10,\"1\":80,\"2\":18,\"3\":13,\"4\":114,\"5\":97,\"6\":106,\"7\":105,\"8\":118,\"9\":95,\"10\":115,\"11\":101,\"12\":115,\"13\":115,\"14\":105,\"15\":111,\"16\":110,\"17\":26,\"18\":36,\"19\":97,\"20\":101,\"21\":50,\"22\":97,\"23\":100,\"24\":50,\"25\":57,\"26\":55,\"27\":45,\"28\":52,\"29\":57,\"30\":53,\"31\":50,\"32\":45,\"33\":52,\"34\":102,\"35\":56,\"36\":52,\"37\":45,\"38\":56,\"39\":50,\"40\":98,\"41\":57,\"42\":45,\"43\":100,\"44\":98,\"45\":98,\"46\":54,\"47\":53,\"48\":54,\"49\":98,\"50\":53,\"51\":49,\"52\":48,\"53\":48,\"54\":102,\"55\":34,\"56\":3,\"57\":49,\"58\":46,\"59\":48,\"60\":42,\"61\":20,\"62\":77,\"63\":84,\"64\":85,\"65\":121,\"66\":77,\"67\":68,\"68\":73,\"69\":49,\"70\":77,\"71\":106,\"72\":65,\"73\":122,\"74\":77,\"75\":68,\"76\":99,\"77\":120,\"78\":79,\"79\":67,\"80\":48,\"81\":121,\"82\":18,\"83\":174,\"84\":2,\"85\":18,\"86\":36,\"87\":97,\"88\":101,\"89\":50,\"90\":97,\"91\":100,\"92\":50,\"93\":57,\"94\":55,\"95\":45,\"96\":52,\"97\":57,\"98\":53,\"99\":50,\"100\":45,\"101\":52,\"102\":102,\"103\":56,\"104\":52,\"105\":45,\"106\":56,\"107\":50,\"108\":98,\"109\":57,\"110\":45,\"111\":100,\"112\":98,\"113\":98,\"114\":54,\"115\":53,\"116\":54,\"117\":98,\"118\":53,\"119\":49,\"120\":48,\"121\":48,\"122\":102,\"123\":26,\"124\":66,\"125\":117,\"126\":114,\"127\":110,\"128\":58,\"129\":114,\"130\":97,\"131\":106,\"132\":105,\"133\":118,\"134\":95,\"135\":104,\"136\":111,\"137\":109,\"138\":101,\"139\":95,\"140\":49,\"141\":58,\"142\":97,\"143\":101,\"144\":50,\"145\":97,\"146\":100,\"147\":50,\"148\":57,\"149\":55,\"150\":45,\"151\":52,\"152\":57,\"153\":53,\"154\":50,\"155\":45,\"156\":52,\"157\":102,\"158\":56,\"159\":52,\"160\":45,\"161\":56,\"162\":50,\"163\":98,\"164\":57,\"165\":45,\"166\":100,\"167\":98,\"168\":98,\"169\":54,\"170\":53,\"171\":54,\"172\":98,\"173\":53,\"174\":49,\"175\":48,\"176\":48,\"177\":102,\"178\":58,\"179\":100,\"180\":109,\"181\":108,\"182\":107,\"183\":90,\"184\":87,\"185\":56,\"186\":117,\"187\":98,\"188\":88,\"189\":65,\"190\":48,\"191\":34,\"192\":69,\"193\":116,\"194\":97,\"195\":103,\"196\":58,\"197\":114,\"198\":100,\"199\":46,\"200\":98,\"201\":98,\"202\":99,\"203\":46,\"204\":99,\"205\":111,\"206\":46,\"207\":117,\"208\":107,\"209\":44,\"210\":50,\"211\":48,\"212\":49,\"213\":53,\"214\":45,\"215\":49,\"216\":50,\"217\":45,\"218\":48,\"219\":56,\"220\":58,\"221\":100,\"222\":118,\"223\":98,\"224\":58,\"225\":99,\"226\":115,\"227\":115,\"228\":58,\"229\":116,\"230\":105,\"231\":109,\"232\":101,\"233\":108,\"234\":105,\"235\":110,\"236\":101,\"237\":58,\"238\":115,\"239\":105,\"240\":109,\"241\":112,\"242\":108,\"243\":101,\"244\":45,\"245\":101,\"246\":108,\"247\":97,\"248\":112,\"249\":115,\"250\":101,\"251\":100,\"252\":45,\"253\":116,\"254\":105,\"255\":109,\"256\":101,\"257\":58,\"258\":49,\"259\":48,\"260\":48,\"261\":48,\"262\":42,\"263\":9,\"264\":118,\"265\":105,\"266\":100,\"267\":101,\"268\":111,\"269\":46,\"270\":109,\"271\":112,\"272\":52,\"273\":48,\"274\":232,\"275\":7,\"276\":58,\"277\":105,\"278\":83,\"279\":101,\"280\":115,\"281\":115,\"282\":105,\"283\":111,\"284\":110,\"285\":115,\"286\":47,\"287\":114,\"288\":97,\"289\":106,\"290\":105,\"291\":118,\"292\":95,\"293\":115,\"294\":101,\"295\":115,\"296\":115,\"297\":105,\"298\":111,\"299\":110,\"300\":47,\"301\":116,\"302\":105,\"303\":109,\"304\":101,\"305\":108,\"306\":105,\"307\":110,\"308\":101,\"309\":115,\"310\":47,\"311\":117,\"312\":114,\"313\":110,\"314\":58,\"315\":114,\"316\":97,\"317\":106,\"318\":105,\"319\":118,\"320\":95,\"321\":104,\"322\":111,\"323\":109,\"324\":101,\"325\":95,\"326\":49,\"327\":58,\"328\":97,\"329\":101,\"330\":50,\"331\":97,\"332\":100,\"333\":50,\"334\":57,\"335\":55,\"336\":45,\"337\":52,\"338\":57,\"339\":53,\"340\":50,\"341\":45,\"342\":52,\"343\":102,\"344\":56,\"345\":52,\"346\":45,\"347\":56,\"348\":50,\"349\":98,\"350\":57,\"351\":45,\"352\":100,\"353\":98,\"354\":98,\"355\":54,\"356\":53,\"357\":54,\"358\":98,\"359\":53,\"360\":49,\"361\":48,\"362\":48,\"363\":102,\"364\":58,\"365\":100,\"366\":109,\"367\":108,\"368\":107,\"369\":90,\"370\":87,\"371\":56,\"372\":117,\"373\":98,\"374\":88,\"375\":65,\"376\":48,\"377\":47,\"378\":115,\"379\":116,\"380\":97,\"381\":116,\"382\":101,\"383\":64,\"384\":1,\"385\":72,\"386\":1}}","timestamp":"12:14:02"}
+{"level":"info","message":"Received TimelineREQ from device: ae2ad297-4952-4f84-82b9-dbb656b5100f","timestamp":"12:14:02"}
+{"level":"info","message":"Received JoinREQ from device: 4b8060b2-ec8f-4bc4-9b36-903e289a538a","timestamp":"12:14:33"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 4b8060b2-ec8f-4bc4-9b36-903e289a538a","timestamp":"12:14:33"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:14:33"}
+{"level":"info","message":"Enqueued SyncController event:  {\"event\":{\"0\":10,\"1\":80,\"2\":18,\"3\":13,\"4\":114,\"5\":97,\"6\":106,\"7\":105,\"8\":118,\"9\":95,\"10\":115,\"11\":101,\"12\":115,\"13\":115,\"14\":105,\"15\":111,\"16\":110,\"17\":26,\"18\":36,\"19\":52,\"20\":98,\"21\":56,\"22\":48,\"23\":54,\"24\":48,\"25\":98,\"26\":50,\"27\":45,\"28\":101,\"29\":99,\"30\":56,\"31\":102,\"32\":45,\"33\":52,\"34\":98,\"35\":99,\"36\":52,\"37\":45,\"38\":57,\"39\":98,\"40\":51,\"41\":54,\"42\":45,\"43\":57,\"44\":48,\"45\":51,\"46\":101,\"47\":50,\"48\":56,\"49\":57,\"50\":97,\"51\":53,\"52\":51,\"53\":56,\"54\":97,\"55\":34,\"56\":3,\"57\":49,\"58\":46,\"59\":48,\"60\":42,\"61\":20,\"62\":77,\"63\":84,\"64\":85,\"65\":121,\"66\":77,\"67\":68,\"68\":73,\"69\":49,\"70\":77,\"71\":106,\"72\":65,\"73\":122,\"74\":77,\"75\":68,\"76\":99,\"77\":120,\"78\":79,\"79\":67,\"80\":48,\"81\":48,\"82\":18,\"83\":174,\"84\":2,\"85\":18,\"86\":36,\"87\":52,\"88\":98,\"89\":56,\"90\":48,\"91\":54,\"92\":48,\"93\":98,\"94\":50,\"95\":45,\"96\":101,\"97\":99,\"98\":56,\"99\":102,\"100\":45,\"101\":52,\"102\":98,\"103\":99,\"104\":52,\"105\":45,\"106\":57,\"107\":98,\"108\":51,\"109\":54,\"110\":45,\"111\":57,\"112\":48,\"113\":51,\"114\":101,\"115\":50,\"116\":56,\"117\":57,\"118\":97,\"119\":53,\"120\":51,\"121\":56,\"122\":97,\"123\":26,\"124\":66,\"125\":117,\"126\":114,\"127\":110,\"128\":58,\"129\":114,\"130\":97,\"131\":106,\"132\":105,\"133\":118,\"134\":95,\"135\":104,\"136\":111,\"137\":109,\"138\":101,\"139\":95,\"140\":49,\"141\":58,\"142\":52,\"143\":98,\"144\":56,\"145\":48,\"146\":54,\"147\":48,\"148\":98,\"149\":50,\"150\":45,\"151\":101,\"152\":99,\"153\":56,\"154\":102,\"155\":45,\"156\":52,\"157\":98,\"158\":99,\"159\":52,\"160\":45,\"161\":57,\"162\":98,\"163\":51,\"164\":54,\"165\":45,\"166\":57,\"167\":48,\"168\":51,\"169\":101,\"170\":50,\"171\":56,\"172\":57,\"173\":97,\"174\":53,\"175\":51,\"176\":56,\"177\":97,\"178\":58,\"179\":100,\"180\":109,\"181\":108,\"182\":107,\"183\":90,\"184\":87,\"185\":56,\"186\":117,\"187\":98,\"188\":88,\"189\":65,\"190\":48,\"191\":34,\"192\":69,\"193\":116,\"194\":97,\"195\":103,\"196\":58,\"197\":114,\"198\":100,\"199\":46,\"200\":98,\"201\":98,\"202\":99,\"203\":46,\"204\":99,\"205\":111,\"206\":46,\"207\":117,\"208\":107,\"209\":44,\"210\":50,\"211\":48,\"212\":49,\"213\":53,\"214\":45,\"215\":49,\"216\":50,\"217\":45,\"218\":48,\"219\":56,\"220\":58,\"221\":100,\"222\":118,\"223\":98,\"224\":58,\"225\":99,\"226\":115,\"227\":115,\"228\":58,\"229\":116,\"230\":105,\"231\":109,\"232\":101,\"233\":108,\"234\":105,\"235\":110,\"236\":101,\"237\":58,\"238\":115,\"239\":105,\"240\":109,\"241\":112,\"242\":108,\"243\":101,\"244\":45,\"245\":101,\"246\":108,\"247\":97,\"248\":112,\"249\":115,\"250\":101,\"251\":100,\"252\":45,\"253\":116,\"254\":105,\"255\":109,\"256\":101,\"257\":58,\"258\":49,\"259\":48,\"260\":48,\"261\":48,\"262\":42,\"263\":9,\"264\":118,\"265\":105,\"266\":100,\"267\":101,\"268\":111,\"269\":46,\"270\":109,\"271\":112,\"272\":52,\"273\":48,\"274\":232,\"275\":7,\"276\":58,\"277\":105,\"278\":83,\"279\":101,\"280\":115,\"281\":115,\"282\":105,\"283\":111,\"284\":110,\"285\":115,\"286\":47,\"287\":114,\"288\":97,\"289\":106,\"290\":105,\"291\":118,\"292\":95,\"293\":115,\"294\":101,\"295\":115,\"296\":115,\"297\":105,\"298\":111,\"299\":110,\"300\":47,\"301\":116,\"302\":105,\"303\":109,\"304\":101,\"305\":108,\"306\":105,\"307\":110,\"308\":101,\"309\":115,\"310\":47,\"311\":117,\"312\":114,\"313\":110,\"314\":58,\"315\":114,\"316\":97,\"317\":106,\"318\":105,\"319\":118,\"320\":95,\"321\":104,\"322\":111,\"323\":109,\"324\":101,\"325\":95,\"326\":49,\"327\":58,\"328\":52,\"329\":98,\"330\":56,\"331\":48,\"332\":54,\"333\":48,\"334\":98,\"335\":50,\"336\":45,\"337\":101,\"338\":99,\"339\":56,\"340\":102,\"341\":45,\"342\":52,\"343\":98,\"344\":99,\"345\":52,\"346\":45,\"347\":57,\"348\":98,\"349\":51,\"350\":54,\"351\":45,\"352\":57,\"353\":48,\"354\":51,\"355\":101,\"356\":50,\"357\":56,\"358\":57,\"359\":97,\"360\":53,\"361\":51,\"362\":56,\"363\":97,\"364\":58,\"365\":100,\"366\":109,\"367\":108,\"368\":107,\"369\":90,\"370\":87,\"371\":56,\"372\":117,\"373\":98,\"374\":88,\"375\":65,\"376\":48,\"377\":47,\"378\":115,\"379\":116,\"380\":97,\"381\":116,\"382\":101,\"383\":64,\"384\":1,\"385\":72,\"386\":1}}","timestamp":"12:14:33"}
+{"level":"info","message":"Received TimelineREQ from device: 4b8060b2-ec8f-4bc4-9b36-903e289a538a","timestamp":"12:14:33"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 4b8060b2-ec8f-4bc4-9b36-903e289a538a","timestamp":"12:14:33"}
+{"level":"info","message":"Device  4b8060b2-ec8f-4bc4-9b36-903e289a538a  has left the session  rajiv_session","timestamp":"12:17:58"}
+{"level":"info","message":"Device 4b8060b2-ec8f-4bc4-9b36-903e289a538a  removed from session  rajiv_session","timestamp":"12:17:58"}
+{"level":"info","message":"Device  ae2ad297-4952-4f84-82b9-dbb656b5100f  has left the session  rajiv_session","timestamp":"12:18:01"}
+{"level":"info","message":"Device ae2ad297-4952-4f84-82b9-dbb656b5100f  removed from session  rajiv_session","timestamp":"12:18:01"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"12:18:01"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:18:13"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:18:30"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"12:18:30"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"12:18:30"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"12:18:30"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:18:30"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:18:30"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:18:30"}
+{"level":"info","message":"connected to redis.","timestamp":"12:18:30"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"12:18:30"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:18:30"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"12:18:30"}
+{"level":"info","message":"Received JoinREQ from device: 1b490bcc-e42c-4e50-9f83-8199d6ff2f89","timestamp":"12:18:43"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"12:18:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"12:18:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"12:18:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"12:18:43"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 1b490bcc-e42c-4e50-9f83-8199d6ff2f89","timestamp":"12:18:43"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:18:43"}
+{"level":"info","message":"Received TimelineREQ from device: 1b490bcc-e42c-4e50-9f83-8199d6ff2f89","timestamp":"12:18:43"}
+{"level":"info","message":"Device  1b490bcc-e42c-4e50-9f83-8199d6ff2f89  has left the session  rajiv_session","timestamp":"12:18:55"}
+{"level":"info","message":"Device 1b490bcc-e42c-4e50-9f83-8199d6ff2f89  removed from session  rajiv_session","timestamp":"12:18:55"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"12:18:55"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:25:08"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:25:10"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"12:25:10"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"12:25:10"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"12:25:10"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:25:10"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:25:11"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:25:10"}
+{"level":"info","message":"connected to redis.","timestamp":"12:25:10"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":1,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"12:25:10"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:25:11"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"12:25:11"}
+{"level":"info","message":"Received JoinREQ from device: 49637084-07c8-4c52-805a-8238418bec5b","timestamp":"12:25:23"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"12:25:23"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"12:25:23"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"12:25:23"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"12:25:23"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 49637084-07c8-4c52-805a-8238418bec5b","timestamp":"12:25:23"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:25:23"}
+{"level":"info","message":"Received TimelineREQ from device: 49637084-07c8-4c52-805a-8238418bec5b","timestamp":"12:25:23"}
+{"level":"info","message":"Device  49637084-07c8-4c52-805a-8238418bec5b  has left the session  rajiv_session","timestamp":"12:25:51"}
+{"level":"info","message":"Device 49637084-07c8-4c52-805a-8238418bec5b  removed from session  rajiv_session","timestamp":"12:25:51"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"12:25:51"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:28:14"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:58:00"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"12:58:00"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"12:58:00"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"12:58:00"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:58:00"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:58:00"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"12:58:00"}
+{"level":"info","message":"connected to redis.","timestamp":"12:58:00"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":1,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"12:58:00"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:58:00"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"12:58:00"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:58:40"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:26:14"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"14:26:14"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"14:26:14"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"14:26:14"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"14:26:14"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:26:14"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"14:26:14"}
+{"level":"info","message":"connected to redis.","timestamp":"14:26:14"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":1,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"14:26:14"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:26:14"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"14:26:14"}
+{"level":"info","message":"Received JoinREQ from device: 799f916f-b25c-43ed-a8db-d6a74f561545","timestamp":"14:26:34"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"14:26:34"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"14:26:34"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"14:26:34"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"14:26:34"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 799f916f-b25c-43ed-a8db-d6a74f561545","timestamp":"14:26:34"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:26:34"}
+{"level":"info","message":"Received TimelineREQ from device: 799f916f-b25c-43ed-a8db-d6a74f561545","timestamp":"14:26:34"}
+{"level":"info","message":"Device  799f916f-b25c-43ed-a8db-d6a74f561545  has left the session  rajiv_session","timestamp":"14:26:45"}
+{"level":"info","message":"Device 799f916f-b25c-43ed-a8db-d6a74f561545  removed from session  rajiv_session","timestamp":"14:26:45"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"14:26:45"}
+{"level":"info","message":"Received JoinREQ from device: 3876a3c4-f28a-466c-8fbf-65e8e962ff0c","timestamp":"14:27:12"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"14:27:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"14:27:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"14:27:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"14:27:12"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 3876a3c4-f28a-466c-8fbf-65e8e962ff0c","timestamp":"14:27:12"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:27:12"}
+{"level":"info","message":"Received TimelineREQ from device: 3876a3c4-f28a-466c-8fbf-65e8e962ff0c","timestamp":"14:27:12"}
+{"level":"info","message":"Device  3876a3c4-f28a-466c-8fbf-65e8e962ff0c  has left the session  rajiv_session","timestamp":"14:27:19"}
+{"level":"info","message":"Device 3876a3c4-f28a-466c-8fbf-65e8e962ff0c  removed from session  rajiv_session","timestamp":"14:27:19"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"14:27:19"}
+{"level":"info","message":"Received JoinREQ from device: d6e97a5d-ec48-47ff-9e52-dcdea8641b33","timestamp":"14:28:10"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"14:28:10"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"14:28:10"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"14:28:10"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"14:28:10"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: d6e97a5d-ec48-47ff-9e52-dcdea8641b33","timestamp":"14:28:11"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:28:11"}
+{"level":"info","message":"Received TimelineREQ from device: d6e97a5d-ec48-47ff-9e52-dcdea8641b33","timestamp":"14:28:11"}
+{"level":"info","message":"Received JoinREQ from device: 9b8508d8-2bd5-4981-8dc4-22e41d647e3c","timestamp":"14:28:25"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 9b8508d8-2bd5-4981-8dc4-22e41d647e3c","timestamp":"14:28:25"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:28:25"}
+{"level":"info","message":"Received TimelineREQ from device: 9b8508d8-2bd5-4981-8dc4-22e41d647e3c","timestamp":"14:28:25"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 9b8508d8-2bd5-4981-8dc4-22e41d647e3c","timestamp":"14:28:25"}
+{"level":"info","message":"Device  9b8508d8-2bd5-4981-8dc4-22e41d647e3c  has left the session  rajiv_session","timestamp":"14:28:38"}
+{"level":"info","message":"Device 9b8508d8-2bd5-4981-8dc4-22e41d647e3c  removed from session  rajiv_session","timestamp":"14:28:38"}
+{"level":"info","message":"Device  d6e97a5d-ec48-47ff-9e52-dcdea8641b33  has left the session  rajiv_session","timestamp":"14:28:49"}
+{"level":"info","message":"Device d6e97a5d-ec48-47ff-9e52-dcdea8641b33  removed from session  rajiv_session","timestamp":"14:28:49"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"14:28:49"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:29:34"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:35:36"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"14:35:36"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"14:35:36"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"14:35:36"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"14:35:36"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:35:36"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"14:35:36"}
+{"level":"info","message":"connected to redis.","timestamp":"14:35:36"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":1,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"14:35:36"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:35:36"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"14:35:36"}
+{"level":"info","message":"Received JoinREQ from device: 3539467a-c9c2-4392-96c0-2c35a258e2f8","timestamp":"14:35:47"}
+{"level":"info","message":"created  session:  rajiv_session","timestamp":"14:35:47"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' REQ channel: Sessions/rajiv_session/REQ","timestamp":"14:35:47"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' RESP channel: Sessions/rajiv_session/RESP","timestamp":"14:35:47"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session ' lastwill channel: Sessions/rajiv_session/lastwill","timestamp":"14:35:47"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 3539467a-c9c2-4392-96c0-2c35a258e2f8","timestamp":"14:35:47"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:35:47"}
+{"level":"info","message":"Received TimelineREQ from device: 3539467a-c9c2-4392-96c0-2c35a258e2f8","timestamp":"14:35:47"}
+{"level":"info","message":"Received JoinREQ from device: 7225fce8-7d06-4f22-b3ef-6a2df2a81e15","timestamp":"14:36:00"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 7225fce8-7d06-4f22-b3ef-6a2df2a81e15","timestamp":"14:36:01"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:36:01"}
+{"level":"info","message":"Received TimelineREQ from device: 7225fce8-7d06-4f22-b3ef-6a2df2a81e15","timestamp":"14:36:01"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 7225fce8-7d06-4f22-b3ef-6a2df2a81e15","timestamp":"14:36:01"}
+{"level":"info","message":"Device  7225fce8-7d06-4f22-b3ef-6a2df2a81e15  has left the session  rajiv_session","timestamp":"14:36:08"}
+{"level":"info","message":"Device 7225fce8-7d06-4f22-b3ef-6a2df2a81e15  removed from session  rajiv_session","timestamp":"14:36:08"}
+{"level":"info","message":"Device  3539467a-c9c2-4392-96c0-2c35a258e2f8  has left the session  rajiv_session","timestamp":"14:36:28"}
+{"level":"info","message":"Device 3539467a-c9c2-4392-96c0-2c35a258e2f8  removed from session  rajiv_session","timestamp":"14:36:28"}
+{"level":"info","message":"Session ' rajiv_session ' deleted.","timestamp":"14:36:28"}
+{"level":"info","message":"stopped listening to channels","timestamp":"16:08:00"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"16:57:22"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.115\"}","timestamp":"16:57:22"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.115\"}","timestamp":"16:57:22"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.115\"}","timestamp":"16:57:22"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"16:57:22"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"16:57:22"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.115\"}","timestamp":"16:57:22"}
+{"level":"info","message":"connected to redis.","timestamp":"16:57:22"}
+{"redis":{"host":"192.168.1.115","port":6379},"log":{"enabled":1,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.115","port":3000},"level":"info","message":"","timestamp":"16:57:22"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"16:57:22"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.115:1883","timestamp":"16:57:22"}
+{"level":"info","message":"stopped listening to channels","timestamp":"17:08:41"}

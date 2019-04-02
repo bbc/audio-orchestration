@@ -1,0 +1,48 @@
+{
+  "name": "sync-controller",
+  "version": "0.0.1",
+  "description": "SyncContoller",
+  "main": "src/main.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "grunt build_test",
+    "prepare": "grunt build_lib"
+  },
+  "author": {
+    "name": "Rajiv Ramdhany",
+    "email": "rajiv.ramdhany@bbc.co.uk"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "async": "^2.5.0",
+    "command-line-args": "^4.0.6",
+    "consul": "^0.29.0",
+    "dvbcss-clocks": "^0.0.4",
+    "events": "^1.1.1",
+    "google-protobuf": "^3.5.0",
+    "inherits": "^2.0.1",
+    "lodash": "^4.6.1",
+    "mdn-polyfills": "^3.6.0",
+    "redis": "^2.8.0",
+    "redis-connection": "^5.4.0",
+    "redis-smq": "^1.0.17",
+    "url": "^0.11.0",
+    "uuid": "^3.2.1",
+    "weak-map": "^1.0.5",
+    "winston": "^2.4.0",
+    "winston-daily-rotate-file": "^1.7.2"
+  },
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-jasmine": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsdoc": "^2.1.0",
+    "grunt-webpack": "^1.0.14",
+    "jasmine-node": "^1.14.5",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}

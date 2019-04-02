@@ -1,0 +1,814 @@
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"09:41:58"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"09:41:58"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"09:41:58"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"09:41:58"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"09:41:58"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"09:41:58"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"09:41:58"}
+{"level":"info","message":"connected to redis.","timestamp":"09:41:58"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"09:41:58"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"09:41:58"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"09:41:58"}
+{"level":"info","message":"stopped listening to channels","timestamp":"09:48:10"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"09:48:13"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"09:48:13"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"09:48:13"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"09:48:13"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"09:48:13"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"09:48:13"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"09:48:13"}
+{"level":"info","message":"connected to redis.","timestamp":"09:48:13"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"09:48:13"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"09:48:13"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"09:48:13"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"09:49:06"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"09:49:07"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"09:49:07"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"09:49:08"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"09:49:10"}
+{"level":"info","message":"stopped listening to channels","timestamp":"09:49:10"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"10:28:57"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"10:28:57"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"10:28:57"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"10:28:57"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"10:28:57"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"10:28:57"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"10:28:57"}
+{"level":"info","message":"connected to redis.","timestamp":"10:28:57"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"10:28:57"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"10:28:57"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"10:28:57"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abf0ab35-4c73-43a9-8f4c-da36a84ed68f\",\"responseChannel\":\"Sessions/rajiv_session_2/abf0ab35-4c73-43a9-8f4c-da36a84ed68f/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/abf0ab35-4c73-43a9-8f4c-da36a84ed68f/RESP\",\"id\":\"MTUyMDU5MTQxNjQ2OS0x\",\"version\":\"0.0.1\"}","timestamp":"10:30:17"}
+{"level":"info","message":"Received JoinREQ from device: abf0ab35-4c73-43a9-8f4c-da36a84ed68f","timestamp":"10:30:17"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"10:30:17"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"10:30:17"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"10:30:17"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"10:30:17"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abf0ab35-4c73-43a9-8f4c-da36a84ed68f\",\"responseChannel\":\"Sessions/rajiv_session_2/abf0ab35-4c73-43a9-8f4c-da36a84ed68f/RESP\",\"correlation\":{},\"timelineId\":\"urn:rajiv_ctx_2:abf0ab35-4c73-43a9-8f4c-da36a84ed68f:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5MTQxNjQ2OS0y\",\"version\":\"0.0.1\"}","timestamp":"10:30:18"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: abf0ab35-4c73-43a9-8f4c-da36a84ed68f","timestamp":"10:30:18"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"10:30:18"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abf0ab35-4c73-43a9-8f4c-da36a84ed68f\",\"responseChannel\":\"Sessions/rajiv_session_2/abf0ab35-4c73-43a9-8f4c-da36a84ed68f/RESP\",\"id\":\"MTUyMDU5MTQxNjQ2OS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"10:30:18"}
+{"level":"info","message":"Received TimelineREQ from device: abf0ab35-4c73-43a9-8f4c-da36a84ed68f","timestamp":"10:30:18"}
+{"level":"info","message":"Device  abf0ab35-4c73-43a9-8f4c-da36a84ed68f  has left the session  rajiv_session_2","timestamp":"10:30:58"}
+{"level":"info","message":"Device abf0ab35-4c73-43a9-8f4c-da36a84ed68f  removed from session  rajiv_session_2","timestamp":"10:30:58"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"10:30:58"}
+{"level":"error","message":"Redis connection Error : AbortError: Ready check failed: Redis connection lost and command aborted. It might have been processed.","timestamp":"10:33:57"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:33:58"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:33:58"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:33:59"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:00"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:01"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:04"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:09"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:17"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"10:34:31"}
+{"level":"info","message":"stopped listening to channels","timestamp":"10:34:32"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:31:27"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"11:31:27"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"11:31:27"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"11:31:27"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:31:27"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"11:31:28"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:31:27"}
+{"level":"info","message":"connected to redis.","timestamp":"11:31:27"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"11:31:27"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"11:31:28"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"11:31:28"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9932213b-1a06-461b-bd2f-9d8c7c057af6\",\"responseChannel\":\"Sessions/rajiv_session_2/9932213b-1a06-461b-bd2f-9d8c7c057af6/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/9932213b-1a06-461b-bd2f-9d8c7c057af6/RESP\",\"id\":\"MTUyMDU5NTEwMDI0My0x\",\"version\":\"0.0.1\"}","timestamp":"11:31:41"}
+{"level":"info","message":"Received JoinREQ from device: 9932213b-1a06-461b-bd2f-9d8c7c057af6","timestamp":"11:31:41"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"11:31:41"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"11:31:41"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"11:31:41"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"11:31:41"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9932213b-1a06-461b-bd2f-9d8c7c057af6\",\"responseChannel\":\"Sessions/rajiv_session_2/9932213b-1a06-461b-bd2f-9d8c7c057af6/RESP\",\"correlation\":{},\"timelineId\":\"urn:rajiv_ctx_2:9932213b-1a06-461b-bd2f-9d8c7c057af6:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5NTEwMDI0My0y\",\"version\":\"0.0.1\"}","timestamp":"11:31:42"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 9932213b-1a06-461b-bd2f-9d8c7c057af6","timestamp":"11:31:42"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"11:31:42"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9932213b-1a06-461b-bd2f-9d8c7c057af6\",\"responseChannel\":\"Sessions/rajiv_session_2/9932213b-1a06-461b-bd2f-9d8c7c057af6/RESP\",\"id\":\"MTUyMDU5NTEwMDI0My0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"11:31:42"}
+{"level":"info","message":"Received TimelineREQ from device: 9932213b-1a06-461b-bd2f-9d8c7c057af6","timestamp":"11:31:42"}
+{"level":"info","message":"Device  9932213b-1a06-461b-bd2f-9d8c7c057af6  has left the session  rajiv_session_2","timestamp":"11:33:14"}
+{"level":"info","message":"Device 9932213b-1a06-461b-bd2f-9d8c7c057af6  removed from session  rajiv_session_2","timestamp":"11:33:14"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"11:33:14"}
+{"level":"info","message":"stopped listening to channels","timestamp":"11:33:26"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:41:31"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"11:41:31"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"11:41:31"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"11:41:31"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:41:31"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"11:41:31"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:41:31"}
+{"level":"info","message":"connected to redis.","timestamp":"11:41:31"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"11:41:31"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"11:41:31"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"11:41:31"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b\",\"responseChannel\":\"Sessions/rajiv_session_2/881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b/RESP\",\"id\":\"MTUyMDU5NTcwMTA1NC0x\",\"version\":\"0.0.1\"}","timestamp":"11:41:42"}
+{"level":"info","message":"Received JoinREQ from device: 881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b","timestamp":"11:41:42"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"11:41:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"11:41:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"11:41:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"11:41:42"}
+{"level":"info","message":"Device  881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b  has left the session  rajiv_session_2","timestamp":"11:42:00"}
+{"level":"info","message":"Device 881fac12-6e70-4fa5-a6d5-cbe4ceb7e83b  removed from session  rajiv_session_2","timestamp":"11:42:00"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"11:42:00"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:30"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:31"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:31"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:32"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:34"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:37"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:42"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:43:50"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:44:04"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:44:28"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:45:08"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:46:17"}
+{"level":"info","message":"stopped listening to channels","timestamp":"11:46:58"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:48:06"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"11:48:06"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"11:48:06"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"11:48:06"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:48:06"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"11:48:06"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:48:06"}
+{"level":"info","message":"connected to redis.","timestamp":"11:48:06"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"11:48:06"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"11:48:06"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"11:48:06"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"29eeb1bf-c646-4113-8dd4-305ef4dfcc08\",\"responseChannel\":\"Sessions/rajiv_session_2/29eeb1bf-c646-4113-8dd4-305ef4dfcc08/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/29eeb1bf-c646-4113-8dd4-305ef4dfcc08/RESP\",\"id\":\"MTUyMDU5NjIzOTQ2Ni0x\",\"version\":\"0.0.1\"}","timestamp":"11:50:40"}
+{"level":"info","message":"Received JoinREQ from device: 29eeb1bf-c646-4113-8dd4-305ef4dfcc08","timestamp":"11:50:40"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"11:50:40"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"11:50:40"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"11:50:40"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"11:50:40"}
+{"level":"info","message":"Device  29eeb1bf-c646-4113-8dd4-305ef4dfcc08  has left the session  rajiv_session_2","timestamp":"11:52:12"}
+{"level":"info","message":"Device 29eeb1bf-c646-4113-8dd4-305ef4dfcc08  removed from session  rajiv_session_2","timestamp":"11:52:12"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"11:52:12"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:53:14"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:53:14"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:53:15"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:53:16"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"11:53:17"}
+{"level":"info","message":"stopped listening to channels","timestamp":"11:53:18"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"11:59:56"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"11:59:56"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"11:59:57"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"11:59:57"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:59:57"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"11:59:57"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"11:59:57"}
+{"level":"info","message":"connected to redis.","timestamp":"11:59:57"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"11:59:57"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"11:59:57"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"11:59:57"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9\",\"responseChannel\":\"Sessions/rajiv_session_2/c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9/RESP\",\"id\":\"MTUyMDU5NjgwNzE3NC0x\",\"version\":\"0.0.1\"}","timestamp":"12:00:08"}
+{"level":"info","message":"Received JoinREQ from device: c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9","timestamp":"12:00:08"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"12:00:08"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"12:00:08"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"12:00:08"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"12:00:08"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9\",\"responseChannel\":\"Sessions/rajiv_session_2/c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9/RESP\",\"correlation\":{},\"timelineId\":\"urn:rajiv_ctx_2:c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5NjgwNzE3NC0y\",\"version\":\"0.0.1\"}","timestamp":"12:00:09"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9","timestamp":"12:00:09"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:00:09"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9\",\"responseChannel\":\"Sessions/rajiv_session_2/c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9/RESP\",\"id\":\"MTUyMDU5NjgwNzE3NC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"12:00:09"}
+{"level":"info","message":"Received TimelineREQ from device: c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9","timestamp":"12:00:09"}
+{"level":"info","message":"Device  c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9  has left the session  rajiv_session_2","timestamp":"12:02:43"}
+{"level":"info","message":"Device c2aaffc9-b8ac-44ad-8553-8e0f246f5ab9  removed from session  rajiv_session_2","timestamp":"12:02:43"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"12:02:43"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:04:21"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:09:07"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"12:09:07"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"12:09:07"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"12:09:07"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:09:07"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:09:07"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:09:07"}
+{"level":"info","message":"connected to redis.","timestamp":"12:09:07"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"12:09:07"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:09:07"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"12:09:07"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"2df6dc8a-17ec-46ed-b573-b779ea4f5ca7\",\"responseChannel\":\"Sessions/rajiv_session_2/2df6dc8a-17ec-46ed-b573-b779ea4f5ca7/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/2df6dc8a-17ec-46ed-b573-b779ea4f5ca7/RESP\",\"id\":\"MTUyMDU5NzM1ODQ3Ni0x\",\"version\":\"0.0.1\"}","timestamp":"12:09:19"}
+{"level":"info","message":"Received JoinREQ from device: 2df6dc8a-17ec-46ed-b573-b779ea4f5ca7","timestamp":"12:09:19"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"12:09:19"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"12:09:19"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"12:09:19"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"12:09:19"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:13:32"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:13:34"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"12:13:34"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"12:13:34"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"12:13:34"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:13:34"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:13:34"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:13:34"}
+{"level":"info","message":"connected to redis.","timestamp":"12:13:34"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"12:13:34"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:13:34"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"12:13:34"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"a581fb96-00d4-4b30-a088-d6511b0fb763\",\"responseChannel\":\"Sessions/rajiv_session_2/a581fb96-00d4-4b30-a088-d6511b0fb763/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/a581fb96-00d4-4b30-a088-d6511b0fb763/RESP\",\"id\":\"MTUyMDU5NzYyMTEzOC0x\",\"version\":\"0.0.1\"}","timestamp":"12:13:42"}
+{"level":"info","message":"Received JoinREQ from device: a581fb96-00d4-4b30-a088-d6511b0fb763","timestamp":"12:13:42"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"12:13:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"12:13:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"12:13:42"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"12:13:42"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:17:26"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"12:17:28"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"12:17:28"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"12:17:28"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"12:17:28"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:17:28"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"12:17:28"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"12:17:28"}
+{"level":"info","message":"connected to redis.","timestamp":"12:17:28"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"12:17:28"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"12:17:28"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"12:17:28"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"182ba6e2-3b08-440c-b780-b70b4f5dc09b\",\"responseChannel\":\"Sessions/rajiv_session_2/182ba6e2-3b08-440c-b780-b70b4f5dc09b/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/182ba6e2-3b08-440c-b780-b70b4f5dc09b/RESP\",\"id\":\"MTUyMDU5Nzg1NTQ2Mi0x\",\"version\":\"0.0.1\"}","timestamp":"12:17:36"}
+{"level":"info","message":"Received JoinREQ from device: 182ba6e2-3b08-440c-b780-b70b4f5dc09b","timestamp":"12:17:36"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"12:17:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"12:17:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"12:17:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"12:17:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"182ba6e2-3b08-440c-b780-b70b4f5dc09b\",\"responseChannel\":\"Sessions/rajiv_session_2/182ba6e2-3b08-440c-b780-b70b4f5dc09b/RESP\",\"correlation\":{\"parentTime\":1520597859152,\"childTime\":3,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:182ba6e2-3b08-440c-b780-b70b4f5dc09b:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5Nzg1NTQ2Mi0y\",\"version\":\"0.0.1\"}","timestamp":"12:17:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 182ba6e2-3b08-440c-b780-b70b4f5dc09b","timestamp":"12:17:36"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:17:36"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"182ba6e2-3b08-440c-b780-b70b4f5dc09b\",\"responseChannel\":\"Sessions/rajiv_session_2/182ba6e2-3b08-440c-b780-b70b4f5dc09b/RESP\",\"id\":\"MTUyMDU5Nzg1NTQ2Mi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"12:17:36"}
+{"level":"info","message":"Received TimelineREQ from device: 182ba6e2-3b08-440c-b780-b70b4f5dc09b","timestamp":"12:17:36"}
+{"level":"info","message":"Device  182ba6e2-3b08-440c-b780-b70b4f5dc09b  has left the session  rajiv_session_2","timestamp":"12:17:47"}
+{"level":"info","message":"Device 182ba6e2-3b08-440c-b780-b70b4f5dc09b  removed from session  rajiv_session_2","timestamp":"12:17:47"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"6bb0e978-7963-486f-89ce-305490c8940b\",\"responseChannel\":\"Sessions/rajiv_session_2/6bb0e978-7963-486f-89ce-305490c8940b/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/6bb0e978-7963-486f-89ce-305490c8940b/RESP\",\"id\":\"MTUyMDU5Nzg3ODg4Ni0x\",\"version\":\"0.0.1\"}","timestamp":"12:17:59"}
+{"level":"info","message":"Received JoinREQ from device: 6bb0e978-7963-486f-89ce-305490c8940b","timestamp":"12:17:59"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"6bb0e978-7963-486f-89ce-305490c8940b\",\"responseChannel\":\"Sessions/rajiv_session_2/6bb0e978-7963-486f-89ce-305490c8940b/RESP\",\"correlation\":{\"parentTime\":1520597882367.5,\"childTime\":9,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:6bb0e978-7963-486f-89ce-305490c8940b:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5Nzg3ODg4Ni0y\",\"version\":\"0.0.1\"}","timestamp":"12:18:00"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 6bb0e978-7963-486f-89ce-305490c8940b","timestamp":"12:18:00"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:18:00"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"6bb0e978-7963-486f-89ce-305490c8940b\",\"responseChannel\":\"Sessions/rajiv_session_2/6bb0e978-7963-486f-89ce-305490c8940b/RESP\",\"id\":\"MTUyMDU5Nzg3ODg4Ni0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"12:18:00"}
+{"level":"info","message":"Received TimelineREQ from device: 6bb0e978-7963-486f-89ce-305490c8940b","timestamp":"12:18:00"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c3f98bee-ddf5-4957-aa27-4d567d60cab3\",\"responseChannel\":\"Sessions/rajiv_session_2/c3f98bee-ddf5-4957-aa27-4d567d60cab3/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/c3f98bee-ddf5-4957-aa27-4d567d60cab3/RESP\",\"id\":\"MTUyMDU5Nzg5NzM1Mi0x\",\"version\":\"0.0.1\"}","timestamp":"12:18:18"}
+{"level":"info","message":"Received JoinREQ from device: c3f98bee-ddf5-4957-aa27-4d567d60cab3","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c3f98bee-ddf5-4957-aa27-4d567d60cab3\",\"responseChannel\":\"Sessions/rajiv_session_2/c3f98bee-ddf5-4957-aa27-4d567d60cab3/RESP\",\"correlation\":{\"parentTime\":1520597901004,\"childTime\":4,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:c3f98bee-ddf5-4957-aa27-4d567d60cab3:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDU5Nzg5NzM1Mi0y\",\"version\":\"0.0.1\"}","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: c3f98bee-ddf5-4957-aa27-4d567d60cab3","timestamp":"12:18:18"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c3f98bee-ddf5-4957-aa27-4d567d60cab3\",\"responseChannel\":\"Sessions/rajiv_session_2/c3f98bee-ddf5-4957-aa27-4d567d60cab3/RESP\",\"id\":\"MTUyMDU5Nzg5NzM1Mi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineREQ from device: c3f98bee-ddf5-4957-aa27-4d567d60cab3","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c3f98bee-ddf5-4957-aa27-4d567d60cab3\",\"responseChannel\":\"Sessions/rajiv_session_2/c3f98bee-ddf5-4957-aa27-4d567d60cab3/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:6bb0e978-7963-486f-89ce-305490c8940b:dmlkZW8ubXA0\",\"id\":\"MTUyMDU5Nzg5NzM1Mi00\",\"version\":\"0.0.1\"}","timestamp":"12:18:18"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: c3f98bee-ddf5-4957-aa27-4d567d60cab3","timestamp":"12:18:18"}
+{"level":"info","message":"Device  c3f98bee-ddf5-4957-aa27-4d567d60cab3  has left the session  rajiv_session_2","timestamp":"12:18:34"}
+{"level":"info","message":"Device c3f98bee-ddf5-4957-aa27-4d567d60cab3  removed from session  rajiv_session_2","timestamp":"12:18:34"}
+{"level":"info","message":"Device  6bb0e978-7963-486f-89ce-305490c8940b  has left the session  rajiv_session_2","timestamp":"12:18:38"}
+{"level":"info","message":"Device 6bb0e978-7963-486f-89ce-305490c8940b  removed from session  rajiv_session_2","timestamp":"12:18:38"}
+{"level":"info","message":"stopped listening to channels","timestamp":"12:18:48"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"13:52:21"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"13:52:21"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"13:52:21"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"13:52:21"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"13:52:21"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"13:52:22"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"13:52:21"}
+{"level":"info","message":"connected to redis.","timestamp":"13:52:21"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"13:52:21"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"13:52:22"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"13:52:22"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"4ad0d015-2606-4711-aa56-4a585c3edd00\",\"responseChannel\":\"Sessions/rajiv_session_2/4ad0d015-2606-4711-aa56-4a585c3edd00/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/4ad0d015-2606-4711-aa56-4a585c3edd00/RESP\",\"id\":\"MTUyMDYwMzU1NTQyNy0x\",\"version\":\"0.0.1\"}","timestamp":"13:52:36"}
+{"level":"info","message":"Received JoinREQ from device: 4ad0d015-2606-4711-aa56-4a585c3edd00","timestamp":"13:52:36"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"13:52:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"13:52:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"13:52:36"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"13:52:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"4ad0d015-2606-4711-aa56-4a585c3edd00\",\"responseChannel\":\"Sessions/rajiv_session_2/4ad0d015-2606-4711-aa56-4a585c3edd00/RESP\",\"correlation\":{\"parentTime\":1520603562119,\"childTime\":1,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:4ad0d015-2606-4711-aa56-4a585c3edd00:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwMzU1NTQyNy0y\",\"version\":\"0.0.1\"}","timestamp":"13:52:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 4ad0d015-2606-4711-aa56-4a585c3edd00","timestamp":"13:52:36"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"13:52:36"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"4ad0d015-2606-4711-aa56-4a585c3edd00\",\"responseChannel\":\"Sessions/rajiv_session_2/4ad0d015-2606-4711-aa56-4a585c3edd00/RESP\",\"id\":\"MTUyMDYwMzU1NTQyNy0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"13:52:36"}
+{"level":"info","message":"Received TimelineREQ from device: 4ad0d015-2606-4711-aa56-4a585c3edd00","timestamp":"13:52:36"}
+{"level":"info","message":"Device  4ad0d015-2606-4711-aa56-4a585c3edd00  has left the session  rajiv_session_2","timestamp":"13:53:19"}
+{"level":"info","message":"Device 4ad0d015-2606-4711-aa56-4a585c3edd00  removed from session  rajiv_session_2","timestamp":"13:53:19"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"eed5b412-b24a-44f8-821b-9713755e6ff1\",\"responseChannel\":\"Sessions/rajiv_session_2/eed5b412-b24a-44f8-821b-9713755e6ff1/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/eed5b412-b24a-44f8-821b-9713755e6ff1/RESP\",\"id\":\"MTUyMDYwMzczMDg4Mi0x\",\"version\":\"0.0.1\"}","timestamp":"13:55:31"}
+{"level":"info","message":"Received JoinREQ from device: eed5b412-b24a-44f8-821b-9713755e6ff1","timestamp":"13:55:31"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"eed5b412-b24a-44f8-821b-9713755e6ff1\",\"responseChannel\":\"Sessions/rajiv_session_2/eed5b412-b24a-44f8-821b-9713755e6ff1/RESP\",\"correlation\":{\"parentTime\":1520603737782,\"childTime\":3,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:eed5b412-b24a-44f8-821b-9713755e6ff1:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwMzczMDg4Mi0y\",\"version\":\"0.0.1\"}","timestamp":"13:55:32"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: eed5b412-b24a-44f8-821b-9713755e6ff1","timestamp":"13:55:32"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"13:55:32"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"eed5b412-b24a-44f8-821b-9713755e6ff1\",\"responseChannel\":\"Sessions/rajiv_session_2/eed5b412-b24a-44f8-821b-9713755e6ff1/RESP\",\"id\":\"MTUyMDYwMzczMDg4Mi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"13:55:32"}
+{"level":"info","message":"Received TimelineREQ from device: eed5b412-b24a-44f8-821b-9713755e6ff1","timestamp":"13:55:32"}
+{"level":"info","message":"Device  eed5b412-b24a-44f8-821b-9713755e6ff1  has left the session  rajiv_session_2","timestamp":"13:55:36"}
+{"level":"info","message":"Device eed5b412-b24a-44f8-821b-9713755e6ff1  removed from session  rajiv_session_2","timestamp":"13:55:36"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b\",\"responseChannel\":\"Sessions/rajiv_session_2/326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b/RESP\",\"id\":\"MTUyMDYwMzc1NDMzMy0x\",\"version\":\"0.0.1\"}","timestamp":"13:55:55"}
+{"level":"info","message":"Received JoinREQ from device: 326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b","timestamp":"13:55:55"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b\",\"responseChannel\":\"Sessions/rajiv_session_2/326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b/RESP\",\"correlation\":{\"parentTime\":1520603761128.5002,\"childTime\":3,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwMzc1NDMzMy0y\",\"version\":\"0.0.1\"}","timestamp":"13:55:55"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b","timestamp":"13:55:55"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"13:55:55"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b\",\"responseChannel\":\"Sessions/rajiv_session_2/326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b/RESP\",\"id\":\"MTUyMDYwMzc1NDMzMy0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"13:55:55"}
+{"level":"info","message":"Received TimelineREQ from device: 326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b","timestamp":"13:55:55"}
+{"level":"info","message":"Device  326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b  has left the session  rajiv_session_2","timestamp":"13:56:07"}
+{"level":"info","message":"Device 326e6e8b-5f95-4aaa-9f6b-0b5b34799a3b  removed from session  rajiv_session_2","timestamp":"13:56:07"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ac0c980e-1001-4c45-b81a-85547983b1ec\",\"responseChannel\":\"Sessions/rajiv_session_2/ac0c980e-1001-4c45-b81a-85547983b1ec/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/ac0c980e-1001-4c45-b81a-85547983b1ec/RESP\",\"id\":\"MTUyMDYwMzgyMDk4OC0x\",\"version\":\"0.0.1\"}","timestamp":"13:57:01"}
+{"level":"info","message":"Received JoinREQ from device: ac0c980e-1001-4c45-b81a-85547983b1ec","timestamp":"13:57:01"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ac0c980e-1001-4c45-b81a-85547983b1ec\",\"responseChannel\":\"Sessions/rajiv_session_2/ac0c980e-1001-4c45-b81a-85547983b1ec/RESP\",\"correlation\":{\"parentTime\":1520603827867,\"childTime\":10,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:ac0c980e-1001-4c45-b81a-85547983b1ec:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwMzgyMDk4OC0y\",\"version\":\"0.0.1\"}","timestamp":"13:57:02"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: ac0c980e-1001-4c45-b81a-85547983b1ec","timestamp":"13:57:02"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"13:57:02"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ac0c980e-1001-4c45-b81a-85547983b1ec\",\"responseChannel\":\"Sessions/rajiv_session_2/ac0c980e-1001-4c45-b81a-85547983b1ec/RESP\",\"id\":\"MTUyMDYwMzgyMDk4OC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"13:57:02"}
+{"level":"info","message":"Received TimelineREQ from device: ac0c980e-1001-4c45-b81a-85547983b1ec","timestamp":"13:57:02"}
+{"level":"info","message":"Device  ac0c980e-1001-4c45-b81a-85547983b1ec  has left the session  rajiv_session_2","timestamp":"13:57:14"}
+{"level":"info","message":"Device ac0c980e-1001-4c45-b81a-85547983b1ec  removed from session  rajiv_session_2","timestamp":"13:57:14"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f7f3c54-9956-4c26-9760-6e4231fd6557\",\"responseChannel\":\"Sessions/rajiv_session_2/0f7f3c54-9956-4c26-9760-6e4231fd6557/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/0f7f3c54-9956-4c26-9760-6e4231fd6557/RESP\",\"id\":\"MTUyMDYwMzg0NDY0Ni0x\",\"version\":\"0.0.1\"}","timestamp":"13:57:25"}
+{"level":"info","message":"Received JoinREQ from device: 0f7f3c54-9956-4c26-9760-6e4231fd6557","timestamp":"13:57:25"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f7f3c54-9956-4c26-9760-6e4231fd6557\",\"responseChannel\":\"Sessions/rajiv_session_2/0f7f3c54-9956-4c26-9760-6e4231fd6557/RESP\",\"correlation\":{\"parentTime\":1520603851504,\"childTime\":3,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:0f7f3c54-9956-4c26-9760-6e4231fd6557:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwMzg0NDY0Ni0y\",\"version\":\"0.0.1\"}","timestamp":"13:57:25"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 0f7f3c54-9956-4c26-9760-6e4231fd6557","timestamp":"13:57:25"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"13:57:25"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f7f3c54-9956-4c26-9760-6e4231fd6557\",\"responseChannel\":\"Sessions/rajiv_session_2/0f7f3c54-9956-4c26-9760-6e4231fd6557/RESP\",\"id\":\"MTUyMDYwMzg0NDY0Ni0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"13:57:25"}
+{"level":"info","message":"Received TimelineREQ from device: 0f7f3c54-9956-4c26-9760-6e4231fd6557","timestamp":"13:57:25"}
+{"level":"info","message":"Device  0f7f3c54-9956-4c26-9760-6e4231fd6557  has left the session  rajiv_session_2","timestamp":"13:57:33"}
+{"level":"info","message":"Device 0f7f3c54-9956-4c26-9760-6e4231fd6557  removed from session  rajiv_session_2","timestamp":"13:57:33"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:33:43"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:33:45"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:33:45"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:33:45"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:33:45"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:33:45"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:33:45"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:33:45"}
+{"level":"info","message":"connected to redis.","timestamp":"14:33:45"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:33:45"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:33:45"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:33:45"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"36bb68a3-9b69-452e-98af-28b248b54f01\",\"responseChannel\":\"Sessions/rajiv_session_2/36bb68a3-9b69-452e-98af-28b248b54f01/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/36bb68a3-9b69-452e-98af-28b248b54f01/RESP\",\"id\":\"MTUyMDYwNjA4MjA1NS0x\",\"version\":\"0.0.1\"}","timestamp":"14:34:43"}
+{"level":"info","message":"Received JoinREQ from device: 36bb68a3-9b69-452e-98af-28b248b54f01","timestamp":"14:34:43"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:34:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:34:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:34:43"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:34:43"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"36bb68a3-9b69-452e-98af-28b248b54f01\",\"responseChannel\":\"Sessions/rajiv_session_2/36bb68a3-9b69-452e-98af-28b248b54f01/RESP\",\"correlation\":{\"parentTime\":1520606090727,\"childTime\":2,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:36bb68a3-9b69-452e-98af-28b248b54f01:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjA4MjA1NS0y\",\"version\":\"0.0.1\"}","timestamp":"14:34:43"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 36bb68a3-9b69-452e-98af-28b248b54f01","timestamp":"14:34:43"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:34:43"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"36bb68a3-9b69-452e-98af-28b248b54f01\",\"responseChannel\":\"Sessions/rajiv_session_2/36bb68a3-9b69-452e-98af-28b248b54f01/RESP\",\"id\":\"MTUyMDYwNjA4MjA1NS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:34:43"}
+{"level":"info","message":"Received TimelineREQ from device: 36bb68a3-9b69-452e-98af-28b248b54f01","timestamp":"14:34:43"}
+{"level":"info","message":"Device  36bb68a3-9b69-452e-98af-28b248b54f01  has left the session  rajiv_session_2","timestamp":"14:34:59"}
+{"level":"info","message":"Device 36bb68a3-9b69-452e-98af-28b248b54f01  removed from session  rajiv_session_2","timestamp":"14:35:00"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abe30155-a65c-46b4-b8c3-039c3dd086dc\",\"responseChannel\":\"Sessions/rajiv_session_2/abe30155-a65c-46b4-b8c3-039c3dd086dc/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/abe30155-a65c-46b4-b8c3-039c3dd086dc/RESP\",\"id\":\"MTUyMDYwNjE2MzI1Mi0x\",\"version\":\"0.0.1\"}","timestamp":"14:36:04"}
+{"level":"info","message":"Received JoinREQ from device: abe30155-a65c-46b4-b8c3-039c3dd086dc","timestamp":"14:36:04"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abe30155-a65c-46b4-b8c3-039c3dd086dc\",\"responseChannel\":\"Sessions/rajiv_session_2/abe30155-a65c-46b4-b8c3-039c3dd086dc/RESP\",\"correlation\":{\"parentTime\":1520606171916,\"childTime\":2,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:abe30155-a65c-46b4-b8c3-039c3dd086dc:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjE2MzI1Mi0y\",\"version\":\"0.0.1\"}","timestamp":"14:36:04"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: abe30155-a65c-46b4-b8c3-039c3dd086dc","timestamp":"14:36:04"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:36:04"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"abe30155-a65c-46b4-b8c3-039c3dd086dc\",\"responseChannel\":\"Sessions/rajiv_session_2/abe30155-a65c-46b4-b8c3-039c3dd086dc/RESP\",\"id\":\"MTUyMDYwNjE2MzI1Mi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:36:04"}
+{"level":"info","message":"Received TimelineREQ from device: abe30155-a65c-46b4-b8c3-039c3dd086dc","timestamp":"14:36:04"}
+{"level":"info","message":"Device  abe30155-a65c-46b4-b8c3-039c3dd086dc  has left the session  rajiv_session_2","timestamp":"14:36:43"}
+{"level":"info","message":"Device abe30155-a65c-46b4-b8c3-039c3dd086dc  removed from session  rajiv_session_2","timestamp":"14:36:43"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:36:47"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:39:38"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:39:38"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:39:38"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:39:38"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:39:38"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:39:38"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:39:38"}
+{"level":"info","message":"connected to redis.","timestamp":"14:39:38"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:39:38"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:39:38"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:39:38"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"a18fb29d-1c78-4d77-bfa0-1c71c7af8e28\",\"responseChannel\":\"Sessions/rajiv_session_2/a18fb29d-1c78-4d77-bfa0-1c71c7af8e28/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/a18fb29d-1c78-4d77-bfa0-1c71c7af8e28/RESP\",\"id\":\"MTUyMDYwNjM5MDI5MC0x\",\"version\":\"0.0.1\"}","timestamp":"14:39:51"}
+{"level":"info","message":"Received JoinREQ from device: a18fb29d-1c78-4d77-bfa0-1c71c7af8e28","timestamp":"14:39:51"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:39:51"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:39:51"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:39:51"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:39:51"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"a18fb29d-1c78-4d77-bfa0-1c71c7af8e28\",\"responseChannel\":\"Sessions/rajiv_session_2/a18fb29d-1c78-4d77-bfa0-1c71c7af8e28/RESP\",\"correlation\":{\"parentTime\":1520606399259,\"childTime\":4,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:a18fb29d-1c78-4d77-bfa0-1c71c7af8e28:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjM5MDI5MC0y\",\"version\":\"0.0.1\"}","timestamp":"14:39:51"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: a18fb29d-1c78-4d77-bfa0-1c71c7af8e28","timestamp":"14:39:51"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:39:51"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"a18fb29d-1c78-4d77-bfa0-1c71c7af8e28\",\"responseChannel\":\"Sessions/rajiv_session_2/a18fb29d-1c78-4d77-bfa0-1c71c7af8e28/RESP\",\"id\":\"MTUyMDYwNjM5MDI5MC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:39:51"}
+{"level":"info","message":"Received TimelineREQ from device: a18fb29d-1c78-4d77-bfa0-1c71c7af8e28","timestamp":"14:39:51"}
+{"level":"info","message":"Device  a18fb29d-1c78-4d77-bfa0-1c71c7af8e28  has left the session  rajiv_session_2","timestamp":"14:40:31"}
+{"level":"info","message":"Device a18fb29d-1c78-4d77-bfa0-1c71c7af8e28  removed from session  rajiv_session_2","timestamp":"14:40:31"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3f90a8f7-74a4-48c2-ba8c-d1543ff2c972\",\"responseChannel\":\"Sessions/rajiv_session_2/3f90a8f7-74a4-48c2-ba8c-d1543ff2c972/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/3f90a8f7-74a4-48c2-ba8c-d1543ff2c972/RESP\",\"id\":\"MTUyMDYwNjQ3NTQ1NS0x\",\"version\":\"0.0.1\"}","timestamp":"14:41:16"}
+{"level":"info","message":"Received JoinREQ from device: 3f90a8f7-74a4-48c2-ba8c-d1543ff2c972","timestamp":"14:41:16"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3f90a8f7-74a4-48c2-ba8c-d1543ff2c972\",\"responseChannel\":\"Sessions/rajiv_session_2/3f90a8f7-74a4-48c2-ba8c-d1543ff2c972/RESP\",\"correlation\":{\"parentTime\":1520606484286.5,\"childTime\":2,\"initialError\":0,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:3f90a8f7-74a4-48c2-ba8c-d1543ff2c972:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjQ3NTQ1NS0y\",\"version\":\"0.0.1\"}","timestamp":"14:41:16"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 3f90a8f7-74a4-48c2-ba8c-d1543ff2c972","timestamp":"14:41:16"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:41:16"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3f90a8f7-74a4-48c2-ba8c-d1543ff2c972\",\"responseChannel\":\"Sessions/rajiv_session_2/3f90a8f7-74a4-48c2-ba8c-d1543ff2c972/RESP\",\"id\":\"MTUyMDYwNjQ3NTQ1NS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:41:16"}
+{"level":"info","message":"Received TimelineREQ from device: 3f90a8f7-74a4-48c2-ba8c-d1543ff2c972","timestamp":"14:41:16"}
+{"level":"info","message":"Device  3f90a8f7-74a4-48c2-ba8c-d1543ff2c972  has left the session  rajiv_session_2","timestamp":"14:41:41"}
+{"level":"info","message":"Device 3f90a8f7-74a4-48c2-ba8c-d1543ff2c972  removed from session  rajiv_session_2","timestamp":"14:41:41"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:41:52"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:45:37"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:45:37"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:45:37"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:45:37"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:45:37"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:45:37"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:45:37"}
+{"level":"info","message":"connected to redis.","timestamp":"14:45:37"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:45:37"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:45:37"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:45:37"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9972dd1a-4925-45e4-bceb-239caf77b828\",\"responseChannel\":\"Sessions/rajiv_session_2/9972dd1a-4925-45e4-bceb-239caf77b828/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/9972dd1a-4925-45e4-bceb-239caf77b828/RESP\",\"id\":\"MTUyMDYwNjc1ODc5MS0x\",\"version\":\"0.0.1\"}","timestamp":"14:45:59"}
+{"level":"info","message":"Received JoinREQ from device: 9972dd1a-4925-45e4-bceb-239caf77b828","timestamp":"14:45:59"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:45:59"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:45:59"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:45:59"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:45:59"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9972dd1a-4925-45e4-bceb-239caf77b828\",\"responseChannel\":\"Sessions/rajiv_session_2/9972dd1a-4925-45e4-bceb-239caf77b828/RESP\",\"correlation\":{\"parentTime\":1520606768124.5,\"childTime\":11,\"initialError\":0.0264692290032,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:9972dd1a-4925-45e4-bceb-239caf77b828:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjc1ODc5MS0y\",\"version\":\"0.0.1\"}","timestamp":"14:46:00"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 9972dd1a-4925-45e4-bceb-239caf77b828","timestamp":"14:46:00"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:46:00"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9972dd1a-4925-45e4-bceb-239caf77b828\",\"responseChannel\":\"Sessions/rajiv_session_2/9972dd1a-4925-45e4-bceb-239caf77b828/RESP\",\"id\":\"MTUyMDYwNjc1ODc5MS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:46:00"}
+{"level":"info","message":"Received TimelineREQ from device: 9972dd1a-4925-45e4-bceb-239caf77b828","timestamp":"14:46:00"}
+{"level":"info","message":"Device  9972dd1a-4925-45e4-bceb-239caf77b828  has left the session  rajiv_session_2","timestamp":"14:46:36"}
+{"level":"info","message":"Device 9972dd1a-4925-45e4-bceb-239caf77b828  removed from session  rajiv_session_2","timestamp":"14:46:36"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:47:59"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:48:01"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:48:01"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:48:01"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:48:01"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:48:01"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:48:01"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:48:01"}
+{"level":"info","message":"connected to redis.","timestamp":"14:48:01"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:48:01"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:48:01"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:48:01"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"93e4bf91-6586-47ed-b8c0-3aab6f6d288a\",\"responseChannel\":\"Sessions/rajiv_session_2/93e4bf91-6586-47ed-b8c0-3aab6f6d288a/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/93e4bf91-6586-47ed-b8c0-3aab6f6d288a/RESP\",\"id\":\"MTUyMDYwNjg4ODMyMS0x\",\"version\":\"0.0.1\"}","timestamp":"14:48:11"}
+{"level":"info","message":"Received JoinREQ from device: 93e4bf91-6586-47ed-b8c0-3aab6f6d288a","timestamp":"14:48:11"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:48:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:48:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:48:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:48:11"}
+{"level":"info","message":"Device  93e4bf91-6586-47ed-b8c0-3aab6f6d288a  has left the session  rajiv_session_2","timestamp":"14:48:27"}
+{"level":"info","message":"Device 93e4bf91-6586-47ed-b8c0-3aab6f6d288a  removed from session  rajiv_session_2","timestamp":"14:48:27"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"1d748b5c-cc76-441a-a39e-ac4cd7e0e611\",\"responseChannel\":\"Sessions/rajiv_session_2/1d748b5c-cc76-441a-a39e-ac4cd7e0e611/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/1d748b5c-cc76-441a-a39e-ac4cd7e0e611/RESP\",\"id\":\"MTUyMDYwNjkxNTY3NS0x\",\"version\":\"0.0.1\"}","timestamp":"14:48:36"}
+{"level":"info","message":"Received JoinREQ from device: 1d748b5c-cc76-441a-a39e-ac4cd7e0e611","timestamp":"14:48:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"1d748b5c-cc76-441a-a39e-ac4cd7e0e611\",\"responseChannel\":\"Sessions/rajiv_session_2/1d748b5c-cc76-441a-a39e-ac4cd7e0e611/RESP\",\"correlation\":{\"parentTime\":1520606924904.5,\"childTime\":2,\"initialError\":0.0094624929968,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:1d748b5c-cc76-441a-a39e-ac4cd7e0e611:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNjkxNTY3NS0y\",\"version\":\"0.0.1\"}","timestamp":"14:48:36"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 1d748b5c-cc76-441a-a39e-ac4cd7e0e611","timestamp":"14:48:36"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:48:36"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"1d748b5c-cc76-441a-a39e-ac4cd7e0e611\",\"responseChannel\":\"Sessions/rajiv_session_2/1d748b5c-cc76-441a-a39e-ac4cd7e0e611/RESP\",\"id\":\"MTUyMDYwNjkxNTY3NS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:48:37"}
+{"level":"info","message":"Received TimelineREQ from device: 1d748b5c-cc76-441a-a39e-ac4cd7e0e611","timestamp":"14:48:37"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:51:17"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:51:20"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:51:20"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:51:20"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:51:20"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:51:20"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:51:20"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:51:20"}
+{"level":"info","message":"connected to redis.","timestamp":"14:51:20"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:51:20"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:51:20"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:51:20"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622\",\"responseChannel\":\"Sessions/rajiv_session_2/0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622/RESP\",\"id\":\"MTUyMDYwNzExMzA0MC0x\",\"version\":\"0.0.1\"}","timestamp":"14:51:54"}
+{"level":"info","message":"Received JoinREQ from device: 0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622","timestamp":"14:51:54"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:51:54"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:51:54"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:51:54"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622\",\"responseChannel\":\"Sessions/rajiv_session_2/0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622/RESP\",\"correlation\":{\"parentTime\":1520607122457.5,\"childTime\":2,\"initialError\":0.007461421009600001,\"errorGrowthRate\":0},\"timelineId\":\"urn:rajiv_ctx_2:0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNzExMzA0MC0y\",\"version\":\"0.0.1\"}","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622","timestamp":"14:51:54"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622\",\"responseChannel\":\"Sessions/rajiv_session_2/0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622/RESP\",\"id\":\"MTUyMDYwNzExMzA0MC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineREQ from device: 0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622\",\"responseChannel\":\"Sessions/rajiv_session_2/0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:1d748b5c-cc76-441a-a39e-ac4cd7e0e611:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwNzExMzA0MC00\",\"version\":\"0.0.1\"}","timestamp":"14:51:54"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622","timestamp":"14:51:54"}
+{"level":"info","message":"Device  0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622  has left the session  rajiv_session_2","timestamp":"14:52:10"}
+{"level":"info","message":"Device 0f1a9895-f0a1-4a4a-ae42-87dd1d8d6622  removed from session  rajiv_session_2","timestamp":"14:52:10"}
+{"level":"info","message":"stopped listening to channels","timestamp":"14:52:14"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"14:57:04"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"14:57:04"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"14:57:04"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"14:57:04"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:57:04"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"14:57:04"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"14:57:04"}
+{"level":"info","message":"connected to redis.","timestamp":"14:57:04"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"14:57:04"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"14:57:04"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"14:57:04"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27\",\"responseChannel\":\"Sessions/rajiv_session_2/d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27/RESP\",\"id\":\"MTUyMDYwNzQzMTY4MS0x\",\"version\":\"0.0.1\"}","timestamp":"14:57:13"}
+{"level":"info","message":"Received JoinREQ from device: d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27","timestamp":"14:57:13"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"14:57:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"14:57:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"14:57:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"14:57:13"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27\",\"responseChannel\":\"Sessions/rajiv_session_2/d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27/RESP\",\"correlation\":{\"parentTime\":1520607441997.5,\"childTime\":3,\"initialError\":0.0154657929968,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNzQzMTY4MS0y\",\"version\":\"0.0.1\"}","timestamp":"14:57:13"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27","timestamp":"14:57:13"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"14:57:13"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27\",\"responseChannel\":\"Sessions/rajiv_session_2/d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27/RESP\",\"id\":\"MTUyMDYwNzQzMTY4MS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"14:57:13"}
+{"level":"info","message":"Received TimelineREQ from device: d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27","timestamp":"14:57:13"}
+{"level":"info","message":"Device  d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27  has left the session  rajiv_session_2","timestamp":"14:58:18"}
+{"level":"info","message":"Device d665eccf-d3be-4fc4-a0f2-d1da5b9d7b27  removed from session  rajiv_session_2","timestamp":"14:58:18"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"14:58:18"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"f61283f1-503b-4163-9a3c-f57fe526583e\",\"responseChannel\":\"Sessions/rajiv_session_2/f61283f1-503b-4163-9a3c-f57fe526583e/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/f61283f1-503b-4163-9a3c-f57fe526583e/RESP\",\"id\":\"MTUyMDYwNzc5MTU1My0x\",\"version\":\"0.0.1\"}","timestamp":"15:03:12"}
+{"level":"info","message":"Received JoinREQ from device: f61283f1-503b-4163-9a3c-f57fe526583e","timestamp":"15:03:12"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:03:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:03:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:03:12"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:03:12"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"f61283f1-503b-4163-9a3c-f57fe526583e\",\"responseChannel\":\"Sessions/rajiv_session_2/f61283f1-503b-4163-9a3c-f57fe526583e/RESP\",\"correlation\":{\"parentTime\":1520607801545,\"childTime\":2,\"initialError\":0.0219653110128,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:f61283f1-503b-4163-9a3c-f57fe526583e:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNzc5MTU1My0y\",\"version\":\"0.0.1\"}","timestamp":"15:03:12"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: f61283f1-503b-4163-9a3c-f57fe526583e","timestamp":"15:03:12"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:03:12"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"f61283f1-503b-4163-9a3c-f57fe526583e\",\"responseChannel\":\"Sessions/rajiv_session_2/f61283f1-503b-4163-9a3c-f57fe526583e/RESP\",\"id\":\"MTUyMDYwNzc5MTU1My0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:03:13"}
+{"level":"info","message":"Received TimelineREQ from device: f61283f1-503b-4163-9a3c-f57fe526583e","timestamp":"15:03:13"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"b1ed829f-9ee5-4bfa-917f-9c85b95fe655\",\"responseChannel\":\"Sessions/rajiv_session_2/b1ed829f-9ee5-4bfa-917f-9c85b95fe655/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/b1ed829f-9ee5-4bfa-917f-9c85b95fe655/RESP\",\"id\":\"MTUyMDYwNzk4NTUzMS0x\",\"version\":\"0.0.1\"}","timestamp":"15:06:26"}
+{"level":"info","message":"Received JoinREQ from device: b1ed829f-9ee5-4bfa-917f-9c85b95fe655","timestamp":"15:06:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"b1ed829f-9ee5-4bfa-917f-9c85b95fe655\",\"responseChannel\":\"Sessions/rajiv_session_2/b1ed829f-9ee5-4bfa-917f-9c85b95fe655/RESP\",\"correlation\":{\"parentTime\":1520607995567.5,\"childTime\":3,\"initialError\":0.0054719929968,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:b1ed829f-9ee5-4bfa-917f-9c85b95fe655:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwNzk4NTUzMS0y\",\"version\":\"0.0.1\"}","timestamp":"15:06:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: b1ed829f-9ee5-4bfa-917f-9c85b95fe655","timestamp":"15:06:26"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:06:26"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"b1ed829f-9ee5-4bfa-917f-9c85b95fe655\",\"responseChannel\":\"Sessions/rajiv_session_2/b1ed829f-9ee5-4bfa-917f-9c85b95fe655/RESP\",\"id\":\"MTUyMDYwNzk4NTUzMS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:06:27"}
+{"level":"info","message":"Received TimelineREQ from device: b1ed829f-9ee5-4bfa-917f-9c85b95fe655","timestamp":"15:06:27"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"b1ed829f-9ee5-4bfa-917f-9c85b95fe655\",\"responseChannel\":\"Sessions/rajiv_session_2/b1ed829f-9ee5-4bfa-917f-9c85b95fe655/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:f61283f1-503b-4163-9a3c-f57fe526583e:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwNzk4NTUzMS00\",\"version\":\"0.0.1\"}","timestamp":"15:06:27"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: b1ed829f-9ee5-4bfa-917f-9c85b95fe655","timestamp":"15:06:27"}
+{"level":"info","message":"Device  b1ed829f-9ee5-4bfa-917f-9c85b95fe655  has left the session  rajiv_session_2","timestamp":"15:06:50"}
+{"level":"info","message":"Device b1ed829f-9ee5-4bfa-917f-9c85b95fe655  removed from session  rajiv_session_2","timestamp":"15:06:50"}
+{"level":"info","message":"Device  f61283f1-503b-4163-9a3c-f57fe526583e  has left the session  rajiv_session_2","timestamp":"15:06:54"}
+{"level":"info","message":"Device f61283f1-503b-4163-9a3c-f57fe526583e  removed from session  rajiv_session_2","timestamp":"15:06:54"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:06:54"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d978c27d-f05c-4356-ae99-3a8b9d98d919\",\"responseChannel\":\"Sessions/rajiv_session_2/d978c27d-f05c-4356-ae99-3a8b9d98d919/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/d978c27d-f05c-4356-ae99-3a8b9d98d919/RESP\",\"id\":\"MTUyMDYwODAyMDEzOC0x\",\"version\":\"0.0.1\"}","timestamp":"15:07:01"}
+{"level":"info","message":"Received JoinREQ from device: d978c27d-f05c-4356-ae99-3a8b9d98d919","timestamp":"15:07:01"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:07:01"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:07:01"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:07:01"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:07:01"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d978c27d-f05c-4356-ae99-3a8b9d98d919\",\"responseChannel\":\"Sessions/rajiv_session_2/d978c27d-f05c-4356-ae99-3a8b9d98d919/RESP\",\"correlation\":{\"parentTime\":1520608030224,\"childTime\":2,\"initialError\":0.021968610987200005,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:d978c27d-f05c-4356-ae99-3a8b9d98d919:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODAyMDEzOC0y\",\"version\":\"0.0.1\"}","timestamp":"15:07:01"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: d978c27d-f05c-4356-ae99-3a8b9d98d919","timestamp":"15:07:01"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:07:01"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"d978c27d-f05c-4356-ae99-3a8b9d98d919\",\"responseChannel\":\"Sessions/rajiv_session_2/d978c27d-f05c-4356-ae99-3a8b9d98d919/RESP\",\"id\":\"MTUyMDYwODAyMDEzOC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:07:01"}
+{"level":"info","message":"Received TimelineREQ from device: d978c27d-f05c-4356-ae99-3a8b9d98d919","timestamp":"15:07:01"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"fdc3827d-4d41-4843-b4c5-055c142755cf\",\"responseChannel\":\"Sessions/rajiv_session_2/fdc3827d-4d41-4843-b4c5-055c142755cf/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/fdc3827d-4d41-4843-b4c5-055c142755cf/RESP\",\"id\":\"MTUyMDYwODAyNjc5MS0x\",\"version\":\"0.0.1\"}","timestamp":"15:07:07"}
+{"level":"info","message":"Received JoinREQ from device: fdc3827d-4d41-4843-b4c5-055c142755cf","timestamp":"15:07:07"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"fdc3827d-4d41-4843-b4c5-055c142755cf\",\"responseChannel\":\"Sessions/rajiv_session_2/fdc3827d-4d41-4843-b4c5-055c142755cf/RESP\",\"correlation\":{\"parentTime\":1520608036882.0002,\"childTime\":3,\"initialError\":0.0049630969872,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:fdc3827d-4d41-4843-b4c5-055c142755cf:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODAyNjc5MS0y\",\"version\":\"0.0.1\"}","timestamp":"15:07:08"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: fdc3827d-4d41-4843-b4c5-055c142755cf","timestamp":"15:07:08"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:07:08"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"fdc3827d-4d41-4843-b4c5-055c142755cf\",\"responseChannel\":\"Sessions/rajiv_session_2/fdc3827d-4d41-4843-b4c5-055c142755cf/RESP\",\"id\":\"MTUyMDYwODAyNjc5MS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:07:08"}
+{"level":"info","message":"Received TimelineREQ from device: fdc3827d-4d41-4843-b4c5-055c142755cf","timestamp":"15:07:08"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"fdc3827d-4d41-4843-b4c5-055c142755cf\",\"responseChannel\":\"Sessions/rajiv_session_2/fdc3827d-4d41-4843-b4c5-055c142755cf/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:d978c27d-f05c-4356-ae99-3a8b9d98d919:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwODAyNjc5MS00\",\"version\":\"0.0.1\"}","timestamp":"15:07:08"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: fdc3827d-4d41-4843-b4c5-055c142755cf","timestamp":"15:07:08"}
+{"level":"info","message":"Device  fdc3827d-4d41-4843-b4c5-055c142755cf  has left the session  rajiv_session_2","timestamp":"15:07:54"}
+{"level":"info","message":"Device fdc3827d-4d41-4843-b4c5-055c142755cf  removed from session  rajiv_session_2","timestamp":"15:07:54"}
+{"level":"info","message":"Device  d978c27d-f05c-4356-ae99-3a8b9d98d919  has left the session  rajiv_session_2","timestamp":"15:08:03"}
+{"level":"info","message":"Device d978c27d-f05c-4356-ae99-3a8b9d98d919  removed from session  rajiv_session_2","timestamp":"15:08:03"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:08:03"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ad122dc4-5967-4f5f-8680-506df4844fa9\",\"responseChannel\":\"Sessions/rajiv_session_2/ad122dc4-5967-4f5f-8680-506df4844fa9/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/ad122dc4-5967-4f5f-8680-506df4844fa9/RESP\",\"id\":\"MTUyMDYwODEwNjEwMC0x\",\"version\":\"0.0.1\"}","timestamp":"15:08:26"}
+{"level":"info","message":"Received JoinREQ from device: ad122dc4-5967-4f5f-8680-506df4844fa9","timestamp":"15:08:26"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:08:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:08:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:08:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:08:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ad122dc4-5967-4f5f-8680-506df4844fa9\",\"responseChannel\":\"Sessions/rajiv_session_2/ad122dc4-5967-4f5f-8680-506df4844fa9/RESP\",\"correlation\":{\"parentTime\":1520608116083.9998,\"childTime\":9,\"initialError\":0.0149660530128,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:ad122dc4-5967-4f5f-8680-506df4844fa9:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODEwNjEwMC0y\",\"version\":\"0.0.1\"}","timestamp":"15:08:27"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: ad122dc4-5967-4f5f-8680-506df4844fa9","timestamp":"15:08:27"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:08:27"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"ad122dc4-5967-4f5f-8680-506df4844fa9\",\"responseChannel\":\"Sessions/rajiv_session_2/ad122dc4-5967-4f5f-8680-506df4844fa9/RESP\",\"id\":\"MTUyMDYwODEwNjEwMC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:08:27"}
+{"level":"info","message":"Received TimelineREQ from device: ad122dc4-5967-4f5f-8680-506df4844fa9","timestamp":"15:08:27"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3371a046-01f4-4715-845e-4197b605c058\",\"responseChannel\":\"Sessions/rajiv_session_2/3371a046-01f4-4715-845e-4197b605c058/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/3371a046-01f4-4715-845e-4197b605c058/RESP\",\"id\":\"MTUyMDYwODExNDIxMS0x\",\"version\":\"0.0.1\"}","timestamp":"15:08:35"}
+{"level":"info","message":"Received JoinREQ from device: 3371a046-01f4-4715-845e-4197b605c058","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3371a046-01f4-4715-845e-4197b605c058\",\"responseChannel\":\"Sessions/rajiv_session_2/3371a046-01f4-4715-845e-4197b605c058/RESP\",\"correlation\":{\"parentTime\":1520608124291.5,\"childTime\":3,\"initialError\":0.0064599570032,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:3371a046-01f4-4715-845e-4197b605c058:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODExNDIxMS0y\",\"version\":\"0.0.1\"}","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 3371a046-01f4-4715-845e-4197b605c058","timestamp":"15:08:35"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3371a046-01f4-4715-845e-4197b605c058\",\"responseChannel\":\"Sessions/rajiv_session_2/3371a046-01f4-4715-845e-4197b605c058/RESP\",\"id\":\"MTUyMDYwODExNDIxMS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineREQ from device: 3371a046-01f4-4715-845e-4197b605c058","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"3371a046-01f4-4715-845e-4197b605c058\",\"responseChannel\":\"Sessions/rajiv_session_2/3371a046-01f4-4715-845e-4197b605c058/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:ad122dc4-5967-4f5f-8680-506df4844fa9:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwODExNDIxMS00\",\"version\":\"0.0.1\"}","timestamp":"15:08:35"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 3371a046-01f4-4715-845e-4197b605c058","timestamp":"15:08:35"}
+{"level":"info","message":"Device  3371a046-01f4-4715-845e-4197b605c058  has left the session  rajiv_session_2","timestamp":"15:08:56"}
+{"level":"info","message":"Device 3371a046-01f4-4715-845e-4197b605c058  removed from session  rajiv_session_2","timestamp":"15:08:57"}
+{"level":"info","message":"Device  ad122dc4-5967-4f5f-8680-506df4844fa9  has left the session  rajiv_session_2","timestamp":"15:09:01"}
+{"level":"info","message":"Device ad122dc4-5967-4f5f-8680-506df4844fa9  removed from session  rajiv_session_2","timestamp":"15:09:01"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:09:01"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"15:09:15"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"15:09:15"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"15:09:16"}
+{"level":"error","message":"Redis connection Error : Error: Redis connection to 192.168.1.162:6379 failed - connect ECONNREFUSED 192.168.1.162:6379","timestamp":"15:09:17"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:09:18"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:12:02"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:12:02"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:12:02"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:12:02"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:12:02"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:12:02"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:12:02"}
+{"level":"info","message":"connected to redis.","timestamp":"15:12:02"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:12:02"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:12:02"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:12:02"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16\",\"responseChannel\":\"Sessions/rajiv_session_2/23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16/RESP\",\"id\":\"MTUyMDYwODMzNTE0Mi0x\",\"version\":\"0.0.1\"}","timestamp":"15:12:16"}
+{"level":"info","message":"Received JoinREQ from device: 23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16","timestamp":"15:12:16"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:12:16"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:12:16"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:12:16"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:12:16"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16\",\"responseChannel\":\"Sessions/rajiv_session_2/23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16/RESP\",\"correlation\":{\"parentTime\":1520608346097,\"childTime\":41,\"initialError\":0.0359867109872,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODMzNTE0Mi0y\",\"version\":\"0.0.1\"}","timestamp":"15:12:17"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16","timestamp":"15:12:17"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:12:17"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16\",\"responseChannel\":\"Sessions/rajiv_session_2/23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16/RESP\",\"id\":\"MTUyMDYwODMzNTE0Mi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:12:17"}
+{"level":"info","message":"Received TimelineREQ from device: 23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16","timestamp":"15:12:17"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"77cbcefe-c608-42e6-9825-0b46d04e6b3d\",\"responseChannel\":\"Sessions/rajiv_session_2/77cbcefe-c608-42e6-9825-0b46d04e6b3d/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/77cbcefe-c608-42e6-9825-0b46d04e6b3d/RESP\",\"id\":\"MTUyMDYwODM0NjIzMi0x\",\"version\":\"0.0.1\"}","timestamp":"15:12:27"}
+{"level":"info","message":"Received JoinREQ from device: 77cbcefe-c608-42e6-9825-0b46d04e6b3d","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"77cbcefe-c608-42e6-9825-0b46d04e6b3d\",\"responseChannel\":\"Sessions/rajiv_session_2/77cbcefe-c608-42e6-9825-0b46d04e6b3d/RESP\",\"correlation\":{\"parentTime\":1520608356493,\"childTime\":4,\"initialError\":0.0089663530128,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:77cbcefe-c608-42e6-9825-0b46d04e6b3d:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODM0NjIzMi0y\",\"version\":\"0.0.1\"}","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 77cbcefe-c608-42e6-9825-0b46d04e6b3d","timestamp":"15:12:27"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"77cbcefe-c608-42e6-9825-0b46d04e6b3d\",\"responseChannel\":\"Sessions/rajiv_session_2/77cbcefe-c608-42e6-9825-0b46d04e6b3d/RESP\",\"id\":\"MTUyMDYwODM0NjIzMi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineREQ from device: 77cbcefe-c608-42e6-9825-0b46d04e6b3d","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"77cbcefe-c608-42e6-9825-0b46d04e6b3d\",\"responseChannel\":\"Sessions/rajiv_session_2/77cbcefe-c608-42e6-9825-0b46d04e6b3d/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwODM0NjIzMi00\",\"version\":\"0.0.1\"}","timestamp":"15:12:27"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 77cbcefe-c608-42e6-9825-0b46d04e6b3d","timestamp":"15:12:27"}
+{"level":"info","message":"Device  77cbcefe-c608-42e6-9825-0b46d04e6b3d  has left the session  rajiv_session_2","timestamp":"15:12:57"}
+{"level":"info","message":"Device 77cbcefe-c608-42e6-9825-0b46d04e6b3d  removed from session  rajiv_session_2","timestamp":"15:12:57"}
+{"level":"info","message":"Device  23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16  has left the session  rajiv_session_2","timestamp":"15:12:59"}
+{"level":"info","message":"Device 23bf8b0f-d0a6-4a07-80b4-fdbb5604aa16  removed from session  rajiv_session_2","timestamp":"15:12:59"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:12:59"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:19:53"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:19:55"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:19:55"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:19:55"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:19:55"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:19:55"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:19:55"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:19:55"}
+{"level":"info","message":"connected to redis.","timestamp":"15:19:55"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:19:55"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:19:55"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:19:56"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"7b87f05e-2832-4e80-8101-57eb830c0a3e\",\"responseChannel\":\"Sessions/rajiv_session_2/7b87f05e-2832-4e80-8101-57eb830c0a3e/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/7b87f05e-2832-4e80-8101-57eb830c0a3e/RESP\",\"id\":\"MTUyMDYwODgwOTg3NS0x\",\"version\":\"0.0.1\"}","timestamp":"15:20:11"}
+{"level":"info","message":"Received JoinREQ from device: 7b87f05e-2832-4e80-8101-57eb830c0a3e","timestamp":"15:20:11"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:20:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:20:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:20:11"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:20:11"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"7b87f05e-2832-4e80-8101-57eb830c0a3e\",\"responseChannel\":\"Sessions/rajiv_session_2/7b87f05e-2832-4e80-8101-57eb830c0a3e/RESP\",\"correlation\":{\"parentTime\":1520608821355.5,\"childTime\":3,\"initialError\":0.0154651150032,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:7b87f05e-2832-4e80-8101-57eb830c0a3e:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwODgwOTg3NS0y\",\"version\":\"0.0.1\"}","timestamp":"15:20:12"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 7b87f05e-2832-4e80-8101-57eb830c0a3e","timestamp":"15:20:12"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:20:12"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"7b87f05e-2832-4e80-8101-57eb830c0a3e\",\"responseChannel\":\"Sessions/rajiv_session_2/7b87f05e-2832-4e80-8101-57eb830c0a3e/RESP\",\"id\":\"MTUyMDYwODgwOTg3NS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:20:12"}
+{"level":"info","message":"Received TimelineREQ from device: 7b87f05e-2832-4e80-8101-57eb830c0a3e","timestamp":"15:20:12"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:21:13"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:25:55"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:25:55"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:25:55"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:25:55"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:25:55"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:25:56"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:25:55"}
+{"level":"info","message":"connected to redis.","timestamp":"15:25:55"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:25:55"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:25:56"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:25:56"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c223059c-9907-48bb-965f-42f95aba0813\",\"responseChannel\":\"Sessions/rajiv_session_2/c223059c-9907-48bb-965f-42f95aba0813/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/c223059c-9907-48bb-965f-42f95aba0813/RESP\",\"id\":\"MTUyMDYwOTE3NDI3NC0x\",\"version\":\"0.0.1\"}","timestamp":"15:26:15"}
+{"level":"info","message":"Received JoinREQ from device: c223059c-9907-48bb-965f-42f95aba0813","timestamp":"15:26:15"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:26:15"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:26:15"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:26:15"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:26:15"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c223059c-9907-48bb-965f-42f95aba0813\",\"responseChannel\":\"Sessions/rajiv_session_2/c223059c-9907-48bb-965f-42f95aba0813/RESP\",\"correlation\":{\"parentTime\":1520609185413.5,\"childTime\":2,\"initialError\":0.0144689570032,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:c223059c-9907-48bb-965f-42f95aba0813:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTE3NDI3NC0y\",\"version\":\"0.0.1\"}","timestamp":"15:26:15"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: c223059c-9907-48bb-965f-42f95aba0813","timestamp":"15:26:15"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:26:16"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c223059c-9907-48bb-965f-42f95aba0813\",\"responseChannel\":\"Sessions/rajiv_session_2/c223059c-9907-48bb-965f-42f95aba0813/RESP\",\"id\":\"MTUyMDYwOTE3NDI3NC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:26:16"}
+{"level":"info","message":"Received TimelineREQ from device: c223059c-9907-48bb-965f-42f95aba0813","timestamp":"15:26:16"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"c223059c-9907-48bb-965f-42f95aba0813\",\"responseChannel\":\"Sessions/rajiv_session_2/c223059c-9907-48bb-965f-42f95aba0813/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:7b87f05e-2832-4e80-8101-57eb830c0a3e:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwOTE3NDI3NC00\",\"version\":\"0.0.1\"}","timestamp":"15:26:16"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: c223059c-9907-48bb-965f-42f95aba0813","timestamp":"15:26:16"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5156e854-51e3-414e-aaa6-55fd31761869\",\"responseChannel\":\"Sessions/rajiv_session_2/5156e854-51e3-414e-aaa6-55fd31761869/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/5156e854-51e3-414e-aaa6-55fd31761869/RESP\",\"id\":\"MTUyMDYwOTIwMDY1Ny0x\",\"version\":\"0.0.1\"}","timestamp":"15:26:41"}
+{"level":"info","message":"Received JoinREQ from device: 5156e854-51e3-414e-aaa6-55fd31761869","timestamp":"15:26:41"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5156e854-51e3-414e-aaa6-55fd31761869\",\"responseChannel\":\"Sessions/rajiv_session_2/5156e854-51e3-414e-aaa6-55fd31761869/RESP\",\"correlation\":{\"parentTime\":1520609211629,\"childTime\":3,\"initialError\":0.0099643609936,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:5156e854-51e3-414e-aaa6-55fd31761869:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTIwMDY1Ny0y\",\"version\":\"0.0.1\"}","timestamp":"15:26:42"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 5156e854-51e3-414e-aaa6-55fd31761869","timestamp":"15:26:42"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:26:42"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5156e854-51e3-414e-aaa6-55fd31761869\",\"responseChannel\":\"Sessions/rajiv_session_2/5156e854-51e3-414e-aaa6-55fd31761869/RESP\",\"id\":\"MTUyMDYwOTIwMDY1Ny0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:26:42"}
+{"level":"info","message":"Received TimelineREQ from device: 5156e854-51e3-414e-aaa6-55fd31761869","timestamp":"15:26:42"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5156e854-51e3-414e-aaa6-55fd31761869\",\"responseChannel\":\"Sessions/rajiv_session_2/5156e854-51e3-414e-aaa6-55fd31761869/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:7b87f05e-2832-4e80-8101-57eb830c0a3e:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwOTIwMDY1Ny00\",\"version\":\"0.0.1\"}","timestamp":"15:26:42"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 5156e854-51e3-414e-aaa6-55fd31761869","timestamp":"15:26:42"}
+{"level":"info","message":"Device  c223059c-9907-48bb-965f-42f95aba0813  has left the session  rajiv_session_2","timestamp":"15:28:35"}
+{"level":"info","message":"Device c223059c-9907-48bb-965f-42f95aba0813  removed from session  rajiv_session_2","timestamp":"15:28:35"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:28:39"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:29:51"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:29:51"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:29:51"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:29:51"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:29:51"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:29:51"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:29:51"}
+{"level":"info","message":"connected to redis.","timestamp":"15:29:51"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:29:51"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:29:51"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:29:51"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5b2a5426-32b9-42ac-af54-fb7b3f0f2845\",\"responseChannel\":\"Sessions/rajiv_session_2/5b2a5426-32b9-42ac-af54-fb7b3f0f2845/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/5b2a5426-32b9-42ac-af54-fb7b3f0f2845/RESP\",\"id\":\"MTUyMDYwOTQyNTM3OC0x\",\"version\":\"0.0.1\"}","timestamp":"15:30:26"}
+{"level":"info","message":"Received JoinREQ from device: 5b2a5426-32b9-42ac-af54-fb7b3f0f2845","timestamp":"15:30:26"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:30:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:30:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:30:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:30:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5b2a5426-32b9-42ac-af54-fb7b3f0f2845\",\"responseChannel\":\"Sessions/rajiv_session_2/5b2a5426-32b9-42ac-af54-fb7b3f0f2845/RESP\",\"correlation\":{\"parentTime\":1520609436593.5,\"childTime\":8,\"initialError\":0.010466529003200001,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:5b2a5426-32b9-42ac-af54-fb7b3f0f2845:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTQyNTM3OC0y\",\"version\":\"0.0.1\"}","timestamp":"15:30:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 5b2a5426-32b9-42ac-af54-fb7b3f0f2845","timestamp":"15:30:26"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:30:26"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5b2a5426-32b9-42ac-af54-fb7b3f0f2845\",\"responseChannel\":\"Sessions/rajiv_session_2/5b2a5426-32b9-42ac-af54-fb7b3f0f2845/RESP\",\"id\":\"MTUyMDYwOTQyNTM3OC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:30:27"}
+{"level":"info","message":"Received TimelineREQ from device: 5b2a5426-32b9-42ac-af54-fb7b3f0f2845","timestamp":"15:30:27"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759\",\"responseChannel\":\"Sessions/rajiv_session_2/9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759/RESP\",\"id\":\"MTUyMDYwOTQ2NzYyNS0x\",\"version\":\"0.0.1\"}","timestamp":"15:31:09"}
+{"level":"info","message":"Received JoinREQ from device: 9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759\",\"responseChannel\":\"Sessions/rajiv_session_2/9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759/RESP\",\"correlation\":{\"parentTime\":1520609479324,\"childTime\":3,\"initialError\":0.0089677470064,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTQ2NzYyNS0y\",\"version\":\"0.0.1\"}","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759","timestamp":"15:31:09"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759\",\"responseChannel\":\"Sessions/rajiv_session_2/9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759/RESP\",\"id\":\"MTUyMDYwOTQ2NzYyNS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineREQ from device: 9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759\",\"responseChannel\":\"Sessions/rajiv_session_2/9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:5b2a5426-32b9-42ac-af54-fb7b3f0f2845:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwOTQ2NzYyNS00\",\"version\":\"0.0.1\"}","timestamp":"15:31:09"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759","timestamp":"15:31:09"}
+{"level":"info","message":"Device  9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759  has left the session  rajiv_session_2","timestamp":"15:32:17"}
+{"level":"info","message":"Device 9eab60ed-9e6e-4ed6-a0f0-bf3c64a2a759  removed from session  rajiv_session_2","timestamp":"15:32:18"}
+{"level":"info","message":"Device  5b2a5426-32b9-42ac-af54-fb7b3f0f2845  has left the session  rajiv_session_2","timestamp":"15:32:24"}
+{"level":"info","message":"Device 5b2a5426-32b9-42ac-af54-fb7b3f0f2845  removed from session  rajiv_session_2","timestamp":"15:32:24"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:32:24"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:37:24"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:37:27"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:37:27"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:37:27"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:37:27"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:37:27"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:37:27"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:37:27"}
+{"level":"info","message":"connected to redis.","timestamp":"15:37:27"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:37:27"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:37:27"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:37:27"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0af22001-f7d7-4474-b11b-13999138d25a\",\"responseChannel\":\"Sessions/rajiv_session_2/0af22001-f7d7-4474-b11b-13999138d25a/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/0af22001-f7d7-4474-b11b-13999138d25a/RESP\",\"id\":\"MTUyMDYwOTg2Njk3NS0x\",\"version\":\"0.0.1\"}","timestamp":"15:37:48"}
+{"level":"info","message":"Received JoinREQ from device: 0af22001-f7d7-4474-b11b-13999138d25a","timestamp":"15:37:48"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:37:48"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:37:48"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:37:48"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:37:48"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0af22001-f7d7-4474-b11b-13999138d25a\",\"responseChannel\":\"Sessions/rajiv_session_2/0af22001-f7d7-4474-b11b-13999138d25a/RESP\",\"correlation\":{\"parentTime\":1520609878627.5,\"childTime\":3,\"initialError\":0.0054627710032,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:0af22001-f7d7-4474-b11b-13999138d25a:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTg2Njk3NS0y\",\"version\":\"0.0.1\"}","timestamp":"15:37:48"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 0af22001-f7d7-4474-b11b-13999138d25a","timestamp":"15:37:48"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:37:48"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"0af22001-f7d7-4474-b11b-13999138d25a\",\"responseChannel\":\"Sessions/rajiv_session_2/0af22001-f7d7-4474-b11b-13999138d25a/RESP\",\"id\":\"MTUyMDYwOTg2Njk3NS0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:37:48"}
+{"level":"info","message":"Received TimelineREQ from device: 0af22001-f7d7-4474-b11b-13999138d25a","timestamp":"15:37:48"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"e39f706f-7ca0-45ea-9104-364ec9eed9c1\",\"responseChannel\":\"Sessions/rajiv_session_2/e39f706f-7ca0-45ea-9104-364ec9eed9c1/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/e39f706f-7ca0-45ea-9104-364ec9eed9c1/RESP\",\"id\":\"MTUyMDYwOTg5MzM1My0x\",\"version\":\"0.0.1\"}","timestamp":"15:38:14"}
+{"level":"info","message":"Received JoinREQ from device: e39f706f-7ca0-45ea-9104-364ec9eed9c1","timestamp":"15:38:14"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"e39f706f-7ca0-45ea-9104-364ec9eed9c1\",\"responseChannel\":\"Sessions/rajiv_session_2/e39f706f-7ca0-45ea-9104-364ec9eed9c1/RESP\",\"correlation\":{\"parentTime\":1520609904880.5,\"childTime\":6,\"initialError\":0.0074695429904,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:e39f706f-7ca0-45ea-9104-364ec9eed9c1:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYwOTg5MzM1My0y\",\"version\":\"0.0.1\"}","timestamp":"15:38:14"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: e39f706f-7ca0-45ea-9104-364ec9eed9c1","timestamp":"15:38:14"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:38:14"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"e39f706f-7ca0-45ea-9104-364ec9eed9c1\",\"responseChannel\":\"Sessions/rajiv_session_2/e39f706f-7ca0-45ea-9104-364ec9eed9c1/RESP\",\"id\":\"MTUyMDYwOTg5MzM1My0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:38:14"}
+{"level":"info","message":"Received TimelineREQ from device: e39f706f-7ca0-45ea-9104-364ec9eed9c1","timestamp":"15:38:14"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"e39f706f-7ca0-45ea-9104-364ec9eed9c1\",\"responseChannel\":\"Sessions/rajiv_session_2/e39f706f-7ca0-45ea-9104-364ec9eed9c1/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:0af22001-f7d7-4474-b11b-13999138d25a:dmlkZW8ubXA0\",\"id\":\"MTUyMDYwOTg5MzM1My00\",\"version\":\"0.0.1\"}","timestamp":"15:38:15"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: e39f706f-7ca0-45ea-9104-364ec9eed9c1","timestamp":"15:38:15"}
+{"level":"info","message":"Device  0af22001-f7d7-4474-b11b-13999138d25a  has left the session  rajiv_session_2","timestamp":"15:39:05"}
+{"level":"info","message":"Device 0af22001-f7d7-4474-b11b-13999138d25a  removed from session  rajiv_session_2","timestamp":"15:39:05"}
+{"level":"info","message":"Device  e39f706f-7ca0-45ea-9104-364ec9eed9c1  has left the session  rajiv_session_2","timestamp":"15:39:07"}
+{"level":"info","message":"Device e39f706f-7ca0-45ea-9104-364ec9eed9c1  removed from session  rajiv_session_2","timestamp":"15:39:07"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:39:07"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:39:19"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"15:45:13"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"15:45:13"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"15:45:13"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"15:45:13"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:45:13"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"15:45:13"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"15:45:13"}
+{"level":"info","message":"connected to redis.","timestamp":"15:45:13"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"15:45:13"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"15:45:13"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"15:45:13"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"497f1475-7cdb-4579-ab55-f9f664c40af1\",\"responseChannel\":\"Sessions/rajiv_session_2/497f1475-7cdb-4579-ab55-f9f664c40af1/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/497f1475-7cdb-4579-ab55-f9f664c40af1/RESP\",\"id\":\"MTUyMDYxMDMyNTk3NC0x\",\"version\":\"0.0.1\"}","timestamp":"15:45:26"}
+{"level":"info","message":"Received JoinREQ from device: 497f1475-7cdb-4579-ab55-f9f664c40af1","timestamp":"15:45:26"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"15:45:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"15:45:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"15:45:26"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"15:45:26"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"497f1475-7cdb-4579-ab55-f9f664c40af1\",\"responseChannel\":\"Sessions/rajiv_session_2/497f1475-7cdb-4579-ab55-f9f664c40af1/RESP\",\"correlation\":{\"parentTime\":1520610337561,\"childTime\":2,\"initialError\":0.0049616030064,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:497f1475-7cdb-4579-ab55-f9f664c40af1:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYxMDMyNTk3NC0y\",\"version\":\"0.0.1\"}","timestamp":"15:45:27"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 497f1475-7cdb-4579-ab55-f9f664c40af1","timestamp":"15:45:27"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:45:27"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"497f1475-7cdb-4579-ab55-f9f664c40af1\",\"responseChannel\":\"Sessions/rajiv_session_2/497f1475-7cdb-4579-ab55-f9f664c40af1/RESP\",\"id\":\"MTUyMDYxMDMyNTk3NC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:45:27"}
+{"level":"info","message":"Received TimelineREQ from device: 497f1475-7cdb-4579-ab55-f9f664c40af1","timestamp":"15:45:27"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5075b827-f1e8-4bac-8e9d-dbd30af641b4\",\"responseChannel\":\"Sessions/rajiv_session_2/5075b827-f1e8-4bac-8e9d-dbd30af641b4/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/5075b827-f1e8-4bac-8e9d-dbd30af641b4/RESP\",\"id\":\"MTUyMDYxMDM0NDAyNi0x\",\"version\":\"0.0.1\"}","timestamp":"15:45:45"}
+{"level":"info","message":"Received JoinREQ from device: 5075b827-f1e8-4bac-8e9d-dbd30af641b4","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5075b827-f1e8-4bac-8e9d-dbd30af641b4\",\"responseChannel\":\"Sessions/rajiv_session_2/5075b827-f1e8-4bac-8e9d-dbd30af641b4/RESP\",\"correlation\":{\"parentTime\":1520610355710,\"childTime\":2,\"initialError\":0.005959288993599999,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:5075b827-f1e8-4bac-8e9d-dbd30af641b4:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYxMDM0NDAyNi0y\",\"version\":\"0.0.1\"}","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 5075b827-f1e8-4bac-8e9d-dbd30af641b4","timestamp":"15:45:45"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5075b827-f1e8-4bac-8e9d-dbd30af641b4\",\"responseChannel\":\"Sessions/rajiv_session_2/5075b827-f1e8-4bac-8e9d-dbd30af641b4/RESP\",\"id\":\"MTUyMDYxMDM0NDAyNi0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineREQ from device: 5075b827-f1e8-4bac-8e9d-dbd30af641b4","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5075b827-f1e8-4bac-8e9d-dbd30af641b4\",\"responseChannel\":\"Sessions/rajiv_session_2/5075b827-f1e8-4bac-8e9d-dbd30af641b4/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:497f1475-7cdb-4579-ab55-f9f664c40af1:dmlkZW8ubXA0\",\"id\":\"MTUyMDYxMDM0NDAyNi00\",\"version\":\"0.0.1\"}","timestamp":"15:45:45"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 5075b827-f1e8-4bac-8e9d-dbd30af641b4","timestamp":"15:45:45"}
+{"level":"info","message":"Device  5075b827-f1e8-4bac-8e9d-dbd30af641b4  has left the session  rajiv_session_2","timestamp":"15:50:30"}
+{"level":"info","message":"Device 5075b827-f1e8-4bac-8e9d-dbd30af641b4  removed from session  rajiv_session_2","timestamp":"15:50:30"}
+{"level":"info","message":"Device  497f1475-7cdb-4579-ab55-f9f664c40af1  has left the session  rajiv_session_2","timestamp":"15:50:33"}
+{"level":"info","message":"Device 497f1475-7cdb-4579-ab55-f9f664c40af1  removed from session  rajiv_session_2","timestamp":"15:50:33"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"15:50:33"}
+{"level":"info","message":"stopped listening to channels","timestamp":"15:50:48"}
+{"level":"info","message":"Multi-tenant session controller created.","timestamp":"16:22:01"}
+{"level":"info","message":"Discovered  wallclockservice-6677  :  {\"port\":6677,\"host\":\"192.168.1.162\"}","timestamp":"16:22:02"}
+{"level":"info","message":"Discovered  wallclockservice-6676  :  {\"port\":6676,\"host\":\"192.168.1.162\"}","timestamp":"16:22:02"}
+{"level":"info","message":"Discovered  mosquitto-1883  :  {\"port\":1883,\"host\":\"192.168.1.162\"}","timestamp":"16:22:02"}
+{"level":"info","message":"Discovered  redis  :  {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"16:22:02"}
+{"level":"info","message":"Multi-tenant Session Controller started.  true","timestamp":"16:22:02"}
+{"level":"info","message":"connecting to Redis endpoint {\"port\":6379,\"host\":\"192.168.1.162\"}","timestamp":"16:22:02"}
+{"level":"info","message":"connected to redis.","timestamp":"16:22:02"}
+{"redis":{"host":"192.168.1.162","port":6379},"log":{"enabled":0,"options":{"level":"trace"}},"monitor":{"enabled":true,"host":"192.168.1.162","port":3000},"level":"info","message":"","timestamp":"16:22:02"}
+{"level":"info","message":"Listening to requests on channel:  Sessions/REQ","timestamp":"16:22:02"}
+{"level":"info","message":"Connected to mqtt broker: 192.168.1.162:1883","timestamp":"16:22:02"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"05cc28a2-2aab-465d-a77f-935d042937dc\",\"responseChannel\":\"Sessions/rajiv_session_2/05cc28a2-2aab-465d-a77f-935d042937dc/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/05cc28a2-2aab-465d-a77f-935d042937dc/RESP\",\"id\":\"MTUyMDYxMjUzMjQ3Ny0x\",\"version\":\"0.0.1\"}","timestamp":"16:22:13"}
+{"level":"info","message":"Received JoinREQ from device: 05cc28a2-2aab-465d-a77f-935d042937dc","timestamp":"16:22:13"}
+{"level":"info","message":"created  session:  rajiv_session_2","timestamp":"16:22:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' REQ channel: Sessions/rajiv_session_2/REQ","timestamp":"16:22:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' RESP channel: Sessions/rajiv_session_2/RESP","timestamp":"16:22:13"}
+{"level":"info","message":"SessionController listening to session ' rajiv_session_2 ' lastwill channel: Sessions/rajiv_session_2/lastwill","timestamp":"16:22:13"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"05cc28a2-2aab-465d-a77f-935d042937dc\",\"responseChannel\":\"Sessions/rajiv_session_2/05cc28a2-2aab-465d-a77f-935d042937dc/RESP\",\"correlation\":{\"parentTime\":1520612545924,\"childTime\":5,\"initialError\":0.0069755969872,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:05cc28a2-2aab-465d-a77f-935d042937dc:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYxMjUzMjQ3Ny0y\",\"version\":\"0.0.1\"}","timestamp":"16:22:14"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 05cc28a2-2aab-465d-a77f-935d042937dc","timestamp":"16:22:14"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"16:22:14"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"05cc28a2-2aab-465d-a77f-935d042937dc\",\"responseChannel\":\"Sessions/rajiv_session_2/05cc28a2-2aab-465d-a77f-935d042937dc/RESP\",\"id\":\"MTUyMDYxMjUzMjQ3Ny0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"16:22:14"}
+{"level":"info","message":"Received TimelineREQ from device: 05cc28a2-2aab-465d-a77f-935d042937dc","timestamp":"16:22:14"}
+{"level":"info","message":"Received JoinREQ from device: {\"type\":\"JoinREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5d13c735-e445-488a-99df-bba4e073a757\",\"responseChannel\":\"Sessions/rajiv_session_2/5d13c735-e445-488a-99df-bba4e073a757/RESP\",\"requestChannel\":\"Sessions/rajiv_session_2/5d13c735-e445-488a-99df-bba4e073a757/RESP\",\"id\":\"MTUyMDYxMjU0MzkzNC0x\",\"version\":\"0.0.1\"}","timestamp":"16:22:24"}
+{"level":"info","message":"Received JoinREQ from device: 5d13c735-e445-488a-99df-bba4e073a757","timestamp":"16:22:24"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: {\"type\":\"TimelineRegistrationREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5d13c735-e445-488a-99df-bba4e073a757\",\"responseChannel\":\"Sessions/rajiv_session_2/5d13c735-e445-488a-99df-bba4e073a757/RESP\",\"correlation\":{\"parentTime\":1520612557027.5,\"childTime\":4,\"initialError\":0.0104602069968,\"errorGrowthRate\":0,\"speed\":1},\"timelineId\":\"urn:rajiv_ctx_2:5d13c735-e445-488a-99df-bba4e073a757:dmlkZW8ubXA0\",\"contentId\":\"video.mp4\",\"timelineType\":\"tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000\",\"frequency\":1000,\"channel\":null,\"useForSessionSync\":true,\"writable\":true,\"id\":\"MTUyMDYxMjU0MzkzNC0y\",\"version\":\"0.0.1\"}","timestamp":"16:22:25"}
+{"level":"info","message":"Received TimelineRegistrationREQ from device: 5d13c735-e445-488a-99df-bba4e073a757","timestamp":"16:22:25"}
+{"level":"info","message":"request.useForSessionSync: true","timestamp":"16:22:25"}
+{"level":"info","message":"Received TimelineREQ from device: {\"type\":\"TimelineREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5d13c735-e445-488a-99df-bba4e073a757\",\"responseChannel\":\"Sessions/rajiv_session_2/5d13c735-e445-488a-99df-bba4e073a757/RESP\",\"id\":\"MTUyMDYxMjU0MzkzNC0z\",\"version\":\"0.0.1\",\"providerContextId\":null,\"providerId\":null,\"timelineType\":null,\"contentId\":null}","timestamp":"16:22:25"}
+{"level":"info","message":"Received TimelineREQ from device: 5d13c735-e445-488a-99df-bba4e073a757","timestamp":"16:22:25"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: {\"type\":\"TimelineSubscriptionREQ\",\"sessionId\":\"rajiv_session_2\",\"contextId\":\"rajiv_ctx_2\",\"deviceId\":\"5d13c735-e445-488a-99df-bba4e073a757\",\"responseChannel\":\"Sessions/rajiv_session_2/5d13c735-e445-488a-99df-bba4e073a757/RESP\",\"timelineId\":\"urn:rajiv_ctx_2:05cc28a2-2aab-465d-a77f-935d042937dc:dmlkZW8ubXA0\",\"id\":\"MTUyMDYxMjU0MzkzNC00\",\"version\":\"0.0.1\"}","timestamp":"16:22:25"}
+{"level":"info","message":"Received TimelineSubscriptionREQ from device: 5d13c735-e445-488a-99df-bba4e073a757","timestamp":"16:22:25"}
+{"level":"info","message":"Device  5d13c735-e445-488a-99df-bba4e073a757  has left the session  rajiv_session_2","timestamp":"16:23:05"}
+{"level":"info","message":"Device 5d13c735-e445-488a-99df-bba4e073a757  removed from session  rajiv_session_2","timestamp":"16:23:05"}
+{"level":"info","message":"Device  05cc28a2-2aab-465d-a77f-935d042937dc  has left the session  rajiv_session_2","timestamp":"16:23:08"}
+{"level":"info","message":"Device 05cc28a2-2aab-465d-a77f-935d042937dc  removed from session  rajiv_session_2","timestamp":"16:23:08"}
+{"level":"info","message":"Session ' rajiv_session_2 ' deleted.","timestamp":"16:23:08"}
+{"level":"info","message":"stopped listening to channels","timestamp":"16:23:16"}
