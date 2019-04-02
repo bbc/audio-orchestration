@@ -126,7 +126,6 @@ var synchroniser = cloudSyncKit.getCloudSynchroniser(syncUrl, sessionId, deviceI
 |-------------------------|------------|------------------------------------------------|
 | `EARLIEST_FIRST`        |     1      | First-to-join master mode. The sync timeline is locked to the timeline that was registered first for this session.    |
 | `LOWEST_DISPERSION`     |     2      | Closest-client master mode. The sync timeline state is computed from the state of the timeline with the lowest reported dispersion (RTT) value.     |
-| `USE_ALL`               |     3      | DVB-CSS MSAS mode. The sync timeline state is computed from Earliest/Actual/Latest Presentation Timestamps reported by each client.     |
 | `DYNAMIC`               |     4      | No master mode. The sync timeline state is computed from the timeline to have undergone the most recent  significant state-change. i.e. any client can change the state of the sync timeline as long as it exports a timeline of the same type and origin (same ```timelineType``` and ```contentId```) |
 
 
@@ -178,7 +177,7 @@ var videoClock = new CorrelatedClock(synchroniser.wallclock, {
 Once registered with the Sync Service, your clock object will be updated dynamically by the service. The media player needs to be kept synchronised with the clock object. You can use the Adaptive Media Playback algorithm to locally sync the media player to the clock. This is more suitable for video. For audio, a seek might be the best option.
 
 * An example of a clock object locked to a video element is found in `examples/synchronisedvideo/src/js/VideoClock.js`
-* An implementation of the Adaptive Media Playback algorithm is found in the [Synchronised Video](https://gitlab-ext.irt.de/2-immerse/cloud-sync/blob/master/examples/synchronisedvideo/src/js/VideoSynchroniser.js) example: `examples/synchronisedvideo/src/js/VideoSynchroniser.js`
+* An implementation of the Adaptive Media Playback algorithm is found in the Synchronised Video example app: `examples/synchronisedvideo/src/js/VideoSynchroniser.js`
 
 
 ### 2.3 Register the clock with the CloudSynchroniser
