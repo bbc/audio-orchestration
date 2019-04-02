@@ -10,7 +10,6 @@ build/
 dist/
 sdist/
 node_modules/
-doc/
 .grunt/
 *~
 **/*~
