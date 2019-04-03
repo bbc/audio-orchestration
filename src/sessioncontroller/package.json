@@ -50,6 +50,6 @@
     "grunt-webpack": "^1.0.14",
     "jasmine-node": "^1.14.5",
     "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^3.2.1"
   }
 }
