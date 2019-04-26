@@ -10,7 +10,7 @@ export const TIMELINE_TYPE_TICK_RATE = 1000;
 
 // cloud sync service websockets endpoint, specified as { hostname } for standard wss:// connection
 // on default port, also specify a { port } number to use a plain ws:// connection on that port.
-export const CLOUDSYNC_ENDPOINT = { hostname: 'mqttbroker.edge.platform.2immerse.eu' };
+export const CLOUDSYNC_ENDPOINT = { hostname: 'cloudsync.virt.ch.bbc.co.uk' };
 
 // number of digits in the session code, used for placeholders and validity check
 export const SESSION_CODE_LENGTH = 6;
@@ -39,7 +39,7 @@ export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
 export const PLAY_AGAIN_CONTENT_ID = CONTENT_ID_MAIN;
 
 export const DEFAULT_IMAGE = 'default';
-export const JOIN_URL = 'http://localhost:8080/join';
+export const JOIN_URL = 'http://localhost:8080/#!/join';
 
 export const DEBUG_UI = true;
 
