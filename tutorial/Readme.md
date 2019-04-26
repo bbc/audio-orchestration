@@ -37,6 +37,9 @@ This template is written mostly in JavaScript, and you'll need `nodejs` to compi
 can view it in the browser. You'll also need `ffmpeg` and `python3` to encode the media and convert
 the metadata files. We recommend you use `git` to checkout this repository.
 
+Installation of the Node modules might also prompt for a JDK, unfortunately this is currently required
+to get it to install; a future version of this template should remove that dependency.
+
 _These instructions assume you're on a Mac and comfortable installing software using homebrew.
 Other operating systems and installation methods are available, but the required steps might
 differ slightly._
