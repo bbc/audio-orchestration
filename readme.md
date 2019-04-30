@@ -1,3 +1,13 @@
+# bbcat-orchestration-cloud-sync-client
+
+This is a fork of the [2-IMMERSE/cloud-sync](https://github.com/2-IMMERSE/cloud-sync). The following changes will be made in this branch:
+
+* remove server-side dependencies to simplify consuming the client as a Node.js dependency,
+* apply a small number of patches to provide functionality required for audio orchestration projects,
+* and publish the built client library to a private NPM repository hosted in R&D Artifactory.
+
+---
+
 # Cloud-Sync Media Synchronisation Service 
 
 <img src="https://2immerse.eu/wp-content/uploads/2016/04/2-IMM_150x50.png" align="left"/><em>This project was originally developed as part of the <a href="https://2immerse.eu/">2-IMMERSE</a> project, co-funded by the European Commission’s <a hef="http://ec.europa.eu/programmes/horizon2020/">Horizon 2020</a> Research Programme</em>
