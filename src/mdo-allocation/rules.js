@@ -16,16 +16,6 @@
  * @property {MdoLocation} location
  */
 
-/**
- * lists all zone names (usually just one) corresponding to a device's location setting.
- *
- * @param {object} location
- * @property {string} location.distance
- * @property {string} location.direction
- *
- * @returns {Array<string>}
- */
-
 const DISTANCES = [
   'near',
   'far',
@@ -45,7 +35,12 @@ const SOFT_STAY = 1;
 const HARD_STAY = 2;
 
 /**
- * @param {MdoLocation} location
+ * lists all zone names (usually just one) corresponding to a device's location setting.
+ *
+ * @param {object} location
+ * @property {string} location.distance
+ * @property {string} location.direction
+ *
  * @returns {Array<string>} zones
  */
 function deviceLocationToZones({ distance = null, direction = null } = {}) {
