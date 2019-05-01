@@ -35,3 +35,5 @@ package-lock.json
 
 .tscache
 
+# NPM
+.npmrc

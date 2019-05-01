@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration-cloud-sync-client",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Library implementing client code for cloud synchronisation",
   "main": "dist/browser/CloudSyncKit.js",
   "directories": {
@@ -40,5 +40,8 @@
     "typescript": "^2.4.2",
     "webpack": "^1.14.1",
     "webpack-dev-server": "^3.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://artifactory-noforge.virt.ch.bbc.co.uk/artifactory/api/npm/iic-npm/"
   }
 }
