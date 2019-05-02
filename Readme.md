@@ -50,11 +50,11 @@ repository, which implements a React.js user interface template recommended for 
 
 Install all dependencies for development of the main library:
 
+NB: some dependencies are installed from the R&D Artifactory registry. See our [ways of working page](https://confluence.dev.bbc.co.uk/display/audioteam/bbcat-orchestration+libraries+and+tools) to set this up.
+
 ```
 yarn install
 ```
-
-NB: some depen
 
 ### available scripts
 
