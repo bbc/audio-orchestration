@@ -1,8 +1,8 @@
 {
-  "name": "bbcat-orchestration",
-  "version": "0.2.4",
+  "name": "@bbc/bbcat-orchestration",
+  "version": "0.2.5",
   "description": "Components for synchronised object based audio experiences.",
-  "main": "src/index.js",
+  "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
   "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
   "license": "UNLICENSED",
@@ -32,6 +32,6 @@
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
     "events": "^3.0.0",
-    "synckit-cloud": "git+ssh://git@github.com:bbc/cloud-synckit-js#kh-media-device-orchestration"
+    "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.0"
   }
 }

@@ -1,1 +1,0 @@
-module.exports = { EARLIEST_FIRST: 1, LOWEST_DISPERSION: 2, USE_ALL: 3};

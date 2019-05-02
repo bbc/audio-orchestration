@@ -27,7 +27,7 @@ experiences.
 
 The recommended way to use the library is to include it as part of a webpack build. You can take advantage of tree-shaking (de-duplicating common dependencies) by importing individual ES6 modules directly from `src/`:  For example, use `import OrchestrationClient from 'bbcat-orchestration/src/orchestration'`. For convenience, the top-level classes are also available as `import { OrchestrationClient } from 'bbcat-orchestration'`.
 
-Alternatively, a webpack bundle including all dependencies can be created by running `npm run build`. This creates a single large file using a Universal Module Definition (UMD) in `dist/` that works when included as a `<script>` tag, exposing the global `bbcatOrchestration` object. Its properties are defined in `src/index.js`.
+Alternatively, a webpack bundle including all dependencies can be created by running `yarn build`. This creates a single large file using a Universal Module Definition (UMD) in `dist/` that works when included as a `<script>` tag, exposing the global `bbcatOrchestration` object. Its properties are defined in `src/index.js`.
 
 ## Examples
 
@@ -51,24 +51,20 @@ repository, which implements a React.js user interface template recommended for 
 Install all dependencies for development of the main library:
 
 ```
-npm install
+yarn install
 ```
 
-NB: `yarn install` currently fails on some cloud-sync dependencies, so using plain old `npm` is recommended for now.
+NB: some depen
 
 ### available scripts
 
-`npm run dev` creates a development build, `npm run build` creates a production build of the complete library in `dist/`.
+`yarn dev` creates a development build, `yarn build` creates a production build of the complete library in `dist/`.
 
-`npm run lint` runs `eslint` to check for coding style violations.
+`yarn lint` runs `eslint` to check for coding style violations.
 
-`npm run doc` generates the documentation in the `docs/` folder.
+`yarn doc` generates the documentation in the `docs/` folder.
 
-### cloud-sync and bbcat-js
-
-The `cloud-sync` client library is used to connect to a hosted synchronisation
-service. A version of the client library with our local patches is included in this
-repository in the [cloud-sync/](cloud-sync/) directory.
+### bbcat-js
 
 The `bbcat-js` library is used for its WebAudio DASH streaming implementation. A patched version is
 included in the [bbcat-js/](bbcat-js/) directory.
@@ -77,13 +73,12 @@ See [subtree.md](subtree.md) to setup git remotes for developing them. Changes h
 
 ### Linking libraries
 
-To develop the `bbcat-js` and `cloud-sync` libraries alongside `bbcat-orchestration`, they may be linked to use the local development version instead of the version installed in `node_modules`.
+To develop the `bbcat-js` library alongside `bbcat-orchestration`, they may be linked to use the local development version instead of the version installed in `node_modules`.
 
-First, run `npm install` in `bbcat-js/` and `cloud-sync/` respectively to get their development dependencies. Note that changes to cloud-sync may only be picked up after running `npm run build_lib` in its directory.
+First, run `yarn install` in `bbcat-js/` to install its development dependencies.
 
-Then, run `npm link` in `bbcat-js/` and `cloud-sync/`. This registers the development version with `npm`.
+Then, run `yarn link` in `bbcat-js/`. This registers the development version with `yarn`.
 
-Now, back in the repository root, the linked version can be enabled using `npm link bbcat-js` and `npm link synckit-cloud`.
+Now, back in the repository root, the linked version can be enabled using `yarn link bbcat-js`.
 
-
-The same process may be used to link the `bbcat-orchestration` package into each of the examples after running `npm install` in their directories.
+The same process may be used to link the `bbcat-orchestration` package into each of the examples after running `yarn install` in their directories.
