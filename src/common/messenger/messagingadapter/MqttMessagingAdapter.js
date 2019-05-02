@@ -54,7 +54,6 @@ MqttMessagingAdapter = function (host, port, user, options) {
     lastWill.payload = new UnexpectedDeviceExit(sessionId, contextId, user).serialise();
     lastWill.qos = 2;
     lastWill.retain = false;
-
     if (typeof port !== "undefined"){
         priv.client = mqtt.connect({ host: host, port: port, keepalive: 60, clientId: user, will: lastWill });
     }else

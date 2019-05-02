@@ -5,7 +5,7 @@ var inherits = require("inherits"),
     TimelineRegistrationRESP;
 
 params = RESPParams().extend([
-    { name: "timelineUpdateChannel", type: "string", writable: false, optional: false }
+    { name: "timelineUpdateChannel", type: "string", writable: false, optional: true }
 ]).get();
 
 /**
