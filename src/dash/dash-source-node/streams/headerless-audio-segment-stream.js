@@ -180,7 +180,8 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     const segment = this._buffer.segments.find((s) => s.n === n);
 
     if (segment) {
-      segment.data = this._removeTimestamps(data);
+      // segment.data = this._removeTimestamps(data);
+      segment.data = data;
 
       const prevSegment = this._buffer.segments.find((s) => s.n === n - 1);
       const nextSegment = this._buffer.segments.find((s) => s.n === n + 1);
@@ -226,7 +227,8 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
           this._loader.load(decodeSegment.url) : null;
       })
       .then((data) => {
-        this._buffer.decode = this._removeTimestamps(data);
+        // this._buffer.decode = this._removeTimestamps(data);
+        this._buffer.decode = data;
       })
       .then(() => {
         const promises = [];

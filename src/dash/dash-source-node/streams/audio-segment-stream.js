@@ -23,7 +23,7 @@ export default class AudioSegmentStream extends SegmentStream {
     // this._primerOffset = 2048 / this._context.sampleRate;
     // HACK - to be resolved defaulting sample rate to 48000 to calculate the
     // primer offset, needs to be resolved.
-    this._primerOffset = 2048 / 48000;
+    this._primerOffset = 0; // 2048 / 48000;
     this._isStreaming = false;
     this._stream.channelCount = definition.channelCount;
     this._output = this._context.createChannelSplitter(this.channelCount);

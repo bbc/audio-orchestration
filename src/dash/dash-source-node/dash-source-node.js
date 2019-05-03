@@ -168,12 +168,12 @@ export default class DashSourceNode extends CompoundNode {
    /**
    * Seek playback by a provided offset value.
    * @param  {?number} [seconds]
-   *         Time in seconds to seek by note this is relative to the current playback position and 
+   *         Time in seconds to seek by note this is relative to the current playback position and
    *         can be +/ve or -/ve
    */
   seek(seekTime) {
-    let seekStart = this.context.currentTime;
-    let seekEnd = seekStart + seekTime;
+    const seekStart = this.context.currentTime;
+    const seekEnd = seekStart + seekTime;
     this.stop();
     this.prime(seekEnd).then(() => {
       this.start();

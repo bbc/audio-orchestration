@@ -1,10 +1,11 @@
 {
-  "name": "bbcat",
-  "version": "0.0.1",
+  "name": "@bbc/bbcat-orchestration-bbcat",
+  "version": "0.1.0",
   "description": "BBC Audio Toolkit",
   "main": "dist/bbcat.js",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
     "build": "npm run lint && npm run test && npm run doc && npm run webpack",
@@ -21,6 +22,7 @@
     "url": "git://git0.rd.bbc.co.uk/javascript-audio-libraries/bbcat-js.git"
   },
   "author": "",
+  "license": "UNLICENSED",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",

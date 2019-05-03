@@ -1,3 +1,9 @@
+# bbcat-orchestration-bbcat-js
+
+Fork of the [bbcat-js](https://github.com/bbc/bbcat-js) library, with patches for use in the bbcat-orchestration libraries.
+
+---
+
 # BBC Audio Toolkit
 The BBC Audio Toolkit extends the [Web Audio API](http://webaudio.github.io/web-audio-api/) to provide streaming of DASH format audio and rendering of object-based audio.
 
