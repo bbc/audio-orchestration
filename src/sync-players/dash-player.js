@@ -1,4 +1,4 @@
-import bbcat from 'bbcat/src/bbcat.js';
+import bbcat from '@bbc/bbcat-orchestration-bbcat/src/bbcat.js';
 import Player from './player';
 
 const { ManifestLoader, ManifestParser, DashSourceNode } = bbcat.dash;

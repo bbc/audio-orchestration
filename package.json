@@ -6,7 +6,7 @@
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
   "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
   "license": "UNLICENSED",
-  "private": true,
+  "private": false,
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
@@ -28,10 +28,10 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "bbcat": "git+ssh://git@github.com:bbc/bbcat-js.git#kh_mdo_vostok",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
     "events": "^3.0.0",
+    "@bbc/bbcat-orchestration-bbcat": "^0.1.0",
     "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.0"
   }
 }

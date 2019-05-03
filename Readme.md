@@ -64,21 +64,12 @@ yarn install
 
 `yarn doc` generates the documentation in the `docs/` folder.
 
-### bbcat-js
-
-The `bbcat-js` library is used for its WebAudio DASH streaming implementation. A patched version is
-included in the [bbcat-js/](bbcat-js/) directory.
-
-See [subtree.md](subtree.md) to setup git remotes for developing them. Changes have to be pushed to the specified remote branches in the original repository, as `package.json` does not allow specifying subdirectories of a repository for dependencies. Changes are only picked up when installing this library if they are in the repository and branch specified in `package.json`.
-
 ### Linking libraries
 
-To develop the `bbcat-js` library alongside `bbcat-orchestration`, they may be linked to use the local development version instead of the version installed in `node_modules`.
+To develop the [bbcat-js](https://github.com/bbc/bbcat-orchestration-bbcat) and [cloud-sync-client](https://github.com/bbc/bbcat-orchestration-cloud-sync-client) libraries alongside `bbcat-orchestration`, they may be linked to use the local development version instead of the version installed in `node_modules`.
 
-First, run `yarn install` in `bbcat-js/` to install its development dependencies.
+E.g. run `yarn install` in `bbcat-orchestration-bbcat-js/` to install its development dependencies, then run `yarn link` to register its the development version with `yarn`.
 
-Then, run `yarn link` in `bbcat-js/`. This registers the development version with `yarn`.
-
-Now, back in the repository root, the linked version can be enabled using `yarn link bbcat-js`.
+Now, back in the `bbcat-orchestration/` repository root, the linked version can be enabled using `yarn link bbcat-js`.
 
 The same process may be used to link the `bbcat-orchestration` package into each of the examples after running `yarn install` in their directories.
