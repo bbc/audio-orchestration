@@ -32,16 +32,18 @@ use `git init` and `git pull` instead of `git clone` to create a fork of this re
 
 [Node.js](https://nodejs.org/en/) 8+ a is recommended.
 
-Install the dependencies using `npm` (`yarn` may not work with some older dependencies!):
+Install the dependencies using `yarn`.
+
+NB: some dependencies are installed from the R&D Artifactory registry. See our [ways of working page](https://confluence.dev.bbc.co.uk/display/audioteam/bbcat-orchestration+libraries+and+tools) to set this up.
 
 ```sh
-npm install
+yarn install
 ```
 
 Start a development server:
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 ### Template Structure

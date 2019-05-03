@@ -65,7 +65,7 @@ repository.
 Then, install all the Node.js dependencies and build tools.
 
 ```sh
-npm install
+yarn install
 ```
 
 The dependencies defined in `package.json` (and their dependencies) are installed into the
@@ -74,7 +74,7 @@ The dependencies defined in `package.json` (and their dependencies) are installe
 You can now start the development server included with the template.
 
 ```sh
-npm run dev
+yarn dev
 ```
 
 The `dev` script uses the `webpack` and `babel` tools to transpile the template and library
@@ -219,7 +219,7 @@ don't define these, it will cut about a second after you press the button to con
 }
 ```
 
-When you now go back to your browser (you might have to CTRL-C and restart the `npm run dev` process)
+When you now go back to your browser (you might have to CTRL-C and restart the `yarn dev` process)
 and start a session, you should hear your new audio.
 
 ## Add per-object images
@@ -244,7 +244,7 @@ and ends with the name you defined in the metadata table's image column.
 
 * `pip install pysndfile` may fail if the `sndfile` headers are not found on the system. In this case,
   get them with e.g. `brew install libsndfile`.
-  * As of version 1.3.2, `pysndfile` does not seem to be compatible with Python 3.7 (MacOS High Sierra default).
-* Python installed via _Anaconda_ may cause errors during `npm install` process. In this case, the
-  system python (`python` comman) should be set to Python 2, and the `$PYTHON_HOME` environment
+  * As of version 1.3.2, `pysndfile` does not seem to be compatible with Python 3.7 (MacOS High Sierra default). The last known working Python version is 3.6. A different method of generating the audio and metadata files is being developed currently (May '19).
+* Python installed via _Anaconda_ may cause errors during `yarn install` process. In this case, the
+  system python (`python` command) should be set to Python 2, and the `$PYTHON_HOME` environment
   variable may also need to be adjusted to match this setting.
