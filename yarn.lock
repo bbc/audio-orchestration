@@ -56,9 +56,10 @@
     dvbcss-protocols "^0.0.2"
     events "^3.0.0"
 
-"@bbc/reith-fonts-npm@bbc/reith-fonts-npm":
-  version "0.1.0"
-  resolved "git+ssh://git@github.com/bbc/reith-fonts-npm.git#21fdfd3e2d348563ab8d5d82c65022c219cc47ee"
+"@bbc/reith-fonts-npm@^0.1.1-rd-iic":
+  version "0.1.1-rd-iic"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/reith-fonts-npm/-/@bbc/reith-fonts-npm-0.1.1-rd-iic.tgz#4579c61f1dd950a677a2f66d16596f36c462c098"
+  integrity sha1-RXnGHx3ZUKZ3ovZtFllvNsRiwJg=
   dependencies:
     fontfaceobserver "^2.0.13"
 
