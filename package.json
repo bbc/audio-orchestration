@@ -5,8 +5,7 @@
   "main": "index.js",
   "repository": "git@github.com:bbc/bbcat-orchestration-template.git",
   "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
-  "license": "ULICENSED",
-  "private": true,
+  "license": "UNLICENSED",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@bbc/reith-fonts-npm": "bbc/reith-fonts-npm",
