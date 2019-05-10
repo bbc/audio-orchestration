@@ -5,6 +5,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const sass = require('sass');
 
 module.exports = {
   mode: 'development',
@@ -24,7 +25,12 @@ module.exports = {
           // fallback to style-loader in development
           process.env.NODE_ENV !== 'production' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader',
-          'sass-loader',
+          {
+            loader: 'sass-loader',
+            options: {
+              implementation: sass,
+            },
+          },
         ],
       },
       {
