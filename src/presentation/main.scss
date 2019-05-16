@@ -1,9 +1,9 @@
 $gel-grid-enable--box-sizing: true;
 
-@import 'node_modules/gel-sass-tools/sass-tools';
-@import 'node_modules/sass-mq/mq';
-@import 'node_modules/gel-grid/grid';
-@import 'node_modules/gel-typography/typography';
+@import '~gel-sass-tools/sass-tools';
+@import '~sass-mq/mq';
+@import '~gel-grid/grid';
+@import '~gel-typography/typography';
 
 @import './colours.scss';
 @import './images.scss';
