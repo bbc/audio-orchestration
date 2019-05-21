@@ -80,9 +80,10 @@ class ItemRenderer {
 }
 
 class ItemRendererFactory {
-  constructor(audioContext, options) {
+  constructor(audioContext, options = {}) {
     this._audioContext = audioContext;
     this._options = options;
+    this._isSafari = options.isSafari || false;
   }
 
   /**
@@ -95,7 +96,7 @@ class ItemRendererFactory {
       case 'dash':
         player = new DashPlayer(
           this._audioContext,
-          source.url,
+          this._isSafari ? (source.urlSafari || source.url) : source.url,
           [source.adaptationSetId || '0'], // TODO hard-coded default name for ffmpeg dash manifests
         );
         break;

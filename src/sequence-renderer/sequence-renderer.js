@@ -16,8 +16,10 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {AudioContext} audioContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
+   * @param {bool} isStereo
+   * @param {bool} isSafari
    */
-  constructor(audioContext, syncClock, sequence, isStereo) {
+  constructor(audioContext, syncClock, sequence, isStereo, isSafari) {
     super();
 
     /**
@@ -117,6 +119,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       this._audioContext,
       {
         stereoOutput: isStereo,
+        isSafari,
       },
     );
 

@@ -89,6 +89,7 @@
  *
  * @property {string} type should be "dash" or "buffer".
  * @property {string} url points to the DASH manifest or a plain audio file.
+ * @property {string} safariUrl is the DASH manifest for Safari (if it needs a different encoding)
  * @property {string} adaptationSetId only required for "dash".
  */
 
@@ -166,6 +167,7 @@ class Sequence {
         const {
           type,
           url,
+          urlSafari,
           adaptationSetId,
           channelMapping,
         } = item.source;
@@ -178,6 +180,7 @@ class Sequence {
           source: {
             type,
             url,
+            urlSafari,
             adaptationSetId,
             channelMapping,
           },

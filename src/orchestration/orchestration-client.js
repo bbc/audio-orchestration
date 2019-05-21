@@ -76,6 +76,7 @@ class OrchestrationClient extends EventEmitter {
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
+    this._isSafari = options.isSafari || false;
   }
 
   /**
@@ -356,6 +357,7 @@ class OrchestrationClient extends EventEmitter {
             this._syncClock,
             sequence,
             this._master, // isStereo
+            this._isSafari,
           );
 
           renderer.on('ended', () => {
