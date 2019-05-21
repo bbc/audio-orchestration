@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import bowser from 'bowser';
 
 // Content ID for session-wide sync clock
@@ -18,12 +17,14 @@ export const SESSION_CODE_LENGTH = 6;
 // Time in milliseconds. Report an error if any individual loading step takes longer than this.
 export const LOADING_TIMEOUT = 5 * 1000;
 
-// Content IDs are used to identify the playing sequence.
+// Content IDs are used to identify the playing sequence and should be unique per sequence.
 export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
 export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
-// Detect safari, it may require differently encoded audio, and thus a different sequence URL.
+// Detect safari, because the old packaging tools generate two versions of sequence.json.
+// The orchestration client now configures the renderer to automatically use urlSafari if available.
 const browser = bowser.getParser(window.navigator.userAgent);
+/* eslint-disable-next-line no-unused-vars */
 const isSafari = browser.is('Safari') || browser.is('iOS');
 
 // Sequence URLs point to the sequence.json metadata file.
@@ -46,16 +47,20 @@ export const DEBUG_UI = true;
 export const MDO_COMPRESSOR_RATIO = 4;
 export const MDO_COMPRESSOR_THRESHOLD = -40;
 
-// check against session-id service
+// don't check against a session-id service by default.
 export const VALIDATE_SESSION_IDS = false;
+
+// the session-id service to use, not used unless enabled above.
 export const SESSION_ID_URL = `//${window.location.hostname}:5000`;
 
-// if session id service returns an error, may generate local codes
-// and verify locally if they match the check digit pattern.
+// if session id service returns an error or is not used, generate codes locally according to this
+// pattern and verify that they match the check digit pattern.
 export const USE_FALLBACK_SESSION_CODES = true;
 export const SESSION_CODE_CHECK_DIGITS = 1;
 export const LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET = 3;
-export const LOCAL_SESSION_ID_PREFIX = 'vostok-orchestration-fallback';
+
+// should be unique to your experience to reduce the chance of collisions
+export const LOCAL_SESSION_ID_PREFIX = 'bbcat-orchestration-template';
 
 // Time in seconds between request and scheduled transition to next sequence.
 export const SEQUENCE_TRANSITION_DELAY = 1.0;

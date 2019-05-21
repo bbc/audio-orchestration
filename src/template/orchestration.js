@@ -27,6 +27,7 @@ import {
 
 // A global browser detection object
 const browser = bowser.getParser(window.navigator.userAgent);
+const isSafari = browser.is('Safari') || browser.is('iOS');
 
 // A global reference to the audio context. It has to be created on a user action and then passed
 // into OrchestrationClient.start().
@@ -39,6 +40,7 @@ const globalOrchestrationClient = new OrchestrationClient({
   sequenceTransitionDelay: SEQUENCE_TRANSITION_DELAY,
   loadingTimeout: LOADING_TIMEOUT,
   contentId: CONTENT_ID,
+  isSafari,
 });
 
 /**
