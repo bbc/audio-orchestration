@@ -1,16 +1,13 @@
 import React from 'react';
 
-const DISTANCES = [
-  'near',
-  'far',
+const ZONES = [
+  'nearFront',
+  'nearSide',
+  'nearRear',
+  'farFront',
+  'farSide',
+  'farRear',
 ];
-
-const DIRECTIONS = [
-  'front',
-  'side',
-  'rear',
-];
-
 
 const Device = ({
   deviceId,
@@ -26,7 +23,6 @@ const Device = ({
     <td>
       { deviceId }
     </td>
-
     <td>
       <button
         type="button"
@@ -41,49 +37,26 @@ const Device = ({
         {mainDevice ? ' (Main)' : ''}
       </button>
     </td>
-
     <td>
-      { DISTANCES.map(distance => (
+      { ZONES.map(zone => (
         <button
-          key={distance}
+          key={zone}
           type="button"
-          className={`location-button ${location.distance === distance ? 'enabled' : 'disabled'}`}
+          className={`location-button ${location === zone ? 'enabled' : 'disabled'}`}
           onClick={() => updateDeviceInfo({
             enabled,
-            location: {
-              distance,
-              direction: location.direction,
-            },
+            location: zone,
           })}
         >
-          { distance }
-        </button>
-      ))}
-    </td>
-
-    <td>
-      { DIRECTIONS.map(direction => (
-        <button
-          key={direction}
-          type="button"
-          className={`location-button ${location.direction === direction ? 'enabled' : 'disabled'}`}
-          onClick={() => updateDeviceInfo({
-            enabled,
-            location: {
-              direction,
-              distance: location.distance,
-            },
-          })}
-        >
-          { direction }
+          { zone }
         </button>
       ))}
     </td>
     <td>
       {
       `${Object.entries(allocations)
-          .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
-          .length}`
+        .filter(([objectId, deviceIds]) => deviceIds.includes(deviceId))
+        .length}`
       }
       {
       ` (${Object.entries(allocations)

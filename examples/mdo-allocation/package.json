@@ -6,7 +6,6 @@
   "license": "UNLICENSED",
   "private": true,
   "dependencies": {
-    "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-hot-loader": "^4.3.3"

@@ -624,9 +624,7 @@ class OrchestrationClient extends EventEmitter {
   /**
    * Sets the device location for this device.
    *
-   * @param {Object} location
-   * @param {string} location.distance - use 'near' or 'far'
-   * @param {string} location.direction - use 'front', 'side', or 'rear'
+   * @param {MdoLocation} location
    */
   setDeviceLocation(location) {
     if (!this._ready) {

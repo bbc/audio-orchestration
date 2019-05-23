@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
-import Sequence from 'bbcat-orchestration/src/sequence-renderer/sequence';
+import Sequence from '../../../src/sequence-renderer/sequence';
 import App from './App';
 
 function render(sequence = null) {

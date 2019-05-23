@@ -1,5 +1,5 @@
 import React from 'react';
-import MdoAllocation from 'bbcat-orchestration/src/mdo-allocation/';
+import { allocate } from '../../../src/mdo-allocation';
 import Device from './Device';
 import NotRenderedDevice from './NotRenderedDevice';
 
@@ -14,10 +14,7 @@ class Allocations extends React.Component {
         deviceId: `device-${i}`,
         enabled: (i === 0),
         mainDevice: (i === 0),
-        location: {
-          distance: null,
-          direction: null,
-        },
+        location: null,
       })),
       allocations: {},
       persistLocation: DEFAULT_PERSIST_LOCATION,
@@ -33,10 +30,10 @@ class Allocations extends React.Component {
         }
         return Object.assign({}, d, {
           enabled,
-          location: (prevState.persistLocation || enabled) ? location : {},
+          location: (prevState.persistLocation || enabled) ? location : null,
         });
       });
-      const allocations = MdoAllocation.allocate(objects, devices, prevState.allocations);
+      const allocations = allocate(objects, devices, prevState.allocations);
 
       // merge previous state and updated properties
       return Object.assign({}, prevState, {
@@ -50,7 +47,7 @@ class Allocations extends React.Component {
     this.setState((prevState, props) => {
       const { objects } = props;
       const { devices } = prevState;
-      const allocations = MdoAllocation.allocate(objects, devices, {});
+      const allocations = allocate(objects, devices, {});
 
       // merge previous state and updated properties
       return Object.assign({}, prevState, {
@@ -67,7 +64,7 @@ class Allocations extends React.Component {
       <table>
         <thead>
           <tr>
-            <td colSpan="5">
+            <td colSpan="4">
               <button type="button" onClick={() => this.resetPreviousAllocations()}>
                 Reset previous allocations
               </button>

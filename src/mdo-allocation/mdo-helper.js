@@ -40,7 +40,7 @@ class MdoHelper extends EventEmitter {
     this._deviceId = deviceId;
     this._deviceMetadata = {
       deviceId,
-      location: { distance: null, direction: null },
+      location: null,
       quality: 1,
       enabled: true,
       deviceType: null,
@@ -152,13 +152,8 @@ class MdoHelper extends EventEmitter {
    *
    * @param {MdoLocation} location
    */
-  setLocation({ direction = null, distance = null } = {}) {
-    if (direction !== null) {
-      this._deviceMetadata.location.direction = direction;
-    }
-    if (distance !== null) {
-      this._deviceMetadata.location.distance = distance;
-    }
+  setLocation(location = null) {
+    this._deviceMetadata.location = location;
     this.emit('location', this._deviceMetadata.location);
   }
 

@@ -1,8 +1,5 @@
 /**
- * @typedef {Object} MdoLocation
- *
- * @property {string} direction (one of 'front', 'side', 'rear')
- * @property {string} distance (one of 'near', 'far')
+ * @typedef {string} MdoLocation
  */
 
 /**
@@ -16,15 +13,13 @@
  * @property {MdoLocation} location
  */
 
-const DISTANCES = [
-  'near',
-  'far',
-];
-
-const DIRECTIONS = [
-  'Front',
-  'Side',
-  'Rear',
+const ZONES = [
+  'nearFront',
+  'nearSide',
+  'nearRear',
+  'farFront',
+  'farSide',
+  'farRear',
 ];
 
 const NEVER = 1;
@@ -37,25 +32,14 @@ const HARD_STAY = 2;
 /**
  * lists all zone names (usually just one) corresponding to a device's location setting.
  *
- * @param {object} location
- * @property {string} location.distance
- * @property {string} location.direction
- *
+ * @param {MdoLocation} location
  * @returns {Array<string>} zones
  */
-function deviceLocationToZones({ distance = null, direction = null } = {}) {
-  // Ensure the values are valid - compare lower case to account for capitalisation in DIRECTIONS
-  // If one of distance, direction is not set, use all possible values.
-  const distances = DISTANCES.filter(d =>
-    (distance === null) || (d.toLowerCase() === distance));
-  const directions = DIRECTIONS.filter(d =>
-    (direction === null) || (d.toLowerCase() === direction));
-
-  const zones = [];
-  distances.forEach(dist =>
-    directions.forEach(dir =>
-      zones.push(`${dist}${dir}`)));
-  return zones;
+function deviceLocationToZones(location = null) {
+  // Ensure the values are valid - compare lower case to account for capitalisation.
+  // When the location is not set, all zones are returned.
+  return ZONES.filter(zone =>
+    (location === null || zone.toLowerCase() === location.toLowerCase()));
 }
 
 /**
