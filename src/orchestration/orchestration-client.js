@@ -59,7 +59,7 @@ class OrchestrationClient extends EventEmitter {
    * add your event handlers, call [@link start]() and wait for the returned promise to resolve,
    * indicating that the class is ready to be used.
    *
-   * @param [options] - optional options for the underlying services.
+   * @param {Object} [options] - optional options for the underlying services.
    */
   constructor(options = {}) {
     super();
@@ -77,6 +77,7 @@ class OrchestrationClient extends EventEmitter {
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
     this._isSafari = options.isSafari || false;
+    this._zones = options.zones || null;
   }
 
   /**
@@ -392,7 +393,12 @@ class OrchestrationClient extends EventEmitter {
     return new Promise((resolve, reject) => {
       // Create mdoHelper
       if (this._master) {
-        this._mdoHelper = new MdoAllocator(this._deviceId);
+        this._mdoHelper = new MdoAllocator(
+          this._deviceId,
+          {
+            zones: this._zones,
+          },
+        );
 
         this._mdoHelper.on('change', () => {
           this.emit('devices', this._mdoHelper.getAuxiliaryDevices());

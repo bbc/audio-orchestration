@@ -1,5 +1,6 @@
 import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS, DEVICE_TYPE } from './mdo-helper';
 import allocate from './allocate';
+import Rules from './rules';
 
 /**
  * Allocates objects to devices, and keeps track of objects in the session. Must be run on the main
@@ -7,7 +8,7 @@ import allocate from './allocate';
  * detected.
  */
 class MdoAllocator extends MdoHelper {
-  constructor(deviceId) {
+  constructor(deviceId, options = {}) {
     super(deviceId);
     this._deviceMetadata.mainDevice = true;
 
@@ -16,7 +17,11 @@ class MdoAllocator extends MdoHelper {
       Object.assign({}, this._deviceMetadata),
     ];
 
+    // create an empty object to hold an objects array for each content id.
     this._objects = {};
+
+    // create a custom Rules instance based on the given zones
+    this._rules = new Rules({ zones: options.zones || null });
   }
 
   /**
@@ -63,6 +68,7 @@ class MdoAllocator extends MdoHelper {
         this._objects[contentId],
         this._devices,
         ignorePrevious ? {} : this._allocations[contentId],
+        this._rules,
       ),
       contentId,
     );

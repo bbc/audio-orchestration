@@ -1,3 +1,7 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-param-reassign */
+
 /**
  * @typedef {string} MdoLocation
  */
@@ -11,6 +15,15 @@
  * @property {number} quality
  * @property {number} joinOrder
  * @property {MdoLocation} location
+ */
+
+/**
+ * @typedef {Object} MdoDomain
+ * @desc the MdoDomain contains all devices eligible to play the current object.
+ *
+ * @property {string} objectId - the object's unique identifier
+ * @property {Set} domain - a Set containing eligible deviceIds
+ * @property {Array<String>} preferred - list of deviceId strings
  */
 
 const ZONES = [
@@ -30,19 +43,6 @@ const SOFT_STAY = 1;
 const HARD_STAY = 2;
 
 /**
- * lists all zone names (usually just one) corresponding to a device's location setting.
- *
- * @param {MdoLocation} location
- * @returns {Array<string>} zones
- */
-function deviceLocationToZones(location = null) {
-  // Ensure the values are valid - compare lower case to account for capitalisation.
-  // When the location is not set, all zones are returned.
-  return ZONES.filter(zone =>
-    (location === null || zone.toLowerCase() === location.toLowerCase()));
-}
-
-/**
  * @param {Array<MdoObject>} objects
  * @param {number} objectNumber
  */
@@ -59,51 +59,77 @@ function randomElement(a) {
 }
 
 /**
- * Selects all deviceIds that match the given zone priority for the given orchestration object.
- * The mainDevice is never included in the results, and its location is ignored.
- *
- * @returns {Array<string>} deviceId, null if no match found in domain.
- */
-function domainDevicesByZoneFlag(domain, orchestration, devices, zonePriority) {
-  return devices
-    .filter(({ deviceId, mainDevice }) => domain.has(deviceId) && !mainDevice)
-    .filter(({ location }) =>
-      deviceLocationToZones(location).some(zone =>
-        orchestration[zone] === zonePriority))
-    .map(({ deviceId }) => deviceId);
-}
-
-/**
- * Selects the best deviceId remaining in the domain, based on it having a matching should or could
- * zone. Returns null if no MDO device matches. In this case, the main device may be selected.
- */
-function bestInDomainByZone(domain, orchestration, devices, preferred = undefined) {
-  const should = domainDevicesByZoneFlag(domain, orchestration, devices, SHOULD);
-  const could = domainDevicesByZoneFlag(domain, orchestration, devices, COULD);
-
-  // if already in a should device, or no should devices available, stay in the same:
-  if (should.includes(preferred) || (should.length === 0 && could.includes(preferred))) {
-    return preferred;
-  }
-
-  if (should.length > 0) {
-    return randomElement(should);
-  } else if (could.length > 0) {
-    return randomElement(could);
-  }
-  return null;
-}
-
-/*
  * These rules only ever delete devices from the domains of objects. Devices or object metadata is
  * not modified. Each rule should only be concerned with its property's own effect. It may use the
  * information in other object's domains to make decisions.
+ *
+ * The behaviour of the rules may be modified by specifying options in the constructor.
+ *
+ * This class may be extended and its {@link applyAll} overridden to implement completely different
+ * rules.
  */
-export default {
-  /*
+class Rules {
+  constructor(options = {}) {
+    this._zones = options.zones || ZONES;
+  }
+
+  /**
+   * lists all zone names (usually just one) corresponding to a device's location setting.
+   *
+   * @param {MdoLocation} location
+   * @returns {Array<string>} zones
+   * @private
+   */
+  _deviceLocationToZones(location = null) {
+    // Ensure the values are valid - compare lower case to account for capitalisation.
+    // When the location is not set, all zones are returned.
+    return this._zones.filter(zone =>
+      (location === null || zone.toLowerCase() === location.toLowerCase()));
+  }
+
+  /**
+   * Selects all deviceIds that match the given zone priority for the given orchestration object.
+   * The mainDevice is never included in the results, and its location is ignored.
+   *
+   * @returns {Array<string>} deviceId, null if no match found in domain.
+   * @private
+   */
+  _domainDevicesByZoneFlag(domain, orchestration, devices, zonePriority) {
+    return devices
+      .filter(({ deviceId, mainDevice }) => domain.has(deviceId) && !mainDevice)
+      .filter(({ location }) =>
+        this._deviceLocationToZones(location).some(zone =>
+          orchestration[zone] === zonePriority))
+      .map(({ deviceId }) => deviceId);
+  }
+
+  /**
+   * Selects the best deviceId remaining in the domain, based on it having a matching should or
+   * could zone. Returns null if no MDO device matches, then the main device may be selected.
+   *
+   * @private
+   */
+  _bestInDomainByZone(domain, orchestration, devices, preferred = undefined) {
+    const should = this._domainDevicesByZoneFlag(domain, orchestration, devices, SHOULD);
+    const could = this._domainDevicesByZoneFlag(domain, orchestration, devices, COULD);
+
+    // if already in a should device, or no should devices available, stay in the same:
+    if (should.includes(preferred) || (should.length === 0 && could.includes(preferred))) {
+      return preferred;
+    }
+
+    if (should.length > 0) {
+      return randomElement(should);
+    } else if (could.length > 0) {
+      return randomElement(could);
+    }
+    return null;
+  }
+
+  /**
    * mdoOnly: An object with mdoOnly set can never go to the main device.
    */
-  mdoOnly: (domains, objects, devices) => {
+  mdoOnly(domains, objects, devices) {
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = findObject(objects, objectId);
       if (orchestration.mdoOnly) {
@@ -113,12 +139,13 @@ export default {
         }
       }
     });
-  },
-  /*
+  }
+
+  /**
    * mdoThreshold: An object can not go into any MDO device if the number of MDO devices is
    * lower than the threshold. They may still appear in the main device
    */
-  mdoThreshold: (domains, objects, devices) => {
+  mdoThreshold(domains, objects, devices) {
     const numMdoDevices = devices.filter(d => d.enabled === true && d.mainDevice === false).length;
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = findObject(objects, objectId);
@@ -128,25 +155,27 @@ export default {
         }
       });
     });
-  },
-  /*
+  }
+
+  /**
    * zonesNever: An object can never go into any MDO device that is in a zone the object lists as
    * 'never'. If any zone for a device with multiple possible zones matches a never-zone for the
    * object, that device cannot be used.
    */
-  zonesNever: (domains, objects, devices) => {
+  zonesNever(domains, objects, devices) {
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
-      domainDevicesByZoneFlag(domain, orchestration, devices, NEVER).forEach((deviceId) => {
+      this._domainDevicesByZoneFlag(domain, orchestration, devices, NEVER).forEach((deviceId) => {
         domain.delete(deviceId);
       });
     });
-  },
-  /*
+  }
+
+  /**
    * minQuality: An object can never go into a device that has a quality lower than this setting.
    * The quality rating is ignored for the main device.
    */
-  minQuality: (domains, objects, devices) => {
+  minQuality(domains, objects, devices) {
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       devices.forEach(({ deviceId, quality, mainDevice }) => {
@@ -155,13 +184,14 @@ export default {
         }
       });
     });
-  },
-  /*
+  }
+
+  /**
    * updatePreferred: The preferred speaker is normally the object's previous allocation. If this
    * is not set, or no longer available due to previous rules, replace it with one from the current
    * domain.
    */
-  updatePreferred: (domains, objects, devices) => {
+  updatePreferred(domains, objects, devices) {
     domains.forEach((objectState) => {
       const { objectId, domain, preferred } = objectState;
       const { orchestration } = objects.find(o => o.objectId === objectId);
@@ -181,16 +211,17 @@ export default {
       // if preferred is set, still available, and object is a soft-stay, only reassign if a better
       // device is available
       if (preferred !== undefined && domain.has(preferred) && objectState.onDropin === SOFT_STAY) {
-        objectState.preferred = bestInDomainByZone(domain, orchestration, devices, preferred);
+        objectState.preferred = this._bestInDomainByZone(domain, orchestration, devices, preferred);
       }
 
       // if the previous allocation hasn't been set, or is no longer available, choose the best.
       if (preferred === undefined || !(domain.has(preferred))) {
-        objectState.preferred = bestInDomainByZone(domain, orchestration, devices);
+        objectState.preferred = this._bestInDomainByZone(domain, orchestration, devices);
       }
     });
-  },
-  /*
+  }
+
+  /**
    * exclusivity: An exclusive object commands control of the entire device. This rule chooses the
    * 'best' device for each exclusive object if possible, and then removes that device from every
    * other object's domain.
@@ -201,7 +232,7 @@ export default {
    * TODO: take into account every other object's preferred allocation, if it is higher priority
    * or has the hard-stay flag.
    */
-  exclusivity: (domains, objects, devices) => {
+  exclusivity(domains, objects, devices) {
     domains.forEach(({ objectId, domain, preferred }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.exclusivity) {
@@ -227,7 +258,7 @@ export default {
         });
         protectedDomain.forEach(d => domain.delete(d));
 
-        const bestDeviceId = bestInDomainByZone(domain, orchestration, devices, preferred);
+        const bestDeviceId = this._bestInDomainByZone(domain, orchestration, devices, preferred);
 
         if (bestDeviceId !== null) {
           // console.debug(`EXCLUSIVITY: ${objectId} is exclusive in device ${bestDeviceId}`);
@@ -246,16 +277,17 @@ export default {
           });
         } else {
           domain.clear();
-          // console.debug(`EXCLUSIVITY: ${objectId} is exclusive but has no MDO devices to be in.`);
+          // console.debug(`EXCLUSIVITY: ${objectId} is exclusive but has no device available.`);
         }
       }
     });
-  },
-  /*
+  }
+
+  /**
    * muteIf: The object disappears entirely if another object is active. If the domain for the
    * referenced object is not empty, remove all devices from this object's domain.
    */
-  muteIf: (domains, objects, devices) => {
+  muteIf(domains, objects, devices) {
     domains.forEach(({ objectId, domain }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.muteIfObject !== 0) {
@@ -268,12 +300,14 @@ export default {
         }
       }
     });
-  },
-  /* chooseOrSpread: For objects without the mdoSpread setting, reduce the domain size to 1 by
+  }
+
+  /**
+   * chooseOrSpread: For objects without the mdoSpread setting, reduce the domain size to 1 by
    * picking a random available should-zone device, or if no matching devices are available, fall
    * back to a could-zone device. mdoSpread objects retain their domains unchanged.
    */
-  chooseOrSpread: (domains, objects, devices) => {
+  chooseOrSpread(domains, objects, devices) {
     domains.forEach(({ objectId, domain, preferred }) => {
       const { orchestration } = objects.find(o => o.objectId === objectId);
       if (orchestration.mdoSpread || domain.size <= 1) {
@@ -282,7 +316,7 @@ export default {
 
       let bestDevice = preferred;
       if (!(domain.has(bestDevice))) {
-        bestDevice = bestInDomainByZone(domain, orchestration, devices);
+        bestDevice = this._bestInDomainByZone(domain, orchestration, devices);
       }
 
       if (bestDevice !== null) {
@@ -301,5 +335,31 @@ export default {
         });
       }
     });
-  },
-};
+  }
+
+  /**
+   * Applies all rules from the default rule set in order. The rules may modify the domain objects
+   * in place.
+   *
+   * @param {Array<MdoDomain>} domains
+   * @param {Array<MdoObject>} objects
+   * @param {Array<MdoDevice>} devices
+   */
+  applyAll(domains, objects, devices) {
+    // Apply rules for reducing the domains:
+    [
+      this.mdoOnly, // remove main device if mdoOnly
+      this.mdoThreshold, // remove mdo devices if too few devices available
+      this.zonesNever, // remove mdo devices in 'never' zones
+      this.minQuality, // remove mdo devices of too low quality
+      this.updatePreferred, // set a preferred speaker from remaining set, if not already set.
+      this.exclusivity, // assign exclusive objects, remove their devices from all other objects
+      this.muteIf, // remove all devices if the referenced object has potential devices
+      this.chooseOrSpread, // assign to best remaining device, or all remaining devices for spread
+    ].forEach(f => f.bind(this)(domains, objects, devices));
+
+    return domains;
+  }
+}
+
+export default Rules;
