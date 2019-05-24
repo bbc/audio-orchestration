@@ -7,7 +7,7 @@ const initialState = {
   sessionCode: null,
   sessionId: null,
   deviceId: null,
-  deviceLocation: {},
+  deviceLocation: null,
   deviceType: null,
   deviceQuality: 1,
   connectedDevices: [],
@@ -101,7 +101,7 @@ const exposed = (state = initialState, action) => {
       });
     case 'REQUEST_SET_DEVICE_LOCATION':
       return Object.assign({}, state, {
-        deviceLocation: Object.assign({}, state.deviceLocation, action.location),
+        deviceLocation: action.location,
       });
     case 'SET_TRANSPORT_CAPABILITIES':
       return Object.assign({}, state, {

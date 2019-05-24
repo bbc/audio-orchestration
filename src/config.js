@@ -64,3 +64,14 @@ export const LOCAL_SESSION_ID_PREFIX = 'bbcat-orchestration-template';
 
 // Time in seconds between request and scheduled transition to next sequence.
 export const SEQUENCE_TRANSITION_DELAY = 1.0;
+
+// Zones a device can be in. The names must match the zones used in the metadata for all sequences,
+// the friendlyNames are used for button labels in the AuxiliaryLocationSelection component.
+export const ZONES = [
+  { name: 'nearFront', friendlyName: 'near front' },
+  { name: 'nearSide', friendlyName: 'near side' },
+  { name: 'nearRear', friendlyName: 'near rear' },
+  { name: 'farFront', friendlyName: 'far front' },
+  { name: 'farSide', friendlyName: 'far side' },
+  { name: 'farRear', friendlyName: 'far rear' },
+];

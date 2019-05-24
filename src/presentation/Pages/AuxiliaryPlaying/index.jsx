@@ -41,7 +41,7 @@ const AuxiliaryPlayingPage = (props) => {
       <p>
         <LargeButton
           text="Change Device Location"
-          secondaryText={`${deviceLocation.distance}-${deviceLocation.direction}`}
+          secondaryText={deviceLocation}
           onClick={() => auxiliaryLocationOnOpen()}
         />
       </p>
@@ -63,7 +63,7 @@ AuxiliaryPlayingPage.propTypes = {
   currentContentId: PropTypes.string.isRequired,
   auxiliaryLocationOnOpen: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
+  deviceLocation: PropTypes.string.isRequired,
 };
 
 export default AuxiliaryPlayingPage;

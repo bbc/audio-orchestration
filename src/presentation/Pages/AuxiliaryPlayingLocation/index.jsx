@@ -18,8 +18,7 @@ const AuxiliaryPlayingLocationPage = ({
     <p>Select a location below.</p>
 
     <LocationSetting
-      distance={deviceLocation.distance}
-      direction={deviceLocation.direction}
+      location={deviceLocation}
       onChange={location => setDeviceLocation(location)}
     />
 
@@ -31,10 +30,14 @@ const AuxiliaryPlayingLocationPage = ({
   </div>
 );
 
+AuxiliaryPlayingLocationPage.defaultProps = {
+  deviceLocation: null,
+};
+
 AuxiliaryPlayingLocationPage.propTypes = {
   auxiliaryLocationOnClose: PropTypes.func.isRequired,
   setDeviceLocation: PropTypes.func.isRequired,
-  deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
+  deviceLocation: PropTypes.string,
 };
 
 export default AuxiliaryPlayingLocationPage;

@@ -19,15 +19,14 @@ const AuxiliarySetupLocationPage = ({
     <p>Select a location below.</p>
 
     <LocationSetting
-      distance={deviceLocation.distance}
-      direction={deviceLocation.direction}
+      location={deviceLocation}
       onChange={location => setDeviceLocation(location)}
     />
 
     <LargeButton
       text="Continue"
       secondaryText="Close the location page."
-      disabled={!(deviceLocation.distance && deviceLocation.direction)}
+      disabled={!deviceLocation}
       onClick={() => auxiliaryLocationOnClose()}
     />
 
@@ -35,10 +34,14 @@ const AuxiliarySetupLocationPage = ({
   </div>
 );
 
+AuxiliarySetupLocationPage.defaultProps = {
+  deviceLocation: null,
+};
+
 AuxiliarySetupLocationPage.propTypes = {
   auxiliaryLocationOnClose: PropTypes.func.isRequired,
   setDeviceLocation: PropTypes.func.isRequired,
-  deviceLocation: PropTypes.objectOf(PropTypes.string).isRequired,
+  deviceLocation: PropTypes.string,
 };
 
 export default AuxiliarySetupLocationPage;

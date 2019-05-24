@@ -23,6 +23,7 @@ import {
   SEQUENCE_TRANSITION_DELAY,
   LOADING_TIMEOUT,
   CONTENT_ID,
+  ZONES,
 } from '../config';
 
 // A global browser detection object
@@ -41,6 +42,7 @@ const globalOrchestrationClient = new OrchestrationClient({
   loadingTimeout: LOADING_TIMEOUT,
   contentId: CONTENT_ID,
   isSafari,
+  zones: ZONES.map(({ name }) => name),
 });
 
 /**
