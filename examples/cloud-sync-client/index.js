@@ -1,17 +1,17 @@
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import Players from 'bbcat-orchestration/src/sync-players';
-import Sync from 'bbcat-orchestration/src/sync/sync';
-import CloudSyncAdapter from 'bbcat-orchestration/src/sync/cloud-sync-adapter';
+import { BufferPlayer, AudioContextClock, SyncController } from '../../src/sync-players';
+import Sync from '../../src/sync/sync';
+import CloudSyncAdapter from '../../src/sync/cloud-sync-adapter';
 
 const url = 'audio/vostok-intro.m4a';
 const timelineType = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
-const cloudSyncEndpoint = 'mqttbroker.edge.platform.2immerse.eu';
+const cloudSyncEndpoint = 'cloudsync.virt.ch.bbc.co.uk';
 const contentId = url;
 
 const audioContext = new AudioContext();
-const player = new Players.BufferPlayer(audioContext, url);
+const player = new BufferPlayer(audioContext, url);
 
-const sysClock = new Players.AudioContextClock({}, audioContext);
+const sysClock = new AudioContextClock({}, audioContext);
 const sync = new Sync(new CloudSyncAdapter({ sysClock }));
 const { wallClock } = sync;
 
@@ -57,7 +57,7 @@ function connect(isMaster = false) {
     .then((timelineClock) => {
       console.debug(sysClock.now(), timelineClock.getRoot().now());
 
-      const controller = new Players.SyncController(timelineClock, player, {
+      const controller = new SyncController(timelineClock, player, {
         bufferingDelay: 0.1,
       });
 

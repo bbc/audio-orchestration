@@ -1,5 +1,5 @@
-import BufferPlayer from 'bbcat-orchestration/src/sync-players/buffer-player';
-import DashPlayer from 'bbcat-orchestration/src/sync-players/dash-player';
+import BufferPlayer from '../../src/sync-players/buffer-player';
+import DashPlayer from '../../src/sync-players/dash-player';
 
 const audioContext = new AudioContext();
 

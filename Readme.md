@@ -64,12 +64,10 @@ yarn install
 
 `yarn doc` generates the documentation in the `docs/` folder.
 
-### Linking libraries
+### Linking local versions of dependencies
 
 To develop the [bbcat-js](https://github.com/bbc/bbcat-orchestration-bbcat) and [cloud-sync-client](https://github.com/bbc/bbcat-orchestration-cloud-sync-client) libraries alongside `bbcat-orchestration`, they may be linked to use the local development version instead of the version installed in `node_modules`.
 
 E.g. run `yarn install` in `bbcat-orchestration-bbcat-js/` to install its development dependencies, then run `yarn link` to register its the development version with `yarn`.
 
 Now, back in the `bbcat-orchestration/` repository root, the linked version can be enabled using `yarn link bbcat-js`.
-
-The same process may be used to link the `bbcat-orchestration` package into each of the examples after running `yarn install` in their directories.

@@ -1,9 +1,6 @@
 import Clocks from 'dvbcss-clocks';
-import SyncPlayers from 'bbcat-orchestration/src/sync-players';
-import SequenceRenderer from 'bbcat-orchestration/src/sequence-renderer';
-
-const { AudioContextClock } = SyncPlayers;
-const { Sequence, SynchronisedSequenceRenderer } = SequenceRenderer;
+import { AudioContextClock } from '../../src/sync-players';
+import { Sequence, SynchronisedSequenceRenderer } from '../../src/sequence-renderer';
 
 const audioContext = new AudioContext();
 const sysClock = new AudioContextClock({}, audioContext);

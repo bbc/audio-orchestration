@@ -5,9 +5,6 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "private": true,
-  "dependencies": {
-    "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git"
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",

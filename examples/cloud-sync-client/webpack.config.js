@@ -5,7 +5,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
   mode: 'development',
   devtool: 'source-map',
-  entry: path.resolve(__dirname, 'client/index.js'),
+  entry: path.resolve(__dirname, 'index.js'),
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
@@ -24,7 +24,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'client/index.html'),
+      template: path.resolve(__dirname, 'index.html'),
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, '../audio'), to: 'audio', toType: 'dir' },

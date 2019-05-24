@@ -28,10 +28,10 @@
     "lint": "eslint src"
   },
   "dependencies": {
+    "@bbc/bbcat-orchestration-bbcat": "^0.1.0",
+    "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.0",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
-    "events": "^3.0.0",
-    "@bbc/bbcat-orchestration-bbcat": "^0.1.0",
-    "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.0"
+    "events": "^3.0.0"
   }
 }

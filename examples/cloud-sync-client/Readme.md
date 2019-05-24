@@ -2,18 +2,12 @@
 
 This example shows the usage of the `sync` client using the `cloud-sync-adapter`.
 
-## Setup
-
-Make sure you've run `yarn link` in the `bbcat-orchestration` repository root to get the
-development version of the library.
+## Usage
 
 ```
 yarn install
-yarn link bbcat-orchestration
 yarn dev
 ```
-
-## Usage
 
 After running the development server (`yarn dev`), browse to [localhost:8080](http://localhost:8080).
 

@@ -1,13 +1,10 @@
 {
-  "name": "buffer-player",
+  "name": "players",
   "version": "0.0.1",
-  "description": "An example demonstrating the use of the buffer player.",
+  "description": "An example demonstrating the use of the buffer and dash players.",
   "main": "index.js",
   "license": "UNLICENSED",
   "private": true,
-  "dependencies": {
-    "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git"
-  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
