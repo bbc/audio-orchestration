@@ -1,5 +1,7 @@
 # Tutorial
 
+**This tutorial will be superseded by the [orchestration-builder](https://github.com/bbc/bbcat-orchestration-builder) tool currently being developed.**
+
 _Use the bbcat-orchestration-template to create orchestrated audio experiences._
 
 This template is an example user interface using the
@@ -22,6 +24,12 @@ the provided scripts to encode the audio in the correct format, and how to liste
 rudimentary interface provided by this template. The text, colour scheme, and images in the template
 can be easily replaced to make it your own, but prior web development experience (React, Redux) is
 required to make as far reaching changes as those done for the _Vostok_ pilot.
+
+## Current developments
+
+The [orchestration-builder](https://github.com/bbc/bbcat-orchestration-builder)
+graphical tool (currently in development) can be used to package the audio and metadata files. In
+that case, the `python` and `ffmpeg` tools do not need to be installed as described below.
 
 ## Requirements
 
@@ -239,6 +247,30 @@ referred to as `my-object-image` in the metadata file, add the following line to
 This defines a CSS class referencing your image file as a background image. Images are assumed to
 be square and around 400 by 400 pixels in size. The class name always begins with `.player-image-`,
 and ends with the name you defined in the metadata table's image column.
+
+## Adding non-linear narrative
+
+You may create more sequences, and link them together with user choices by editing the
+`SEQUENCE_URLS` list in `config.js`. Each entry represents one sequence. Each must have
+a unique `contentId` and `url`.
+
+If `hold` is `true`, the player pauses at the end of the sequence until the user selects one of the
+choices to move to the next sequence. If it is `false`, the first entry in `next` will begin playing
+automatically when the sequence ends.
+
+If `skippable` is `true`, the choices are displayed while the sequence is playing, and not just
+when it has ended. Selecting a choice immediately transitions to the next sequence.
+
+The `next` list specifies the choices available. Each choice has a `contentId` that must match one
+of the defined sequence. It can be the same as the current sequence. The `label` is displayed on
+the button for that choice. Choices are listed in order, and the first entry is automatically
+chosen if `hold` is false.
+
+The starting point (the `contentId` of the first sequence to be played) must be set in
+`INITIAL_CONTENT_ID`.
+
+The default setup in `config.js` defines a skippable loop, and a main sequence that offers the
+single choice to _listen again_ at the end.
 
 ## Troubleshooting
 

@@ -28,7 +28,10 @@ const initialState = {
   canPause: false,
   canDismissError: false,
   connected: false,
-  ended: false,
+  sequenceEnded: false,
+  sequenceSkippable: false,
+  sequenceHold: false,
+  sequenceNext: [],
   help: false,
 };
 
@@ -93,7 +96,13 @@ const exposed = (state = initialState, action) => {
       });
     case 'SET_ENDED':
       return Object.assign({}, state, {
-        ended: action.ended,
+        sequenceEnded: action.ended,
+      });
+    case 'SET_SEQUENCE_CHOICES':
+      return Object.assign({}, state, {
+        sequenceSkippable: action.skippable,
+        sequenceNext: action.next,
+        sequenceHold: action.hold,
       });
     case 'SET_MUTED':
       return Object.assign({}, state, {

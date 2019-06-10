@@ -13,10 +13,10 @@ import {
   setTransportCapabilities,
   setConnectedDevices,
   setPlaybackStatus,
+  setSequenceChoices,
 } from './actions/orchestration';
 import {
   SEQUENCE_URLS,
-  PLAY_AGAIN_CONTENT_ID,
   MDO_COMPRESSOR_RATIO,
   MDO_COMPRESSOR_THRESHOLD,
   CLOUDSYNC_ENDPOINT,
@@ -66,6 +66,8 @@ export const ensureAudioContext = () => {
  * @returns {string} deviceId
  */
 export const initialiseOrchestration = (dispatch) => {
+  let transitionOnEnded = null;
+
   SEQUENCE_URLS.forEach(({ contentId, url }) => {
     globalOrchestrationClient.registerSequence(contentId, url);
   });
@@ -85,10 +87,31 @@ export const initialiseOrchestration = (dispatch) => {
       parentTime: e.dateNowTime,
       childTime: e.contentTime,
     }));
+
     dispatch(setTransportCapabilities({
       canSeek: globalOrchestrationClient.master && !e.loop,
       canPause: globalOrchestrationClient.master,
     }));
+
+    if (globalOrchestrationClient.master) {
+      const {
+        skippable,
+        next,
+        hold,
+      } = SEQUENCE_URLS.find(({ contentId }) => contentId === e.currentContentId);
+
+      if (!hold && !e.loop && next.length > 0) {
+        transitionOnEnded = next[0].contentId;
+      } else {
+        transitionOnEnded = null;
+      }
+
+      dispatch(setSequenceChoices({
+        skippable,
+        next,
+        hold,
+      }));
+    }
   });
 
   globalOrchestrationClient.on('devices', (e) => {
@@ -118,6 +141,17 @@ export const initialiseOrchestration = (dispatch) => {
 
   globalOrchestrationClient.on('ended', (ended) => {
     dispatch(setEnded(ended));
+
+    if (ended && globalOrchestrationClient.master && transitionOnEnded !== null) {
+      console.log('auto transition on ended');
+      const nextContentId = transitionOnEnded;
+      transitionOnEnded = null;
+      // TODO: the orchestration client/renderer pause after emitting the ended event, so can't
+      // request a transition immediately. This is a hack that works most of the time.
+      setTimeout(() => {
+        globalOrchestrationClient.transitionToSequence(nextContentId);
+      }, 300);
+    }
   });
 
   globalOrchestrationClient.on('unavailable', () => {
@@ -181,10 +215,6 @@ function* unmute() {
   yield call(() => globalOrchestrationClient.mute(false));
 }
 
-function* playAgain() {
-  yield call(() => globalOrchestrationClient.transitionToSequence(PLAY_AGAIN_CONTENT_ID));
-}
-
 function* setDeviceLocation({ location }) {
   yield call(() => globalOrchestrationClient.setDeviceLocation(location));
 }
@@ -194,7 +224,6 @@ export const orchestrationWatcherSaga = function* () {
   yield takeEvery('REQUEST_PLAY', play);
   yield takeEvery('REQUEST_PAUSE', pause);
   yield takeEvery('REQUEST_SEEK', seek);
-  yield takeEvery('REQUEST_PLAY_AGAIN', playAgain);
   // yield takeEvery('REQUEST_SET_VOLUME', ...);
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
   yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);

@@ -8,7 +8,6 @@ import {
   PAGE_START,
   PAGE_LOADING,
   PAGE_ERROR,
-  PAGE_MAIN_SETUP,
   PAGE_MAIN_PLAYING,
   PAGE_CONNECT_FORM,
   PAGE_CONNECT_DIRECT,
@@ -22,7 +21,6 @@ import {
 import StartPage from './Pages/Start';
 import LoadingPage from './Pages/Loading';
 import ErrorPage from './Pages/Error';
-import MainSetupPage from './Pages/MainSetup';
 import MainPlayingPage from './Pages/MainPlaying';
 import ConnectFormPage from './Pages/ConnectForm';
 import ConnectDirectPage from './Pages/ConnectDirect';
@@ -63,9 +61,6 @@ const App = (props) => {
     case PAGE_ERROR:
       CurrentPage = ErrorPage;
       break;
-    case PAGE_MAIN_SETUP:
-      CurrentPage = MainSetupPage;
-      break;
     case PAGE_MAIN_PLAYING:
       CurrentPage = MainPlayingPage;
       break;
@@ -92,7 +87,7 @@ const App = (props) => {
   }
 
   // Way too many divs to make the layout work. Every page is displayed in a single grid item
-  // to avoid etraneous repeated mark up in every page component.
+  // to avoid extraneous repeated mark up in every page component.
   return (
     <div id="page-wrapper">
       <div id="content-background">

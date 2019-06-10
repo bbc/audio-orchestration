@@ -82,6 +82,17 @@ export const setPlaybackStatus = ({
   childTime,
 });
 
+export const setSequenceChoices = ({
+  next,
+  skippable,
+  hold,
+}) => ({
+  type: 'SET_SEQUENCE_CHOICES',
+  next,
+  skippable,
+  hold,
+});
+
 // ------------------------------------------------------------------------------------------------
 // actions intended to be called by the user interface to request changes, watched for by a saga
 
@@ -96,10 +107,6 @@ export const requestPause = () => ({
 export const requestSeek = relativeOffset => ({
   type: 'REQUEST_SEEK',
   relativeOffset,
-});
-
-export const requestPlayAgain = () => ({
-  type: 'REQUEST_PLAY_AGAIN',
 });
 
 export const requestSetVolume = volume => ({

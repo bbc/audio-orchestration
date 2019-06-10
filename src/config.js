@@ -1,5 +1,3 @@
-import bowser from 'bowser';
-
 // Content ID for session-wide sync clock
 export const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
 
@@ -17,27 +15,57 @@ export const SESSION_CODE_LENGTH = 6;
 // Time in milliseconds. Report an error if any individual loading step takes longer than this.
 export const LOADING_TIMEOUT = 5 * 1000;
 
-// Content IDs are used to identify the playing sequence and should be unique per sequence.
+// Content IDs are used to identify the playing sequence and must be unique per sequence.
 export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
 export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
-// Detect safari, because the old packaging tools generate two versions of sequence.json.
-// The orchestration client now configures the renderer to automatically use urlSafari if available.
-const browser = bowser.getParser(window.navigator.userAgent);
-/* eslint-disable-next-line no-unused-vars */
-const isSafari = browser.is('Safari') || browser.is('iOS');
-
-// Sequence URLs point to the sequence.json metadata file.
+// Sequence URLs point to the sequence.json metadata files
 const SEQUENCE_LOOP = 'audio/clicks-and-tone/loop.json';
 const SEQUENCE_MAIN = 'audio/clicks-and-tone/sequence.json';
 
+// This list specifies how the different sequences relate, and how one may move from one to the
+// next. The default assignment has the intro loop, moving to the main content when the user
+// clicks 'Continue'. The main content stops playing at the end, and offers the choice to 'Listen
+// Again', linking back to itself.
+//
+// * contentId: unique id for the sequence
+// * url: link to the sequence.json file
+// * hold: if true, the player pauses at the end of the sequence, waiting for a choice.
+// * skippable: if true, the choice is displayed throughout the sequence.
+// * next: list of choices, the first entry is used as the default if hold is false.
+//    * contentId: the sequence id to transition to
+//    * label: the label to use for the button.
+//
+// The behaviour of these fields is defined in template/orchestration.js.
 export const SEQUENCE_URLS = [
-  { contentId: CONTENT_ID_LOOP, url: SEQUENCE_LOOP },
-  { contentId: CONTENT_ID_MAIN, url: SEQUENCE_MAIN },
+  {
+    contentId: CONTENT_ID_LOOP,
+    url: SEQUENCE_LOOP,
+    hold: false,
+    skippable: true,
+    next: [
+      {
+        contentId: CONTENT_ID_MAIN,
+        label: 'Continue',
+      },
+    ],
+  },
+  {
+    contentId: CONTENT_ID_MAIN,
+    url: SEQUENCE_MAIN,
+    hold: true,
+    skippable: false,
+    next: [
+      {
+        contentId: CONTENT_ID_MAIN,
+        label: 'Listen Again',
+      },
+    ],
+  },
 ];
 
+// The initial content id is what starts playing when the user first creates the session.
 export const INITIAL_CONTENT_ID = CONTENT_ID_LOOP;
-export const PLAY_AGAIN_CONTENT_ID = CONTENT_ID_MAIN;
 
 export const DEFAULT_IMAGE = 'default';
 export const JOIN_URL = 'http://localhost:8080/#!/join';

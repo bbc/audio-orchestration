@@ -69,8 +69,8 @@ function* connectForm(canCancel = true) {
 /**
  * Main flow for the main device.
  *
- * After deciding the device is the main, we try to create a session. Then the setup screen is
- * shown, before moving on to the main playing screen.
+ * After deciding the device is the main, we try to create a session. Then the playing screen is
+ * shown. Sequence transitions are dispatched by the page component or the orchestration saga.
  */
 function* mainFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MAIN });
@@ -91,10 +91,6 @@ function* mainFlow() {
     window.location.reload(); // TODO okay to do that here?
     return;
   }
-
-  yield put({ type: 'SET_PAGE', page: PAGE_MAIN_SETUP });
-
-  yield take('CLICK_MAIN_SETUP_CONTINUE');
 
   yield put({ type: 'SET_PAGE', page: PAGE_MAIN_PLAYING });
 }

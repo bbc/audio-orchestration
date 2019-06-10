@@ -10,11 +10,14 @@ import { JOIN_URL } from '../../../config';
 
 const MainPlayingPage = (props) => {
   const {
+    transitionToSequence,
     sessionCode,
     connectedDevices,
     activeObjectIds,
-    playAgain,
-    ended,
+    sequenceEnded,
+    sequenceSkippable,
+    sequenceHold,
+    sequenceNext,
   } = props;
 
   return (
@@ -27,19 +30,19 @@ const MainPlayingPage = (props) => {
         This is the main device. Join with code
         {' '}
         <b>
-          {sessionCode}
+          {`${sessionCode.slice(0, sessionCode.length / 2)} ${sessionCode.slice(sessionCode.length / 2)}`}
         </b>
         .
       </p>
 
       <Player {...props} />
 
-      { ended
-        ? (
-          <p>
-            <LargeButton text="Play again" onClick={playAgain} />
+      { (sequenceEnded && sequenceHold) || sequenceSkippable
+        ? sequenceNext.map(({ contentId, label }) => (
+          <p key={`${contentId}-${label}`}>
+            <LargeButton text={label} onClick={() => transitionToSequence(contentId)} />
           </p>
-        )
+        ))
         : null
       }
 
@@ -58,11 +61,15 @@ const MainPlayingPage = (props) => {
 MainPlayingPage.propTypes = {
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string.isRequired,
-  currentContentId: PropTypes.string.isRequired,
   transitionToSequence: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  playAgain: PropTypes.func.isRequired,
-  ended: PropTypes.bool.isRequired,
+  sequenceSkippable: PropTypes.bool.isRequired,
+  sequenceHold: PropTypes.bool.isRequired,
+  sequenceEnded: PropTypes.bool.isRequired,
+  sequenceNext: PropTypes.arrayOf(PropTypes.shape({
+    contentId: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+  })).isRequired,
 };
 
 export default MainPlayingPage;
