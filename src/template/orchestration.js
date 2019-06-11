@@ -17,6 +17,7 @@ import {
 } from './actions/orchestration';
 import {
   SEQUENCE_URLS,
+  INITIAL_CONTENT_ID,
   MDO_COMPRESSOR_RATIO,
   MDO_COMPRESSOR_THRESHOLD,
   CLOUDSYNC_ENDPOINT,
@@ -37,6 +38,7 @@ let globalAudioContext = null;
 // A global orchestration object - this is the only instance of it. It is started with a sessionId,
 // deviceId, and audioContext reference in connectOrchestration.
 const globalOrchestrationClient = new OrchestrationClient({
+  initialContentId: INITIAL_CONTENT_ID,
   cloudSyncEndpoint: CLOUDSYNC_ENDPOINT,
   sequenceTransitionDelay: SEQUENCE_TRANSITION_DELAY,
   loadingTimeout: LOADING_TIMEOUT,

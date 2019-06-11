@@ -45,16 +45,17 @@
     weak-map "^1.0.5"
     winston "^2.4.0"
 
-"@bbc/bbcat-orchestration@^0.2.5":
-  version "0.2.5"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.2.5.tgz#9ee3c00df6f55bc862e0915badca64045a5dfb38"
-  integrity sha1-nuPADfb1W8hi4JFbrcpkBFpd+zg=
+"@bbc/bbcat-orchestration@^0.3.2":
+  version "0.3.2"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.3.2.tgz#3cc8ccea83d87ff5939a1346c78c054b66146f08"
+  integrity sha1-PMjM6oPYf/WTmhNGx4wFS2YUbwg=
   dependencies:
     "@bbc/bbcat-orchestration-bbcat" "^0.1.0"
     "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.0"
     dvbcss-clocks "^0.0.4"
     dvbcss-protocols "^0.0.2"
     events "^3.0.0"
+    uuid "^3.3.2"
 
 "@bbc/reith-fonts-npm@^0.1.1-rd-iic":
   version "0.1.1-rd-iic"

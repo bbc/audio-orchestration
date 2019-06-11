@@ -16,8 +16,8 @@ export const SESSION_CODE_LENGTH = 6;
 export const LOADING_TIMEOUT = 5 * 1000;
 
 // Content IDs are used to identify the playing sequence and must be unique per sequence.
-export const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
-export const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
+const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
+const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
 // Sequence URLs point to the sequence.json metadata files
 const SEQUENCE_LOOP = 'audio/clicks-and-tone/loop.json';

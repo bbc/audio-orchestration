@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import LargeButton from '../../Components/LargeButton';
-import { CONTENT_ID_MAIN, DEBUG_UI } from '../../../config';
+import { INITIAL_CONTENT_ID, DEBUG_UI } from '../../../config';
 
 const AuxiliaryPlayingPage = (props) => {
   const {
@@ -27,7 +27,7 @@ const AuxiliaryPlayingPage = (props) => {
         .
       </p>
 
-      { currentContentId !== CONTENT_ID_MAIN
+      { currentContentId === INITIAL_CONTENT_ID
         ? (
           <p>
             { 'Click continue on your main device to proceed when you\'re ready.' }
