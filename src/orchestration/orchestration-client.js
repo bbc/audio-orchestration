@@ -30,7 +30,7 @@ const TIMELINE_TYPE_TICK_RATE = 1000;
  * transition to another sequence at any time.
  *
  * @example
- * import OrchestrationClient from '@bbc/bbcat-orchestration/src/orchestration/orchestration-client';
+ * import { OrchestrationClient } from '@bbc/bbcat-orchestration/src/orchestration';
  *
  * const orchestration = new OrchestrationClient({});
  *
@@ -66,7 +66,7 @@ class OrchestrationClient extends EventEmitter {
 
     this._initialised = false;
     this._ready = false;
-    this._initialContentId = null;
+    this._initialContentId = options.initialContentId || null;
     this._audioContext = null;
     this._sequences = {};
     this._contentIds = [];
