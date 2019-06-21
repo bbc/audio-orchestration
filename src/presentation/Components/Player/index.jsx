@@ -14,7 +14,6 @@ const Player = ({
   seek,
   canPause,
   canSeek,
-  currentContentId,
   contentCorrelation,
   contentSpeed,
   contentDuration,
@@ -50,20 +49,20 @@ const Player = ({
       <button key="seek-back" type="button" onClick={() => seek(-10.0)}>
         -10
       </button>,
-      <button key="seek-forward" type="button" onClick={() => seek(10)}>
-        +10
+      <button key="seek-forward" type="button" onClick={() => seek(30)}>
+        +30
       </button>,
     );
   }
 
   return (
     <div className="player">
-      <PlayerImage image={primaryObjectImage} />
+      { primaryObjectImage && primaryObjectImage.length > 0
+        ? <PlayerImage image={primaryObjectImage} />
+        : <PlayerImage image={DEFAULT_IMAGE} />
+      }
       <p className="player-controls">
         { buttons }
-      </p>
-      <p>
-        { currentContentId }
       </p>
       <p>
         <DurationClock
@@ -78,7 +77,7 @@ const Player = ({
 };
 
 Player.defaultProps = {
-  primaryObjectImage: DEFAULT_IMAGE,
+  primaryObjectImage: null,
 };
 
 Player.propTypes = {

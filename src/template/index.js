@@ -7,7 +7,6 @@ import {
   requestMute,
   requestUnmute,
   requestSeek,
-  requestPlayAgain,
   requestTransitionToSequence,
   connectFormOnCancel,
   connectFormOnSubmit,
@@ -51,9 +50,6 @@ function mapDispatchToProps(dispatch) {
     },
     seek: (seekTime) => {
       dispatch(requestSeek(seekTime));
-    },
-    playAgain: () => {
-      dispatch(requestPlayAgain());
     },
     transitionToSequence: (contentId) => {
       dispatch(requestTransitionToSequence(contentId));

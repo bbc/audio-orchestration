@@ -5,6 +5,7 @@ import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import DeviceList from '../../Components/DeviceList';
 import LargeButton from '../../Components/LargeButton';
+import SessionCode from '../../Components/SessionCode';
 
 import { JOIN_URL } from '../../../config';
 
@@ -29,9 +30,7 @@ const MainPlayingPage = (props) => {
       <p>
         This is the main device. Join with code
         {' '}
-        <b>
-          {`${sessionCode.slice(0, sessionCode.length / 2)} ${sessionCode.slice(sessionCode.length / 2)}`}
-        </b>
+        <SessionCode sessionCode={sessionCode} />
         .
       </p>
 

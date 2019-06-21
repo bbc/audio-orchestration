@@ -10,7 +10,6 @@ export {
   requestUnmute,
   requestSetDeviceLocation,
   requestSetVolume,
-  requestPlayAgain,
   requestTransitionToSequence,
 } from './orchestration';
 

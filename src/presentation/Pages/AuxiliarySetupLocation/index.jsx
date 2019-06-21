@@ -11,12 +11,10 @@ const AuxiliarySetupLocationPage = ({
 }) => (
   <div className="page page-auxiliary-setup-location">
     <h1>
-      Set Location
+      Device Setup
     </h1>
 
-    <p>This is the auxiliary device setup location page.</p>
-
-    <p>Select a location below.</p>
+    <p>Select an option below.</p>
 
     <LocationSetting
       location={deviceLocation}
@@ -25,8 +23,6 @@ const AuxiliarySetupLocationPage = ({
 
     <LargeButton
       text="Continue"
-      secondaryText="Close the location page."
-      disabled={!deviceLocation}
       onClick={() => auxiliaryLocationOnClose()}
     />
 

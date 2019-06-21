@@ -1,17 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SessionCode from './SessionCode';
 
 const ConnectionInstructions = ({
   sessionCode,
   baseUrl,
 }) => (
   <p>
-    { ' These are the connection instructions: go to ' }
-    <code>{baseUrl}</code>
-    { ' on all your devices, and use this code: ' }
-    <b>
-      {sessionCode}
-    </b>
+    { 'Visit ' }
+    <code>{baseUrl || window.location.href}</code>
+    { ' on all your devices, and join with the session code: ' }
+    <SessionCode sessionCode={sessionCode} />
     .
   </p>
 );

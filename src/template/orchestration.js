@@ -91,7 +91,7 @@ export const initialiseOrchestration = (dispatch) => {
     }));
 
     dispatch(setTransportCapabilities({
-      canSeek: globalOrchestrationClient.master && !e.loop,
+      canSeek: globalOrchestrationClient.master,
       canPause: globalOrchestrationClient.master,
     }));
 

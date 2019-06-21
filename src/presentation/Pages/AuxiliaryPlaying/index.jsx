@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import LargeButton from '../../Components/LargeButton';
-import { INITIAL_CONTENT_ID, DEBUG_UI } from '../../../config';
+import SessionCode from '../../Components/SessionCode';
+import { DEBUG_UI } from '../../../config';
 
 const AuxiliaryPlayingPage = (props) => {
   const {
     sessionCode,
     activeObjectIds,
     auxiliaryLocationOnOpen,
-    currentContentId,
     deviceLocation,
   } = props;
 
@@ -19,22 +19,11 @@ const AuxiliaryPlayingPage = (props) => {
     <div className="page page-auxiliary-playing">
       <h1>Auxiliary Device</h1>
 
-      <p>This is the auxiliary device playing page.</p>
-
       <p>
-        { 'You are connected to ' }
-        <b>{sessionCode}</b>
-        .
+        { 'Connected to ' }
+        <SessionCode sessionCode={sessionCode} />
+        . Interact with the player on the main device.
       </p>
-
-      { currentContentId === INITIAL_CONTENT_ID
-        ? (
-          <p>
-            { 'Click continue on your main device to proceed when you\'re ready.' }
-          </p>
-        )
-        : null
-      }
 
       <Player {...props} />
 

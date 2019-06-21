@@ -10,12 +10,10 @@ const AuxiliaryPlayingLocationPage = ({
 }) => (
   <div className="page page-auxiliary-playing-location">
     <h1>
-      Change Location
+      Device Settings
     </h1>
 
-    <p>This is the auxiliary device playing location page.</p>
-
-    <p>Select a location below.</p>
+    <p>Select an option below.</p>
 
     <LocationSetting
       location={deviceLocation}
