@@ -29,7 +29,7 @@ const AuxiliaryPlayingPage = (props) => {
 
       <p>
         <LargeButton
-          text="Change Device Location"
+          text="Change Device Settings"
           secondaryText={deviceLocation}
           onClick={() => auxiliaryLocationOnOpen()}
         />
