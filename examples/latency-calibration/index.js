@@ -9,7 +9,9 @@ import {
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import sequenceData from './sequence.json';
 
-const CLOUD_SYNC_ENDPOINT = { hostname: 'mqttbroker.edge.platform.2immerse.eu' };
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+const CLOUD_SYNC_ENDPOINT = { hostname: 'cloudsync.virt.ch.bbc.co.uk' };
 
 const USE_TONE = true;
 const USE_NOISE = false;
