@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LargeButton from '../../Components/LargeButton';
 import StepProgressIndicator from '../../Components/StepProgressIndicator';
+import config from '../../../config';
 
 const StartPage = ({
   startSession,
@@ -9,33 +10,23 @@ const StartPage = ({
 }) => (
   <div className="page page-start">
     <h1>
-      Orchestration template
+      {config.TEXT_TITLE}
     </h1>
 
     <p>
-      This is the starting page.
-    </p>
-
-    <p>
-      { 'You can replace the text in these components by editing the '}
-      <code>JSX</code>
-      { ' files in the '}
-      <code>src/presentation/</code>
-      { ' directory, and change the colour scheme by editing '}
-      <code>colours.scss</code>
-      .
+      {config.TEXT_INTRODUCTION}
     </p>
 
     <p>
       <LargeButton
-        text="Create Session"
+        text={config.TEXT_START_LABEL}
         secondaryText="Start on the device with the best speakers."
         onClick={startSession}
       />
     </p>
     <p>
       <LargeButton
-        text="Join"
+        text={config.TEXT_JOIN_LABEL}
         secondaryText="Connect this device as an auxiliary speaker."
         onClick={joinSession}
       />

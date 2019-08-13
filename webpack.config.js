@@ -14,7 +14,7 @@ module.exports = {
     path.resolve(__dirname, 'src/index.js'),
   ],
   output: {
-    filename: 'bundle.[hash].js',
+    filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -67,6 +67,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
+      inject: false,
+      minify: false,
       template: path.resolve(__dirname, 'src/presentation/index.html'),
     }),
     new CopyWebpackPlugin([
@@ -75,8 +77,7 @@ module.exports = {
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: 'bundle.css',
     }),
     new CleanWebpackPlugin([
       'dist',

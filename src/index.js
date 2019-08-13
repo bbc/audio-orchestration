@@ -29,6 +29,7 @@ import {
 import 'regenerator-runtime/runtime';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
+import { updateConfig } from './config';
 import { initialiseOrchestration } from './template/orchestration';
 
 import { reducers, mapTemplateStateToProps, mapTemplateDispatchToProps } from './template';
@@ -51,17 +52,6 @@ const store = createStore(
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 
-// Initialise the orchestration object and connect its events to the redux store.
-const deviceId = initialiseOrchestration(store.dispatch);
-
-// TODO: decide on where to start based on initial URL here.
-// pass join, sessionCode to rootSaga
-sagaMiddleware.run(rootSaga, {
-  join: window.location.hash.startsWith('#!/join'),
-  deviceId,
-});
-
-
 // Connect the App to the redux store, and add the state and handlers managed by the template.
 // - hot() allows the module to be hot-reloaded in development mode.
 // - connect() ensures the component is refreshed when any state changes are recorded. It
@@ -80,10 +70,25 @@ const ConnectedApp = hot(module)(connect(
 // template so it appears on the page. Wrap it in the redux provider, to make the state available
 // within it (remember, connect() does not add the props by itself, but the component it creates
 // accesses it through the Provider).
-/* eslint-disable react/jsx-filename-extension */
-render(
-  <Provider store={store}>
-    <ConnectedApp />
-  </Provider>,
-  document.getElementById('app'),
-);
+global.initOrchestrationTemplate = (element, config = {}) => {
+  // Write the config
+  updateConfig(config);
+
+  // Initialise the orchestration object and connect its events to the redux store.
+  const deviceId = initialiseOrchestration(store.dispatch);
+
+  // Start the saga middleware, starting either on the start or join page.
+  sagaMiddleware.run(rootSaga, {
+    join: window.location.hash.startsWith('#!/join'),
+    deviceId,
+  });
+
+  // Render the connected component into the provided target element
+  /* eslint-disable react/jsx-filename-extension */
+  render(
+    <Provider store={store}>
+      <ConnectedApp />
+    </Provider>,
+    element,
+  );
+};

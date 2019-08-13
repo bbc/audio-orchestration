@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import LargeButton from '../../Components/LargeButton';
 import LinkButton from '../../Components/LinkButton';
 import StepProgressIndicator from '../../Components/StepProgressIndicator';
-import { SESSION_CODE_LENGTH } from '../../../config';
+import config from '../../../config';
 
 class ConnectFormPage extends React.Component {
   constructor(props) {
@@ -40,7 +40,7 @@ class ConnectFormPage extends React.Component {
     const sanitised = userInput.replace(/[^0-9]/g, '');
     this.inputRef.current.value = sanitised;
     this.setState({
-      valid: (sanitised.length === SESSION_CODE_LENGTH)
+      valid: (sanitised.length === config.SESSION_CODE_LENGTH)
           && (sanitised.match(this.validRegex) !== null),
     });
   }
@@ -65,7 +65,7 @@ class ConnectFormPage extends React.Component {
           Connect your device
         </h1>
         <p>
-          { `Please enter the ${SESSION_CODE_LENGTH}-digit code displayed on your main device.` }
+          { `Please enter the ${config.SESSION_CODE_LENGTH}-digit code displayed on your main device.` }
         </p>
         { !sessionCodeIsValid
           ? (
@@ -77,11 +77,11 @@ class ConnectFormPage extends React.Component {
         }
         <p>
           <input
-            placeholder={'*'.repeat(SESSION_CODE_LENGTH)}
+            placeholder={'*'.repeat(config.SESSION_CODE_LENGTH)}
             autoComplete="off"
             className="input-session-id"
             type="tel"
-            maxLength={SESSION_CODE_LENGTH + 1}
+            maxLength={config.SESSION_CODE_LENGTH + 1}
             ref={this.inputRef}
             disabled={sessionCodeIsValidating}
             onKeyPress={(e) => {

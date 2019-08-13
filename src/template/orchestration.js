@@ -1,6 +1,7 @@
 import bowser from 'bowser';
 import { takeEvery, call } from 'redux-saga/effects';
 import OrchestrationClient from '@bbc/bbcat-orchestration/src/orchestration/orchestration-client';
+import config from '../config';
 import {
   addLoadingMessage,
   setConnected,
@@ -15,17 +16,6 @@ import {
   setPlaybackStatus,
   setSequenceChoices,
 } from './actions/orchestration';
-import {
-  SEQUENCE_URLS,
-  INITIAL_CONTENT_ID,
-  MDO_COMPRESSOR_RATIO,
-  MDO_COMPRESSOR_THRESHOLD,
-  CLOUDSYNC_ENDPOINT,
-  SEQUENCE_TRANSITION_DELAY,
-  LOADING_TIMEOUT,
-  CONTENT_ID,
-  ZONES,
-} from '../config';
 
 // A global browser detection object
 const browser = bowser.getParser(window.navigator.userAgent);
@@ -37,15 +27,7 @@ let globalAudioContext = null;
 
 // A global orchestration object - this is the only instance of it. It is started with a sessionId,
 // deviceId, and audioContext reference in connectOrchestration.
-const globalOrchestrationClient = new OrchestrationClient({
-  initialContentId: INITIAL_CONTENT_ID,
-  cloudSyncEndpoint: CLOUDSYNC_ENDPOINT,
-  sequenceTransitionDelay: SEQUENCE_TRANSITION_DELAY,
-  loadingTimeout: LOADING_TIMEOUT,
-  contentId: CONTENT_ID,
-  isSafari,
-  zones: ZONES.map(({ name }) => name),
-});
+let globalOrchestrationClient = null;
 
 /**
  * Ensure an audio context exists.
@@ -70,7 +52,17 @@ export const ensureAudioContext = () => {
 export const initialiseOrchestration = (dispatch) => {
   let transitionOnEnded = null;
 
-  SEQUENCE_URLS.forEach(({ contentId, url }) => {
+  globalOrchestrationClient = new OrchestrationClient({
+    initialContentId: config.INITIAL_CONTENT_ID,
+    cloudSyncEndpoint: config.CLOUDSYNC_ENDPOINT,
+    sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
+    loadingTimeout: config.LOADING_TIMEOUT,
+    contentId: config.SYNC_CLOCK_CONTENT_ID,
+    isSafari,
+    zones: config.DEVICE_TAGS.map(({ name }) => name),
+  });
+
+  config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
     globalOrchestrationClient.registerSequence(contentId, url);
   });
 
@@ -100,7 +92,7 @@ export const initialiseOrchestration = (dispatch) => {
         skippable,
         next,
         hold,
-      } = SEQUENCE_URLS.find(({ contentId }) => contentId === e.currentContentId);
+      } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === e.currentContentId);
 
       if (!hold && !e.loop && next.length > 0) {
         transitionOnEnded = next[0].contentId;
@@ -183,8 +175,8 @@ export const connectOrchestration = (master, sessionId) => globalOrchestrationCl
 )
   .then(() => {
     if (!master) {
-      globalOrchestrationClient.setCompressorRatio(MDO_COMPRESSOR_RATIO);
-      globalOrchestrationClient.setCompressorThreshold(MDO_COMPRESSOR_THRESHOLD);
+      globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
+      globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
     }
   })
   .then(() => ({ success: true }))

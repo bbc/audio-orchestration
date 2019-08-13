@@ -5,7 +5,7 @@ import Player from '../../Components/Player';
 import ObjectList from '../../Components/ObjectList';
 import LargeButton from '../../Components/LargeButton';
 import SessionCode from '../../Components/SessionCode';
-import { DEBUG_UI } from '../../../config';
+import config from '../../../config';
 
 const AuxiliaryPlayingPage = (props) => {
   const {
@@ -35,7 +35,7 @@ const AuxiliaryPlayingPage = (props) => {
         />
       </p>
 
-      { DEBUG_UI
+      { config.DEBUG_UI
         ? (
           <ObjectList objectIds={activeObjectIds} />
         )

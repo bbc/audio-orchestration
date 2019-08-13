@@ -10,11 +10,67 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>bbcat-orchestration-template</title>
+    <link rel="stylesheet" href="bundle.css" />
+    <title>Device Orchestration Template</title>
   </head>
   <body>
     <div id="app"></div>
+    <script src="bundle.js"></script>
+    <script>
+      const SEQUENCE_URL_LOOP = 'audio/clicks-and-tone/loop.json';
+      const SEQUENCE_URL_MAIN = 'audio/clicks-and-tone/sequence.json';
+      const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
+      const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
 
+      // Any value specified in config.js may be overwritten here without having to rebuild the app.
+      const config = {
+        JOIN_URL: 'http://localhost:8080/#!/join',
+        LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
+        CLOUDSYNC_ENDPOINT: { hostname: 'cloudsync.virt.ch.bbc.co.uk' },
+        INITIAL_CONTENT_ID: CONTENT_ID_LOOP,
+        SEQUENCE_URLS: [
+          {
+            contentId: CONTENT_ID_LOOP,
+            url: SEQUENCE_URL_LOOP,
+            hold: false,
+            skippable: true,
+            next: [
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Continue',
+              },
+            ],
+          },
+          {
+            contentId: CONTENT_ID_MAIN,
+            url: SEQUENCE_URL_MAIN,
+            hold: true,
+            skippable: false,
+            next: [
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Listen Again',
+              },
+            ],
+          },
+        ],
+        DEVICE_TAGS: [
+          { name: 'nearFront', friendlyName: 'near front' },
+          { name: 'nearSide', friendlyName: 'near side' },
+          { name: 'nearRear', friendlyName: 'near rear' },
+          { name: 'farFront', friendlyName: 'far front' },
+          { name: 'farSide', friendlyName: 'far side' },
+          { name: 'farRear', friendlyName: 'far rear' },
+        ],
+        TEXT_TITLE: 'Device Orchestration Template',
+        TEXT_INTRODUCTION: 'This template is a starting point for building a custom user interface using React.',
+        TEXT_START_LABEL: 'Create Session',
+        TEXT_JOIN_LABEL: 'Join',
+      };
+
+      // Instantiate the React app to render into the #app div:
+      initOrchestrationTemplate(document.getElementById('app'), config);
+    </script>
     <noscript>
       This page requires JavaScript to be enabled.
     </noscript>

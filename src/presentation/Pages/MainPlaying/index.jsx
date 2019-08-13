@@ -7,7 +7,7 @@ import DeviceList from '../../Components/DeviceList';
 import LargeButton from '../../Components/LargeButton';
 import SessionCode from '../../Components/SessionCode';
 
-import { JOIN_URL } from '../../../config';
+import config from '../../../config';
 
 const MainPlayingPage = (props) => {
   const {
@@ -48,7 +48,7 @@ const MainPlayingPage = (props) => {
       <DeviceList
         showInstructions
         devices={connectedDevices}
-        baseUrl={JOIN_URL}
+        baseUrl={config.JOIN_URL}
         sessionCode={sessionCode}
       />
 

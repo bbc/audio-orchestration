@@ -20,7 +20,7 @@ const Footer = () => (
       </a>
     </p>
     <p>
-      &copy;&nbsp;2018 The BBC
+      &copy;&nbsp;2019 The BBC
     </p>
   </div>
 );

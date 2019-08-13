@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DurationClock from './duration-clock';
 import PlayerImage from './PlayerImage';
-import { DEFAULT_IMAGE } from '../../../config';
+import config from '../../../config';
 
 const Player = ({
   playing,
@@ -59,7 +59,7 @@ const Player = ({
     <div className="player">
       { primaryObjectImage && primaryObjectImage.length > 0
         ? <PlayerImage image={primaryObjectImage} />
-        : <PlayerImage image={DEFAULT_IMAGE} />
+        : <PlayerImage image={config.DEFAULT_IMAGE} />
       }
       <p className="player-controls">
         { buttons }

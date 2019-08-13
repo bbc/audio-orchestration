@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ToggleButton from './ToggleButton';
-import { ZONES } from '../../config';
+import config from '../../config';
 
 const LocationSetting = ({
   location,
@@ -9,7 +9,7 @@ const LocationSetting = ({
 }) => (
   <div>
     <p>
-      { ZONES.map(({ name, friendlyName }) => (
+      { config.DEVICE_TAGS.map(({ name, friendlyName }) => (
         <ToggleButton
           onClick={() => onChange(name)}
           text={friendlyName}
