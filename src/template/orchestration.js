@@ -209,8 +209,9 @@ function* unmute() {
   yield call(() => globalOrchestrationClient.mute(false));
 }
 
-function* setDeviceLocation({ location }) {
-  yield call(() => globalOrchestrationClient.setDeviceLocation(location));
+function* setDeviceTag({ tag }) {
+  yield call(() => globalOrchestrationClient.setDeviceLocation(tag));
+  // TODO orchestration client API still uses 'location'.
 }
 
 export const orchestrationWatcherSaga = function* () {
@@ -221,7 +222,7 @@ export const orchestrationWatcherSaga = function* () {
   // yield takeEvery('REQUEST_SET_VOLUME', ...);
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
   yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);
-  yield takeEvery('REQUEST_SET_DEVICE_LOCATION', setDeviceLocation);
+  yield takeEvery('REQUEST_SET_DEVICE_TAG', setDeviceTag);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
 
   yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* (action) {

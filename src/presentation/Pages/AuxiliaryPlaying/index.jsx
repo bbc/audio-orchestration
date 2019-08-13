@@ -11,8 +11,8 @@ const AuxiliaryPlayingPage = (props) => {
   const {
     sessionCode,
     activeObjectIds,
-    auxiliaryLocationOnOpen,
-    deviceLocation,
+    auxiliaryTagOnOpen,
+    deviceTag,
   } = props;
 
   return (
@@ -30,8 +30,8 @@ const AuxiliaryPlayingPage = (props) => {
       <p>
         <LargeButton
           text="Change Device Settings"
-          secondaryText={deviceLocation}
-          onClick={() => auxiliaryLocationOnOpen()}
+          secondaryText={deviceTag}
+          onClick={() => auxiliaryTagOnOpen()}
         />
       </p>
 
@@ -50,9 +50,9 @@ AuxiliaryPlayingPage.propTypes = {
   connectedDevices: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)).isRequired,
   sessionCode: PropTypes.string.isRequired,
   currentContentId: PropTypes.string.isRequired,
-  auxiliaryLocationOnOpen: PropTypes.func.isRequired,
+  auxiliaryTagOnOpen: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  deviceLocation: PropTypes.string.isRequired,
+  deviceTag: PropTypes.string.isRequired,
 };
 
 export default AuxiliaryPlayingPage;

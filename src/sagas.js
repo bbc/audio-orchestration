@@ -17,9 +17,9 @@ export const PAGE_MAIN_SETUP = 'main-setup';
 export const PAGE_MAIN_PLAYING = 'main-playing';
 export const PAGE_CONNECT_FORM = 'connect-form';
 export const PAGE_CONNECT_DIRECT = 'connect-direct';
-export const PAGE_AUXILIARY_SETUP_LOCATION = 'auxiliary-setup-location';
+export const PAGE_AUXILIARY_SETUP_TAG = 'auxiliary-setup-tag';
 export const PAGE_AUXILIARY_PLAYING = 'auxiliary-playing';
-export const PAGE_AUXILIARY_PLAYING_LOCATION = 'auxiliary-playing-location';
+export const PAGE_AUXILIARY_PLAYING_TAG = 'auxiliary-playing-tag';
 export const PAGE_AUXILIARY_DISCONNECTED = 'auxiliary-disconnected';
 
 export const ROLE_MAIN = 'main';
@@ -99,7 +99,7 @@ function* mainFlow() {
  * Main flow for a auxiliary device.
  *
  * After having decided that this device is a auxiliary, a session code is requested from the user.
- * If this succeeds, we move on to the location screen and then the playing screen.
+ * If this succeeds, we move on to the tag screen and then the playing screen.
  */
 function* auxiliaryFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
@@ -124,13 +124,13 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
     return;
   }
 
-  yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_SETUP_LOCATION });
+  yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_SETUP_TAG });
 
   while (true) {
-    yield take('REQUEST_CLOSE_AUXILIARY_LOCATION');
+    yield take('REQUEST_CLOSE_AUXILIARY_TAG');
     yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING });
-    yield take('REQUEST_OPEN_AUXILIARY_LOCATION');
-    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING_LOCATION });
+    yield take('REQUEST_OPEN_AUXILIARY_TAG');
+    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING_TAG });
   }
 }
 

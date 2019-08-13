@@ -7,7 +7,7 @@ const initialState = {
   sessionCode: null,
   sessionId: null,
   deviceId: null,
-  deviceLocation: null,
+  deviceTag: null,
   deviceType: null,
   deviceQuality: 1,
   connectedDevices: [],
@@ -108,9 +108,9 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         muted: action.muted,
       });
-    case 'REQUEST_SET_DEVICE_LOCATION':
+    case 'REQUEST_SET_DEVICE_TAG':
       return Object.assign({}, state, {
-        deviceLocation: action.location,
+        deviceTag: action.tag,
       });
     case 'SET_TRANSPORT_CAPABILITIES':
       return Object.assign({}, state, {
@@ -130,8 +130,11 @@ const exposed = (state = initialState, action) => {
         },
       });
     case 'SET_CONNECTED_DEVICES':
+      // TODO: converting from location to tag because orchestration library still uses location.
       return Object.assign({}, state, {
-        connectedDevices: action.connectedDevices,
+        connectedDevices: action.connectedDevices.map(device => Object.assign({}, device, {
+          deviceTag: device.deviceLocation,
+        })),
       });
     case 'SET_PRIMARY_OBJECT':
       return Object.assign({}, state, {

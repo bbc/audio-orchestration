@@ -8,7 +8,7 @@ export {
   requestSeek,
   requestMute,
   requestUnmute,
-  requestSetDeviceLocation,
+  requestSetDeviceTag,
   requestSetVolume,
   requestTransitionToSequence,
 } from './orchestration';
@@ -34,10 +34,10 @@ export const mainSetupOnContinue = () => ({
   type: 'CLICK_MAIN_SETUP_CONTINUE',
 });
 
-export const auxiliaryLocationOnClose = () => ({
-  type: 'REQUEST_CLOSE_AUXILIARY_LOCATION',
+export const auxiliaryTagOnClose = () => ({
+  type: 'REQUEST_CLOSE_AUXILIARY_TAG',
 });
 
-export const auxiliaryLocationOnOpen = () => ({
-  type: 'REQUEST_OPEN_AUXILIARY_LOCATION',
+export const auxiliaryTagOnOpen = () => ({
+  type: 'REQUEST_OPEN_AUXILIARY_TAG',
 });

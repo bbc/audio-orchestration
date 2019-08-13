@@ -1,7 +1,7 @@
 import {
   startSession,
   joinSession,
-  requestSetDeviceLocation,
+  requestSetDeviceTag,
   requestPlay,
   requestPause,
   requestMute,
@@ -11,8 +11,8 @@ import {
   connectFormOnCancel,
   connectFormOnSubmit,
   mainSetupOnContinue,
-  auxiliaryLocationOnClose,
-  auxiliaryLocationOnOpen,
+  auxiliaryTagOnClose,
+  auxiliaryTagOnOpen,
 } from './actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
@@ -33,8 +33,8 @@ function mapDispatchToProps(dispatch) {
     joinSession: (sessionCode) => {
       dispatch(joinSession(sessionCode));
     },
-    setDeviceLocation: (location) => {
-      dispatch(requestSetDeviceLocation(location));
+    setDeviceTag: (tag) => {
+      dispatch(requestSetDeviceTag(tag));
     },
     play: () => {
       dispatch(requestPlay());
@@ -64,11 +64,11 @@ function mapDispatchToProps(dispatch) {
     mainSetupOnContinue: () => {
       dispatch(mainSetupOnContinue());
     },
-    auxiliaryLocationOnClose: () => {
-      dispatch(auxiliaryLocationOnClose());
+    auxiliaryTagOnClose: () => {
+      dispatch(auxiliaryTagOnClose());
     },
-    auxiliaryLocationOnOpen: () => {
-      dispatch(auxiliaryLocationOnOpen());
+    auxiliaryTagOnOpen: () => {
+      dispatch(auxiliaryTagOnOpen());
     },
   };
 }

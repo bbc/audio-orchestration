@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ToggleButton from './ToggleButton';
 import config from '../../config';
 
-const LocationSetting = ({
-  location,
+const DeviceTagSelection = ({
+  tag,
   onChange,
 }) => (
   <div>
@@ -13,7 +13,7 @@ const LocationSetting = ({
         <ToggleButton
           onClick={() => onChange(name)}
           text={friendlyName}
-          selected={location === name}
+          selected={tag === name}
           key={name}
         />
       ))
@@ -22,13 +22,13 @@ const LocationSetting = ({
   </div>
 );
 
-LocationSetting.defaultProps = {
-  location: null,
+DeviceTagSelection.defaultProps = {
+  tag: null,
 };
 
-LocationSetting.propTypes = {
-  location: PropTypes.string,
+DeviceTagSelection.propTypes = {
+  tag: PropTypes.string,
   onChange: PropTypes.func.isRequired,
 };
 
-export default LocationSetting;
+export default DeviceTagSelection;

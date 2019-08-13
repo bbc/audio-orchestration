@@ -11,9 +11,9 @@ import {
   PAGE_MAIN_PLAYING,
   PAGE_CONNECT_FORM,
   PAGE_CONNECT_DIRECT,
-  PAGE_AUXILIARY_SETUP_LOCATION,
+  PAGE_AUXILIARY_SETUP_TAG,
   PAGE_AUXILIARY_PLAYING,
-  PAGE_AUXILIARY_PLAYING_LOCATION,
+  PAGE_AUXILIARY_PLAYING_TAG,
   PAGE_AUXILIARY_DISCONNECTED,
 } from '../sagas';
 
@@ -24,9 +24,9 @@ import ErrorPage from './Pages/Error';
 import MainPlayingPage from './Pages/MainPlaying';
 import ConnectFormPage from './Pages/ConnectForm';
 import ConnectDirectPage from './Pages/ConnectDirect';
-import AuxiliarySetupLocationPage from './Pages/AuxiliarySetupLocation';
+import AuxiliarySetupTagPage from './Pages/AuxiliarySetupTag';
 import AuxiliaryPlayingPage from './Pages/AuxiliaryPlaying';
-import AuxiliaryPlayingLocationPage from './Pages/AuxiliaryPlayingLocation';
+import AuxiliaryPlayingTagPage from './Pages/AuxiliaryPlayingTag';
 import AuxiliaryDisconnectedPage from './Pages/AuxiliaryDisconnected';
 import Footer from './Footer';
 
@@ -70,14 +70,14 @@ const App = (props) => {
     case PAGE_CONNECT_DIRECT:
       CurrentPage = ConnectDirectPage;
       break;
-    case PAGE_AUXILIARY_SETUP_LOCATION:
-      CurrentPage = AuxiliarySetupLocationPage;
+    case PAGE_AUXILIARY_SETUP_TAG:
+      CurrentPage = AuxiliarySetupTagPage;
       break;
     case PAGE_AUXILIARY_PLAYING:
       CurrentPage = AuxiliaryPlayingPage;
       break;
-    case PAGE_AUXILIARY_PLAYING_LOCATION:
-      CurrentPage = AuxiliaryPlayingLocationPage;
+    case PAGE_AUXILIARY_PLAYING_TAG:
+      CurrentPage = AuxiliaryPlayingTagPage;
       break;
     case PAGE_AUXILIARY_DISCONNECTED:
       CurrentPage = AuxiliaryDisconnectedPage;
