@@ -88,10 +88,6 @@ button {
   padding: $gel-spacing-unit;
   cursor: pointer;
 
-  &:active, &:hover, &:focus {
-    background-color: lighten($button-background, 20);
-  }
-
   &:disabled {
     background-color: $button-background-disabled;
     color: $button-foreground-disabled;

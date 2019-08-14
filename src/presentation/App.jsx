@@ -29,6 +29,7 @@ import AuxiliaryPlayingPage from './Pages/AuxiliaryPlaying';
 import AuxiliaryPlayingTagPage from './Pages/AuxiliaryPlayingTag';
 import AuxiliaryDisconnectedPage from './Pages/AuxiliaryDisconnected';
 import Footer from './Footer';
+import config from '../config';
 
 /**
  * The App is the top level presentational component.
@@ -89,7 +90,7 @@ const App = (props) => {
   // Way too many divs to make the layout work. Every page is displayed in a single grid item
   // to avoid extraneous repeated mark up in every page component.
   return (
-    <div id="page-wrapper">
+    <div id="page-wrapper" style={{ '--accent-colour': config.ACCENT_COLOUR }}>
       <div id="content-background">
         <div className="wrap">
           <div className="row">

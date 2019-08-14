@@ -79,6 +79,8 @@ const config = {
   TEXT_INTRODUCTION: 'Introduction',
   TEXT_START_LABEL: 'Create Session',
   TEXT_JOIN_LABEL: 'Join',
+
+  ACCENT_COLOUR: '#80BBFF',
 };
 
 export const updateConfig = (newConfig = {}) => {

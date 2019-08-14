@@ -24,7 +24,7 @@
 
       // Any value specified in config.js may be overwritten here without having to rebuild the app.
       const config = {
-        JOIN_URL: 'http://localhost:8080/#!/join',
+        JOIN_URL: location.protocol + '//' + location.host + '/#!/join',
         LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
         CLOUDSYNC_ENDPOINT: { hostname: 'cloudsync.virt.ch.bbc.co.uk' },
         INITIAL_CONTENT_ID: CONTENT_ID_LOOP,
@@ -66,6 +66,7 @@
         TEXT_INTRODUCTION: 'This template is a starting point for building a custom user interface using React.',
         TEXT_START_LABEL: 'Create Session',
         TEXT_JOIN_LABEL: 'Join',
+        ACCENT_COLOUR: '#3cf',
       };
 
       // Instantiate the React app to render into the #app div:

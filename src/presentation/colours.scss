@@ -1,8 +1,19 @@
+/*
+ * Specify colours in the variables below ($button-background).
+ *
+ * Using CSS3 custom properties here despite lack of old browser support so that they can be easily
+ * overridden from JS with a custom value. Production code should specify final colours in the
+ * $variables instead and delete this body {} block.
+ */
+body {
+  --accent-colour: #3cf;
+}
+
 $fg: #111;
 $bg: #fff;
 
 $button-foreground: $fg;
-$button-background: #3cf;
+$button-background: var(--accent-colour);
 $button-foreground-disabled: #333;
 $button-background-disabled: #ccc;
 $toggle-button-background: #ccc;
