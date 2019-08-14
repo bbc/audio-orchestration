@@ -8,19 +8,10 @@ $gel-grid-enable--box-sizing: true;
 @import './colours.scss';
 @import './images.scss';
 
-@mixin reith-sans {
-  font-family: Helvetica, Arial, sans-serif;
-
-  .reith-sans-loaded &, &.reith-sans-loaded {
-    font-family: 'ReithSans';
-  }
-}
-
 html, body {
-  @include reith-sans;
   background-color: $bg;
   color: $fg;
-  font-family: BBC-Reith-Sans, Helvetica, Arial, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   padding: 0;
   margin: 0;
   height: 100%;
@@ -173,7 +164,6 @@ button {
 }
 
 .loading-message-log {
-  @include reith-sans;
   @include gel-typography('brevier');
   text-align: left;
   opacity: 0.5;

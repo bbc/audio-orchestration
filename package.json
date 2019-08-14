@@ -1,15 +1,23 @@
 {
   "name": "@bbc/bbcat-orchestration-template",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "A user interface template showing how to integrate the bbcat-orchestration toolkit for orchestrated personal audio devices with React components.",
-  "main": "index.js",
+  "browser": "dist/bundle.js",
   "repository": "git@github.com:bbc/bbcat-orchestration-template.git",
   "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
   "license": "UNLICENSED",
-  "dependencies": {
+  "files": [
+    "Readme.md",
+    "audio",
+    "dist",
+    "src",
+    "webpack.config.js",
+    "yarn.lock"
+  ],
+  "dependencies": {},
+  "devDependencies": {
     "@babel/polyfill": "^7.0.0",
     "@bbc/bbcat-orchestration": "^0.3.2",
-    "@bbc/reith-fonts-npm": "^0.1.1-rd-iic",
     "bowser": "^2.0.0-beta.1",
     "gel-grid": "^4.0.0",
     "gel-typography": "^2.0.5",
@@ -23,9 +31,7 @@
     "redux-saga": "^0.16.0",
     "regenerator-runtime": "^0.12.1",
     "uuid": "^3.3.2",
-    "whatwg-fetch": "^2.0.4"
-  },
-  "devDependencies": {
+    "whatwg-fetch": "^2.0.4",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -39,7 +45,6 @@
     "eslint-plugin-import": "^2.13.0",
     "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
-    "favicons-webpack-plugin": "^0.0.9",
     "file-loader": "^1.1.11",
     "image-webpack-loader": "^4.3.1",
     "mini-css-extract-plugin": "^0.4.1",
@@ -54,8 +59,8 @@
     "webpack-dev-server": "^3.1.4"
   },
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack-dev-server --hot --host 0.0.0.0",
+    "build": "NODE_ENV=production webpack --mode production",
+    "dev": "NODE_ENV=development webpack-dev-server --hot --host 0.0.0.0",
     "lint": "eslint src/"
   }
 }

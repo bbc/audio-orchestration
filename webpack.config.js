@@ -4,7 +4,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const sass = require('sass');
 
 module.exports = {
@@ -32,13 +31,6 @@ module.exports = {
             },
           },
         ],
-      },
-      {
-        test: /\.(eot|ttf|woff|woff2)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 1000,
-        },
       },
       {
         test: /\.(png|jpg|gif|svg)$/,
@@ -82,18 +74,6 @@ module.exports = {
     new CleanWebpackPlugin([
       'dist',
     ]),
-    new FaviconsWebpackPlugin({
-      logo: path.resolve(__dirname, 'src/presentation/images/favicon-default-256.png'),
-      background: '#99ff99',
-      icons: {
-        android: true,
-        appleIcon: true,
-        appleStartup: false,
-        favicons: true,
-        firefox: true,
-      },
-      title: 'bbcat-orchestration-template',
-    }),
   ],
   optimization: {
     minimizer: [
