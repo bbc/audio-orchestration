@@ -151,16 +151,17 @@ function* joinFlow() {
  * Entry point for /join/session-code, only have to click a button to join
  * the pre-filled session code.
  */
-function* directJoinFlow(sessionCode) {
+function* directJoinFlow(sessionCodeParam) {
+  const { sessionCode } = sessionCodeParam;
   yield put({ type: 'SET_PAGE', page: PAGE_CONNECT_DIRECT });
-  yield take('CLICK_JOIN');
+  yield take('CLICK_JOIN_DIRECT');
   yield put({ type: 'REQUEST_VALIDATE_SESSION_CODE', sessionCode });
 
   const result = yield take(['SESSION_CODE_VALID', 'SESSION_CODE_INVALID']);
 
   if (result.type === 'SESSION_CODE_VALID') {
     const { sessionId } = result;
-    yield call(auxiliaryFlow, { sessionId, sessionCode });
+    yield call(auxiliaryFlow, { sessionCode, sessionId });
   } else {
     yield call(joinFlow);
   }
@@ -200,7 +201,7 @@ function* rootSaga({
   yield fork(orchestrationWatcherSaga);
 
   if (join && sessionCode !== null) {
-    yield call(directJoinFlow);
+    yield call(directJoinFlow, { sessionCode });
   } else if (join) {
     yield call(joinFlow);
   } else {

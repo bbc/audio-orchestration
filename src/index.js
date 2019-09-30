@@ -26,7 +26,7 @@ import {
 import 'regenerator-runtime/runtime';
 import createSagaMiddleware from 'redux-saga';
 import rootSaga from './sagas';
-import { updateConfig } from './config';
+import config, { updateConfig } from './config';
 import { initialiseOrchestration } from './template/orchestration';
 
 import { reducers, mapTemplateStateToProps, mapTemplateDispatchToProps } from './template';
@@ -67,16 +67,18 @@ const ConnectedApp = hot(module)(connect(
 // template so it appears on the page. Wrap it in the redux provider, to make the state available
 // within it (remember, connect() does not add the props by itself, but the component it creates
 // accesses it through the Provider).
-global.initOrchestrationTemplate = (element, config = {}) => {
+global.initOrchestrationTemplate = (element, userConfig = {}) => {
   // Write the config
-  updateConfig(config);
+  updateConfig(userConfig);
 
   // Initialise the orchestration object and connect its events to the redux store.
   const deviceId = initialiseOrchestration(store.dispatch);
-
+  const sessionCodeExpression = new RegExp(`^#!/join/([0-9]{${config.SESSION_CODE_LENGTH}})$`);
+  const matches = window.location.hash.match(sessionCodeExpression);
   // Start the saga middleware, starting either on the start or join page.
   sagaMiddleware.run(rootSaga, {
     join: window.location.hash.startsWith('#!/join'),
+    sessionCode: matches ? matches[1] : null,
     deviceId,
   });
 

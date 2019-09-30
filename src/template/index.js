@@ -1,6 +1,7 @@
 import {
   startSession,
   joinSession,
+  joinDirect,
   requestSetDeviceTag,
   requestPlay,
   requestPause,
@@ -32,6 +33,9 @@ function mapDispatchToProps(dispatch) {
     },
     joinSession: (sessionCode) => {
       dispatch(joinSession(sessionCode));
+    },
+    joinDirect: (sessionCode) => {
+      dispatch(joinDirect(sessionCode));
     },
     setDeviceTag: (tag) => {
       dispatch(requestSetDeviceTag(tag));

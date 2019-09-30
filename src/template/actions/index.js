@@ -21,6 +21,10 @@ export const joinSession = () => ({
   type: 'CLICK_JOIN_SESSION',
 });
 
+export const joinDirect = () => ({
+  type: 'CLICK_JOIN_DIRECT',
+});
+
 export const connectFormOnCancel = () => ({
   type: 'CLOSE_CONNECT_FORM',
 });
