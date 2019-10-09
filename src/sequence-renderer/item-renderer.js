@@ -36,7 +36,8 @@ class ItemRenderer {
 
   start() {
     this._player.prepare()
-      // .then(() => this._syncController.start()) // TODO implement start as separate from constructor
+      // TODO implement start as separate from constructor
+      // .then(() => this._syncController.start())
       .then(() => {
         switch (this._stereoOutput ? this._channelMapping : 'mono') {
           case 'stereo':

@@ -193,6 +193,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {number} offset - in seconds, where in the sequence playback should start.
    */
   start(syncClockTime, offset = 0) {
+    /* eslint-disable-next-line */
     // console.debug(`start sequencerenderer at ${syncClockTime.toFixed(1)} (loop ${this._sequence.loop})`);
     this._stopped = false;
     this._clock.setCorrelationAndSpeed({
@@ -223,6 +224,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       setTimeout(
         () => {
           renderer.stop();
+          /* eslint-disable-next-line */
           // console.debug(`renderer.stop at ${this._audioContext.currentTime} (output cut at ${syncTime}).`);
         },
         1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
@@ -252,6 +254,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     // I think this is due to the sync clock changing and the sync-controller having decided
     // that the change was too small to seek the audio of the first sequence.
 
+    /* eslint-disable-next-line */
     // console.debug(`stopAtOutPoint delay ${delay} contentTime ${this.contentTime} out point ${out}\n` +
     //               `syncClockTime: ${syncClockTime}\n` +
     //               `syncClock now: ${this._syncClock.now()}\n` +
@@ -319,6 +322,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       tickRate: 1,
     });
 
+    /* eslint-disable-next-line */
     // console.debug(`at ${startTime.toFixed(1)}\t start ${itemId} (new item renderer) (sequence loop: ${this._sequence.loop})\n` +
     //               `syncClock.now: ${this._syncClock.now()}\n` +
     //               `clock.now: ${clock.now()}`);

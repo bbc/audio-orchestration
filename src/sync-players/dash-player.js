@@ -54,14 +54,17 @@ class DashPlayer extends Player {
       return manifest;
     }
 
+    const filteredManifest = Object.assign({}, manifest);
+
     // Remove all adaptation sets from the parsed manifest, except for those matching this
     // player's adaptationSetIds.
     manifest.periods.forEach((p) => {
-      manifest.periods[p.id].adaptationSets = p.adaptationSets.filter(a =>
-        this.adaptationSetIds.includes(a.id));
+      filteredManifest.periods[p.id] = Object.assign({}, p, {
+        adaptationSets: p.adaptationSets.filter(a => this.adaptationSetIds.includes(a.id)),
+      });
     });
 
-    return manifest;
+    return filteredManifest;
   }
 
   /**

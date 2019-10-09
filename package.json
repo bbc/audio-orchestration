@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
@@ -24,7 +24,7 @@
     "dev": "webpack",
     "build": "webpack --mode=production",
     "doc": "esdoc",
-    "tests": "echo tests not yet defined",
+    "test": "echo tests not yet defined",
     "lint": "eslint src"
   },
   "dependencies": {

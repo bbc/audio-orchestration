@@ -97,18 +97,18 @@ class CloudSyncAdapter extends SyncAdapter {
       });
 
       this._synchroniser.on('ApplicationBroadcast', (e) => {
-        const { deviceId, topic, content } = e;
+        const { topic, content } = e;
         this.emit('broadcast', {
-          deviceId,
+          deviceId: e.deviceId,
           topic,
           content,
         });
       });
 
       this._synchroniser.on('DeviceStatus', (e) => {
-        const { deviceId, status } = e;
+        const { status } = e;
         this.emit('presence', {
-          deviceId,
+          deviceId: e.deviceId,
           status,
         });
       });
@@ -142,7 +142,6 @@ class CloudSyncAdapter extends SyncAdapter {
    * @public
    */
   provideTimelineClock(timelineClock, timelineType, contentId) {
-    timelineClock.id = `providedTimelineClock_${contentId}`;
     if (this._connectPromise === null) {
       throw new Error('CloudSyncAdapter: provideTimelineClock: Not connected. Call connect() first.');
     }
@@ -210,10 +209,12 @@ class CloudSyncAdapter extends SyncAdapter {
             this._synchroniser.syncClockToThisTimeline(intermediateClock, timelineId);
             timelineClock.setParent(intermediateClock);
             timelineClock.setAvailabilityFlag(true);
+            /* eslint-disable-next-line */
             // console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock available.');
             resolve(timelineClock);
           });
         } else {
+          /* eslint-disable-next-line */
           // console.debug('requestTimelineClock SyncTimelinesAvailable timeline clock unavailable.');
           timelineClock.setAvailabilityFlag(false);
         }

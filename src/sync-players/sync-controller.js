@@ -116,6 +116,7 @@ class SyncController {
     const s = expectedMediaTime - actualMediaTime;
     const v = this.idealTimelineClock.getEffectiveSpeed();
 
+    /* eslint-disable-next-line */
     // console.debug('SyncController.resync: v =', v, 'actualSpeed =', actualSpeed, 's =', s.toFixed(1), 'player.currentTime', actualMediaTime);
 
     if (v === 0) {
