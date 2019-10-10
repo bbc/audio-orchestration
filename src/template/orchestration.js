@@ -137,7 +137,6 @@ export const initialiseOrchestration = (dispatch) => {
     dispatch(setEnded(ended));
 
     if (ended && globalOrchestrationClient.master && transitionOnEnded !== null) {
-      console.log('auto transition on ended');
       const nextContentId = transitionOnEnded;
       transitionOnEnded = null;
       // TODO: the orchestration client/renderer pause after emitting the ended event, so can't

@@ -3,7 +3,6 @@ import config from './config';
 const generateSessionId = (userSessionCode) => {
   let sessionCode = userSessionCode;
   if (userSessionCode === undefined) {
-    console.warn('Generating random session id, not guaranteed to be unique.');
     const numCheckDigits = config.SESSION_CODE_CHECK_DIGITS;
     const numDigits = config.SESSION_CODE_LENGTH - numCheckDigits;
 
@@ -65,7 +64,6 @@ const isValidLocalSessionCode = (sessionCode) => {
   }
 
   // check they are the same
-  console.log(sessionCode, testDigits.join(''));
   return testDigits.join('') === sessionCode;
 };
 
