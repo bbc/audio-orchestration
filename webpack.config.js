@@ -51,6 +51,10 @@ module.exports = {
         exclude: [/node_modules/],
         loader: 'babel-loader',
       },
+      {
+        test: require.resolve('qrcodejs/qrcode'),
+        use: 'exports-loader?QRCode',
+      },
     ],
   },
   resolve: {
