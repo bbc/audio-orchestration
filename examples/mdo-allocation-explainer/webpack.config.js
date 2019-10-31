@@ -16,6 +16,10 @@ module.exports = {
         test: [/\.jsx?$/],
         exclude: [/node_modules/],
         loader: 'babel-loader',
+        options: {
+          presets: ['@babel/preset-env', '@babel/preset-react'],
+          plugins: ['react-hot-loader/babel'],
+        },
       },
     ],
   },
@@ -24,7 +28,7 @@ module.exports = {
       template: path.resolve(__dirname, 'src/index.html'),
     }),
     new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, 'sequence.json') },
+      { from: path.resolve(__dirname, 'src/main.css'), to: 'bundle.css' }
     ]),
   ],
   resolve: {

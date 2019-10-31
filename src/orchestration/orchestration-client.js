@@ -26,7 +26,7 @@ const TIMELINE_TYPE_TICK_RATE = 1000;
  * interface to call into and fires events to update the user interface state.
  *
  * It manages multiple sequence renderers, transport controls, and the transition between
- * sequences. Only one sequence may be active at a time, and the master device may trigger a
+ * sequences. Only one sequence may be active at a time, and the main device may trigger a
  * transition to another sequence at any time.
  *
  * @example
@@ -77,7 +77,7 @@ class OrchestrationClient extends EventEmitter {
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
     this._isSafari = options.isSafari || false;
-    this._zones = options.zones || null;
+    this._allocationAlgorithm = options.allocationAlgorithm || null;
   }
 
   /**
@@ -300,7 +300,7 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Requests (and provides, if this is a master) the experience synchronisation clock.
+   * Requests (and provides, if this is the main device) the experience synchronisation clock.
    *
    * @returns {Promise<CorrelatedClock>} - A promise resolving when the synchronised clock is
    * available.
@@ -396,7 +396,7 @@ class OrchestrationClient extends EventEmitter {
         this._mdoHelper = new MdoAllocator(
           this._deviceId,
           {
-            zones: this._zones,
+            allocationAlgorithm: this._allocationAlgorithm,
           },
         );
 
@@ -628,27 +628,16 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Sets the device location for this device.
+   * Sets some device metadata. Overwrites existing values with the same key. Commonly used
+   * metadata keys are deviceTags and deviceType.
    *
-   * @param {MdoLocation} location
+   * @param {Object} metadata
    */
-  setDeviceLocation(location) {
+  setDeviceMetadata(metadata) {
     if (!this._ready) {
       return;
     }
-    this._mdoHelper.setLocation(location);
-  }
-
-  /**
-   * Sets the device type
-   *
-   * @param {string} deviceType - should be one of 'mobile', 'tablet', or 'desktop'
-   */
-  setDeviceType(deviceType) {
-    if (!this._ready) {
-      return;
-    }
-    this._mdoHelper.setDeviceType(deviceType);
+    this._mdoHelper.setDeviceMetadata(metadata);
   }
 
   get master() {

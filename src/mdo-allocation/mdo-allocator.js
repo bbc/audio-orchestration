@@ -1,6 +1,5 @@
-import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS, DEVICE_TYPE } from './mdo-helper';
-import allocate from './allocate';
-import Rules from './rules';
+import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS } from './mdo-helper';
+import { DefaultAllocationAlgorithm } from '../allocation-algorithm';
 
 /**
  * Allocates objects to devices, and keeps track of objects in the session. Must be run on the main
@@ -10,18 +9,20 @@ import Rules from './rules';
 class MdoAllocator extends MdoHelper {
   constructor(deviceId, options = {}) {
     super(deviceId);
-    this._deviceMetadata.mainDevice = true;
+    this._deviceMetadata.deviceIsMain = true;
 
     // start the list of devices with only this device in it.
     this._devices = [
       Object.assign({}, this._deviceMetadata),
     ];
 
+    this._enabledDevices = new Set();
+
     // create an empty object to hold an objects array for each content id.
     this._objects = {};
 
-    // create a custom Rules instance based on the given zones
-    this._rules = new Rules({ zones: options.zones || null });
+    // use either a supplied allocation algorithm or instantiate the default algorithm.
+    this._allocationAlgorithm = options.allocationAlgorithm || new DefaultAllocationAlgorithm();
   }
 
   /**
@@ -63,15 +64,13 @@ class MdoAllocator extends MdoHelper {
     //   ignorePrevious ? {} : this._allocations[contentId],
     // );
 
-    this.setAllocations(
-      allocate(
-        this._objects[contentId],
-        this._devices,
-        ignorePrevious ? {} : this._allocations[contentId],
-        this._rules,
-      ),
-      contentId,
-    );
+    const { allocations } = this._allocationAlgorithm.allocate({
+      objects: this._objects[contentId],
+      devices: this._devices,
+      previousAllocations: ignorePrevious ? {} : this._allocations[contentId],
+    });
+
+    this.setAllocations(allocations, contentId);
 
     this._sendAllocations(contentId);
   }
@@ -113,12 +112,18 @@ class MdoAllocator extends MdoHelper {
    * @private
    */
   _handleRemotePresence(deviceId, status) {
-    this._handleRemoteDeviceMetadata(deviceId, { enabled: (status === DEVICE_STATUS.ONLINE) });
+    if (status === DEVICE_STATUS.ONLINE) {
+      this._enabledDevices.add(deviceId);
+    } else {
+      this._enabledDevices.delete(deviceId);
+    }
+
+    this.allocateAll();
   }
 
   /**
    * Handles a remote metadata change event, updating the internal list of devices. Called when
-   * some device has joined or left the session, or has changed its location, quality, or type.
+   * some device has joined or left the session, or has changed its metadata.
    *
    * @param {string} deviceId
    * @param {object} metadata
@@ -152,7 +157,7 @@ class MdoAllocator extends MdoHelper {
   _handleRemoteAllocations(allocations) {
     // eslint-disable-next-line no-console
     console.warn(
-      'MdoAllocator should never receive a remote allocations object. Are there too many Masters?',
+      'MdoAllocator should never receive a remote allocations object. Are there multiple Allocators in the session?',
       `${allocations.map(({ contentId }) => contentId).join(', ')}`,
     );
   }
@@ -169,10 +174,7 @@ class MdoAllocator extends MdoHelper {
       ...this._devices.filter(d => d.deviceId !== deviceId),
       {
         deviceId,
-        location: null,
-        quality: 1,
-        deviceType: DEVICE_TYPE.UNKNOWN,
-        mainDevice: false,
+        deviceIsMain: false,
       },
     ];
   }
@@ -226,19 +228,12 @@ class MdoAllocator extends MdoHelper {
   /**
    * Get a list of all enabled devices registered with this allocator, excluding the main device.
    *
-   * Device location is represented as a string as defined in rules.js.
-   *
-   * @returns {Array<Object>}
+   * @returns {Array<MdoDevice>}
    */
   getAuxiliaryDevices() {
     return this._devices
-      .filter(({ mainDevice }) => mainDevice === false)
-      .filter(({ enabled }) => enabled === true)
-      .map(d => ({
-        deviceId: d.deviceId,
-        deviceType: d.deviceType,
-        deviceLocation: d.location,
-      }));
+      .filter(({ deviceIsMain }) => deviceIsMain === false)
+      .filter(({ deviceId }) => this._enabledDevices.has(deviceId) === true);
   }
 }
 

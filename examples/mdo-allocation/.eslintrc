@@ -1,6 +1,0 @@
-{
-  "extends": "eslint-config-airbnb",
-  "rules": {
-    "react/prop-types": 0
-  }
-}

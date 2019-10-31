@@ -38,19 +38,50 @@ class MdoHelper extends EventEmitter {
   constructor(deviceId) {
     super();
     this._deviceId = deviceId;
+
+    /**
+     * @private
+     *
+     * Locally held metadata about this device.
+     */
     this._deviceMetadata = {
       deviceId,
-      location: null,
-      quality: 1,
-      enabled: true,
+      deviceIsMain: false,
+      deviceTags: [],
+      deviceLatency: 0,
+      deviceGain: 1,
       deviceType: null,
-      mainDevice: false,
     };
-    this._allocations = [];
+
+    /**
+     * @private
+     *
+     * The locally held allocations list for this device. The key is a contentId, and the value is
+     * a list of { objectId, gain } objects.
+     */
+    this._allocations = {};
+
+    /**
+     * @private
+     *
+     * The locally held schedule for when sequences should start playing relative to the master
+     * experience timeline.
+     */
     this._schedule = [];
+
+    /**
+     * @private
+     *
+     * A reference to the synchronisation client, used communicating with other devices in the
+     * session.
+     */
     this._sync = null;
   }
 
+  /**
+   * @param {MdoAllocations} allocations
+   * @param {string} [contentId]
+   */
   setAllocations(allocations, contentId = DEFAULT_CONTENT_ID) {
     this._allocations[contentId] = allocations;
     this.emit('change', {
@@ -60,9 +91,9 @@ class MdoHelper extends EventEmitter {
   }
 
   /**
-   * Get the current allocations for all objects.
+   * Get the current allocations for all devices.
    *
-   * @param {string} contentId
+   * @param {string} [contentId]
    *
    * @returns {MdoAllocations}
    */
@@ -77,12 +108,13 @@ class MdoHelper extends EventEmitter {
    *
    * @returns {Array<string>} objectIds; an empty list is returned if the contentId or deviceId
    * does not have any allocations.
+   *
+   * TODO: Gain property is ignored.
    */
   getActiveObjects(contentId = DEFAULT_CONTENT_ID) {
     const allocations = this._allocations[contentId] || {};
-    return Object.entries(allocations)
-      .filter(([, deviceIds]) => deviceIds.includes(this._deviceId))
-      .map(([objectId]) => objectId);
+    const objectsList = allocations[this._deviceId] || [];
+    return objectsList.map(({ objectId }) => objectId);
   }
 
   /**
@@ -123,48 +155,21 @@ class MdoHelper extends EventEmitter {
       }
       this._handleRemotePresence(deviceId, status);
     });
-
-    this.on('location', (location) => {
-      this._handleDeviceMetadata({ location });
-    });
-
-    this.on('quality', (quality) => {
-      this._handleDeviceMetadata({ quality });
-    });
-
-    this.on('deviceType', (deviceType) => {
-      this._handleDeviceMetadata({ deviceType });
-    });
   }
 
   /**
-   * set the deviceType for this device.
+   * Update a subset of the device metadata. The main device metadata properties are:
    *
-   * @param {string} deviceType
-   */
-  setDeviceType(deviceType) {
-    this._deviceMetadata.deviceType = deviceType;
-    this.emit('deviceType', deviceType);
-  }
-
-  /**
-   * set the location for this device.
+   * * `deviceType`
+   * * `deviceGain`
+   * * `deviceLatency`
+   * * `deviceTags`
    *
-   * @param {MdoLocation} location
+   * @param {Object} metadata
    */
-  setLocation(location = null) {
-    this._deviceMetadata.location = location;
-    this.emit('location', this._deviceMetadata.location);
-  }
-
-  /**
-   * set the quality for this device.
-   *
-   * @param {number} quality
-   */
-  setQuality(quality) {
-    this._deviceMetadata.quality = quality;
-    this.emit('quality', quality);
+  setDeviceMetadata(metadata) {
+    this._deviceMetadata = Object.assign({}, this._deviceMetadata, metadata);
+    this.emit('metadata', this._deviceMetadata);
   }
 
   /**
@@ -175,18 +180,6 @@ class MdoHelper extends EventEmitter {
   setSchedule(schedule) {
     this._schedule = schedule;
     this.emit('schedule', schedule);
-  }
-
-  /**
-   * Store changes to _this device's_ metadata.
-   *
-   * Sub-classes should extend this method and call super(metadata) to ensure that the local
-   * deviceMetadata copy is kept up to date.
-   *
-   * @param {object} metadata
-   */
-  _handleDeviceMetadata(metadata) {
-    this._deviceMetadata = Object.assign({}, this._deviceMetadata, metadata);
   }
 
   // eslint-disable-next-line class-methods-use-this
