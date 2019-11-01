@@ -50,7 +50,7 @@ pipeline {
         script {
           withBBCRDJavascriptArtifactory {
             withCredentials([string(credentialsId: authCredentialsId, variable: 'AUTH_TOKEN')]) {
-              sh "npm publish --reg {publishReg} --email={publishEmail}"
+              sh "npm publish --reg ${publishReg} --email=${publishEmail}"
             }
           }
         }
