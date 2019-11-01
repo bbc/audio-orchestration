@@ -14,6 +14,9 @@ pipeline {
   environment { 
     HOME="/var/tmp/home-for-npm"  // Override the npm cache directory to avoid: EACCES: permission denied, mkdir '/.npm'
     yarn_cache_folder="/var/tmp/yarn-cache"  // give an explicit location for the cache inside the jenkins workspace
+    publishReg = "https://artifactory.virt.ch.bbc.co.uk/artifactory/api/npm/iic-npm"
+    authCredentialsId = "5b6641fe-5581-4c8c-9cdf-71f17452c065"
+    publishEmail = "support@rd.bbc.co.uk"
   }
   stages {
     stage ("Setup") {
@@ -37,6 +40,20 @@ pipeline {
     stage ("Build") {
       steps {
         bbcNpmRunScript("build")
+      }
+    }
+    stage ("Publish") {
+      when {
+        expression { bbcShouldNpmPublish(branches: ["master"], reg: publishReg) }
+      }
+      steps {
+        script {
+          withBBCRDJavascriptArtifactory {
+            withCredentials([string(credentialsId: authCredentialsId, variable: 'AUTH_TOKEN')]) {
+              sh "npm publish --reg {publishReg} --email={publishEmail}"
+            }
+          }
+        }
       }
     }
   }
