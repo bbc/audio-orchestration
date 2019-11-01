@@ -7,7 +7,7 @@ import DeviceTagSelection from '../../Components/DeviceTagSelection';
 const AuxiliarySetupTagPage = ({
   auxiliaryTagOnClose,
   setDeviceTag,
-  deviceTag,
+  deviceTemplateTag,
 }) => (
   <div className="page page-auxiliary-setup-tag">
     <h1>
@@ -17,7 +17,7 @@ const AuxiliarySetupTagPage = ({
     <p>Select an option below.</p>
 
     <DeviceTagSelection
-      tag={deviceTag}
+      tag={deviceTemplateTag}
       onChange={tag => setDeviceTag(tag)}
     />
 
@@ -31,13 +31,13 @@ const AuxiliarySetupTagPage = ({
 );
 
 AuxiliarySetupTagPage.defaultProps = {
-  deviceTag: null,
+  deviceTemplateTag: null,
 };
 
 AuxiliarySetupTagPage.propTypes = {
   auxiliaryTagOnClose: PropTypes.func.isRequired,
   setDeviceTag: PropTypes.func.isRequired,
-  deviceTag: PropTypes.string,
+  deviceTemplateTag: PropTypes.string,
 };
 
 export default AuxiliarySetupTagPage;

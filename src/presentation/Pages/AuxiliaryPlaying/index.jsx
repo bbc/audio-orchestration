@@ -12,7 +12,7 @@ const AuxiliaryPlayingPage = (props) => {
     sessionCode,
     activeObjectIds,
     auxiliaryTagOnOpen,
-    deviceTag,
+    deviceTemplateTag,
   } = props;
 
   return (
@@ -30,7 +30,7 @@ const AuxiliaryPlayingPage = (props) => {
       <p>
         <LargeButton
           text="Change Device Settings"
-          secondaryText={deviceTag}
+          secondaryText={deviceTemplateTag}
           onClick={() => auxiliaryTagOnOpen()}
         />
       </p>

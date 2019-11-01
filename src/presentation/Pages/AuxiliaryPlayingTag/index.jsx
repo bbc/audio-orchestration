@@ -6,7 +6,7 @@ import DeviceTagSelection from '../../Components/DeviceTagSelection';
 const AuxiliaryPlayingTagPage = ({
   auxiliaryTagOnClose,
   setDeviceTag,
-  deviceTag,
+  deviceTemplateTag,
 }) => (
   <div className="page page-auxiliary-playing-tag">
     <h1>
@@ -16,7 +16,7 @@ const AuxiliaryPlayingTagPage = ({
     <p>Select an option below.</p>
 
     <DeviceTagSelection
-      tag={deviceTag}
+      tag={deviceTemplateTag}
       onChange={tag => setDeviceTag(tag)}
     />
 
@@ -29,13 +29,13 @@ const AuxiliaryPlayingTagPage = ({
 );
 
 AuxiliaryPlayingTagPage.defaultProps = {
-  deviceTag: null,
+  deviceTemplateTag: null,
 };
 
 AuxiliaryPlayingTagPage.propTypes = {
   auxiliaryTagOnClose: PropTypes.func.isRequired,
   setDeviceTag: PropTypes.func.isRequired,
-  deviceTag: PropTypes.string,
+  deviceTemplateTag: PropTypes.string,
 };
 
 export default AuxiliaryPlayingTagPage;

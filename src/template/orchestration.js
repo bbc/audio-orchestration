@@ -109,7 +109,25 @@ export const initialiseOrchestration = (dispatch) => {
   });
 
   globalOrchestrationClient.on('devices', (e) => {
-    dispatch(setConnectedDevices(e));
+    const devices = e.map((d) => {
+      const {
+        deviceId,
+        deviceType,
+        deviceTags,
+      } = d;
+
+      // TODO: Template should deal with deviceTags in original format, but for now a special
+      // templateTag is used, with a default value of null.
+      const { tagValues } = deviceTags.find(({ tagId }) => tagId === 'templateTag') || { tagValues: [null] };
+      const deviceTemplateTag = tagValues[0];
+
+      return {
+        deviceId,
+        deviceType,
+        deviceTemplateTag,
+      };
+    });
+    dispatch(setConnectedDevices(devices));
   });
 
   globalOrchestrationClient.on('objects', (e) => {
@@ -161,7 +179,9 @@ export const initialiseOrchestration = (dispatch) => {
   });
 
   globalOrchestrationClient.on('loaded', () => {
-    globalOrchestrationClient.setDeviceType(browser.getPlatform().type);
+    globalOrchestrationClient.setDeviceMetadata({
+      deviceType: browser.getPlatform().type,
+    });
   });
 
   return globalOrchestrationClient.deviceId;
@@ -209,8 +229,15 @@ function* unmute() {
 }
 
 function* setDeviceTag({ tag }) {
-  yield call(() => globalOrchestrationClient.setDeviceLocation(tag));
-  // TODO orchestration client API still uses 'location'.
+  // TODO: The template, for now, assumes that only a single tag is used.
+  yield call(() => globalOrchestrationClient.setDeviceMetadata({
+    deviceTags: [
+      {
+        tagId: 'templateTag',
+        tagValues: [tag],
+      },
+    ],
+  }));
 }
 
 export const orchestrationWatcherSaga = function* () {
