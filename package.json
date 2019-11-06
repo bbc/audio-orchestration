@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
@@ -8,24 +8,20 @@
   "license": "UNLICENSED",
   "private": false,
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "ajv": "^6.10.2",
+    "babel-loader": "^8.0.6",
     "esdoc": "^1.1.0",
     "esdoc-standard-plugin": "^1.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jest": "^22.17.0",
+    "jest": "^24.9.0",
     "webpack": "^4.12.0",
     "webpack-cli": "^3.0.6",
     "webpack-node-externals": "^1.7.2"
-  },
-  "scripts": {
-    "dev": "webpack",
-    "build": "webpack --mode=production",
-    "doc": "esdoc",
-    "test": "echo tests not yet defined",
-    "lint": "eslint src"
   },
   "dependencies": {
     "@bbc/bbcat-orchestration-bbcat": "^0.1.0",
@@ -34,5 +30,17 @@
     "dvbcss-protocols": "^0.0.2",
     "events": "^3.0.0",
     "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "dev": "webpack",
+    "build": "webpack --mode=production",
+    "doc": "esdoc",
+    "test": "jest",
+    "lint": "eslint src test"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
   }
 }

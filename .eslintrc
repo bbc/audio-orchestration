@@ -1,5 +1,8 @@
 {
-  "extends": "eslint-config-airbnb-base",
+  "extends": [
+    "eslint-config-airbnb-base",
+    "plugin:jest/recommended"
+  ],
   "rules": {
     "import/extensions": 0,
     "import/no-extraneous-dependencies": 0,
@@ -8,6 +11,8 @@
     "no-underscore-dangle": 0
   },
   "env": {
-    "browser": true
-  }
+    "browser": true,
+    "jest/globals": true
+  },
+  "plugins": ["jest"]
 }

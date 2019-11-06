@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bbc.github.io/bbcat-orchestration/schemas/allocation.json",
+  "title": "Allocations",
+  "definitions": {
+    "allocation": {
+      "type": "array",
+      "description": "A list of objects to be rendered on a device, with optional rendering parameters",
+      "items": {
+        "$ref": "#/definitions/objectInDevice"
+      }
+    },
+    "objectInDevice": {
+      "type": "object",
+      "required": [
+        "objectId"
+      ],
+      "properties": {
+        "objectId": {
+          "description": "unique identifier for the object matching the object metadata list",
+          "type": "string"
+        },
+        "gain": {
+          "description": "gain multiplier for the object, to be applied on this device only",
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    }
+  },
+  "$ref": "#/definitions/allocation"
+}
