@@ -629,7 +629,7 @@ class OrchestrationClient extends EventEmitter {
 
   /**
    * Sets some device metadata. Overwrites existing values with the same key. Commonly used
-   * metadata keys are deviceTags and deviceType.
+   * metadata keys are deviceControls, deviceType, deviceGain, deviceLatency.
    *
    * @param {Object} metadata
    */

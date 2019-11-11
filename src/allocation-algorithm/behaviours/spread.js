@@ -1,4 +1,4 @@
-const spread = ({ behaviourOptions, object, allocations }) => ({
+const spread = ({ behaviourParameters, object, allocations }) => ({
   flags: ['spread'],
   postAllocationBehaviour: () => {
     // this is called for each device this object is assigned to once all objects are done.
@@ -13,7 +13,7 @@ const spread = ({ behaviourOptions, object, allocations }) => ({
     });
 
     // get the setting and calculate the desired new gain
-    const { perDeviceGainAdjust = 1.0 } = behaviourOptions;
+    const { perDeviceGainAdjust = 1.0 } = behaviourParameters;
     return {
       gain: perDeviceGainAdjust ** (numDevices - 1),
     };

@@ -2,7 +2,7 @@ import MdoHelper, { TOPICS } from './mdo-helper';
 
 /**
  * Maintains the local state necessary for an auxiliary device. Sends updates on this device's
- * tags, quality, etc; but mainly receives allocations from the main device.
+ * controls, quality, etc; but mainly receives allocations from the main device.
  */
 class MdoReceiver extends MdoHelper {
   /**

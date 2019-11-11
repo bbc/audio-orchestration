@@ -11,7 +11,7 @@
         "deviceIsMain",
         "deviceJoiningNumber",
         "deviceCurrentNumber",
-        "deviceTags"
+        "deviceControls"
       ],
       "additionalProperties": false,
       "properties": {
@@ -23,17 +23,17 @@
           "description": "True if this device is the main device (the device that manages playback and allocations)",
           "type": "boolean"
         },
-        "deviceCategory": {
-          "description": "Device category as detected by the application",
+        "deviceType": {
+          "description": "Device type as detected by the application",
           "type": "string",
           "enum": ["mobile", "tablet", "desktop", "unknown"]
         },
         "deviceJoiningNumber": {
-          "description": "Original position in the joining order",
+          "description": "Original position in the joining order, 1-based",
           "type": "integer"
         },
         "deviceCurrentNumber": {
-          "description": "Current position in the joining order",
+          "description": "Current position in the joining order, 1-based",
           "type": "integer"
         },
         "deviceLatency": {
@@ -45,23 +45,23 @@
           "type": "number",
           "minimum": 0
         },
-        "deviceTags": {
-          "description": "List of tag groups and the user selections applied to the device",
+        "deviceControls": {
+          "description": "List of controls and their user-selected values reported by the device",
           "type": "array",
           "items": {
-            "description": "The selection for a specific tag group",
+            "description": "The selection for a specific control",
             "type": "object",
             "required": [
-              "tagId",
-              "tagValues"
+              "controlId",
+              "controlValues"
             ],
             "properties": {
-              "tagId": {
-                "description": "The unique identifier for this tag group",
+              "controlId": {
+                "description": "The unique identifier for this control",
                 "type": "string"
               },
-              "tagValues": {
-                "description": "The selections made for this tag group; this may be a default value if no selection was made",
+              "controlValues": {
+                "description": "The current user-selected values for this control; if no values are selected, the device should send the control's default value.",
                 "type": "array",
                 "items": {
                   "oneOf": [

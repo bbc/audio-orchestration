@@ -56,8 +56,8 @@
                 "description": "Type identifier of the behaviour, must be registered with the allocation algorithm",
                 "type": "string"
               },
-              "behaviourOptions": {
-                "descriptions": "Options for the behaviour, specific to the behaviourType, can be any JSON object",
+              "behaviourParameters": {
+                "descriptions": "Parameters for the behaviour, specific to the behaviourType, can be any JSON object",
                 "type": "object"
               }
             }

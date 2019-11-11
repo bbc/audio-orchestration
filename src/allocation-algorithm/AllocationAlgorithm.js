@@ -134,7 +134,7 @@ class AllocationAlgorithm {
       if (trace) traceUpdateObjectState('prohibit devices with exclusive objects');
 
       // Process all the allocation behaviours added to the current object.
-      objectBehaviours.forEach(({ behaviourType, behaviourOptions = {} }) => {
+      objectBehaviours.forEach(({ behaviourType, behaviourParameters = {} }) => {
         if (this.behaviours.has(behaviourType)) {
           const behaviour = this.behaviours.get(behaviourType);
 
@@ -148,7 +148,7 @@ class AllocationAlgorithm {
             flags = [],
             postAllocationBehaviour = null,
           } = behaviour({
-            behaviourOptions,
+            behaviourParameters,
             object,
             objects,
             devices,

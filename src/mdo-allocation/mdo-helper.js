@@ -47,7 +47,7 @@ class MdoHelper extends EventEmitter {
     this._deviceMetadata = {
       deviceId,
       deviceIsMain: false,
-      deviceTags: [],
+      deviceControls: [],
       deviceLatency: 0,
       deviceGain: 1,
       deviceType: null,
@@ -163,7 +163,7 @@ class MdoHelper extends EventEmitter {
    * * `deviceType`
    * * `deviceGain`
    * * `deviceLatency`
-   * * `deviceTags`
+   * * `deviceControls`
    *
    * @param {Object} metadata
    */

@@ -7,7 +7,7 @@ const generateDevices = (initialDevices = [], numAdditionalDevices = 0) => {
       deviceIsMain: (i === 0),
       deviceJoiningNumber: i + 1,
       deviceCurrentNumber: i + 1,
-      deviceTags: [],
+      deviceControls: [],
       ...(initialDevices[i] || {}),
     });
   }

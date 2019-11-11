@@ -14,25 +14,25 @@
  *
  * @property {string} deviceId - Unique identifier for this device, automatically generated
  * @property {boolean} deviceIsMain - Whether it is the main device or an aux device
- * @property {string} deviceCategory - Device category as detected by the application
+ * @property {string} deviceType - Device type, can be e.g. mobile, tablet, desktop, or unknown
  * @property {integer} deviceJoiningNumber - Original position in the joining order
  * @property {integer} deviceCurrentNumber - Current position in the joining order
  * @property {integer} deviceLatency - Emission delay, in milliseconds, if known
  * @property {number} deviceGain - Calibration gain multiplier to be applied to the output from the
  * device, if known
- * @property {MdoTags} deviceTags - List of tag groups and the user selections applied to the device
+ * @property {MdoControls} deviceControls - List of controls and their current values for the device
  */
 
 /**
- * @typedef {Array<MdoTagSelection>} MdoTags
+ * @typedef {Array<MdoControlSelection>} MdoControls
  */
 
 /**
- * @typedef {Object} MdoTagSelection
+ * @typedef {Object} MdoControlSelection
  *
- * @property {string} tagId
- * @property {Array} tagValues - array of strings or numbers representing all current selections or
- * the default value.
+ * @property {string} controlId
+ * @property {Array} controlValues - array of strings or numbers representing all current selections
+ * or the default value.
  */
 
 /**
@@ -41,7 +41,7 @@
  * @desc Represents the metadata for a behaviour instance referenced in an {@link MdoObject}.
  *
  * @property {String} behaviourType - name registered with the {@link AllocationAlgorithm}
- * @property {Object} [behaviourOptions] - options for this instance of the behaviour
+ * @property {Object} [behaviourParameters] - options for this instance of the behaviour
  */
 
 /**

@@ -17,11 +17,11 @@ operators.set('anyOf', (lhs, rhs) => rhs.includes(lhs));
 export const evaluateConditions = (deviceId, {
   devices,
   session,
-  behaviourOptions,
+  behaviourParameters,
 }) => {
-  const { conditions } = behaviourOptions;
+  const { conditions } = behaviourParameters;
   const device = devices.find((d => d.deviceId === deviceId));
-  const { deviceTags = [] } = device;
+  const { deviceControls = [] } = device;
 
   // Conditions are AND'ed - all have to be true for this function to return true.
   let result = true;
@@ -33,7 +33,8 @@ export const evaluateConditions = (deviceId, {
       value,
     } = condition;
 
-    // find the property value to compare to - property looks like 'device.tag.foo'
+    // Find the property value to compare to - property looks like 'device.foo', 'session.bar', or
+    // 'deviceControls.myControlId' and must only contain exactly one '.'
     let propertyValue;
     const [propertySource, propertyName] = property.split('.');
     if (propertySource && propertyName) {
@@ -41,8 +42,9 @@ export const evaluateConditions = (deviceId, {
         case 'device':
           propertyValue = device[propertyName];
           break;
-        case 'deviceTags':
-          propertyValue = (deviceTags.find(({ tagId }) => tagId === propertyName) || {}).tagValues;
+        case 'deviceControls':
+          propertyValue = (deviceControls.find(({ controlId }) => controlId === propertyName) || {})
+            .controlValues;
           break;
         case 'session':
           propertyValue = session[propertyName];
@@ -57,11 +59,13 @@ export const evaluateConditions = (deviceId, {
       let conditionResult;
       const operatorFn = operators.get(operator);
 
-      if (Array.isArray(value)) {
-        conditionResult = value.some(v => operatorFn(propertyValue, v));
+      if (Array.isArray(propertyValue)) {
+        conditionResult = propertyValue.some(pv => operatorFn(pv, value));
       } else {
         conditionResult = operatorFn(propertyValue, value);
       }
+
+      // console.debug(`${property} ${propertyValue} ${operator} ${value} => ${conditionResult}`);
 
       result = result && (invertCondition ? !conditionResult : conditionResult);
     } else {

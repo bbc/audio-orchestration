@@ -64,4 +64,32 @@ describe('registerAllocationValidationMatchers', () => {
       expect(allocations).not.toHaveObjectInDeviceWithGain('object-1', 'device-1', 0.5 * expectedGain);
     });
   });
+
+  describe('toHaveObjectInNumDevices', () => {
+    const allocations = {
+      'device-1': [{ objectId: 'object-1' }],
+      'device-2': [{ objectId: 'object-1' }],
+      'device-3': [{ objectId: 'object-2' }],
+    };
+
+    it('passes if the object is in 2 devices as expected', () => {
+      expect(allocations).toHaveObjectInNumDevices('object-1', 2);
+    });
+
+    it('fails if the object is fewer devices than expected', () => {
+      expect(allocations).not.toHaveObjectInNumDevices('object-1', 3);
+    });
+
+    it('fails if the object is in more devices than expected', () => {
+      expect(allocations).not.toHaveObjectInNumDevices('object-1', 1);
+    });
+
+    it('fails if the object is not in any device', () => {
+      expect(allocations).not.toHaveObjectInNumDevices('object-1', 0);
+    });
+
+    it('passes if the object is in 0 devices as expected', () => {
+      expect(allocations).toHaveObjectInNumDevices('object-3', 0);
+    });
+  });
 });

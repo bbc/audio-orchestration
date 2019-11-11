@@ -33,7 +33,9 @@ const registerAllocationValidationMatchers = () => {
         };
       }
       return {
-        message: () => `Expected object ${objectId} to be in device ${deviceId}`,
+        message: () => `Expected object ${objectId} to be in device ${deviceId}.` +
+          '\n\n' +
+          `Allocations: ${this.utils.printReceived(allocations)}`,
         pass: false,
       };
     },
@@ -57,6 +59,27 @@ const registerAllocationValidationMatchers = () => {
       }
       return {
         message: () => `Expected object ${objectId} to be in device ${deviceId} with gain ${gain}, got ${actualGain}`,
+        pass: false,
+      };
+    },
+  });
+
+  // Check if object is in a specific number of devices
+  expect.extend({
+    toHaveObjectInNumDevices(allocations, objectId, numDevices) {
+      const allocationsWithObject = Object.values(allocations)
+        .filter(allocation => allocation.some(a => a.objectId === objectId));
+      const actualNumDevices = allocationsWithObject.length;
+      const pass = actualNumDevices === numDevices;
+
+      if (pass) {
+        return {
+          message: () => `Expected object ${objectId} not to be in exactly ${numDevices} devices`,
+          pass: true,
+        };
+      }
+      return {
+        message: () => `Expected object ${objectId} to be in exactly ${numDevices} devices, but got ${actualNumDevices}`,
         pass: false,
       };
     },
