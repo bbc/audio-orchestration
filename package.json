@@ -1,12 +1,23 @@
 {
   "name": "@bbc/bbcat-orchestration",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
   "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
   "license": "UNLICENSED",
   "private": false,
+  "files": [
+    "Readme.md",
+    "dist",
+    "src",
+    "webpack.config.js",
+    "yarn.lock",
+    ".babelrc",
+    ".eslintrc",
+    ".eslintignore",
+    ".gitignore"
+  ],
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
