@@ -124,9 +124,9 @@ export const requestUnmute = muted => ({
   muted,
 });
 
-export const requestSetDeviceTag = tag => ({
-  type: 'REQUEST_SET_DEVICE_TAG',
-  tag,
+export const requestSetDeviceTemplateControlValue = deviceTemplateControlValue => ({
+  type: 'REQUEST_SET_DEVICE_TEMPLATE_CONTROL_VALUE',
+  deviceTemplateControlValue,
 });
 
 export const requestTransitionToSequence = contentId => ({

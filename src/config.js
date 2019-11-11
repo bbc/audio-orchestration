@@ -67,12 +67,10 @@ const config = {
   // Time in seconds between request and scheduled transition to next sequence.
   SEQUENCE_TRANSITION_DELAY: 1.0,
 
-  // Tags that can be associated with a device and used to determine where objects can go. Each
-  // entry must be an object with the keys:
-  //
-  // * name: name used in the orchestration metadata for all sequences
-  // * friendlyName: the user-facing name used for button labels in the tag selection screen.
-  DEVICE_TAGS: [],
+  // Control options for the default template control. One of these can be selected on each device.
+  // TODO: Replace this mechanism with a more wide-ranging definition of controls and their
+  // parameters.
+  TEMPLATE_CONTROL_OPTIONS: [],
 
   // Some text on the start page can be customised here to avoid having to rebuild the template.
   TEXT_TITLE: 'Title',

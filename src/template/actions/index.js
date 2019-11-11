@@ -8,7 +8,7 @@ export {
   requestSeek,
   requestMute,
   requestUnmute,
-  requestSetDeviceTag,
+  requestSetDeviceTemplateControlValue,
   requestSetVolume,
   requestTransitionToSequence,
 } from './orchestration';
@@ -38,10 +38,10 @@ export const mainSetupOnContinue = () => ({
   type: 'CLICK_MAIN_SETUP_CONTINUE',
 });
 
-export const auxiliaryTagOnClose = () => ({
-  type: 'REQUEST_CLOSE_AUXILIARY_TAG',
+export const controlsOnClose = () => ({
+  type: 'REQUEST_CLOSE_CONTROLS',
 });
 
-export const auxiliaryTagOnOpen = () => ({
-  type: 'REQUEST_OPEN_AUXILIARY_TAG',
+export const controlsOnOpen = () => ({
+  type: 'REQUEST_OPEN_CONTROLS',
 });

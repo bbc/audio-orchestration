@@ -19,6 +19,8 @@ const MainPlayingPage = (props) => {
     sequenceSkippable,
     sequenceHold,
     sequenceNext,
+    controlsOnOpen,
+    deviceTemplateControlValue,
   } = props;
 
   return (
@@ -45,6 +47,14 @@ const MainPlayingPage = (props) => {
         : null
       }
 
+      <p>
+        <LargeButton
+          text="Change main device controls"
+          secondaryText={deviceTemplateControlValue}
+          onClick={() => controlsOnOpen()}
+        />
+      </p>
+
       <DeviceList
         showInstructions
         devices={connectedDevices}
@@ -69,6 +79,12 @@ MainPlayingPage.propTypes = {
     contentId: PropTypes.string.isRequired,
     label: PropTypes.string.isRequired,
   })).isRequired,
+  controlsOnOpen: PropTypes.func.isRequired,
+  deviceTemplateControlValue: PropTypes.string,
+};
+
+MainPlayingPage.defaultProps = {
+  deviceTemplateControlValue: '',
 };
 
 export default MainPlayingPage;

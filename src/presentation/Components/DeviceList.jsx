@@ -41,9 +41,9 @@ class DeviceList extends React.Component {
             )
             : null
           }
-          { devices.map(({ deviceId, deviceType, deviceTemplateTag }) => (
-            <li key={deviceId} className={`device-icon ${deviceType} ${deviceTemplateTag}`}>
-              {`${deviceType} (${deviceTemplateTag})`}
+          { devices.map(({ deviceId, deviceType, deviceTemplateControlValue }) => (
+            <li key={deviceId} className={`device-icon ${deviceType} ${deviceTemplateControlValue}`}>
+              {`${deviceType} (${deviceTemplateControlValue})`}
             </li>
           ))}
           { showInstructions

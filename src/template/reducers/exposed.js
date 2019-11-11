@@ -7,7 +7,7 @@ const initialState = {
   sessionCode: null,
   sessionId: null,
   deviceId: null,
-  deviceTemplateTag: null,
+  deviceTemplateControlValue: null,
   deviceType: null,
   deviceQuality: 1,
   connectedDevices: [],
@@ -108,9 +108,9 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         muted: action.muted,
       });
-    case 'REQUEST_SET_DEVICE_TAG':
+    case 'REQUEST_SET_DEVICE_TEMPLATE_CONTROL_VALUE':
       return Object.assign({}, state, {
-        deviceTemplateTag: action.tag,
+        deviceTemplateControlValue: action.deviceTemplateControlValue,
       });
     case 'SET_TRANSPORT_CAPABILITIES':
       return Object.assign({}, state, {

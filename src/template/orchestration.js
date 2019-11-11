@@ -59,7 +59,9 @@ export const initialiseOrchestration = (dispatch) => {
     loadingTimeout: config.LOADING_TIMEOUT,
     contentId: config.SYNC_CLOCK_CONTENT_ID,
     isSafari,
-    zones: config.DEVICE_TAGS.map(({ name }) => name),
+    // TODO: used to pass zones in here - maybe controls don't need to be registered with
+    // orchestration client yet, unless we want to use the library to decide which controls
+    // go to which device.
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
@@ -113,20 +115,22 @@ export const initialiseOrchestration = (dispatch) => {
       const {
         deviceId,
         deviceType,
-        deviceTags,
+        deviceControls,
       } = d;
 
-      // TODO: Template should deal with deviceTags in original format, but for now a special
-      // templateTag is used, with a default value of null.
-      const { tagValues } = deviceTags.find(({ tagId }) => tagId === 'templateTag') || { tagValues: [null] };
-      const deviceTemplateTag = tagValues[0];
+      // TODO: For now, a single control (templateControl) is shown on all devices, until we
+      // implement a metadata format for describing multiple controls to the template.
+      const { controlValues } = deviceControls
+        .find(({ controlId }) => controlId === 'templateControl') || { controlValues: [null] };
+      const deviceTemplateControlValue = controlValues[0];
 
       return {
         deviceId,
         deviceType,
-        deviceTemplateTag,
+        deviceTemplateControlValue,
       };
     });
+
     dispatch(setConnectedDevices(devices));
   });
 
@@ -228,13 +232,13 @@ function* unmute() {
   yield call(() => globalOrchestrationClient.mute(false));
 }
 
-function* setDeviceTag({ tag }) {
-  // TODO: The template, for now, assumes that only a single tag is used.
+function* setDeviceTemplateControlValue({ deviceTemplateControlValue }) {
+  // TODO: The template, for now, assumes that only a single control is used.
   yield call(() => globalOrchestrationClient.setDeviceMetadata({
-    deviceTags: [
+    deviceControls: [
       {
-        tagId: 'templateTag',
-        tagValues: [tag],
+        controlId: 'templateControl',
+        controlValues: [deviceTemplateControlValue],
       },
     ],
   }));
@@ -248,7 +252,7 @@ export const orchestrationWatcherSaga = function* () {
   // yield takeEvery('REQUEST_SET_VOLUME', ...);
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
   yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);
-  yield takeEvery('REQUEST_SET_DEVICE_TAG', setDeviceTag);
+  yield takeEvery('REQUEST_SET_DEVICE_TEMPLATE_CONTROL_VALUE', setDeviceTemplateControlValue);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
 
   yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* (action) {

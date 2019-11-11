@@ -2,7 +2,7 @@ import {
   startSession,
   joinSession,
   joinDirect,
-  requestSetDeviceTag,
+  requestSetDeviceTemplateControlValue,
   requestPlay,
   requestPause,
   requestMute,
@@ -12,8 +12,8 @@ import {
   connectFormOnCancel,
   connectFormOnSubmit,
   mainSetupOnContinue,
-  auxiliaryTagOnClose,
-  auxiliaryTagOnOpen,
+  controlsOnClose,
+  controlsOnOpen,
 } from './actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
@@ -37,8 +37,8 @@ function mapDispatchToProps(dispatch) {
     joinDirect: (sessionCode) => {
       dispatch(joinDirect(sessionCode));
     },
-    setDeviceTag: (tag) => {
-      dispatch(requestSetDeviceTag(tag));
+    setDeviceTemplateControlValue: (deviceTemplateControlValue) => {
+      dispatch(requestSetDeviceTemplateControlValue(deviceTemplateControlValue));
     },
     play: () => {
       dispatch(requestPlay());
@@ -68,11 +68,11 @@ function mapDispatchToProps(dispatch) {
     mainSetupOnContinue: () => {
       dispatch(mainSetupOnContinue());
     },
-    auxiliaryTagOnClose: () => {
-      dispatch(auxiliaryTagOnClose());
+    controlsOnClose: () => {
+      dispatch(controlsOnClose());
     },
-    auxiliaryTagOnOpen: () => {
-      dispatch(auxiliaryTagOnOpen());
+    controlsOnOpen: () => {
+      dispatch(controlsOnOpen());
     },
   };
 }
