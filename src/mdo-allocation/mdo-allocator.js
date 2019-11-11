@@ -16,13 +16,19 @@ class MdoAllocator extends MdoHelper {
       Object.assign({}, this._deviceMetadata),
     ];
 
-    this._enabledDevices = new Set();
+    this._enabledDevices = new Set([deviceId]);
 
     // create an empty object to hold an objects array for each content id.
     this._objects = {};
 
     // use either a supplied allocation algorithm or instantiate the default algorithm.
     this._allocationAlgorithm = options.allocationAlgorithm || new DefaultAllocationAlgorithm();
+
+    // after this device's metadata is changed the parent class emits a metadata event, that is
+    // used here to propagate the metadata to the devices list as well.
+    this.on('metadata', () => {
+      this._handleRemoteDeviceMetadata(this._deviceId, this._deviceMetadata);
+    });
   }
 
   /**
@@ -233,6 +239,16 @@ class MdoAllocator extends MdoHelper {
   getAuxiliaryDevices() {
     return this._devices
       .filter(({ deviceIsMain }) => deviceIsMain === false)
+      .filter(({ deviceId }) => this._enabledDevices.has(deviceId) === true);
+  }
+
+  /**
+   * Get a list of all enabled devices registered with this allocator
+   *
+   * @returns {Array<MdoDevice>}
+   */
+  getDevices() {
+    return this._devices
       .filter(({ deviceId }) => this._enabledDevices.has(deviceId) === true);
   }
 }

@@ -401,7 +401,7 @@ class OrchestrationClient extends EventEmitter {
         );
 
         this._mdoHelper.on('change', () => {
-          this.emit('devices', this._mdoHelper.getAuxiliaryDevices());
+          this.emit('devices', this._mdoHelper.getDevices());
         });
       } else {
         this._mdoHelper = new MdoReceiver(this._deviceId);
