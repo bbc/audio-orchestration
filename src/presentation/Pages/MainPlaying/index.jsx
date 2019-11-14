@@ -20,7 +20,6 @@ const MainPlayingPage = (props) => {
     sequenceHold,
     sequenceNext,
     controlsOnOpen,
-    deviceTemplateControlValue,
   } = props;
 
   return (
@@ -50,7 +49,6 @@ const MainPlayingPage = (props) => {
       <p>
         <LargeButton
           text="Change main device controls"
-          secondaryText={deviceTemplateControlValue}
           onClick={() => controlsOnOpen()}
         />
       </p>
@@ -80,11 +78,6 @@ MainPlayingPage.propTypes = {
     label: PropTypes.string.isRequired,
   })).isRequired,
   controlsOnOpen: PropTypes.func.isRequired,
-  deviceTemplateControlValue: PropTypes.string,
-};
-
-MainPlayingPage.defaultProps = {
-  deviceTemplateControlValue: '',
 };
 
 export default MainPlayingPage;

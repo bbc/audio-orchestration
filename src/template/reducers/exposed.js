@@ -7,9 +7,9 @@ const initialState = {
   sessionCode: null,
   sessionId: null,
   deviceId: null,
-  deviceTemplateControlValue: null,
   deviceType: null,
   deviceQuality: 1,
+  controlValues: {},
   connectedDevices: [],
   activeObjectIds: [],
   primaryObjectImage: null,
@@ -108,9 +108,11 @@ const exposed = (state = initialState, action) => {
       return Object.assign({}, state, {
         muted: action.muted,
       });
-    case 'REQUEST_SET_DEVICE_TEMPLATE_CONTROL_VALUE':
+    case 'REQUEST_SET_CONTROL_VALUES':
+      // merge the current state and the controlValues included in the action so we can update one
+      // control at a time.
       return Object.assign({}, state, {
-        deviceTemplateControlValue: action.deviceTemplateControlValue,
+        controlValues: Object.assign({}, state.controlValues, action.controlValues),
       });
     case 'SET_TRANSPORT_CAPABILITIES':
       return Object.assign({}, state, {

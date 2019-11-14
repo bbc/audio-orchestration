@@ -8,7 +8,7 @@ export {
   requestSeek,
   requestMute,
   requestUnmute,
-  requestSetDeviceTemplateControlValue,
+  requestSetControlValues,
   requestSetVolume,
   requestTransitionToSequence,
 } from './orchestration';

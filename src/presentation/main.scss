@@ -174,3 +174,9 @@ button {
     content: '\2026';
   }
 }
+
+.control {
+  border: 1px solid #ccc;
+  padding: $gel-spacing-unit;
+  margin: $gel-spacing-unit 0;
+}

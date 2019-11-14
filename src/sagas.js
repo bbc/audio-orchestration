@@ -9,6 +9,7 @@ import {
 
 import { orchestrationWatcherSaga, connectOrchestration } from './template/orchestration';
 import { createSession, validateSession } from './session';
+import config from './config';
 
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
@@ -23,6 +24,18 @@ export const PAGE_AUXILIARY_DISCONNECTED = 'auxiliary-disconnected';
 
 export const ROLE_MAIN = 'main';
 export const ROLE_AUXILIARY = 'auxiliary';
+
+
+function getInitialControlValues() {
+  // set control default values from config, must be after orchestrationWatcherSaga is running
+  // because it also listens for these actions
+  const initialControlValues = {};
+  config.CONTROLS.forEach(({ controlId, controlDefaultValues = [] }) => {
+    initialControlValues[controlId] = [...controlDefaultValues];
+  });
+
+  return initialControlValues;
+}
 
 function* validateSessionCode(action) {
   try {
@@ -92,6 +105,11 @@ function* mainFlow() {
     return;
   }
 
+  // Now we are connected we can set the initial control values (because they need to be sent to
+  // the main device).
+  yield put({ type: 'REQUEST_SET_CONTROL_VALUES', controlValues: getInitialControlValues() });
+
+  // Open the playing page, and move between the controls and playing pages on further actions.
   yield put({ type: 'SET_PAGE', page: PAGE_MAIN_PLAYING });
 
   while (true) {
@@ -131,6 +149,11 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
     return;
   }
 
+  // Now we are connected we can set the initial control values (because they need to be sent to
+  // the main device).
+  yield put({ type: 'REQUEST_SET_CONTROL_VALUES', controlValues: getInitialControlValues() });
+
+  // Open the controls page and move between the controls and playing pages on further actions.
   yield put({ type: 'SET_PAGE', page: PAGE_CONTROLS });
 
   while (true) {

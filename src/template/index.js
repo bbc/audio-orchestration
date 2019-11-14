@@ -2,7 +2,7 @@ import {
   startSession,
   joinSession,
   joinDirect,
-  requestSetDeviceTemplateControlValue,
+  requestSetControlValues,
   requestPlay,
   requestPause,
   requestMute,
@@ -37,8 +37,8 @@ function mapDispatchToProps(dispatch) {
     joinDirect: (sessionCode) => {
       dispatch(joinDirect(sessionCode));
     },
-    setDeviceTemplateControlValue: (deviceTemplateControlValue) => {
-      dispatch(requestSetDeviceTemplateControlValue(deviceTemplateControlValue));
+    setControlValues: (controlValues) => {
+      dispatch(requestSetControlValues(controlValues));
     },
     play: () => {
       dispatch(requestPlay());

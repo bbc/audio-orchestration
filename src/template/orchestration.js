@@ -29,6 +29,11 @@ let globalAudioContext = null;
 // deviceId, and audioContext reference in connectOrchestration.
 let globalOrchestrationClient = null;
 
+// A global object (controlId => controlValues[]) of current values for all controls on this device.
+// TODO: This replicates state, listening to the same Redux actions to keep up to date, and that is
+// a bit ugly.
+const globalDeviceControlValues = {};
+
 /**
  * Ensure an audio context exists.
  */
@@ -115,19 +120,11 @@ export const initialiseOrchestration = (dispatch) => {
       const {
         deviceId,
         deviceType,
-        deviceControls,
       } = d;
-
-      // TODO: For now, a single control (templateControl) is shown on all devices, until we
-      // implement a metadata format for describing multiple controls to the template.
-      const { controlValues } = deviceControls
-        .find(({ controlId }) => controlId === 'templateControl') || { controlValues: [null] };
-      const deviceTemplateControlValue = controlValues[0];
 
       return {
         deviceId,
         deviceType,
-        deviceTemplateControlValue,
       };
     });
 
@@ -232,15 +229,19 @@ function* unmute() {
   yield call(() => globalOrchestrationClient.mute(false));
 }
 
-function* setDeviceTemplateControlValue({ deviceTemplateControlValue }) {
-  // TODO: The template, for now, assumes that only a single control is used.
+function* setDeviceControls({ controlValues }) {
+  // Keep the globalDeviceControlValues in sync by replacing any values stored for controls that are
+  // included in this update.
+  Object.entries(controlValues).forEach(([k, v]) => {
+    globalDeviceControlValues[k] = v;
+  });
+
+  // Set the deviceControls in the device metadata, which is a complete list of all controls
   yield call(() => globalOrchestrationClient.setDeviceMetadata({
-    deviceControls: [
-      {
-        controlId: 'templateControl',
-        controlValues: [deviceTemplateControlValue],
-      },
-    ],
+    deviceControls: Object.entries(globalDeviceControlValues).map(([k, v]) => ({
+      controlId: k,
+      controlValues: v,
+    })),
   }));
 }
 
@@ -252,7 +253,7 @@ export const orchestrationWatcherSaga = function* () {
   // yield takeEvery('REQUEST_SET_VOLUME', ...);
   yield takeEvery('REQUEST_MUTE_LOCAL', mute);
   yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);
-  yield takeEvery('REQUEST_SET_DEVICE_TEMPLATE_CONTROL_VALUE', setDeviceTemplateControlValue);
+  yield takeEvery('REQUEST_SET_CONTROL_VALUES', setDeviceControls);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
 
   yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* (action) {

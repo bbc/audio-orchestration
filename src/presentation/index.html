@@ -1,11 +1,4 @@
 <!DOCTYPE html>
-<!--
-  This file is a template. The presentational components are inserted into the #app wrapper.
-  Webpack adds css and javascript imports as required.
-
-  You should only need to edit the title, and any additional header metadata tags you might want,
-  here.
--->
 <html>
   <head>
     <meta charset="UTF-8">
@@ -54,19 +47,83 @@
             ],
           },
         ],
-        TEMPLATE_CONTROL_OPTIONS: [
-          'near front',
-          'near side',
-          'near rear',
-          'far front',
-          'far side',
-          'far rear',
-        ],
         TEXT_TITLE: 'Device Orchestration Template',
-        TEXT_INTRODUCTION: 'This template is a starting point for building a custom user interface using React.',
+        TEXT_INTRODUCTION: 'This template is a starting point for a custom user interface for your orchestrated audio experience.',
         TEXT_START_LABEL: 'Create Session',
         TEXT_JOIN_LABEL: 'Join',
         ACCENT_COLOUR: '#3cf',
+        CONTROLS: [
+          {
+            controlId: 'radio-buttons',
+            controlName: 'Radio buttons',
+            controlType: 'radio',
+            controlDefaultValues: ['none'],
+            controlParameters: {
+              options: [
+                { value: 'foo', label: 'Foo' },
+                { value: 'bar', label: 'Bar' },
+                { value: 'other', label: 'Other' },
+              ],
+            },
+          },
+          {
+            controlId: 'checkboxes',
+            controlName: 'Checkboxes',
+            controlType: 'checkbox',
+            controlDefaultValues: ['foo', 'bar'],
+            controlParameters: {
+              options: [
+                { value: 'foo', label: 'Foo' },
+                { value: 'bar', label: 'Bar' },
+                { value: 'other', label: 'Other' },
+              ],
+            },
+          },
+          {
+            controlId: 'slider',
+            controlName: 'Slider',
+            controlType: 'range',
+            controlDefaultValues: [0],
+            controlParameters: {
+              min: -1.0,
+              max: 1.0,
+              step: 0.1,
+            },
+          },
+          {
+            controlId: 'map-position',
+            controlName: 'Map position',
+            controlType: 'coordinate',
+            controlDefaultValues: [0, 0],
+            controlParameters: {
+              xMin: 0,
+              xMax: 1,
+              xStep: 0.1,
+              yMin: 0,
+              yMax: 1,
+              yStep: 0.1,
+            },
+          },
+          {
+            controlId: 'text',
+            controlName: 'Text',
+            controlType: 'text',
+            controlDefaultValues: ['hello world'],
+            controlParameters: {
+              length: 128,
+            },
+          },
+          {
+            controlId: 'counter-button',
+            controlName: 'Counter button',
+            controlType: 'counter',
+            controlDefaultValues: [0],
+            controlParameters: {
+              step: 1,
+              label: 'Shuffle',
+            },
+          },
+        ],
       };
 
       // Instantiate the React app to render into the #app div:

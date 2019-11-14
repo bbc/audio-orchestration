@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import LinkButton from './LinkButton';
 
-// TODO add toggle to show device addition instructions on + click
 import ConnectionInstructions from './ConnectionInstructions';
 
 class DeviceList extends React.Component {
@@ -41,9 +40,9 @@ class DeviceList extends React.Component {
             )
             : null
           }
-          { devices.map(({ deviceId, deviceType, deviceTemplateControlValue }) => (
-            <li key={deviceId} className={`device-icon ${deviceType} ${deviceTemplateControlValue}`}>
-              {`${deviceType} (${deviceTemplateControlValue})`}
+          { devices.map(({ deviceId, deviceType }) => (
+            <li key={deviceId} className={`device-icon ${deviceType}`}>
+              {`${deviceType}`}
             </li>
           ))}
           { showInstructions

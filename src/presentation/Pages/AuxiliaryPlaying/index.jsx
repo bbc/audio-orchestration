@@ -12,7 +12,6 @@ const AuxiliaryPlayingPage = (props) => {
     sessionCode,
     activeObjectIds,
     controlsOnOpen,
-    deviceTemplateControlValue,
   } = props;
 
   return (
@@ -30,7 +29,6 @@ const AuxiliaryPlayingPage = (props) => {
       <p>
         <LargeButton
           text="Change device controls"
-          secondaryText={deviceTemplateControlValue}
           onClick={() => controlsOnOpen()}
         />
       </p>
@@ -52,11 +50,6 @@ AuxiliaryPlayingPage.propTypes = {
   currentContentId: PropTypes.string.isRequired,
   controlsOnOpen: PropTypes.func.isRequired,
   activeObjectIds: PropTypes.arrayOf(PropTypes.string).isRequired,
-  deviceTemplateControlValue: PropTypes.string,
-};
-
-AuxiliaryPlayingPage.defaultProps = {
-  deviceTemplateControlValue: '',
 };
 
 export default AuxiliaryPlayingPage;

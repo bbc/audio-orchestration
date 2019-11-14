@@ -1,41 +1,94 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import config from '../../../config';
 import LargeButton from '../../Components/LargeButton';
-import DeviceControlSelection from '../../Components/DeviceControlSelection';
+import RadioControl from './RadioControl';
+import CheckboxControl from './CheckboxControl';
+import RangeControl from './RangeControl';
+import CoordinateControl from './CoordinateControl';
+import TextControl from './TextControl';
+import CounterControl from './CounterControl';
+
+const getControlComponent = (controlType) => {
+  switch (controlType) {
+    case 'radio':
+      return RadioControl;
+    case 'checkbox':
+      return CheckboxControl;
+    case 'range':
+      return RangeControl;
+    case 'coordinate':
+      return CoordinateControl;
+    case 'text':
+      return TextControl;
+    case 'counter':
+      return CounterControl;
+    default:
+      console.warn(`unknown controlType ${controlType}`);
+      return TextControl;
+  }
+};
 
 const ControlsPage = ({
   controlsOnClose,
-  setDeviceTemplateControlValue,
-  deviceTemplateControlValue,
-}) => (
-  <div className="page page-controls">
-    <h1>
-      Device Settings
-    </h1>
+  setControlValues = () => {},
+  controlValues = {},
+}) => {
+  const makeSetValues = controlId => values => setControlValues({ [controlId]: values });
 
-    <p>Select an option below.</p>
+  return (
+    <div className="page page-controls">
+      <h1>
+        Controls
+      </h1>
 
-    <DeviceControlSelection
-      value={deviceTemplateControlValue}
-      onChange={value => setDeviceTemplateControlValue(value)}
-    />
+      { config.CONTROLS.map(({
+        controlId,
+        controlType,
+        controlName,
+        controlParameters,
+      }) => {
+        const ControlComponent = getControlComponent(controlType);
+        const currentValues = controlValues[controlId] || [];
+        return (
+          <div key={controlId} className="control">
+            <h2>{controlName}</h2>
+            { config.DEBUG_UI ? (
+              <p>
+                {controlId}
+                {' - '}
+                <em>{controlType}</em>
+                {' - '}
+                <em>{JSON.stringify(currentValues)}</em>
+              </p>
+            ) : null }
+            <ControlComponent
+              parameters={controlParameters}
+              setValues={makeSetValues(controlId)}
+              values={currentValues}
+            />
+          </div>
+        );
+      })}
 
-    <LargeButton
-      text="Close"
-      secondaryText="Return to the player."
-      onClick={() => controlsOnClose()}
-    />
-  </div>
-);
-
-ControlsPage.defaultProps = {
-  deviceTemplateControlValue: null,
+      <p>
+        <LargeButton
+          text="Close"
+          secondaryText="Return to the player."
+          onClick={() => controlsOnClose()}
+        />
+      </p>
+    </div>
+  );
 };
 
 ControlsPage.propTypes = {
   controlsOnClose: PropTypes.func.isRequired,
-  setDeviceTemplateControlValue: PropTypes.func.isRequired,
-  deviceTemplateControlValue: PropTypes.string,
+  setControlValues: PropTypes.func.isRequired,
+  controlValues: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+  ]))).isRequired,
 };
 
 export default ControlsPage;
