@@ -20,4 +20,8 @@ const ConnectDirectPage = ({
   </div>
 );
 
+ConnectDirectPage.propTypes = {
+  joinDirect: PropTypes.func.isRequired,
+};
+
 export default ConnectDirectPage;

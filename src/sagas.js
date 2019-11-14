@@ -89,7 +89,7 @@ function* mainFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MAIN });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
-  yield takeEvery('SET_ERROR', function* () {
+  yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
   });
 
@@ -131,11 +131,11 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_ROLE', role: ROLE_AUXILIARY });
   yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
-  yield takeEvery('SET_ERROR', function* () {
+  yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
   });
 
-  yield takeEvery('SET_DISCONNECTED', function* () {
+  yield takeEvery('SET_DISCONNECTED', function* openAuxDisconnectedPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_DISCONNECTED });
   });
 

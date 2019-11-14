@@ -91,7 +91,6 @@ Player.propTypes = {
   muted: PropTypes.bool.isRequired,
   canPause: PropTypes.bool.isRequired,
   canSeek: PropTypes.bool.isRequired,
-  currentContentId: PropTypes.string.isRequired,
   contentCorrelation: PropTypes.objectOf(PropTypes.number).isRequired,
   contentSpeed: PropTypes.number.isRequired,
   contentDuration: PropTypes.number.isRequired,

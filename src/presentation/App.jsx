@@ -35,9 +35,6 @@ import config from '../config';
  * It selects the currently active page to render, and forwards all its props to the page. Each
  * page may contain further logic to show different screens depending on its props.
  *
- * The 'role' can be start, main, or auxiliary. It typically does not change after the user's initial
- * selection to create, or join a session.
- *
  * The loading, error, and help (and any other screens you may want to add) are boolean properties
  * in the state. They change as these pages should become visible, or hidden.
  *

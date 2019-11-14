@@ -245,7 +245,7 @@ function* setDeviceControls({ controlValues }) {
   }));
 }
 
-export const orchestrationWatcherSaga = function* () {
+export const orchestrationWatcherSaga = function* orchestrationWatcherSaga() {
   // Player and orchestration controls
   yield takeEvery('REQUEST_PLAY', play);
   yield takeEvery('REQUEST_PAUSE', pause);
@@ -256,7 +256,7 @@ export const orchestrationWatcherSaga = function* () {
   yield takeEvery('REQUEST_SET_CONTROL_VALUES', setDeviceControls);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
 
-  yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* (action) {
+  yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* setCompressorSettings(action) {
     yield call(() => globalOrchestrationClient.setCompressorRatio(action.ratio));
     yield call(() => globalOrchestrationClient.setCompressorThreshold(action.threshold));
   });

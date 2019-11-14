@@ -1,4 +1,4 @@
 {
-  "presets": ["env", "react"],
-  "plugins": ["regenerator-transform"]
+  "presets": ["@babel/env", "@babel/react"],
+  "plugins": ["react-hot-loader/babel"]
 }
