@@ -13,7 +13,7 @@ yarn test --coverage  # collect coverage information (creates a report in (repo-
 
 Jenkins (our continuous integration system) requires all tests to pass before allowing us to merge a pull request. We can mark tests as `skip` to only produce a warning, for example if we are using unit tests to define future features.
 
-The [Jest Documentation](https://jestjs.io/docs/en/using-matchers) is a good starting point to understand its globally defined functions and variables. 
+The [Jest Documentation](https://jestjs.io/docs/en/using-matchers) is a good starting point to understand its globally defined functions and variables.
 
 In general, we `describe` a class or feature using a number of tests, each saying that `it` should do something, and we `expect` certain conditions at the end of the test. An individual test is defined using `it` or `test`.
 
@@ -89,6 +89,9 @@ expect(allocations).toHaveObjectInAnyDevice('my-object-id');
 
 // object is in a specific device:
 expect(allocations).toHaveObjectInDevice('my-object-id', 'my-device-id');
+
+// object is only in a specific device:
+expect(allocations).toHaveObjectOnlyInDevice('my-object-id', 'my-device-id');
 
 // object is in a specific device, with a specific gain:
 expect(allocations).toHaveObjectInDeviceWithGain('my-object-id', 'my-device-id', 0.67);

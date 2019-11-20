@@ -18,11 +18,15 @@ class MdoAllocator extends MdoHelper {
 
     this._enabledDevices = new Set([deviceId]);
 
-    // create an empty object to hold an objects array for each content id.
+    // create an empty object to hold an objects array for each contentId.
     this._objects = {};
 
     // use either a supplied allocation algorithm or instantiate the default algorithm.
     this._allocationAlgorithm = options.allocationAlgorithm || new DefaultAllocationAlgorithm();
+
+    // create an empty object to hold the previous results from the allocation algorithm, indexed
+    // by contentId.
+    this._allocationResults = {};
 
     // after this device's metadata is changed the parent class emits a metadata event, that is
     // used here to propagate the metadata to the devices list as well.
@@ -70,13 +74,14 @@ class MdoAllocator extends MdoHelper {
     //   ignorePrevious ? {} : this._allocations[contentId],
     // );
 
-    const { allocations } = this._allocationAlgorithm.allocate({
+    const results = this._allocationAlgorithm.allocate({
       objects: this._objects[contentId],
       devices: this._devices,
-      previousAllocations: ignorePrevious ? {} : this._allocations[contentId],
+      previousResults: ignorePrevious ? {} : this._allocationResults[contentId],
     });
 
-    this.setAllocations(allocations, contentId);
+    this._allocationResults[contentId] = results;
+    this.setAllocations(results.allocations, contentId);
 
     this._sendAllocations(contentId);
   }

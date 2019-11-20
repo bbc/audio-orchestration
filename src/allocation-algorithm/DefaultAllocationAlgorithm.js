@@ -1,4 +1,5 @@
 import AllocationAlgorithm from './AllocationAlgorithm';
+import onChange from './behaviours/onChange';
 import spread from './behaviours/spread';
 import exclusive from './behaviours/exclusive';
 import mainDeviceOnly from './behaviours/mainDeviceOnly';
@@ -12,6 +13,9 @@ import {
 class DefaultAllocationAlgorithm extends AllocationAlgorithm {
   constructor(options) {
     super(options);
+
+    // onChange: options for managing changes between allocation algorithm runs
+    this.registerBehaviour('onChange', onChange);
 
     // Spread: can be in multiple devices.
     this.registerBehaviour('spread', spread);

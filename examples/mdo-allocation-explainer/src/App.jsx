@@ -31,8 +31,15 @@ const mockObjects = [
     objectImage: null,
     objectBehaviours: [
       { behaviourType: 'auxDevicesOnly' },
-      { behaviourType: 'spread', behaviourOptions: { perDeviceGainAdjust: 0.8 } },
+      { behaviourType: 'spread', behaviourParameters: { perDeviceGainAdjust: 0.8 } },
       { behaviourType: 'allowedEverywhere' },
+      {
+        behaviourType: 'onChange',
+        behaviourParameters: {
+          start: 'canAlwaysStart',
+          allocate: ['moveToPreferred', 'stayInPrevious', 'moveToAllowedNotPrevious', 'moveToAllowed'],
+        },
+      },
     ],
   },
   {
@@ -47,7 +54,7 @@ const mockObjects = [
       // { behaviourType: 'preferredIf' },
       {
         behaviourType: 'allowedIf',
-        behaviourOptions: {
+        behaviourParameters: {
           conditions: [
             {
               property: 'deviceTags.location',
@@ -115,6 +122,7 @@ class App extends React.Component {
     super(props);
 
     this.state = {
+      previousResults: {},
       devices: mockDevices,
       objects: mockObjects,
       steps: [],
@@ -125,15 +133,17 @@ class App extends React.Component {
   }
 
   handleReallocate({ objects, devices }) {
-    const { previousAllocations } = this.state;
-    const { allocations, steps } = allocationAlgorithm.allocate({
+    const { previousResults } = this.state;
+    const results = allocationAlgorithm.allocate({
       objects,
       devices,
-      previousAllocations,
+      previousResults,
     });
 
+    const { steps } = results;
+
     this.setState({
-      previousAllocations: allocations,
+      previousResults: results,
       steps,
       objects,
       devices,
@@ -142,7 +152,7 @@ class App extends React.Component {
 
   handleClearState() {
     this.setState({
-      previousAllocations: null,
+      previousResults: null,
       steps: [],
     });
     const { objects, devices } = this.state;

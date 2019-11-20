@@ -93,3 +93,11 @@
  * @property {string} adaptationSetId only required for "dash".
  */
 
+/**
+ * @typedef {Object} AllocationAlgorithmResults
+ * @property {MdoAllocations} allocations
+ * @property {number} runNumber
+ * @property {Array<String>} objectIdsEverAllocated
+ * @property {Object} [steps]
+ */
+

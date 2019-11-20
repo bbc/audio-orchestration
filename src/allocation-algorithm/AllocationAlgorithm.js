@@ -1,24 +1,23 @@
 import AllocationTrace from './AllocationTrace';
-
-// const setUnion = (s1, s2) => new Set([...s1, ...s2]);
-const setIntersection = (s1, s2) => new Set([...s1].filter(x => s2.has(x)));
-const setDifference = (s1, s2) => new Set([...s1].filter(x => !s2.has(x)));
+import applyOnChangeBehaviour from './applyOnChangeBehaviour';
+import { setDifference, setUnion } from './setOperations';
 
 /**
  * Represents the generic allocation algorithm. To be useful, it must be extended by registering
  * the behaviours referred to in the object metadata. See {@link DefaultAllocationAlgorithm} for
  * the implementation of the default behaviours.
  *
- * The algorithm is stateless, in that the previousAllocations are only used if passed in.
- * Therefore the same instance can be used to allocate objects for different sets of objects
- * independently.
+ * The algorithm itself is stateless; but the previous results can be passed into the
+ * {@link allocate} method. Therefore the same instance can be used to allocate objects for
+ * different sets of objects independently.
  *
  * @example
  * const a = new AllocationAlgorithm();
  * a.registerBehaviour('allowEverything', ({ devices }) => ({
  *   allowed: devices.map(d => d.deviceId),
  * });
- * const allocations = a.allocate({ objects, devices, session, previousAllocations });
+ * const results = a.allocate({ objects, devices, session, previousResults });
+ * console.log(results.allocations);
  */
 class AllocationAlgorithm {
   /**
@@ -54,20 +53,25 @@ class AllocationAlgorithm {
    * @param {Array<MdoDevice>} options.devices - list of devices, representing the current state
    * of available devices.
    * @param {MdoSession} options.session - object of global session state metadata
-   * @param {MdoAllocations} options.previousAllocations - a previously returned allocations map
+   * @param {AllocationAlgorithmResults} [options.previousResults] - the previous results object,
+   * used for any state that needs to be remembered between runs
    *
-   * @return {Object}
-   * @property {MdoAllocations} allocations - the new allocations
-   * @property {Array<Object>} steps - if options.saveSteps was set, the traced steps (see
-   * {@link AllocationTrace} for the format).
+   * @returns {AllocationAlgorithmResults}
    */
   allocate({
     objects,
     devices,
     session,
-    previousAllocations,
+    previousResults = {},
   }) {
     const trace = this.saveSteps ? new AllocationTrace({ objects, devices }) : null;
+
+    // Declare previous versions of the results, and set them to previous or default (empty) values.
+    const {
+      allocations: previousAllocations = {},
+      runNumber: previousRunNumber = 0,
+      objectIdsEverAllocated: previousObjectIdsEverAllocated = [],
+    } = previousResults;
 
     // Initialise a map of functions to call after all objects have been allocated to devices.
     const postAllocationBehaviours = new Map();
@@ -107,6 +111,19 @@ class AllocationAlgorithm {
       // Initialise an empty list of post-allocation behaviours for this object.
       postAllocationBehaviours.set(objectId, []);
 
+      // Compute flags needed for change management: whether the object has ever been allocated, and
+      // whether the object was allocated in the last run of the algorithm (because we need to know
+      // this even if its previous device is no longer available, we can't use previousDevices).
+      if (previousObjectIdsEverAllocated.includes(objectId)) {
+        objectFlags.add('onChange-objectWasEverAllocated');
+      }
+
+      if (Object.values(previousAllocations)
+        .some(deviceAllocation => deviceAllocation
+          .some(objectInDevice => objectInDevice.objectId === objectId))) {
+        objectFlags.add('onChange-objectWasInPreviousAllocation');
+      }
+
       // define a helper for tracing the object state
       const traceUpdateObjectState = trace ? (step, activeObjectBehaviour) => {
         trace.updateObjectState({
@@ -122,6 +139,19 @@ class AllocationAlgorithm {
           objectFlags,
         });
       } : null;
+
+      // Populate the previousDevices list with the devices to which this object is assigned
+      // in the previous allocation
+      // previousDevices does not include devices that dropped out
+      devices.forEach(({ deviceId }) => {
+        if (previousAllocations[deviceId]) {
+          if (previousAllocations[deviceId].some(x => x.objectId === objectId)) {
+            previousDevices.add(deviceId);
+          }
+        }
+      });
+
+      if (trace) traceUpdateObjectState('find previous devices');
 
       // Exception: regardless of the exclusive behaviour.
       // If the exclusive flag is set on a device, it is prohibited.
@@ -178,22 +208,35 @@ class AllocationAlgorithm {
         if (trace) traceUpdateObjectState(`results from ${behaviourType} behaviour`, behaviourType);
       });
 
-      // Begin selecting the actual device/s for this object
-      // Remove prohibited devices
+      // Remove prohibited devices from other lists before change management
+      // TODO: Check whether or not they need removing from previous devices
       previousDevices = setDifference(previousDevices, prohibitedDevices);
       preferredDevices = setDifference(preferredDevices, prohibitedDevices);
       allowedDevices = setDifference(allowedDevices, prohibitedDevices);
       if (trace) traceUpdateObjectState('remove prohibited devices');
 
-      // Ignore previous devices if the object should always be allowed to move on a change.
-      if (objectFlags.has('alwaysMove')) {
-        previousDevices = new Set();
+      // Act on flags set by onChange behaviour
+      if (previousRunNumber > 0 && objectFlags.has('onChange-applied')) {
+        applyOnChangeBehaviour({
+          objectFlags,
+          previousDevices,
+          preferredDevices,
+          allowedDevices,
+          prohibitedDevices,
+        });
       }
+      if (trace) traceUpdateObjectState('apply change management');
 
+      previousDevices = setDifference(previousDevices, prohibitedDevices);
+      preferredDevices = setDifference(preferredDevices, prohibitedDevices);
+      allowedDevices = setDifference(allowedDevices, prohibitedDevices);
+      if (trace) traceUpdateObjectState('remove prohibited devices again');
+
+      // Select final device or devices
       if (objectFlags.has('spread')) {
-        // Select all remaining devices (previous, preferred, allowed) for spread objects
+        // Select all remaining devices (preferred, allowed) for spread objects
         [
-          ...previousDevices, ...preferredDevices, ...allowedDevices,
+          ...preferredDevices, ...allowedDevices,
         ].forEach(deviceId => selectedDevices.add(deviceId));
 
         if (trace) traceUpdateObjectState('select spread devices');
@@ -202,14 +245,8 @@ class AllocationAlgorithm {
         // one, etc.
         const setsToChooseFrom = [];
 
-        // TODO I think the logic here is not quite consistent with proposal
-        if (objectFlags.has('moveToPreferredOnly')) {
-          setsToChooseFrom.push(setIntersection(previousDevices, preferredDevices));
-        } else {
-          setsToChooseFrom.push(previousDevices);
-          setsToChooseFrom.push(preferredDevices);
-          setsToChooseFrom.push(allowedDevices);
-        }
+        setsToChooseFrom.push(preferredDevices);
+        setsToChooseFrom.push(allowedDevices);
 
         // picking a random element from the first non-empty set.
         setsToChooseFrom.forEach((s) => {
@@ -252,9 +289,24 @@ class AllocationAlgorithm {
 
     if (trace) trace.postAllocationBehaviourResults();
 
+    // Create a new list of objectIds that were ever allocated by finding all objects allocated in
+    // this run of the algorithm and then calculating the set union with the previous list.
+    const objectIdsAllocated = [];
+    Object.values(allocations)
+      .forEach(deviceAllocations => deviceAllocations
+        .forEach(({ objectId }) => objectIdsAllocated.push(objectId)));
+    const objectIdsEverAllocated = [...setUnion(
+      new Set(previousObjectIdsEverAllocated),
+      new Set(objectIdsAllocated),
+    )];
+
+    // Return the results in the same format as the previousResults argument, this should be
+    // remembered by the caller and passed in in the next run if they want to rely on state.
     return {
       allocations,
-      steps: trace ? trace.getSteps() : null,
+      runNumber: previousRunNumber + 1,
+      objectIdsEverAllocated,
+      steps: trace ? trace.getSteps() : undefined,
     };
   }
 }

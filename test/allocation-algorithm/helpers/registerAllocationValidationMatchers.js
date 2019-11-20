@@ -28,12 +28,42 @@ const registerAllocationValidationMatchers = () => {
 
       if (pass) {
         return {
-          message: () => `Expected object ${objectId} not to be in device ${deviceId}`,
+          message: () => `Expected object ${objectId} not to be in device ${deviceId}` +
+            '\n\n' +
+            `Allocations: ${this.utils.printReceived(allocations)}`,
           pass: true,
         };
       }
       return {
         message: () => `Expected object ${objectId} to be in device ${deviceId}.` +
+          '\n\n' +
+          `Allocations: ${this.utils.printReceived(allocations)}`,
+        pass: false,
+      };
+    },
+  });
+
+  // Check if object is in specified device and only that device
+  expect.extend({
+    toHaveObjectOnlyInDevice(allocations, objectId, deviceId) {
+      const allocationsWithObject = Object.values(allocations)
+        .filter(allocation => allocation.some(a => a.objectId === objectId));
+      const actualNumDevices = allocationsWithObject.length;
+
+      const pass = allocations[deviceId]
+        && allocations[deviceId].some(objectInDevice => objectInDevice.objectId === objectId)
+        && actualNumDevices === 1;
+
+      if (pass) {
+        return {
+          message: () => `Expected object ${objectId} not to be in device ${deviceId} or not to be in multiple devices` +
+            '\n\n' +
+            `Allocations: ${this.utils.printReceived(allocations)}`,
+          pass: true,
+        };
+      }
+      return {
+        message: () => `Expected object ${objectId} to be in device ${deviceId} only.` +
           '\n\n' +
           `Allocations: ${this.utils.printReceived(allocations)}`,
         pass: false,

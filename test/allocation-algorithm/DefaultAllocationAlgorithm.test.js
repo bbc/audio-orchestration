@@ -515,9 +515,4 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInNumDevices('object-1', 1);
     });
   });
-
-  describe('E: Re-allocation', () => {
-    test.todo('1 Object tries to stay in same device, or other device with same tag, or same tag group');
-    test.todo('2 Object must move (if it can)');
-  });
 });

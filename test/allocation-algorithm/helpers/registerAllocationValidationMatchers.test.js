@@ -42,6 +42,36 @@ describe('registerAllocationValidationMatchers', () => {
     });
   });
 
+  describe('toHaveObjectOnlyInDevice', () => {
+    it('passes if object is only in a specific device', () => {
+      const allocations = {
+        'device-1': [{ objectId: 'object-1' }],
+        'device-2': [],
+      };
+
+      expect(allocations).toHaveObjectOnlyInDevice('object-1', 'device-1');
+    });
+
+    it('fails if object is not in the specific device', () => {
+      const allocations = {
+        'device-1': [],
+        'device-2': [{ objectId: 'object-1' }],
+      };
+
+      expect(allocations).not.toHaveObjectOnlyInDevice('object-1', 'device-1');
+    });
+
+    it('fails if object is in more than one device', () => {
+      const allocations = {
+        'device-1': [{ objectId: 'object-1' }],
+        'device-2': [{ objectId: 'object-1' }],
+      };
+
+      expect(allocations).not.toHaveObjectOnlyInDevice('object-1', 'device-1');
+    });
+  });
+
+
   describe('toHaveObjectInDeviceWithGain', () => {
     const expectedGain = 0.667;
     const allocations = {
