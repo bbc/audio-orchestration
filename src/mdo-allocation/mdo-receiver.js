@@ -8,8 +8,9 @@ class MdoReceiver extends MdoHelper {
   /**
    * Called when an allocations message is received, updates the locally held allocations.
    */
-  _handleRemoteAllocations({ allocations, contentId }) {
-    this.setAllocations(allocations, contentId);
+  _handleRemoteAllocations({ objectAllocations, controlAllocations, contentId }) {
+    if (objectAllocations) this.setObjectAllocations(objectAllocations, contentId);
+    if (controlAllocations) this.setControlAllocations(controlAllocations, contentId);
   }
 
   /**

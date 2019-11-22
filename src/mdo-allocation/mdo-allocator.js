@@ -21,12 +21,16 @@ class MdoAllocator extends MdoHelper {
     // create an empty object to hold an objects array for each contentId.
     this._objects = {};
 
+    // create an empty list to hold the controls
+    this._controls = [];
+
     // use either a supplied allocation algorithm or instantiate the default algorithm.
     this._allocationAlgorithm = options.allocationAlgorithm || new DefaultAllocationAlgorithm();
 
     // create an empty object to hold the previous results from the allocation algorithm, indexed
     // by contentId.
-    this._allocationResults = {};
+    this._objectAllocationResults = {};
+    this._controlAllocationResults = {};
 
     // after this device's metadata is changed the parent class emits a metadata event, that is
     // used here to propagate the metadata to the devices list as well.
@@ -48,6 +52,16 @@ class MdoAllocator extends MdoHelper {
   }
 
   /**
+   * Replace the controls. Triggers an allocation for all sequences.
+   *
+   * @param {Array<MdoControl>} controls
+   */
+  setControls(controls) {
+    this._controls = controls;
+    this.allocateAll();
+  }
+
+  /**
    * get a list of objects for the given contentId.
    */
   getObjects(contentId) {
@@ -63,6 +77,7 @@ class MdoAllocator extends MdoHelper {
    * devies as if they joined simultaneously.
    */
   allocate(contentId, ignorePrevious = false) {
+    // If the content metadata file was not registered don't do anything.
     if (!(contentId in this._objects)) {
       return;
     }
@@ -71,18 +86,43 @@ class MdoAllocator extends MdoHelper {
     //   'calling allocate()',
     //   this._objects[contentId],
     //   this._devices,
-    //   ignorePrevious ? {} : this._allocations[contentId],
+    //   ignorePrevious ? {} : this._objectAllocationResults[contentId],
     // );
 
-    const results = this._allocationAlgorithm.allocate({
+    // Allocate objects for the given contentId
+    // TODO add session metadata
+    const objectAllocationResults = this._allocationAlgorithm.allocate({
       objects: this._objects[contentId],
       devices: this._devices,
-      previousResults: ignorePrevious ? {} : this._allocationResults[contentId],
+      previousResults: ignorePrevious ? {} : this._objectAllocationResults[contentId],
     });
 
-    this._allocationResults[contentId] = results;
-    this.setAllocations(results.allocations, contentId);
+    // Save object allocation results
+    this._objectAllocationResults[contentId] = objectAllocationResults;
+    this.setObjectAllocations(objectAllocationResults.allocations, contentId);
 
+    // Allocate controls for the given contentId
+    // convert control metadata to the object metadata format expected by the allocation algorithm
+    // TODO add session metadata including contentId
+    const controlAllocationResults = this._allocationAlgorithm.allocate({
+      objects: this._controls.map(({ controlId, controlBehaviours }) => ({
+        objectId: controlId,
+        objectBehaviours: controlBehaviours,
+      })),
+      devices: this._devices,
+      previousResults: ignorePrevious ? {} : this._controlAllocationResults[contentId],
+    });
+
+    // Save control allocation results; converting the results back to use controlId instead of
+    // objectId.
+    this._controlAllocationResults[contentId] = controlAllocationResults;
+    const controlAllocations = {};
+    Object.entries(controlAllocationResults.allocations).forEach(([deviceId, controlsList]) => {
+      controlAllocations[deviceId] = controlsList.map(({ objectId }) => ({ controlId: objectId }));
+    });
+    this.setControlAllocations(controlAllocations, contentId);
+
+    // Send both types of allocation results to other devices in the session
     this._sendAllocations(contentId);
   }
 
@@ -90,19 +130,20 @@ class MdoAllocator extends MdoHelper {
    * Broadcasts allocations for all registered contentIds.
    */
   _sendAllAllocations() {
-    Object.keys(this._allocations).forEach(contentId => this._sendAllocations(contentId));
+    Object.keys(this._objects).forEach(contentId => this._sendAllocations(contentId));
   }
 
   /**
-   * Broadcasts the current object allocations for the given contentId.
+   * Broadcasts the current object and control allocations for the given contentId.
    *
    * @param {string} contentId
    */
   _sendAllocations(contentId) {
-    if (this._sync !== null && this._allocations[contentId] !== undefined) {
+    if (this._sync !== null && this._objectAllocations[contentId] !== undefined) {
       this._sync.sendMessage(TOPICS.ALLOCATIONS, {
         contentId,
-        allocations: this._allocations[contentId],
+        objectAllocations: this._objectAllocations[contentId] || {},
+        controlAllocations: this._controlAllocations[contentId] || {},
       });
     }
   }
@@ -169,7 +210,7 @@ class MdoAllocator extends MdoHelper {
     // eslint-disable-next-line no-console
     console.warn(
       'MdoAllocator should never receive a remote allocations object. Are there multiple Allocators in the session?',
-      `${allocations.map(({ contentId }) => contentId).join(', ')}`,
+      allocations,
     );
   }
 
@@ -224,6 +265,8 @@ class MdoAllocator extends MdoHelper {
 
   setSchedule(schedule) {
     super.setSchedule(schedule);
+    // TODO: resets the allocation state for all sequences, but should only do it for the one we
+    // are about to transition into.
     this.allocateAll(true);
     this._sendSchedule();
   }

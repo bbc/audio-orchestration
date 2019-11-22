@@ -56,10 +56,16 @@ class MdoHelper extends EventEmitter {
     /**
      * @private
      *
-     * The locally held allocations list for this device. The key is a contentId, and the value is
-     * a list of { objectId, gain } objects.
+     * The object allocations containing a list of objects for each device for each contentId.
      */
-    this._allocations = {};
+    this._objectAllocations = {};
+
+    /**
+     * @private
+     *
+     * The control allocations containing a list of controls for each device for each contentId.
+     */
+    this._controlAllocations = {};
 
     /**
      * @private
@@ -79,11 +85,13 @@ class MdoHelper extends EventEmitter {
   }
 
   /**
-   * @param {MdoAllocations} allocations
+   * @param {MdoAllocations} objectAllocations
    * @param {string} [contentId]
    */
-  setAllocations(allocations, contentId = DEFAULT_CONTENT_ID) {
-    this._allocations[contentId] = allocations;
+  setObjectAllocations(objectAllocations, contentId = DEFAULT_CONTENT_ID) {
+    this._objectAllocations[contentId] = objectAllocations;
+    // TODO combine with setControlAllocations and only send one change event?
+    // TODO consider storing only the allocations for this device?
     this.emit('change', {
       contentId,
       activeObjects: this.getActiveObjects(contentId),
@@ -91,14 +99,37 @@ class MdoHelper extends EventEmitter {
   }
 
   /**
-   * Get the current allocations for all devices.
+   * @param {MdoAllocations} controlAllocations
+   * @param {string} [contentId]
+   */
+  setControlAllocations(controlAllocations, contentId = DEFAULT_CONTENT_ID) {
+    this._controlAllocations[contentId] = controlAllocations;
+    this.emit('change', {
+      contentId,
+      activeControls: this.getActiveControls(contentId),
+    });
+  }
+
+  /**
+   * Get the current object allocations for all devices.
    *
    * @param {string} [contentId]
    *
    * @returns {MdoAllocations}
    */
-  getAllocations(contentId = DEFAULT_CONTENT_ID) {
-    return Object.assign({}, this._allocations[contentId]);
+  getObjectAllocations(contentId = DEFAULT_CONTENT_ID) {
+    return Object.assign({}, this._objectAllocations[contentId]);
+  }
+
+  /**
+   * Get the current control allocations for all devices.
+   *
+   * @param {string} [contentId]
+   *
+   * @returns {MdoAllocations}
+   */
+  getControlAllocations(contentId = DEFAULT_CONTENT_ID) {
+    return Object.assign({}, this._controlAllocations[contentId]);
   }
 
   /**
@@ -112,9 +143,23 @@ class MdoHelper extends EventEmitter {
    * TODO: Gain property is ignored.
    */
   getActiveObjects(contentId = DEFAULT_CONTENT_ID) {
-    const allocations = this._allocations[contentId] || {};
+    const allocations = this._objectAllocations[contentId] || {};
     const objectsList = allocations[this._deviceId] || [];
     return objectsList.map(({ objectId }) => objectId);
+  }
+
+  /**
+   * Get the active controls for this device for a given contentId.
+   *
+   * @param {string} contentId
+   *
+   * @returns {Array<string>} controlIds; an empty list is returned if the contentId or deviceId
+   * does not have any allocations.
+   */
+  getActiveControls(contentId = DEFAULT_CONTENT_ID) {
+    const allocations = this._controlAllocations[contentId] || {};
+    const controlsList = allocations[this._deviceId] || [];
+    return controlsList.map(({ controlId }) => controlId);
   }
 
   /**

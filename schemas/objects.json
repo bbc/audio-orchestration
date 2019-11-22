@@ -5,7 +5,7 @@
   "description": "A list of object metadata objects",
   "type": "array",
   "items": {
-    "$ref": "object.json#/definitions/object"
+    "$ref": "object.json"
   }
 }
 

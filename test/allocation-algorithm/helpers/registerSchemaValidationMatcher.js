@@ -1,15 +1,25 @@
 import Ajv from 'ajv';
 import objectSchema from '../../../schemas/object.json';
 import objectsSchema from '../../../schemas/objects.json';
+import controlSchema from '../../../schemas/control.json';
+import controlsSchema from '../../../schemas/controls.json';
+import behaviourSchema from '../../../schemas/behaviour.json';
+import behavioursSchema from '../../../schemas/behaviours.json';
 import deviceSchema from '../../../schemas/device.json';
 import devicesSchema from '../../../schemas/devices.json';
-import allocationsSchema from '../../../schemas/allocations.json';
 import allocationSchema from '../../../schemas/allocation.json';
+import allocationsSchema from '../../../schemas/allocations.json';
 
 const ajv = new Ajv();
 
 ajv.addSchema(objectSchema, 'object');
 ajv.addSchema(objectsSchema, 'objects');
+
+ajv.addSchema(controlSchema, 'control');
+ajv.addSchema(controlsSchema, 'controls');
+
+ajv.addSchema(behaviourSchema, 'behaviour');
+ajv.addSchema(behavioursSchema, 'behaviours');
 
 ajv.addSchema(deviceSchema, 'device');
 ajv.addSchema(devicesSchema, 'devices');

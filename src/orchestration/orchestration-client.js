@@ -77,6 +77,8 @@ class OrchestrationClient extends EventEmitter {
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
     this._isSafari = options.isSafari || false;
+    this._controls = options.controls || [];
+    this._activeControlIds = {};
     this._allocationAlgorithm = options.allocationAlgorithm || null;
   }
 
@@ -178,6 +180,18 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
+   * Emits a 'controls' event with a list of currently active controls.
+   */
+  _publishControlsEvent() {
+    const currentContentId = this._currentContentId;
+    const activeControlIds = this._activeControlIds[currentContentId];
+
+    this.emit('controls', {
+      activeControlIds,
+    });
+  }
+
+  /**
    * Parses and acts on a sequence schedule received from the [@link MdoHelper]. Schedules audio
    * playback for this local device in response.
    *
@@ -209,6 +223,7 @@ class OrchestrationClient extends EventEmitter {
     this.play();
     this._publishStatusEvent();
     this._publishObjectsEvent();
+    this._publishControlsEvent();
   }
 
   /**
@@ -407,14 +422,20 @@ class OrchestrationClient extends EventEmitter {
         this._mdoHelper = new MdoReceiver(this._deviceId);
       }
 
-      this._mdoHelper.on('change', ({ contentId, activeObjects }) => {
+      this._mdoHelper.on('change', ({ contentId, activeObjects, activeControls }) => {
         // Update all sequence renderers with new allocations
         const sequenceWrapper = this._sequences[contentId];
-        if (sequenceWrapper !== undefined) {
-          sequenceWrapper.renderer.setActiveObjectIds(activeObjects);
+        if (activeObjects) {
+          if (sequenceWrapper !== undefined) {
+            sequenceWrapper.renderer.setActiveObjectIds(activeObjects);
+          }
+          this._publishObjectsEvent();
         }
 
-        this._publishObjectsEvent();
+        if (activeControls) {
+          this._activeControlIds[contentId] = activeControls;
+          this._publishControlsEvent();
+        }
       });
 
       // resolve the promise once the schedule with the initial sequence has been received.
@@ -429,6 +450,8 @@ class OrchestrationClient extends EventEmitter {
       // Register the sequence objects and start playing the first one.
       // The master device transitionToSequence causes a schedule event on all devices.
       if (this._master) {
+        // set the controls
+        this._mdoHelper.setControls(this._controls);
         // register the objects for all sequences.
         Object.values(this._sequences).forEach((s) => {
           this._mdoHelper.registerObjects(s.sequence.objects, s.contentId);

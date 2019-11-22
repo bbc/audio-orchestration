@@ -2,69 +2,46 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bbc.github.io/bbcat-orchestration/schemas/object.json",
   "title": "Object",
-  "definitions": {
-    "object": {
-      "description": "Object properties as used by the allocation algorithm and output by the authoring tools",
-      "type": "object",
-      "required": [
-        "objectId",
-        "objectBehaviours"
-      ],
-      "properties": {
-        "objectId": {
-          "description": "Unique identifier for this object",
-          "type": "string"
-        },
-        "objectName": {
-          "description": "Human-readable name for this object",
-          "type": "string"
-        },
-        "objectLabels": {
-          "description": "Custom labels applied to the object for grouping",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "uniqueItems": true
-        },
-        "objectPan": {
-          "description": "Stereo panning position, -1 for full left, +1 for full right",
-          "type": "number",
-          "minimum": -1.0,
-          "maximum": 1.0
-        },
-        "objectGain": {
-          "description": "Gain multiplier for the object",
-          "type": "number",
-          "minimum": 0
-        },
-        "objectImage": {
-          "description": "Application-specific reference to an image to display when this object is rendered on a device",
-          "type": "string"
-        },
-        "objectBehaviours": {
-          "description": "Behaviours for this object, they can affect placement and rendering",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "behaviourType"
-            ],
-            "additionalProperties": false,
-            "properties": {
-              "behaviourType": {
-                "description": "Type identifier of the behaviour, must be registered with the allocation algorithm",
-                "type": "string"
-              },
-              "behaviourParameters": {
-                "descriptions": "Parameters for the behaviour, specific to the behaviourType, can be any JSON object",
-                "type": "object"
-              }
-            }
-          }
-        }
-      }
+  "description": "Object properties as used by the allocation algorithm and output by the authoring tools",
+  "type": "object",
+  "required": [
+    "objectId",
+    "objectBehaviours"
+  ],
+  "properties": {
+    "objectId": {
+      "description": "Unique identifier for this object",
+      "type": "string"
+    },
+    "objectName": {
+      "description": "Human-readable name for this object",
+      "type": "string"
+    },
+    "objectLabels": {
+      "description": "Custom labels applied to the object for grouping",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "objectPan": {
+      "description": "Stereo panning position, -1 for full left, +1 for full right",
+      "type": "number",
+      "minimum": -1.0,
+      "maximum": 1.0
+    },
+    "objectGain": {
+      "description": "Gain multiplier for the object",
+      "type": "number",
+      "minimum": 0
+    },
+    "objectImage": {
+      "description": "Application-specific reference to an image to display when this object is rendered on a device",
+      "type": "string"
+    },
+    "objectBehaviours": {
+      "$ref": "behaviours.json"
     }
-  },
-  "$ref": "#/definitions/object"
+  }
 }

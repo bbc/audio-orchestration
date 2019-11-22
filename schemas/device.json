@@ -2,74 +2,70 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bbc.github.io/bbcat-orchestration/schemas/device.json",
   "title": "Device",
-  "definitions": {
-    "device": {
-      "description": "Device properties as used by the allocation algorithm",
-      "type": "object",
-      "required": [
-        "deviceId",
-        "deviceIsMain",
-        "deviceJoiningNumber",
-        "deviceCurrentNumber",
-        "deviceControls"
-      ],
-      "additionalProperties": false,
-      "properties": {
-        "deviceId": {
-          "description": "Unique identifier for this device, automatically generated",
-          "type": "string"
-        },
-        "deviceIsMain": {
-          "description": "True if this device is the main device (the device that manages playback and allocations)",
-          "type": "boolean"
-        },
-        "deviceType": {
-          "description": "Device type as detected by the application",
-          "type": "string",
-          "enum": ["mobile", "tablet", "desktop", "unknown"]
-        },
-        "deviceJoiningNumber": {
-          "description": "Original position in the joining order, 1-based",
-          "type": "integer"
-        },
-        "deviceCurrentNumber": {
-          "description": "Current position in the joining order, 1-based",
-          "type": "integer"
-        },
-        "deviceLatency": {
-          "description": "Emission delay, in milliseconds, if known",
-          "type": "integer"
-        },
-        "deviceGain": {
-          "description": "Calibration gain multiplier to be applied to the output from the device, if known",
-          "type": "number",
-          "minimum": 0
-        },
-        "deviceControls": {
-          "description": "List of controls and their user-selected values reported by the device",
-          "type": "array",
-          "items": {
-            "description": "The selection for a specific control",
-            "type": "object",
-            "required": [
-              "controlId",
-              "controlValues"
-            ],
-            "properties": {
-              "controlId": {
-                "description": "The unique identifier for this control",
-                "type": "string"
-              },
-              "controlValues": {
-                "description": "The current user-selected values for this control; if no values are selected, the device should send the control's default value.",
-                "type": "array",
-                "items": {
-                  "oneOf": [
-                    { "type": "string" },
-                    { "type": "number" }
-                  ]
-                }
-              }
+  "description": "Device properties as used by the allocation algorithm",
+  "type": "object",
+  "required": [
+    "deviceId",
+    "deviceIsMain",
+    "deviceJoiningNumber",
+    "deviceCurrentNumber",
+    "deviceControls"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "deviceId": {
+      "description": "Unique identifier for this device, automatically generated",
+      "type": "string"
+    },
+    "deviceIsMain": {
+      "description": "True if this device is the main device (the device that manages playback and allocations)",
+      "type": "boolean"
+    },
+    "deviceType": {
+      "description": "Device type as detected by the application",
+      "type": "string",
+      "enum": ["mobile", "tablet", "desktop", "unknown"]
+    },
+    "deviceJoiningNumber": {
+      "description": "Original position in the joining order, 1-based",
+      "type": "integer"
+    },
+    "deviceCurrentNumber": {
+      "description": "Current position in the joining order, 1-based",
+      "type": "integer"
+    },
+    "deviceLatency": {
+      "description": "Emission delay, in milliseconds, if known",
+      "type": "integer"
+    },
+    "deviceGain": {
+      "description": "Calibration gain multiplier to be applied to the output from the device, if known",
+      "type": "number",
+      "minimum": 0
+    },
+    "deviceControls": {
+      "description": "List of controls and their user-selected values reported by the device",
+      "type": "array",
+      "items": {
+        "description": "The selection for a specific control",
+        "type": "object",
+        "required": [
+          "controlId",
+          "controlValues"
+        ],
+        "properties": {
+          "controlId": {
+            "description": "The unique identifier for this control",
+            "type": "string"
+          },
+          "controlValues": {
+            "description": "The current user-selected values for this control; if no values are selected, the device should send the control's default value.",
+            "type": "array",
+            "items": {
+              "oneOf": [
+                { "type": "string" },
+                { "type": "number" }
+              ]
             }
           }
         }

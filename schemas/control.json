@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bbc.github.io/bbcat-orchestration/schemas/control.json",
+  "title": "Control",
+  "description": "A control specifies a user interface element for requesting some kind of input; and which devices the control will be available on.",
+  "type": "object",
+  "required": [
+    "controlId",
+    "controlBehaviours"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "controlId": {
+      "description": "Unique identifier for this control",
+      "type": "string"
+    },
+    "controlBehaviours": {
+      "$ref": "behaviours.json"
+    },
+    "controlType": {
+      "description": "Type of control to be drawn",
+      "type": "string"
+    },
+    "controlName": {
+      "description": "A human-readable name for the control",
+      "type": "string"
+    },
+    "controlDefaultValues": {
+      "description": "Default values for the control",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" }
+        ]
+      }
+    },
+    "controlParameters": {
+      "description": "Parameters specific to the controlType; may affect the valid values or how the control is displayed.",
+      "type": "string"
+    }
+  }
+}

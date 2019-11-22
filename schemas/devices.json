@@ -5,6 +5,6 @@
   "description": "A list of device metadata objects",
   "type": "array",
   "items": {
-    "$ref": "device.json#/definitions/device"
+    "$ref": "device.json"
   }
 }

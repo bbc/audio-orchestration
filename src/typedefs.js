@@ -20,11 +20,8 @@
  * @property {integer} deviceLatency - Emission delay, in milliseconds, if known
  * @property {number} deviceGain - Calibration gain multiplier to be applied to the output from the
  * device, if known
- * @property {MdoControls} deviceControls - List of controls and their current values for the device
- */
-
-/**
- * @typedef {Array<MdoControlSelection>} MdoControls
+ * @property {Array<MdoControlSelection>} deviceControls - List of controls and their current
+ * values for the device
  */
 
 /**
@@ -62,6 +59,7 @@
  * @property {Array<MdoSequenceItem>} items - rendering items for the audio content of this object
  */
 
+
 /**
  * @typedef {Object} MdoSequence
  * @desc The MdoSequence is the top level object describing the entire object scene.
@@ -91,6 +89,19 @@
  * @property {string} url points to the DASH manifest or a plain audio file.
  * @property {string} safariUrl is the DASH manifest for Safari (if it needs a different encoding)
  * @property {string} adaptationSetId only required for "dash".
+ */
+
+/**
+ * @typedef {Object} MdoControl
+ * @desc A control specifies a user interface element for requesting some kind of input; and which
+ * devices the control will be available on.
+ *
+ * @property {string} controlId - Unique identifier for this control.
+ * @property {Array<MdoBehaviour>} controlBehaviours - List of behaviours for device allocation.
+ * @property {string} [controlType] - type of control to be drawn, for UI
+ * @property {string} [controlName] - human-readable name for the control, for UI
+ * @property {Object} [controlParameters] - type-specific configuration for the control, for UI
+ * @property {Array} [controlDefaultValues] - default values for the control, for UI
  */
 
 /**
