@@ -12,6 +12,7 @@ const initialState = {
   controlValues: {},
   connectedDevices: [],
   activeObjectIds: [],
+  activeControlIds: [],
   primaryObjectImage: null,
   primaryObjectId: '',
   currentContentId: null,
@@ -143,6 +144,10 @@ const exposed = (state = initialState, action) => {
     case 'SET_ACTIVE_OBJECT_IDS':
       return Object.assign({}, state, {
         activeObjectIds: action.activeObjectIds,
+      });
+    case 'SET_ACTIVE_CONTROL_IDS':
+      return Object.assign({}, state, {
+        activeControlIds: action.activeControlIds,
       });
     default:
       return state;

@@ -10,6 +10,7 @@ import {
   setErrorMessage,
   setPrimaryObject,
   setActiveObjectIds,
+  setActiveControlIds,
   setMuted,
   setTransportCapabilities,
   setConnectedDevices,
@@ -63,10 +64,8 @@ export const initialiseOrchestration = (dispatch) => {
     sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.LOADING_TIMEOUT,
     contentId: config.SYNC_CLOCK_CONTENT_ID,
+    controls: config.CONTROLS,
     isSafari,
-    // TODO: used to pass zones in here - maybe controls don't need to be registered with
-    // orchestration client yet, unless we want to use the library to decide which controls
-    // go to which device.
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
@@ -135,6 +134,11 @@ export const initialiseOrchestration = (dispatch) => {
     dispatch(setActiveObjectIds(e.activeObjectIds));
     dispatch(setPrimaryObject(e.primaryObjectId, e.primaryObjectImage));
   });
+
+  globalOrchestrationClient.on('controls', (e) => {
+    dispatch(setActiveControlIds(e.activeControlIds));
+  });
+
 
   globalOrchestrationClient.on('mute', muted => dispatch(setMuted(muted)));
 

@@ -33,6 +33,7 @@ const ControlsPage = ({
   controlsOnClose,
   setControlValues = () => {},
   controlValues = {},
+  activeControlIds,
 }) => {
   const makeSetValues = controlId => values => setControlValues({ [controlId]: values });
 
@@ -42,7 +43,7 @@ const ControlsPage = ({
         Controls
       </h1>
 
-      { config.CONTROLS.map(({
+      { config.CONTROLS.filter(({ controlId }) => activeControlIds.includes(controlId)).map(({
         controlId,
         controlType,
         controlName,
@@ -89,6 +90,7 @@ ControlsPage.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]))).isRequired,
+  activeControlIds: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 
 export default ControlsPage;

@@ -65,6 +65,10 @@
                 { value: 'other', label: 'Other' },
               ],
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
           },
           {
             controlId: 'checkboxes',
@@ -78,6 +82,10 @@
                 { value: 'other', label: 'Other' },
               ],
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
           },
           {
             controlId: 'slider',
@@ -89,6 +97,10 @@
               max: 1.0,
               step: 0.1,
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
           },
           {
             controlId: 'map-position',
@@ -103,6 +115,10 @@
               yMax: 1,
               yStep: 0.1,
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
           },
           {
             controlId: 'text',
@@ -112,6 +128,17 @@
             controlParameters: {
               length: 128,
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              {
+                behaviourType: 'allowedIf',
+                behaviourParameters: {
+                  conditions: [
+                    { property: 'device.deviceJoiningNumber', operator: 'greaterThan', value: 2 },
+                  ],
+                }
+              },
+            ],
           },
           {
             controlId: 'counter-button',
@@ -122,6 +149,11 @@
               step: 1,
               label: 'Shuffle',
             },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+              { behaviourType: 'mainDeviceOnly' },
+            ],
           },
         ],
       };

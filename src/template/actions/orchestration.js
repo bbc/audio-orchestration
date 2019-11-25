@@ -49,6 +49,11 @@ export const setActiveObjectIds = activeObjectIds => ({
   activeObjectIds,
 });
 
+export const setActiveControlIds = activeControlIds => ({
+  type: 'SET_ACTIVE_CONTROL_IDS',
+  activeControlIds,
+});
+
 export const setMuted = muted => ({
   type: 'SET_MUTED',
   muted,
