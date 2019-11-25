@@ -1,6 +1,8 @@
 import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, TOPICS } from './mdo-helper';
 import { DefaultAllocationAlgorithm } from '../allocation-algorithm';
 
+const LOG_ALLOCATION_REASON = false;
+
 /**
  * Allocates objects to devices, and keeps track of objects in the session. Must be run on the main
  * device, and will publish allocations for all devices whenever a change to any other device is
@@ -11,12 +13,18 @@ class MdoAllocator extends MdoHelper {
     super(deviceId);
     this._deviceMetadata.deviceIsMain = true;
 
-    // start the list of devices with only this device in it.
+    // create the list of devices with only this device in it.
     this._devices = [
-      Object.assign({}, this._deviceMetadata),
+      Object.assign({
+        deviceJoiningNumber: 1,
+      }, this._deviceMetadata),
     ];
 
-    this._enabledDevices = new Set([deviceId]);
+    // create the set of enabled deviceIds with this device initially enabled
+    this._enabledDeviceIds = new Set([deviceId]);
+
+    // keep track of the last joining number to use, increment it when a new device joins
+    this._lastJoiningNumber = 1;
 
     // create an empty object to hold an objects array for each contentId.
     this._objects = {};
@@ -48,6 +56,8 @@ class MdoAllocator extends MdoHelper {
    */
   registerObjects(objects, contentId = DEFAULT_CONTENT_ID) {
     this._objects[contentId] = objects;
+
+    if (LOG_ALLOCATION_REASON) console.debug('allocate() called directly from registerObjects');
     this.allocate(contentId);
   }
 
@@ -82,18 +92,17 @@ class MdoAllocator extends MdoHelper {
       return;
     }
 
-    // console.debug(
-    //   'calling allocate()',
-    //   this._objects[contentId],
-    //   this._devices,
-    //   ignorePrevious ? {} : this._objectAllocationResults[contentId],
-    // );
+    const objects = this.getObjects(contentId);
+    const devices = this.getDevices(contentId);
+    const session = {
+      currentContentId: contentId,
+      numDevices: this._enabledDeviceIds.size,
+    };
 
-    // Allocate objects for the given contentId
-    // TODO add session metadata
     const objectAllocationResults = this._allocationAlgorithm.allocate({
-      objects: this._objects[contentId],
-      devices: this._devices,
+      objects,
+      devices,
+      session,
       previousResults: ignorePrevious ? {} : this._objectAllocationResults[contentId],
     });
 
@@ -103,13 +112,13 @@ class MdoAllocator extends MdoHelper {
 
     // Allocate controls for the given contentId
     // convert control metadata to the object metadata format expected by the allocation algorithm
-    // TODO add session metadata including contentId
     const controlAllocationResults = this._allocationAlgorithm.allocate({
       objects: this._controls.map(({ controlId, controlBehaviours }) => ({
         objectId: controlId,
         objectBehaviours: controlBehaviours,
       })),
-      devices: this._devices,
+      devices,
+      session,
       previousResults: ignorePrevious ? {} : this._controlAllocationResults[contentId],
     });
 
@@ -150,9 +159,13 @@ class MdoAllocator extends MdoHelper {
 
   /**
    * Triggers the allocation process for every contentId registered with {@link registerObjects}.
+   * @param {bool} [ignorePrevious] set to true to reset the allocation state for each sequence
+   * @param {string} [reason] a reason for re-running the allocation, used for debug logs.
    */
-  allocateAll(reset = false) {
-    Object.keys(this._objects).forEach(contentId => this.allocate(contentId, reset));
+  allocateAll(ignorePrevious = false, reason = '') {
+    if (LOG_ALLOCATION_REASON) console.debug(`allocateAll(), ${ignorePrevious ? '' : 'not '}resetting state, because: ${reason}`);
+
+    Object.keys(this._objects).forEach(contentId => this.allocate(contentId, ignorePrevious));
   }
 
   /**
@@ -165,12 +178,12 @@ class MdoAllocator extends MdoHelper {
    */
   _handleRemotePresence(deviceId, status) {
     if (status === DEVICE_STATUS.ONLINE) {
-      this._enabledDevices.add(deviceId);
+      this._enabledDeviceIds.add(deviceId);
     } else {
-      this._enabledDevices.delete(deviceId);
+      this._enabledDeviceIds.delete(deviceId);
     }
 
-    this.allocateAll();
+    this.allocateAll(false, 'device presence changed');
   }
 
   /**
@@ -182,7 +195,6 @@ class MdoAllocator extends MdoHelper {
    */
   _handleRemoteDeviceMetadata(deviceId, metadata) {
     // console.debug('remote device metadata', deviceId, metadata);
-
     if (this._devices.find(d => d.deviceId === deviceId) === undefined) {
       this._addDevice(deviceId);
     }
@@ -194,7 +206,7 @@ class MdoAllocator extends MdoHelper {
       return d;
     });
 
-    this.allocateAll();
+    this.allocateAll(false, 'device metadata received');
   }
 
   /**
@@ -215,24 +227,22 @@ class MdoAllocator extends MdoHelper {
   }
 
   /**
-   * Creates a new empty device with the given deviceId.
+   * Creates a new device with the given deviceId and allocates its joining number.
    *
    * @param {string} deviceId
    *
    * @private
    */
   _addDevice(deviceId) {
+    this._lastJoiningNumber += 1;
     this._devices = [
       ...this._devices.filter(d => d.deviceId !== deviceId),
       {
         deviceId,
         deviceIsMain: false,
+        deviceJoiningNumber: this._lastJoiningNumber,
       },
     ];
-  }
-
-  _handleRemoteSchedule({ schedule }) {
-    this.setSchedule(schedule);
   }
 
   _handleRequestAllocationsAndSchedule() {
@@ -267,7 +277,7 @@ class MdoAllocator extends MdoHelper {
     super.setSchedule(schedule);
     // TODO: resets the allocation state for all sequences, but should only do it for the one we
     // are about to transition into.
-    this.allocateAll(true);
+    this.allocateAll(true, 'schedule changed');
     this._sendSchedule();
   }
 
@@ -285,19 +295,27 @@ class MdoAllocator extends MdoHelper {
    * @returns {Array<MdoDevice>}
    */
   getAuxiliaryDevices() {
-    return this._devices
-      .filter(({ deviceIsMain }) => deviceIsMain === false)
-      .filter(({ deviceId }) => this._enabledDevices.has(deviceId) === true);
+    return this.getDevices()
+      .filter(({ deviceIsMain }) => deviceIsMain === false);
   }
 
   /**
-   * Get a list of all enabled devices registered with this allocator
+   * Get a list of all enabled devices registered with this allocator, and fill in their current
+   * position in the join order.
    *
    * @returns {Array<MdoDevice>}
    */
   getDevices() {
-    return this._devices
-      .filter(({ deviceId }) => this._enabledDevices.has(deviceId) === true);
+    const devices = this._devices
+      .filter(({ deviceId }) => this._enabledDeviceIds.has(deviceId) === true);
+
+    // For each device, count the number of devices that have a lower or equal joining number to
+    // find the deviceCurrentNumber (filling the gaps left by dropped out device).
+    return devices.map(device => ({
+      ...device,
+      deviceCurrentNumber: devices.filter((d =>
+        d.deviceJoiningNumber <= device.deviceJoiningNumber)).length,
+    }));
   }
 }
 

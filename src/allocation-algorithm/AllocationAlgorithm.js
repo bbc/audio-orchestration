@@ -66,6 +66,13 @@ class AllocationAlgorithm {
   }) {
     const trace = this.saveSteps ? new AllocationTrace({ objects, devices }) : null;
 
+    // console.debug({
+    //   objects,
+    //   devices,
+    //   session,
+    //   previousResults,
+    // });
+
     // Declare previous versions of the results, and set them to previous or default (empty) values.
     const {
       allocations: previousAllocations = {},
