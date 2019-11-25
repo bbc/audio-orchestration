@@ -12,7 +12,10 @@ operators.set('greaterThan', (lhs, rhs) => lhs > rhs);
 
 operators.set('greaterThanOrEqual', (lhs, rhs) => lhs >= rhs);
 
+// expects rhs to be an array
 operators.set('anyOf', (lhs, rhs) => rhs.includes(lhs));
+
+operators.set('moduloIsZero', (lhs, rhs) => lhs % rhs === 0);
 
 export const evaluateConditions = (deviceId, {
   devices,

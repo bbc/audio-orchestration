@@ -94,29 +94,51 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInNumDevices('object-1', 1);
     });
 
-    test('3 Object plays from any device auxiliary or main', () => {
-      const devices = generateDevices([
-        { deviceId: 'device-1', deviceIsMain: true },
-        { deviceId: 'device-2' },
-        { deviceId: 'device-3' },
-      ]);
-
+    describe('3 Object plays from any device auxiliary or main', () => {
+      // The algorithm will randomly choose one of the allowed devices. We can check that:
+      // * it only goes into one device at a time;
+      // * it goes into the main device if that is available; and
+      // * it goes into an auxiliary device if that is available.
       const objects = [
         {
           objectId: 'object-1',
           objectBehaviours: [
             { behaviourType: 'allowedEverywhere' },
-            { behaviourType: 'auxDevicesOnly' },
           ],
         },
       ];
 
-      const { allocations } = wrappedAllocate({ devices, objects });
+      it('plays from only one device', () => {
+        const devices = generateDevices([
+          { deviceId: 'device-1', deviceIsMain: true },
+          { deviceId: 'device-2' },
+          { deviceId: 'device-3' },
+        ]);
 
-      // The algorithm will randomly choose one of the allowed devices, so all we can check for is
-      // that it goes into exactly one device - there is no guarantee that it will be a different
-      // random device every time.
-      expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+        const { allocations } = wrappedAllocate({ devices, objects });
+
+        expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+      });
+
+      it('plays from the main device if no other device is available', () => {
+        const devices = generateDevices([
+          { deviceId: 'device-1', deviceIsMain: true },
+        ]);
+
+        const { allocations } = wrappedAllocate({ devices, objects });
+
+        expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+      });
+
+      it('plays from an auxiliary if no other device is available', () => {
+        const devices = generateDevices([
+          { deviceId: 'device-1', deviceIsMain: false },
+        ]);
+
+        const { allocations } = wrappedAllocate({ devices, objects });
+
+        expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+      });
     });
 
     test('4 Object plays only on a mobile device', () => {
@@ -241,8 +263,77 @@ describe('DefaultAllocationAlgorithm', () => {
       });
     });
 
-    // TODO: we currently don't have a modulo operator in conditions
-    test.todo('8 Object plays on every other joined device');
+    test('8 Object plays on every other joined device', () => {
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'moduloIsZero', value: 2 },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const devices = generateDevices([
+        { deviceId: 'device-1' },
+        { deviceId: 'device-2' },
+        { deviceId: 'device-3' },
+        { deviceId: 'device-4' },
+        { deviceId: 'device-5' },
+        { deviceId: 'device-6' },
+      ]);
+
+      // preferred in a non-main device, both a main and non-main device are available
+      const { allocations } = wrappedAllocate({ devices, objects });
+
+      expect(allocations).not.toHaveObjectInDevice('object-1', 'device-1');
+      expect(allocations).toHaveObjectInDevice('object-1', 'device-2');
+      expect(allocations).not.toHaveObjectInDevice('object-1', 'device-3');
+      expect(allocations).toHaveObjectInDevice('object-1', 'device-4');
+      expect(allocations).not.toHaveObjectInDevice('object-1', 'device-5');
+      expect(allocations).toHaveObjectInDevice('object-1', 'device-6');
+    });
+
+    test('9 Object plays from a preferred device unless none are available', () => {
+      // The object is allowed in any device, but preferred in a non-main device.
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            {
+              behaviourType: 'preferredIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceIsMain', operator: 'equals', value: false },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const devices = generateDevices([
+        { deviceId: 'device-1', deviceIsMain: true },
+        { deviceId: 'device-2' },
+      ]);
+
+      // preferred in a non-main device, both a main and non-main device are available
+      const { allocations: allocations1 } = wrappedAllocate({ devices, objects });
+      expect(allocations1).not.toHaveObjectInDevice('object-1', 'device-1');
+      expect(allocations1).toHaveObjectInDevice('object-1', 'device-2');
+
+      // preferred in a non-main device, but only the main device is available
+      const { allocations: allocations2 } = wrappedAllocate({ devices: [devices[0]], objects });
+      expect(allocations2).toHaveObjectInDevice('object-1', 'device-1');
+    });
   });
 
   describe('B: Controls', () => {
@@ -379,7 +470,7 @@ describe('DefaultAllocationAlgorithm', () => {
     // TODO I think this would include all devices
     test.todo('5 Object plays only on devices with control value not including X or not including Y');
 
-    test('6 Object plays only on devices without control value X and without control value tag Y', () => {
+    test('6 Object plays only on devices without control value X and without control value Y', () => {
       const objects = [{
         objectId: 'object-1',
         objectBehaviours: [
@@ -406,8 +497,8 @@ describe('DefaultAllocationAlgorithm', () => {
 
     // TODO: there is no concept yet of a device having or not having a control (formerly known as
     // tag group)
-    test.todo('7 Object plays only on devices with a tag in group X');
-    test.todo('8 Object plays only on devices without any tag in tag group X');
+    test.todo('7 Object plays only on devices with control A.');
+    test.todo('8 Object plays only on devices without control A.');
   });
 
   describe('C: Object relations and object groups', () => {
@@ -452,7 +543,7 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInNumDevices('object-2', 2);
     });
 
-    // TODO: we don't currently have conditions/operators that can check metadata of other obejcts
+    // TODO: we don't currently have conditions/operators that check metadata of other objects
     test.todo('2 Object only plays if no other object from group X is playing');
     test.todo('3 Object plays only if fewer than 2 other objects from group X are playing');
   });

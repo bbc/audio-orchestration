@@ -29,13 +29,13 @@ class DefaultAllocationAlgorithm extends AllocationAlgorithm {
     // auxDevicesOnly
     this.registerBehaviour('auxDevicesOnly', auxDevicesOnly);
 
-    // mainOrAuxDevice: can be in any devices; does not make any changes
-    this.registerBehaviour('mainOrAuxDevice', () => ({}));
-
+    // preferredIf (conditional)
     this.registerBehaviour('preferredIf', preferredIf);
 
+    // allowedIf (conditional)
     this.registerBehaviour('allowedIf', allowedIf);
 
+    // prohibitedIf (conditional)
     this.registerBehaviour('prohibitedIf', prohibitedIf);
 
     // Allowed on every device, mainly for testing
