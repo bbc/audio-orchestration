@@ -1,14 +1,14 @@
 {
   "name": "@bbc/bbcat-orchestration-bbcat",
-  "version": "0.1.0",
-  "description": "BBC Audio Toolkit",
+  "version": "0.2.0",
+  "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
   "main": "dist/bbcat.js",
   "files": [
     "dist",
     "src"
   ],
   "scripts": {
-    "build": "npm run lint && npm run test && npm run doc && npm run webpack",
+    "build": "yarn run lint && yarn run test && yarn run doc && yarn run webpack",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
     "webpack": "webpack --optimize-minimize ",
     "debug": "webpack ",
@@ -17,11 +17,8 @@
     "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://git0.rd.bbc.co.uk/javascript-audio-libraries/bbcat-js.git"
-  },
-  "author": "",
+  "repository": "https://github.com/bbc/bbcat-orchestration-bbcat",
+  "author": "BBC",
   "license": "UNLICENSED",
   "devDependencies": {
     "babel-core": "^6.5.2",
@@ -47,12 +44,5 @@
     "path": "^0.12.7",
     "webpack": "^1.12.14"
   },
-  "dependencies": {
-    "binauralfir": "git+https://github.com/Ircam-RnD/binauralFIR.git#gh-pages",
-    "fractional-delay": "git+https://github.com/Ircam-RnD/fractional-delay.git#gh-pages",
-    "gl-matrix": "^2.3.2",
-    "kdt": "^0.1.0",
-    "quickhull3d": "^2.0.0",
-    "three": "^0.76.1"
-  }
+  "dependencies": {}
 }
