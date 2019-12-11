@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",
@@ -35,7 +35,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@bbc/bbcat-orchestration-bbcat": "^0.1.0",
+    "@bbc/bbcat-orchestration-bbcat": "^0.2.0",
     "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.0",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.2",
