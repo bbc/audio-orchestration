@@ -59,8 +59,7 @@ const Player = ({
     <div className="player">
       { primaryObjectImage && primaryObjectImage.length > 0
         ? <PlayerImage image={primaryObjectImage} />
-        : <PlayerImage image={config.DEFAULT_IMAGE} />
-      }
+        : <PlayerImage image={config.DEFAULT_IMAGE} />}
       <p className="player-controls">
         { buttons }
       </p>

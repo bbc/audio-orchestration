@@ -14,7 +14,7 @@ class DeviceList extends React.Component {
   }
 
   toggleInstructions(instructionsVisible) {
-    this.setState(state => Object.assign({}, state, { instructionsVisible }));
+    this.setState((state) => ({ ...state, instructionsVisible }));
   }
 
   render() {
@@ -38,8 +38,7 @@ class DeviceList extends React.Component {
                 { placeholderText }
               </li>
             )
-            : null
-          }
+            : null}
           { devices.map(({ deviceId, deviceType }) => (
             <li key={deviceId} className={`device-icon ${deviceType}`}>
               {`${deviceType}`}
@@ -54,8 +53,7 @@ class DeviceList extends React.Component {
                 />
               </li>
             )
-            : null
-          }
+            : null}
         </ul>
         { instructionsVisible
           ? (
@@ -64,8 +62,7 @@ class DeviceList extends React.Component {
               baseUrl={baseUrl}
             />
           )
-          : null
-        }
+          : null}
       </div>
     );
   }

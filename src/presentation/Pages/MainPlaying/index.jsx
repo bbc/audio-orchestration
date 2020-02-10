@@ -43,8 +43,7 @@ const MainPlayingPage = (props) => {
             <LargeButton text={label} onClick={() => transitionToSequence(contentId)} />
           </p>
         ))
-        : null
-      }
+        : null}
 
       <p>
         <LargeButton

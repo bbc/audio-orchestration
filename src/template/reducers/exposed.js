@@ -39,89 +39,72 @@ const initialState = {
 const exposed = (state = initialState, action) => {
   switch (action.type) {
     case 'SET_PAGE':
-      return Object.assign({}, state, {
-        page: action.page,
-      });
+      return { ...state, page: action.page };
     case 'SET_ROLE':
-      return Object.assign({}, state, {
-        role: action.role,
-      });
+      return { ...state, role: action.role };
     case 'SET_CONNECT_FORM_CAN_CANCEL':
-      return Object.assign({}, state, {
-        connectFormCanCancel: action.canCancel,
-      });
+      return { ...state, connectFormCanCancel: action.canCancel };
     case 'SESSION_CODE_VALID':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         sessionCodeIsValid: true,
         sessionCodeIsValidating: false,
-      });
+      };
     case 'SESSION_CODE_INVALID':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         sessionCodeIsValid: false,
         sessionCodeIsValidating: false,
-      });
+      };
     case 'SESSION_CODE_VALIDATING':
-      return Object.assign({}, state, {
-        sessionCodeIsValidating: true,
-      });
+      return { ...state, sessionCodeIsValidating: true };
 
     case 'SET_LOADING':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         loading: action.loading,
         loadingMessages: [],
-      });
+      };
     case 'ADD_LOADING_MESSAGE':
-      return Object.assign({}, state, {
-        loadingMessages: [...state.loadingMessages, action.loadingMessage],
-      });
+      return { ...state, loadingMessages: [...state.loadingMessages, action.loadingMessage] };
     case 'SET_CONNECTED':
-      return Object.assign({}, state, {
-        connected: true,
-      });
+      return { ...state, connected: true };
     case 'SET_DISCONNECTED':
-      return Object.assign({}, state, {
-        connected: false,
-      });
+      return { ...state, connected: false };
     case 'SET_DEVICE_ID':
-      return Object.assign({}, state, {
-        deviceId: action.deviceId,
-      });
+      return { ...state, deviceId: action.deviceId };
     case 'SET_SESSION_CODE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         sessionCode: action.sessionCode,
         sessionId: action.sessionId,
-      });
+      };
     case 'SET_ERROR':
-      return Object.assign({}, state, {
-        errorMessage: action.errorMessage,
-      });
+      return { ...state, errorMessage: action.errorMessage };
     case 'SET_ENDED':
-      return Object.assign({}, state, {
-        sequenceEnded: action.ended,
-      });
+      return { ...state, sequenceEnded: action.ended };
     case 'SET_SEQUENCE_CHOICES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         sequenceSkippable: action.skippable,
         sequenceNext: action.next,
         sequenceHold: action.hold,
-      });
+      };
     case 'SET_MUTED':
-      return Object.assign({}, state, {
-        muted: action.muted,
-      });
+      return { ...state, muted: action.muted };
     case 'REQUEST_SET_CONTROL_VALUES':
       // merge the current state and the controlValues included in the action so we can update one
       // control at a time.
-      return Object.assign({}, state, {
-        controlValues: Object.assign({}, state.controlValues, action.controlValues),
-      });
+      return { ...state, controlValues: { ...state.controlValues, ...action.controlValues } };
     case 'SET_TRANSPORT_CAPABILITIES':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         canPause: action.canPause,
         canSeek: action.canSeek,
-      });
+      };
     case 'SET_PLAYBACK_STATUS':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentContentId: action.currentContentId,
         contentDuration: action.duration,
         contentSpeed: action.speed,
@@ -131,24 +114,19 @@ const exposed = (state = initialState, action) => {
           parentTime: action.parentTime,
           childTime: action.childTime,
         },
-      });
+      };
     case 'SET_CONNECTED_DEVICES':
-      return Object.assign({}, state, {
-        connectedDevices: action.connectedDevices,
-      });
+      return { ...state, connectedDevices: action.connectedDevices };
     case 'SET_PRIMARY_OBJECT':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         primaryObjectId: action.primaryObjectId,
         primaryObjectImage: action.primaryObjectImage,
-      });
+      };
     case 'SET_ACTIVE_OBJECT_IDS':
-      return Object.assign({}, state, {
-        activeObjectIds: action.activeObjectIds,
-      });
+      return { ...state, activeObjectIds: action.activeObjectIds };
     case 'SET_ACTIVE_CONTROL_IDS':
-      return Object.assign({}, state, {
-        activeControlIds: action.activeControlIds,
-      });
+      return { ...state, activeControlIds: action.activeControlIds };
     default:
       return state;
   }

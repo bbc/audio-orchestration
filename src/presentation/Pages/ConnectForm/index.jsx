@@ -73,8 +73,7 @@ class ConnectFormPage extends React.Component {
               Invalid code entered, please try again.
             </p>
           )
-          : null
-        }
+          : null}
         <p>
           <input
             placeholder={'*'.repeat(config.SESSION_CODE_LENGTH)}
@@ -95,8 +94,7 @@ class ConnectFormPage extends React.Component {
         <p>
           { sessionCodeIsValidating
             ? <LargeButton disabled text="Checking&hellip;" />
-            : <LargeButton onClick={this.submit} disabled={!valid} text="Connect" />
-          }
+            : <LargeButton onClick={this.submit} disabled={!valid} text="Connect" />}
         </p>
         { connectFormCanCancel
           ? (
@@ -104,8 +102,7 @@ class ConnectFormPage extends React.Component {
               <LinkButton onClick={connectFormOnCancel} text="Cancel" />
             </p>
           )
-          : null
-        }
+          : null}
         <StepProgressIndicator step={1} numSteps={3} />
       </div>
     );

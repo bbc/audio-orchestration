@@ -1,11 +1,11 @@
 // ------------------------------------------------------------------------------------------------
 // actions dispatched from orchestration event handlers to expose state updates to the applications
-export const setLoading = loading => ({
+export const setLoading = (loading) => ({
   type: 'SET_LOADING',
   loading,
 });
 
-export const addLoadingMessage = loadingMessage => ({
+export const addLoadingMessage = (loadingMessage) => ({
   type: 'ADD_LOADING_MESSAGE',
   loadingMessage,
 });
@@ -18,22 +18,22 @@ export const setDisconnected = () => ({
   type: 'SET_DISCONNECTED',
 });
 
-export const setEnded = ended => ({
+export const setEnded = (ended) => ({
   type: 'SET_ENDED',
   ended,
 });
 
-export const setSessionCode = sessionCode => ({
+export const setSessionCode = (sessionCode) => ({
   type: 'SET_SESSION_CODE',
   sessionCode,
 });
 
-export const setRole = role => ({
+export const setRole = (role) => ({
   type: 'SET_ROLE',
   role,
 });
 
-export const setErrorMessage = errorMessage => ({
+export const setErrorMessage = (errorMessage) => ({
   type: 'SET_ERROR',
   errorMessage,
 });
@@ -44,17 +44,17 @@ export const setPrimaryObject = (primaryObjectId, primaryObjectImage) => ({
   primaryObjectImage,
 });
 
-export const setActiveObjectIds = activeObjectIds => ({
+export const setActiveObjectIds = (activeObjectIds) => ({
   type: 'SET_ACTIVE_OBJECT_IDS',
   activeObjectIds,
 });
 
-export const setActiveControlIds = activeControlIds => ({
+export const setActiveControlIds = (activeControlIds) => ({
   type: 'SET_ACTIVE_CONTROL_IDS',
   activeControlIds,
 });
 
-export const setMuted = muted => ({
+export const setMuted = (muted) => ({
   type: 'SET_MUTED',
   muted,
 });
@@ -65,7 +65,7 @@ export const setTransportCapabilities = ({ canPause, canSeek }) => ({
   canSeek,
 });
 
-export const setConnectedDevices = connectedDevices => ({
+export const setConnectedDevices = (connectedDevices) => ({
   type: 'SET_CONNECTED_DEVICES',
   connectedDevices,
 });
@@ -109,32 +109,32 @@ export const requestPause = () => ({
   type: 'REQUEST_PAUSE',
 });
 
-export const requestSeek = relativeOffset => ({
+export const requestSeek = (relativeOffset) => ({
   type: 'REQUEST_SEEK',
   relativeOffset,
 });
 
-export const requestSetVolume = volume => ({
+export const requestSetVolume = (volume) => ({
   type: 'REQUEST_SET_VOLUME',
   volume,
 });
 
-export const requestMute = muted => ({
+export const requestMute = (muted) => ({
   type: 'REQUEST_MUTE_LOCAL',
   muted,
 });
 
-export const requestUnmute = muted => ({
+export const requestUnmute = (muted) => ({
   type: 'REQUEST_UNMUTE_LOCAL',
   muted,
 });
 
-export const requestSetControlValues = controlValues => ({
+export const requestSetControlValues = (controlValues) => ({
   type: 'REQUEST_SET_CONTROL_VALUES',
   controlValues,
 });
 
-export const requestTransitionToSequence = contentId => ({
+export const requestTransitionToSequence = (contentId) => ({
   type: 'REQUEST_TRANSITION_TO_SEQUENCE',
   contentId,
 });

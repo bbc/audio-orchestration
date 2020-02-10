@@ -5,7 +5,7 @@ const ObjectList = ({
   objectIds,
 }) => (
   <ul className="object-list">
-    { objectIds.map(objectId => (
+    { objectIds.map((objectId) => (
       <li key={objectId}>
         {`${objectId}`}
       </li>

@@ -22,7 +22,7 @@ import { ensureAudioContext } from './orchestration';
 export { default as reducers } from './reducers';
 
 function mapStateToProps(state) {
-  return Object.assign({}, state.exposed);
+  return { ...state.exposed };
 }
 
 function mapDispatchToProps(dispatch) {

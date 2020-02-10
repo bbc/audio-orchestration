@@ -45,7 +45,7 @@ const isValidLocalSessionCode = (sessionCode) => {
   // parse digits to numbers
   let digits;
   try {
-    digits = sessionCode.split('').map(d => parseInt(d, 10));
+    digits = sessionCode.split('').map((d) => parseInt(d, 10));
   } catch (e) {
     return false;
   }
@@ -107,7 +107,7 @@ export const createSession = () => {
  */
 export const validateSession = (sessionCode) => {
   if (!config.VALIDATE_SESSION_IDS || isValidLocalSessionCode(sessionCode)) {
-    return Promise.resolve(Object.assign({ valid: true }, generateSessionId(sessionCode)));
+    return Promise.resolve({ valid: true, ...generateSessionId(sessionCode) });
   }
 
   return window.fetch(`${config.SESSION_ID_URL}/session/${sessionCode}`)

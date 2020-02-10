@@ -35,7 +35,7 @@ const ControlsPage = ({
   controlValues = {},
   activeControlIds,
 }) => {
-  const makeSetValues = controlId => values => setControlValues({ [controlId]: values });
+  const makeSetValues = (controlId) => (values) => setControlValues({ [controlId]: values });
 
   return (
     <div className="page page-controls">

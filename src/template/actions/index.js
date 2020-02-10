@@ -29,7 +29,7 @@ export const connectFormOnCancel = () => ({
   type: 'CLOSE_CONNECT_FORM',
 });
 
-export const connectFormOnSubmit = sessionCode => ({
+export const connectFormOnSubmit = (sessionCode) => ({
   type: 'REQUEST_VALIDATE_SESSION_CODE',
   sessionCode,
 });

@@ -54,12 +54,10 @@ const store = createStore(
 //   takes functions to transform the state into properties, and likewise, generate handler
 //   functions (dispatchers) that can be called from within the component to trigger state updates.
 const ConnectedApp = hot(module)(connect(
-  state => Object.assign({}, mapTemplateStateToProps(state.template), {
-    // Add any additional properties managed by your own reducers here.
-  }),
-  dispatch => Object.assign({}, mapTemplateDispatchToProps(dispatch), {
-    // Add any additional dispatchers needed for your own reducers here.
-  }),
+  // Add any additional properties managed by your own reducers here.
+  (state) => ({ ...mapTemplateStateToProps(state.template) }),
+  // Add any additional dispatchers needed for your own reducers here.
+  (dispatch) => ({ ...mapTemplateDispatchToProps(dispatch) }),
 )(App));
 
 // Instantiate the ConnectedApp component and render it to the root div tag in the index.html

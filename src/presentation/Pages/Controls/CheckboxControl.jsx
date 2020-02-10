@@ -14,10 +14,10 @@ class CheckboxControl extends React.Component {
 
     if (!checked) {
       // unchecked, remove from current values
-      setValues(values.filter(v => v !== name));
+      setValues(values.filter((v) => v !== name));
     } else {
       // checked, add to current values (but remove it first to so it's only in there once)
-      setValues([...values.filter(v => v !== name), name]);
+      setValues([...values.filter((v) => v !== name), name]);
     }
   }
 

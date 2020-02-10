@@ -10,7 +10,7 @@ const Loading = ({
       Loading&hellip;
     </h1>
     <div>
-      { loadingMessages.map(m => (
+      { loadingMessages.map((m) => (
         <p key={m} className="loading-message-log">
           {m}
         </p>

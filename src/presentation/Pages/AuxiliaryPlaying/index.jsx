@@ -37,8 +37,7 @@ const AuxiliaryPlayingPage = (props) => {
         ? (
           <ObjectList objectIds={activeObjectIds} />
         )
-        : null
-      }
+        : null}
 
     </div>
   );

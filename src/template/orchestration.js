@@ -140,7 +140,7 @@ export const initialiseOrchestration = (dispatch) => {
   });
 
 
-  globalOrchestrationClient.on('mute', muted => dispatch(setMuted(muted)));
+  globalOrchestrationClient.on('mute', (muted) => dispatch(setMuted(muted)));
 
   globalOrchestrationClient.on('connected', () => dispatch(setConnected()));
 

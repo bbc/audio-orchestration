@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const sass = require('sass');
 
@@ -60,6 +60,9 @@ module.exports = {
   resolve: {
     symlinks: false,
     extensions: ['.js', '.jsx'],
+    alias: {
+      'react-dom': '@hot-loader/react-dom',
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -75,9 +78,7 @@ module.exports = {
       // both options are optional
       filename: 'bundle.css',
     }),
-    new CleanWebpackPlugin([
-      'dist',
-    ]),
+    new CleanWebpackPlugin(),
   ],
   optimization: {
     minimizer: [
