@@ -9,18 +9,26 @@
  */
 
 // Import polyfills to patch features not natively supported in older browsers
-import '@babel/polyfill';
+// General ES2015 features (Promises, Object.assign, etc.)
+import 'core-js/stable';
+// Generator functions (used in redux-saga)
+import 'regenerator-runtime/runtime';
+// fetch (used in orchestration library to download sequence data)
 import 'whatwg-fetch';
+// pointer events (used for touch and mouse events in seek bar)
+import 'pepjs';
 
 // Import React and ReactDOM, to render React components to the page.
 import React from 'react';
 import { hot } from 'react-hot-loader';
 import { render } from 'react-dom';
-import { Provider, connect } from 'react-redux';
+import {
+  connect,
+  Provider,
+} from 'react-redux';
 import {
   createStore,
   applyMiddleware,
-  combineReducers,
   compose,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
@@ -28,11 +36,29 @@ import rootSaga from './sagas';
 import config, { updateConfig } from './config';
 import { initialiseOrchestration } from './template/orchestration';
 
-import { reducers, mapTemplateStateToProps, mapTemplateDispatchToProps } from './template';
+import reducer from './template/reducer';
 
 // The App is the top level presentational component. You may add, remove, or edit components used
 // by it to change the layout to fit your specific application.
-import App from './presentation/App';
+import App from './App';
+
+// Import the CSS
+import './main.scss';
+
+// Import CSS for all components used at the top level
+import './components/button/Button.scss';
+import './components/page-filler/PageFiller.scss';
+import './components/page-overflow/PageOverflow.scss';
+import './components/page-contents/PageContents.scss';
+import './components/status-bar/StatusBar.scss';
+import './components/player-image/PlayerImage.scss';
+import './components/player-title/PlayerTitle.scss';
+import './components/player-controls/PlayerControls.scss';
+import './components/icon/Icon.scss';
+import './components/input/Input.scss';
+import './components/choices/Choices.scss';
+import './components/controls/Controls.scss';
+import './components/object-list/ObjectList.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
@@ -41,24 +67,18 @@ import App from './presentation/App';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
-  combineReducers({
-    template: reducers,
-    // Add your own reducers here if you wish to use custom reducers.
-  }),
+  reducer,
   composeEnhancers(applyMiddleware(sagaMiddleware)),
 );
 
-// Connect the App to the redux store, and add the state and handlers managed by the template.
-// - hot() allows the module to be hot-reloaded in development mode.
-// - connect() ensures the component is refreshed when any state changes are recorded. It
-//   takes functions to transform the state into properties, and likewise, generate handler
-//   functions (dispatchers) that can be called from within the component to trigger state updates.
-const ConnectedApp = hot(module)(connect(
-  // Add any additional properties managed by your own reducers here.
-  (state) => ({ ...mapTemplateStateToProps(state.template) }),
-  // Add any additional dispatchers needed for your own reducers here.
-  (dispatch) => ({ ...mapTemplateDispatchToProps(dispatch) }),
-)(App));
+// connect() allows us to pass the page property of the state into the App component
+const mapStateToProps = (state) => ({
+  page: state.page,
+});
+const ConnectedApp = connect(mapStateToProps)(App);
+
+// hot() allows the module to be hot-reloaded in development mode
+const HotConnectedApp = hot(module)(ConnectedApp);
 
 // Instantiate the ConnectedApp component and render it to the root div tag in the index.html
 // template so it appears on the page. Wrap it in the redux provider, to make the state available
@@ -68,10 +88,22 @@ global.initOrchestrationTemplate = (element, userConfig = {}) => {
   // Write the config
   updateConfig(userConfig);
 
+  // Add a style block for the custom accent colour
+  if (config.ACCENT_COLOUR) {
+    const styleBlock = document.createElement('style');
+    styleBlock.innerHTML = [
+      `.accent-colour-background { background-color: ${config.ACCENT_COLOUR}; }`,
+      `.accent-colour-text { color: ${config.ACCENT_COLOUR}; }`,
+      `.accent-colour-border { border-color: ${config.ACCENT_COLOUR}; }`,
+    ].join('\n');
+    document.head.appendChild(styleBlock);
+  }
+
   // Initialise the orchestration object and connect its events to the redux store.
   const deviceId = initialiseOrchestration(store.dispatch);
   const sessionCodeExpression = new RegExp(`^#!/join/([0-9]{${config.SESSION_CODE_LENGTH}})$`);
   const matches = window.location.hash.match(sessionCodeExpression);
+
   // Start the saga middleware, starting either on the start or join page.
   sagaMiddleware.run(rootSaga, {
     join: window.location.hash.startsWith('#!/join'),
@@ -83,7 +115,7 @@ global.initOrchestrationTemplate = (element, userConfig = {}) => {
   /* eslint-disable react/jsx-filename-extension */
   render(
     <Provider store={store}>
-      <ConnectedApp />
+      <HotConnectedApp />
     </Provider>,
     element,
   );

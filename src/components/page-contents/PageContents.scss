@@ -1,0 +1,9 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+
+.page-contents {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding: 0 $gel-spacing-unit;
+}

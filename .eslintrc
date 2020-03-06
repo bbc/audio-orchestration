@@ -4,6 +4,8 @@
     "browser": true
   },
   "rules": {
-    "react/jsx-props-no-spreading": "warn"
+    "react/jsx-props-no-spreading": "warn",
+    "jsx-a11y/label-has-associated-control": "warn",
+    "jsx-a11y/control-has-associated-label": "warn"
   },
 }

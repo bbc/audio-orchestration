@@ -2,26 +2,17 @@
 
 This project is an example you can modify to suit your application. Fork this repository, and build
 your own orchestrated audio experiences using [React](https://reactjs.org/) and our
-[bbcat-orchestration](https://github.com/bbc/bbcat-orchestration) tools. Follow the [tutorial](tutorial/) for step-by-step instructions.
+[bbcat-orchestration](https://github.com/bbc/bbcat-orchestration) tools.
 
-You should only need to modify this template in three places:
+## Browser compatibility
 
-* [src/presentation/](src/presentation/) contains stateless presentational React components, CSS
-  stylesheets, and content images. This defines the look and feel of the front end.
-* [src/config.js](src/config.js) contains configuration parameters, such as paths to audio files.
-* [audio/](audio/) contains the encoded audio files and metadata files describing the sequences.
+Browsers on iOS < 11 may not be supported.
 
 ## Usage
-
-A detailed tutorial for using this template, including setting up the required tools on a new machine,
-is included in the [tutorial/](tutorial/) directory.
 
 This explains how audio assets should be packaged, and how a local copy of the template can be customised
 to include the packaged audio, and how the presentational components may be adapted to better suit a
 particular experience.
-
-For an implementation using this template, but adding a lot of custom functionality on top of it, see
-the [repository](https://github.com/bbc/rd-audio-vostok) for _The Vostok-K Incident_.
 
 ## Development
 
@@ -65,12 +56,6 @@ You should familiarise yourself with these libraries before attempting to follow
 
 Redux actions are dispatched to the store to effect changes in the state. The sagas (see below) also listen for and dispatch certain actions, and a saga is used to manage the orchestration client---the object that interacts with the synchronisation service and manages audio rendering.
 
-#### `src/index.js`
-
-Initialises the redux store, starts the root saga, and initialises the orchestration client (`initialiseOrchestration`). Renders the top-level `App` component. Also includes various polyfills and the web font package.
-
-As the template is designed to be extended, only the `state.template` property of the global state is used by reducers introduced by the template. Further reducers specific to a particular experience may be created and should be registered in the `createStore` call in `src/index.js` and provide their own `mapStateToProps` and `mapDispatchToProps` functions in the `connect` call.
-
 #### `src/template/index.js`
 
 Contains the `mapStateToProps` and `mapDispatchToProps` methods used in the `connect` call in the entry point file. These export the entire state as props, and create all action dispatchers intendend to be called by user interface components.
@@ -103,9 +88,26 @@ When the timeline speed eventually changes to zero as a result of the pause call
 
 Implements a client for the [session-id-service](https://github.com/bbc/bbcat-orchestration-session-id).
 
-### React components and props
+### React components, style sheets, and props
 
-Currently, the entire state is set as props on the top-level `App` component. This passes all its props as props to the `CurrentPage` component. Each of the pages implemented in `src/presentation/Pages/` can then pick and choose and pass on the required props to its children.
+#### `src/index.html`
 
-_A better pattern for passing state through to presentational components, for example using higher-order components, could probably be devised. As this is only a starting point for a very simple interface, this effort has not yet been put in. You're welcome to contribute if you have strong opinions about how this might be done more cleanly!_
+This is the HTML skeleton used for the page. It is transformed by a webpack plugin to import the final JS and CSS bundles.
 
+#### `src/index.js`
+
+This file is the overall entry point. It imports many things that have to be imported exactly once (JavaScript polyfills, component style). It also sets up the React application (including the state, reducers, and sagas) and renders the top-level `<App />` component.
+
+#### `src/App.jsx`
+
+The `App` component renders the currently active _page_ as set in the state.
+
+#### `src/pages`
+
+Each _page_ renders the presentational components (some of which may be connected to access properties of the state without those being passed as props) for the page contents.
+
+#### `src/components`
+
+Each _component_ contains at least one `.jsx` file defining the React component, and usually it also has a `.scss` file defining the styling. Some components have multiple `.jsx` files for sub-components or to provide a version of the component that is connected to the state.
+
+For the style sheets (`.scss` files), we scope all class names to always begin with the name of the component folder. Where shorter class names are desired, these must be combined with a scoped name to ensure styles don't affect other components.

@@ -33,7 +33,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|svg)$/,
+        test: /\.(png|jpg|gif)$/,
         use: [
           {
             loader: 'url-loader',
@@ -43,6 +43,18 @@ module.exports = {
           },
           {
             loader: 'image-webpack-loader',
+          },
+        ],
+      },
+      {
+        test: /\.(eot|ttf|woff|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'fonts',
+            },
           },
         ],
       },
@@ -68,10 +80,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       minify: false,
-      template: path.resolve(__dirname, 'src/presentation/index.html'),
+      template: path.resolve(__dirname, 'src/index.html'),
     }),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'audio'), to: 'audio', toType: 'dir' },
+      { from: path.resolve(__dirname, 'images'), to: 'images', toType: 'dir' },
     ]),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output

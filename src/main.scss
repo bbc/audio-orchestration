@@ -1,0 +1,56 @@
+// Import sass media queries helper functions
+@import '~sass-mq/mq';
+
+// Import BBC GEL libraries for uniform grid, spacing, and typography variables and helpers.
+$gel-grid-enable--box-sizing: true;
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-grid/grid';
+@import '~gel-typography/typography';
+
+// Import theme for uniform default colours
+@import './theme.scss';
+
+// Set global styles for body and html elements (reset)
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  height: 100%;
+
+  color: $theme-color-white;
+  background-color: $theme-color-black;
+}
+
+#app {
+  height: 100%;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.page {
+  box-sizing: border-box;
+  height: 100%;
+  width: 100%;
+  max-width: 600px;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.page-with-status-bar {
+  padding-top: 48px; // TODO to be based on height of .status-bar
+}
+
+p {
+  @include gel-typography('pica');
+  margin: $gel-spacing-unit 0;
+}
+
+h1 {
+  @include gel-typography('trafalgar-bold');
+}
+
+h2 {
+  @include gel-typography('double-pica-bold');
+}
+

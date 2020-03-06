@@ -2,6 +2,7 @@ deploy
 *.zip
 dist/
 docs/
+.DS_Store
 
 # Logs
 logs
@@ -175,4 +176,3 @@ venv.bak/
 
 # mypy
 .mypy_cache/
-

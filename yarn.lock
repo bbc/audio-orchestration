@@ -157,6 +157,11 @@
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/helper-plugin-utils/-/helper-plugin-utils-7.0.0.tgz#bbb3fbee98661c569034237cc03967ba99b4f250"
   integrity sha1-u7P77phmHFaQNCN8wDlnupm08lA=
 
+"@babel/helper-plugin-utils@^7.8.0", "@babel/helper-plugin-utils@^7.8.3":
+  version "7.8.3"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/helper-plugin-utils/-/helper-plugin-utils-7.8.3.tgz#9ea293be19babc0f52ff8ca88b34c3611b208670"
+  integrity sha1-nqKTvhm6vA9S/4yoizTDYRsghnA=
+
 "@babel/helper-regex@^7.0.0", "@babel/helper-regex@^7.4.4":
   version "7.5.5"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/helper-regex/-/helper-regex-7.5.5.tgz#0aa6824f7100a2e0e89c1527c23936c152cab351"
@@ -266,6 +271,14 @@
     "@babel/helper-plugin-utils" "^7.0.0"
     "@babel/plugin-syntax-object-rest-spread" "^7.2.0"
 
+"@babel/plugin-proposal-object-rest-spread@^7.8.3":
+  version "7.8.3"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/plugin-proposal-object-rest-spread/-/plugin-proposal-object-rest-spread-7.8.3.tgz#eb5ae366118ddca67bed583b53d7554cad9951bb"
+  integrity sha1-61rjZhGN3KZ77Vg7U9dVTK2ZUbs=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.3"
+    "@babel/plugin-syntax-object-rest-spread" "^7.8.0"
+
 "@babel/plugin-proposal-optional-catch-binding@^7.2.0":
   version "7.2.0"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/plugin-proposal-optional-catch-binding/-/plugin-proposal-optional-catch-binding-7.2.0.tgz#135d81edb68a081e55e56ec48541ece8065c38f5"
@@ -316,6 +329,13 @@
   integrity sha1-O3o+czUQxX6CC5FCpleayLDfrS4=
   dependencies:
     "@babel/helper-plugin-utils" "^7.0.0"
+
+"@babel/plugin-syntax-object-rest-spread@^7.8.0":
+  version "7.8.3"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/plugin-syntax-object-rest-spread/-/plugin-syntax-object-rest-spread-7.8.3.tgz#60e225edcbd98a640332a2e72dd3e66f1af55871"
+  integrity sha1-YOIl7cvZimQDMqLnLdPmbxr1WHE=
+  dependencies:
+    "@babel/helper-plugin-utils" "^7.8.0"
 
 "@babel/plugin-syntax-optional-catch-binding@^7.2.0":
   version "7.2.0"
@@ -607,14 +627,6 @@
     "@babel/helper-create-regexp-features-plugin" "^7.7.0"
     "@babel/helper-plugin-utils" "^7.0.0"
 
-"@babel/polyfill@^7.7.0":
-  version "7.7.0"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/polyfill/-/polyfill-7.7.0.tgz#e1066e251e17606ec7908b05617f9b7f8180d8f3"
-  integrity sha1-4QZuJR4XYG7HkIsFYX+bf4GA2PM=
-  dependencies:
-    core-js "^2.6.5"
-    regenerator-runtime "^0.13.2"
-
 "@babel/preset-env@^7.7.1":
   version "7.7.1"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@babel/preset-env/-/preset-env-7.7.1.tgz#04a2ff53552c5885cf1083e291c8dd5490f744bb"
@@ -751,10 +763,10 @@
     weak-map "^1.0.5"
     winston "^2.4.0"
 
-"@bbc/bbcat-orchestration@^0.7.4":
-  version "0.7.4"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.7.4.tgz#f1616ea3d060b866e4cf2bbc5ed9d24e4ca9a6a3"
-  integrity sha1-8WFuo9BguGbkzyu8XtnSTkyppqM=
+"@bbc/bbcat-orchestration@^0.7.5":
+  version "0.7.5"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.7.5.tgz#83ff5e39d1272c5d28d3c4621e1650dc923c5a90"
+  integrity sha1-g/9eOdEnLF0o08RiHhZQ3JI8WpA=
   dependencies:
     "@bbc/bbcat-orchestration-bbcat" "^0.2.0"
     "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.0"
@@ -2217,10 +2229,10 @@ core-js-compat@^3.1.1:
     browserslist "^4.7.2"
     semver "^6.3.0"
 
-core-js@^2.6.5:
-  version "2.6.9"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/core-js/-/core-js-2.6.9.tgz#6b4b214620c834152e179323727fc19741b084f2"
-  integrity sha1-a0shRiDINBUuF5Mjcn/Bl0GwhPI=
+core-js@^3.6.4:
+  version "3.6.4"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/core-js/-/core-js-3.6.4.tgz#440a83536b458114b9cb2ac1580ba377dc470647"
+  integrity sha1-RAqDU2tFgRS5yyrBWAujd9xHBkc=
 
 core-util-is@~1.0.0:
   version "1.0.2"
@@ -6305,6 +6317,11 @@ pend@~1.2.0:
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/pend/-/pend-1.2.0.tgz#7a57eb550a6783f9115331fcf4663d5c8e007a50"
   integrity sha1-elfrVQpng/kRUzH89GY9XI4AelA=
 
+pepjs@^0.5.2:
+  version "0.5.2"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/pepjs/-/pepjs-0.5.2.tgz#f0d10bb160bcbf4b72d2069d931170661491a05c"
+  integrity sha1-8NELsWC8v0ty0gadkxFwZhSRoFw=
+
 picomatch@^2.0.4:
   version "2.0.7"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/picomatch/-/picomatch-2.0.7.tgz#514169d8c7cd0bdbeecc8a2609e34a7163de69f6"
@@ -6814,7 +6831,7 @@ regenerate@^1.4.0:
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
   integrity sha1-SoVuxLVuQHfFV1icroXnpMiGmhE=
 
-regenerator-runtime@^0.13.2:
+regenerator-runtime@^0.13.2, regenerator-runtime@^0.13.3:
   version "0.13.3"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/regenerator-runtime/-/regenerator-runtime-0.13.3.tgz#7cf6a77d8f5c6f60eb73c5fc1955b2ceb01e6bf5"
   integrity sha1-fPanfY9cb2Drc8X8GVWyzrAea/U=

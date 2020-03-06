@@ -88,12 +88,12 @@ export const setPlaybackStatus = ({
 });
 
 export const setSequenceChoices = ({
-  next,
+  choices,
   skippable,
   hold,
 }) => ({
   type: 'SET_SEQUENCE_CHOICES',
-  next,
+  choices,
   skippable,
   hold,
 });

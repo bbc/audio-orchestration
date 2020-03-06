@@ -29,6 +29,10 @@ export const connectFormOnCancel = () => ({
   type: 'CLOSE_CONNECT_FORM',
 });
 
+export const loadingTutorialContinue = () => ({
+  type: 'CLICK_TUTORIAL_CONTINUE',
+});
+
 export const connectFormOnSubmit = (sessionCode) => ({
   type: 'REQUEST_VALIDATE_SESSION_CODE',
   sessionCode,
@@ -36,12 +40,4 @@ export const connectFormOnSubmit = (sessionCode) => ({
 
 export const mainSetupOnContinue = () => ({
   type: 'CLICK_MAIN_SETUP_CONTINUE',
-});
-
-export const controlsOnClose = () => ({
-  type: 'REQUEST_CLOSE_CONTROLS',
-});
-
-export const controlsOnOpen = () => ({
-  type: 'REQUEST_OPEN_CONTROLS',
 });

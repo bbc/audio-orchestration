@@ -1,0 +1,30 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '../../theme.scss';
+
+.input {
+  @include gel-typography('pica');
+
+  &.text, &.tel, &.number {
+    color: $theme-color-black;
+    background-color: $theme-color-white;
+    padding: 2 * $gel-spacing-unit;
+    border: 0px solid;
+    box-sizing: border-box;
+
+    &.disabled {
+      background-color: $theme-color-light-grey;
+      color: $theme-color-grey;
+    }
+
+    &.error {
+      border: $gel-spacing-unit/2 solid $theme-color-red;
+      padding: $gel-spacing-unit;
+    }
+  }
+
+  &.fluid {
+    width: 100%;
+  }
+}

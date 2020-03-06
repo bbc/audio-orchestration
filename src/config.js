@@ -41,10 +41,6 @@ const config = {
   // hosted. The "#!/join" suffix immediately opens the connect-form page.
   JOIN_URL: '',
 
-  // The debug UI components, if shown, display the currently playing contentId and any objects
-  // allocated to the current device.
-  DEBUG_UI: true,
-
   // Dynamics compression with these settings is applied to the output of all auxiliary devices.
   MDO_COMPRESSOR_RATIO: 4,
   MDO_COMPRESSOR_THRESHOLD: -40,
@@ -67,18 +63,23 @@ const config = {
   // Time in seconds between request and scheduled transition to next sequence.
   SEQUENCE_TRANSITION_DELAY: 1.0,
 
-  // Control options for the default template control. One of these can be selected on each device.
-  // TODO: Replace this mechanism with a more wide-ranging definition of controls and their
-  // parameters.
-  TEMPLATE_CONTROL_OPTIONS: [],
-
-  // Some text on the start page can be customised here to avoid having to rebuild the template.
+  // The text on the start page can be customised here.
   TEXT_TITLE: 'Title',
+  TEXT_SUBTITLE: 'Secondary title',
   TEXT_INTRODUCTION: 'Introduction',
-  TEXT_START_LABEL: 'Create Session',
-  TEXT_JOIN_LABEL: 'Join',
+  TEXT_START_LABEL: 'Start session',
+  TEXT_JOIN_LABEL: 'Join existing session',
 
-  ACCENT_COLOUR: '#80BBFF',
+  // The tutorial, if enabled, is an extra page shown during the loading step (until dismissed).
+  ENABLE_TUTORIAL: false,
+
+  // The debug UI components can display the objects allocated to the current device and other info
+  // useful for prototyping.
+  DEBUG_UI: false,
+
+  ACCENT_COLOUR: '#006DEF',
+
+  PLAYER_IMAGE_URL: 'https://placekitten.com/600/600',
 };
 
 export const updateConfig = (newConfig = {}) => {

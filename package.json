@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration-template",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "A user interface template showing how to integrate the bbcat-orchestration toolkit for orchestrated personal audio devices with React components.",
   "browser": "dist/bundle.js",
   "repository": "git@github.com:bbc/bbcat-orchestration-template.git",
@@ -18,10 +18,12 @@
     ".gitignore"
   ],
   "dependencies": {
-    "@babel/polyfill": "^7.7.0",
-    "@bbc/bbcat-orchestration": "^0.7.4",
+    "@bbc/bbcat-orchestration": "^0.7.5",
     "@hot-loader/react-dom": "^16.11.0",
     "bowser": "^2.9.0",
+    "classnames": "^2.2.6",
+    "core-js": "^3.6.4",
+    "pepjs": "^0.5.2",
     "prop-types": "^15.7.2",
     "qrcodejs": "^1.0.0",
     "react": "^16.12.0",
@@ -30,16 +32,17 @@
     "react-redux": "^7.1.3",
     "redux": "^4.0.5",
     "redux-saga": "^1.1.3",
+    "regenerator-runtime": "^0.13.3",
     "uuid": "^3.3.2",
     "whatwg-fetch": "^3.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.7.0",
     "@types/react": "16.0.0",
     "babel-loader": "^8.0.6",
-    "classnames": "^2.2.6",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.2",

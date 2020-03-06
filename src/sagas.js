@@ -13,18 +13,14 @@ import config from './config';
 
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
+export const PAGE_LOADING_TUTORIAL = 'loading-tutorial';
 export const PAGE_ERROR = 'error';
-export const PAGE_MAIN_SETUP = 'main-setup';
-export const PAGE_MAIN_PLAYING = 'main-playing';
+export const PAGE_PLAYING = 'main-playing';
 export const PAGE_CONNECT_FORM = 'connect-form';
 export const PAGE_CONNECT_DIRECT = 'connect-direct';
-export const PAGE_CONTROLS = 'controls';
-export const PAGE_AUXILIARY_PLAYING = 'auxiliary-playing';
-export const PAGE_AUXILIARY_DISCONNECTED = 'auxiliary-disconnected';
 
 export const ROLE_MAIN = 'main';
 export const ROLE_AUXILIARY = 'auxiliary';
-
 
 function getInitialControlValues() {
   // set control default values from config, must be after orchestrationWatcherSaga is running
@@ -87,7 +83,12 @@ function* connectForm(canCancel = true) {
  */
 function* mainFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MAIN });
-  yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
+
+  if (config.ENABLE_TUTORIAL) {
+    yield put({ type: 'SET_PAGE', page: PAGE_LOADING_TUTORIAL });
+  } else {
+    yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
+  }
 
   yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
@@ -109,15 +110,15 @@ function* mainFlow() {
   // the main device).
   yield put({ type: 'REQUEST_SET_CONTROL_VALUES', controlValues: getInitialControlValues() });
 
-  // Open the playing page, and move between the controls and playing pages on further actions.
-  yield put({ type: 'SET_PAGE', page: PAGE_MAIN_PLAYING });
-
-  while (true) {
-    yield take('REQUEST_OPEN_CONTROLS');
-    yield put({ type: 'SET_PAGE', page: PAGE_CONTROLS });
-    yield take('REQUEST_CLOSE_CONTROLS');
-    yield put({ type: 'SET_PAGE', page: PAGE_MAIN_PLAYING });
+  // once loading is completed, accept the continue action before moving to the playing page.
+  if (config.ENABLE_TUTORIAL) {
+    yield take('CLICK_TUTORIAL_CONTINUE');
   }
+
+  // Open the playing page, and move between the controls and playing pages on further actions.
+  yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
+
+  // TODO listen for instructions open/close actions here?
 }
 
 /**
@@ -129,14 +130,20 @@ function* mainFlow() {
 function* auxiliaryFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
   yield put({ type: 'SET_ROLE', role: ROLE_AUXILIARY });
-  yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
+
+  if (config.ENABLE_TUTORIAL) {
+    yield put({ type: 'SET_PAGE', page: PAGE_LOADING_TUTORIAL });
+  } else {
+    yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
+  }
 
   yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
   });
 
   yield takeEvery('SET_DISCONNECTED', function* openAuxDisconnectedPage() {
-    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_DISCONNECTED });
+    // TODO set error message/use special page
+    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
   });
 
   try {
@@ -146,22 +153,22 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
     yield put({ type: 'SET_ERROR', errorMessage: e.message });
     yield take('CLICK_ERROR_RETRY');
     yield call(joinFlow);
-    return;
   }
 
   // Now we are connected we can set the initial control values (because they need to be sent to
   // the main device).
   yield put({ type: 'REQUEST_SET_CONTROL_VALUES', controlValues: getInitialControlValues() });
 
-  // Open the controls page and move between the controls and playing pages on further actions.
-  yield put({ type: 'SET_PAGE', page: PAGE_CONTROLS });
 
-  while (true) {
-    yield take('REQUEST_CLOSE_CONTROLS');
-    yield put({ type: 'SET_PAGE', page: PAGE_AUXILIARY_PLAYING });
-    yield take('REQUEST_OPEN_CONTROLS');
-    yield put({ type: 'SET_PAGE', page: PAGE_CONTROLS });
+  // once loading is completed, accept the continue action before moving to the playing page.
+  if (config.ENABLE_TUTORIAL) {
+    yield take('CLICK_TUTORIAL_CONTINUE');
   }
+
+  // Open the playing page.
+  yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
+
+  // TODO listen for instructions open/close actions here?
 }
 
 /**

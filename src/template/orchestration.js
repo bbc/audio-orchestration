@@ -1,6 +1,7 @@
 import bowser from 'bowser';
 import { takeEvery, call } from 'redux-saga/effects';
-import OrchestrationClient from '@bbc/bbcat-orchestration/src/orchestration/orchestration-client';
+import { OrchestrationClient } from '@bbc/bbcat-orchestration';
+
 import config from '../config';
 import {
   addLoadingMessage,
@@ -95,8 +96,8 @@ export const initialiseOrchestration = (dispatch) => {
 
     if (globalOrchestrationClient.master) {
       const {
-        skippable,
         next,
+        skippable,
         hold,
       } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === e.currentContentId);
 
@@ -107,8 +108,8 @@ export const initialiseOrchestration = (dispatch) => {
       }
 
       dispatch(setSequenceChoices({
+        choices: next,
         skippable,
-        next,
         hold,
       }));
     }

@@ -1,8 +1,0 @@
-objectNumber,panning,filename,mdoObjectLabel,image,mdoThreshold,mdoOnly,mdoSpread,muteIfObject,exclusivity,nearFront,nearSide,nearRear,farFront,farSide,farRear,above,onDropin,onDropout,minQuality
-1,30,loadingloop_stem_1_L.wav,Music_L,title,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1
-2,-30,loadingloop_stem_1_R.wav,Music_R,title,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1
-3,0,loadingloop_stem_2_M.wav,GeneralTat,tape-machine,2,1,0,0,1,2,3,1,2,2,1,1,1,1,1
-4,0,loadingloop_stem_3_M.wav,Sam,radio-mast,0,0,0,0,0,3,2,1,2,1,1,1,1,1,1
-5,0,loadingloop_stem_4_M.wav,fly-by,enemy-jet,1,1,0,0,0,1,2,2,1,2,2,1,1,1,1
-6,0,loadingloop_stem_5_M.wav,rain-1,lightning,0,0,1,0,0,2,2,2,1,1,1,1,1,1,1
-7,0,loadingloop_stem_6_M.wav,rain-2,lightning,1,0,1,0,0,1,1,1,2,2,2,1,1,1,1

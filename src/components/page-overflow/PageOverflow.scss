@@ -1,0 +1,15 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '../../theme.scss';
+
+.page-overflow {
+  background-color: $theme-color-white;
+  color: $theme-color-black;
+  border-radius: $gel-spacing-unit $gel-spacing-unit 0 0;
+  padding: $gel-spacing-unit;
+  margin-top: 4*$gel-spacing-unit;
+
+  // TODO remove; only used to simulate more content.
+  min-height: 100%;
+}
+

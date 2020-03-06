@@ -106,7 +106,10 @@ export const createSession = () => {
  * @returns {Promise<Object>} - { valid, sessionCode, sessionId }
  */
 export const validateSession = (sessionCode) => {
-  if (!config.VALIDATE_SESSION_IDS || isValidLocalSessionCode(sessionCode)) {
+  if (!config.VALIDATE_SESSION_IDS) {
+    if (!isValidLocalSessionCode(sessionCode)) {
+      return Promise.resolve({ valid: false });
+    }
     return Promise.resolve({ valid: true, ...generateSessionId(sessionCode) });
   }
 

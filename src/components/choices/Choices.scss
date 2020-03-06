@@ -1,0 +1,32 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '../../theme.scss';
+
+.choices {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+  position: relative;
+  padding-right: 2 * $gel-spacing-unit;
+
+  .button {
+    margin: 0 ($gel-spacing-unit/2);
+  }
+
+  .button:first-child {
+    margin-left: 0;
+  }
+
+  // TODO this does not quite work, because it moves with the horizontal scrolling.
+  // &::after {
+  //   display: block;
+  //   content: ' ';
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   width: 2 * $gel-spacing-unit;
+  //   height: 100%;
+  //   background: $theme-color-black;
+  //   background: linear-gradient(90deg, rgba($theme-color-black, 0) 0, rgba($theme-color-black, 1) 100%); 
+  // }
+}
