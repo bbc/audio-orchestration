@@ -80,6 +80,8 @@ class OrchestrationClient extends EventEmitter {
     this._controls = options.controls || [];
     this._activeControlIds = {};
     this._allocationAlgorithm = options.allocationAlgorithm || null;
+    this._gain = 1.0;
+    this._playbackOffset = 0;
   }
 
   /**
@@ -249,7 +251,7 @@ class OrchestrationClient extends EventEmitter {
   _createAudioGraph() {
     this.emit('loading', 'connecting audio output');
     this._volumeControl = this._audioContext.createGain();
-    this._volumeControl.gain.value = 1.0;
+    this._volumeControl.gain.value = this._gain;
     this._volumeControl.connect(this._audioContext.destination);
 
     this._compressor = this._audioContext.createDynamicsCompressor();
@@ -329,7 +331,12 @@ class OrchestrationClient extends EventEmitter {
     return new Promise((resolve, reject) => {
       this._sync.requestTimelineClock(TIMELINE_TYPE, this._contentId)
         .then((syncClock) => {
-          this._syncClock = syncClock;
+          this._syncClockOriginal = syncClock;
+          this._syncClock = new CorrelatedClock(
+            this._syncClockOriginal,
+            { correlation: [0, this._playbackOffset] },
+          );
+
           resolve(this._syncClock);
         });
       setTimeout(() => {
@@ -644,7 +651,7 @@ class OrchestrationClient extends EventEmitter {
     if (muted) {
       this._volumeControl.gain.value = 0.0;
     } else {
-      this._volumeControl.gain.value = 1.0;
+      this._volumeControl.gain.value = this._gain;
     }
 
     this.emit('mute', muted);
@@ -687,6 +694,30 @@ class OrchestrationClient extends EventEmitter {
    */
   setCompressorThreshold(threshold = -50) {
     this._compressor.threshold.value = threshold;
+  }
+
+  /**
+   * Sets the gain value.
+   *
+   * @param {number} gain - decibel gain value of the device.
+   */
+  setGain(gain = 0.0) {
+    this._gain = 10 ** (gain / 20);
+    if (this._volumeControl) {
+      this._volumeControl.gain.value = this._gain;
+    }
+  }
+
+  /**
+   * Sets the playback offset.
+   *
+   * @param {number} offset - offset value in milliseconds of the device.
+   */
+  setPlaybackOffset(offset = 0) {
+    this._playbackOffset = Math.min(1000, Math.max(-1000, offset));
+    if (this._syncClock) {
+      this._syncClock.setCorrelation([0, this._playbackOffset]);
+    }
   }
 
   /**
