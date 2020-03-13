@@ -451,6 +451,11 @@ class OrchestrationClient extends EventEmitter {
         resolve(this._mdoHelper);
       });
 
+      // Emit custom message events
+      this._mdoHelper.on('message', (message) => {
+        this.emit('message', message);
+      });
+
       // Start listening for broadcast messages, send request for schedule and allocations.
       this._mdoHelper.start(this._sync);
 
@@ -717,6 +722,18 @@ class OrchestrationClient extends EventEmitter {
     this._playbackOffset = Math.min(1000, Math.max(-1000, offset));
     if (this._syncClock) {
       this._syncClock.setCorrelation([0, this._playbackOffset]);
+    }
+  }
+
+  /**
+   * Send a custom message to all devices in the same session.
+   *
+   * @param {string} topic
+   * @param {object} message
+   */
+  sendMessage(message) {
+    if (this._mdoHelper) {
+      this._mdoHelper.sendCustomMessage(message);
     }
   }
 

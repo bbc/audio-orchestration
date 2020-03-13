@@ -21,6 +21,7 @@ export const TOPICS = {
   ALLOCATIONS: 'mdo-allocations',
   REQUEST_ALLOCATIONS_AND_SCHEDULE: 'mdo-request-allocations-and-schedule',
   SCHEDULE: 'mdo-schedule',
+  CUSTOM: 'mdo-custom',
 };
 
 export const DEFAULT_CONTENT_ID = 'default';
@@ -189,6 +190,9 @@ class MdoHelper extends EventEmitter {
         case TOPICS.REQUEST_ALLOCATIONS_AND_SCHEDULE:
           this._handleRequestAllocationsAndSchedule();
           break;
+        case TOPICS.CUSTOM:
+          this.emit('message', content.message);
+          break;
         default:
       }
     });
@@ -225,6 +229,18 @@ class MdoHelper extends EventEmitter {
   setSchedule(schedule) {
     this._schedule = schedule;
     this.emit('schedule', schedule);
+  }
+
+  /**
+   * Send a custom message to all devices in the same session.
+   *
+   * @param {string} topic
+   * @param {object} message
+   */
+  sendCustomMessage(message) {
+    if (this._sync !== null) {
+      this._sync.sendMessage(TOPICS.CUSTOM, { message });
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
