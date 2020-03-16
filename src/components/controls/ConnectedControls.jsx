@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import { requestSetControlValues } from 'actions';
 import Controls from './Controls';
 
-
 const mapStateToProps = ({
   // state
   activeControlIds,

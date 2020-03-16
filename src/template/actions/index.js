@@ -33,6 +33,14 @@ export const loadingTutorialContinue = () => ({
   type: 'CLICK_TUTORIAL_CONTINUE',
 });
 
+export const openInstructions = () => ({
+  type: 'CLICK_OPEN_INSTRUCTIONS',
+});
+
+export const closeInstructions = () => ({
+  type: 'CLICK_CLOSE_INSTRUCTIONS',
+});
+
 export const connectFormOnSubmit = (sessionCode) => ({
   type: 'REQUEST_VALIDATE_SESSION_CODE',
   sessionCode,

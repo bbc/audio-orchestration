@@ -41,6 +41,13 @@ body, html {
   padding-top: 48px; // TODO to be based on height of .status-bar
 }
 
+.page {
+  a:link, a:active, a:visited {
+    color: #eee;
+    text-decoration: underline;
+  }
+}
+
 p {
   @include gel-typography('pica');
   margin: $gel-spacing-unit 0;
@@ -53,4 +60,3 @@ h1 {
 h2 {
   @include gel-typography('double-pica-bold');
 }
-

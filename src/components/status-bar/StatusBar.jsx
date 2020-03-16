@@ -9,19 +9,27 @@ const StatusBar = ({
   connected,
   numDevices,
   instructions,
+  instructionsOpen,
   onOpenInstructions,
+  onCloseInstructions,
   isMain,
   className,
 }) => {
   // TODO review copy for different statuses
+  // TODO show 'tick' icon after loading only once (when connected changes?)
   let statusText = 'Waiting to connect...';
 
-  if (connected) {
+  if (instructionsOpen) {
+    statusText = 'Tap to close instructions.';
+  } else if (connected) {
     if (isMain) {
       if (numDevices <= 1) {
         statusText = 'Tap to add devices.';
+      } else if (numDevices === 2) {
+        // numDevices includes the main device, but here we show the number of _additional_ devices.
+        statusText = '1 device connected.';
       } else {
-        statusText = `${numDevices} devices connected.`;
+        statusText = `${numDevices - 1} devices connected.`;
       }
     } else {
       statusText = 'This device is connected to:';
@@ -56,6 +64,12 @@ const StatusBar = ({
             : null }
         </div>
         <div className="status-bar-right">
+          { instructionsOpen
+            ? (
+              <Button icon onClick={onCloseInstructions} className="status-bar-button-instructions">
+                <Icon title="close connection instructions" name="cross" />
+              </Button>
+            ) : null }
           { instructions
             ? (
               <Button icon onClick={onOpenInstructions} className="status-bar-button-instructions">
@@ -74,7 +88,9 @@ StatusBar.propTypes = {
   numDevices: PropTypes.number,
   isMain: PropTypes.bool,
   onOpenInstructions: PropTypes.func,
+  onCloseInstructions: PropTypes.func,
   instructions: PropTypes.bool,
+  instructionsOpen: PropTypes.bool,
   className: PropTypes.string,
 };
 
@@ -84,7 +100,9 @@ StatusBar.defaultProps = {
   numDevices: 0,
   isMain: false,
   onOpenInstructions: undefined,
+  onCloseInstructions: undefined,
   instructions: false,
+  instructionsOpen: false,
   className: undefined,
 };
 

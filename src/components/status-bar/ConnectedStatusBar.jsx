@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
 import { ROLE_MAIN } from 'sagas';
+import {
+  openInstructions,
+  closeInstructions,
+} from 'actions';
 import StatusBar from './StatusBar';
-
-
-// TODO import action to open instructions page
-// import { } from 'actions';
 
 const mapStateToProps = ({
   // state
@@ -15,6 +15,7 @@ const mapStateToProps = ({
 }, {
   // ownProps
   instructions,
+  instructionsOpen,
   className,
 }) => ({
   sessionCode,
@@ -22,12 +23,14 @@ const mapStateToProps = ({
   numDevices: connectedDevices.length,
   isMain: role === ROLE_MAIN,
   instructions,
+  instructionsOpen,
   className,
 });
 
 // TODO dispatch action to open instructions
-// const mapDispatchToProps = (dispatch) => ({
-//   onOpenInstructions: () => {},
-// });
+const mapDispatchToProps = (dispatch) => ({
+  onOpenInstructions: () => dispatch(openInstructions()),
+  onCloseInstructions: () => dispatch(closeInstructions()),
+});
 
-export default connect(mapStateToProps, null)(StatusBar);
+export default connect(mapStateToProps, mapDispatchToProps)(StatusBar);

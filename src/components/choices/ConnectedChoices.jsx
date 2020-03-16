@@ -3,7 +3,6 @@ import { ROLE_MAIN } from 'sagas'; // TODO set isMain in state to avoid these im
 import { requestTransitionToSequence } from 'actions';
 import Choices from './Choices';
 
-
 const mapStateToProps = ({
   sequenceChoices,
   role,

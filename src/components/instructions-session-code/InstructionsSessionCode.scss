@@ -1,0 +1,10 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '../../theme.scss';
+
+.instructions-session-code {
+  @include gel-typography('canon');
+  text-align: center;
+  letter-spacing: 0.1em;
+}

@@ -14,6 +14,7 @@ import { createSession, validateSession } from './session';
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
 export const PAGE_LOADING_TUTORIAL = 'loading-tutorial';
+export const PAGE_INSTRUCTIONS = 'instructions';
 export const PAGE_ERROR = 'error';
 export const PAGE_PLAYING = 'main-playing';
 export const PAGE_CONNECT_FORM = 'connect-form';
@@ -117,8 +118,6 @@ function* mainFlow() {
 
   // Open the playing page, and move between the controls and playing pages on further actions.
   yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
-
-  // TODO listen for instructions open/close actions here?
 }
 
 /**
@@ -167,8 +166,6 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
 
   // Open the playing page.
   yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
-
-  // TODO listen for instructions open/close actions here?
 }
 
 /**
@@ -226,6 +223,15 @@ function* startFlow() {
 function* watcherSaga() {
   // In the connection form, the connect button dispatches this action:
   yield takeEvery('REQUEST_VALIDATE_SESSION_CODE', validateSessionCode);
+
+  // listen for open/close actions for instructions page
+  yield takeEvery('CLICK_OPEN_INSTRUCTIONS', function* openInstructionsPage() {
+    yield put({ type: 'SET_PAGE', page: PAGE_INSTRUCTIONS });
+  });
+
+  yield takeEvery('CLICK_CLOSE_INSTRUCTIONS', function* closeInstructionsPage() {
+    yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
+  });
 }
 
 function* rootSaga({

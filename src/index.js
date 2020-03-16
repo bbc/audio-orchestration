@@ -59,6 +59,9 @@ import 'components/input/Input.scss';
 import 'components/choices/Choices.scss';
 import 'components/controls/Controls.scss';
 import 'components/object-list/ObjectList.scss';
+import './components/instructions-session-code/InstructionsSessionCode.scss';
+import './components/qr-code/QRCode.scss';
+import './components/device-list/DeviceList.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.

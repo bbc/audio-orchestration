@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import Button from 'components/button/Button';
 import PageFiller from 'components/page-filler/PageFiller';
 import PageContents from 'components/page-contents/PageContents';
-
 import { joinDirect } from 'actions';
 
 const ConnectDirectPage = ({

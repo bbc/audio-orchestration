@@ -1,0 +1,13 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '../../theme.scss';
+
+.qr-code {
+  text-align: center;
+
+  img {
+    border: 4px solid #fff;
+    margin: 0 auto;
+  }
+}
