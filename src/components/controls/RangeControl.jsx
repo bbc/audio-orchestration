@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Input from '../input/Input';
+import Input from 'components/input/Input';
 
 const RadioControl = ({
   parameters,

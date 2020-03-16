@@ -2,16 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import config from '../../config';
-import Button from '../../components/button/Button';
-import PageFiller from '../../components/page-filler/PageFiller';
-import PageContents from '../../components/page-contents/PageContents';
-import Input from '../../components/input/Input';
+import config from 'config';
+import Button from 'components/button/Button';
+import PageFiller from 'components/page-filler/PageFiller';
+import PageContents from 'components/page-contents/PageContents';
+import Input from 'components/input/Input';
 
 import {
   connectFormOnCancel,
   connectFormOnSubmit,
-} from '../../template/actions';
+} from 'actions';
 
 const validRegex = /^[0-9]+$/;
 

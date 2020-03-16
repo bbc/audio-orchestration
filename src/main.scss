@@ -8,7 +8,7 @@ $gel-grid-enable--box-sizing: true;
 @import '~gel-typography/typography';
 
 // Import theme for uniform default colours
-@import './theme.scss';
+@import '~theme';
 
 // Set global styles for body and html elements (reset)
 body, html {

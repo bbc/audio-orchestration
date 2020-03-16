@@ -1,9 +1,9 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import PageFiller from '../../components/page-filler/PageFiller';
-import PageContents from '../../components/page-contents/PageContents';
-import Icon from '../../components/icon/Icon';
+import PageFiller from 'components/page-filler/PageFiller';
+import PageContents from 'components/page-contents/PageContents';
+import Icon from 'components/icon/Icon';
 
 // TODO make an error icon
 // TODO get error message from state

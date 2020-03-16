@@ -32,8 +32,8 @@ import {
   compose,
 } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import rootSaga from './sagas';
-import config, { updateConfig } from './config';
+import rootSaga from 'sagas';
+import config, { updateConfig } from 'config';
 import { initialiseOrchestration } from './template/orchestration';
 
 import reducer from './template/reducer';
@@ -46,19 +46,19 @@ import App from './App';
 import './main.scss';
 
 // Import CSS for all components used at the top level
-import './components/button/Button.scss';
-import './components/page-filler/PageFiller.scss';
-import './components/page-overflow/PageOverflow.scss';
-import './components/page-contents/PageContents.scss';
-import './components/status-bar/StatusBar.scss';
-import './components/player-image/PlayerImage.scss';
-import './components/player-title/PlayerTitle.scss';
-import './components/player-controls/PlayerControls.scss';
-import './components/icon/Icon.scss';
-import './components/input/Input.scss';
-import './components/choices/Choices.scss';
-import './components/controls/Controls.scss';
-import './components/object-list/ObjectList.scss';
+import 'components/button/Button.scss';
+import 'components/page-filler/PageFiller.scss';
+import 'components/page-overflow/PageOverflow.scss';
+import 'components/page-contents/PageContents.scss';
+import 'components/status-bar/StatusBar.scss';
+import 'components/player-image/PlayerImage.scss';
+import 'components/player-title/PlayerTitle.scss';
+import 'components/player-controls/PlayerControls.scss';
+import 'components/icon/Icon.scss';
+import 'components/input/Input.scss';
+import 'components/choices/Choices.scss';
+import 'components/controls/Controls.scss';
+import 'components/object-list/ObjectList.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.

@@ -2,7 +2,7 @@ import bowser from 'bowser';
 import { takeEvery, call } from 'redux-saga/effects';
 import { OrchestrationClient } from '@bbc/bbcat-orchestration';
 
-import config from '../config';
+import config from 'config';
 import {
   addLoadingMessage,
   setConnected,
@@ -17,7 +17,7 @@ import {
   setConnectedDevices,
   setPlaybackStatus,
   setSequenceChoices,
-} from './actions/orchestration';
+} from 'actions/orchestration';
 
 // A global browser detection object
 const browser = bowser.getParser(window.navigator.userAgent);

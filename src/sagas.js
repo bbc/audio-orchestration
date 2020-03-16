@@ -7,9 +7,9 @@ import {
   fork,
 } from 'redux-saga/effects';
 
+import config from 'config';
 import { orchestrationWatcherSaga, connectOrchestration } from './template/orchestration';
 import { createSession, validateSession } from './session';
-import config from './config';
 
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';

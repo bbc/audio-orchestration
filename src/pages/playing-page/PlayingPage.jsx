@@ -2,21 +2,21 @@ import React from 'react';
 // import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import config from '../../config';
-import PageOverflow from '../../components/page-overflow/PageOverflow';
-import PageContents from '../../components/page-contents/PageContents';
-import ConnectedStatusBar from '../../components/status-bar/ConnectedStatusBar';
-import PlayerImage from '../../components/player-image/PlayerImage';
-import PlayerTitle from '../../components/player-title/PlayerTitle';
-import ConnectedPlayerControls from '../../components/player-controls/ConnectedPlayerControls';
-import ConnectedChoices from '../../components/choices/ConnectedChoices';
-import ConnectedControls from '../../components/controls/ConnectedControls';
-import ConnectedObjectList from '../../components/object-list/ConnectedObjectList';
+import config from 'config';
+import PageOverflow from 'components/page-overflow/PageOverflow';
+import PageContents from 'components/page-contents/PageContents';
+import ConnectedStatusBar from 'components/status-bar/ConnectedStatusBar';
+import PlayerImage from 'components/player-image/PlayerImage';
+import PlayerTitle from 'components/player-title/PlayerTitle';
+import ConnectedPlayerControls from 'components/player-controls/ConnectedPlayerControls';
+import ConnectedChoices from 'components/choices/ConnectedChoices';
+import ConnectedControls from 'components/controls/ConnectedControls';
+import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
 
 import {
   startSession,
   joinSession,
-} from '../../template/actions';
+} from 'actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
 import { ensureAudioContext } from '../../template/orchestration';

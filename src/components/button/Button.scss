@@ -1,7 +1,7 @@
 @import '~sass-mq/mq';
 @import '~gel-sass-tools/sass-tools';
 @import '~gel-typography/typography';
-@import '../../theme.scss';
+@import '~theme';
 
 .button {
   @include gel-typography('pica-bold');

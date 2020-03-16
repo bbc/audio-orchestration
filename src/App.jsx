@@ -11,7 +11,7 @@ import {
   PAGE_CONNECT_DIRECT,
   // PAGE_INSTRUCTIONS,
   PAGE_LOADING_TUTORIAL,
-} from './sagas';
+} from 'sagas';
 
 // Import the page components: only one of these is used at a time.
 import StartPage from './pages/start-page/StartPage';

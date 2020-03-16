@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
+import { ROLE_MAIN } from 'sagas';
 import StatusBar from './StatusBar';
-import { ROLE_MAIN } from '../../sagas';
+
 
 // TODO import action to open instructions page
-// import { } from '../../template/actions';
+// import { } from 'actions';
 
 const mapStateToProps = ({
   // state

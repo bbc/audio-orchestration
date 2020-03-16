@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import PageContents from '../../components/page-contents/PageContents';
-import PageFiller from '../../components/page-filler/PageFiller';
-import ConnectedStatusBar from '../../components/status-bar/ConnectedStatusBar';
-import Button from '../../components/button/Button';
+import PageContents from 'components/page-contents/PageContents';
+import PageFiller from 'components/page-filler/PageFiller';
+import ConnectedStatusBar from 'components/status-bar/ConnectedStatusBar';
+import Button from 'components/button/Button';
 
 import {
   loadingTutorialContinue,
-} from '../../template/actions';
+} from 'actions';
 
 // TODO make a TutorialStep component?
 const LoadingTutorialPage = ({

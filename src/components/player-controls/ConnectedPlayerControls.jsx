@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import PlayerControls from './PlayerControls';
 import {
   requestPlay,
   requestPause,
   requestSeek,
-} from '../../template/actions';
+} from 'actions';
+import PlayerControls from './PlayerControls';
 
 const mapStateToProps = ({
   contentDuration,

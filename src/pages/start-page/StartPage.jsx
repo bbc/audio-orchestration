@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import config from '../../config';
-import Button from '../../components/button/Button';
-import PageFiller from '../../components/page-filler/PageFiller';
-import PageContents from '../../components/page-contents/PageContents';
-import PlayerImage from '../../components/player-image/PlayerImage';
-import PlayerTitle from '../../components/player-title/PlayerTitle';
+import config from 'config';
+import Button from 'components/button/Button';
+import PageFiller from 'components/page-filler/PageFiller';
+import PageContents from 'components/page-contents/PageContents';
+import PlayerImage from 'components/player-image/PlayerImage';
+import PlayerTitle from 'components/player-title/PlayerTitle';
 
 import {
   startSession,
   joinSession,
-} from '../../template/actions';
+} from 'actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
 import { ensureAudioContext } from '../../template/orchestration';

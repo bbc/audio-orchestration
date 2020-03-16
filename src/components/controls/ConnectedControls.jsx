@@ -1,9 +1,7 @@
 import { connect } from 'react-redux';
+import { requestSetControlValues } from 'actions';
 import Controls from './Controls';
 
-import {
-  requestSetControlValues,
-} from '../../template/actions';
 
 const mapStateToProps = ({
   // state
