@@ -243,6 +243,7 @@ class MdoAllocator extends MdoHelper {
         deviceJoiningNumber: this._lastJoiningNumber,
       },
     ];
+    this._enabledDeviceIds.add(deviceId);
   }
 
   _handleRequestAllocationsAndSchedule() {
