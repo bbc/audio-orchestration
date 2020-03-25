@@ -2,19 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
-import PageContents from '../../components/page-contents/PageContents';
-import PageFiller from '../../components/page-filler/PageFiller';
-import ConnectedStatusBar from '../../components/status-bar/ConnectedStatusBar';
-import Button from '../../components/button/Button';
-import ConnectedInstructionsSessionCode from '../../components/instructions-session-code/ConnectedInstructionsSessionCode';
-import QRCode from '../../components/qr-code/QRCode';
-import ConnectedDeviceList from '../../components/device-list/ConnectedDeviceList';
+import PageContents from 'components/page-contents/PageContents';
+import PageFiller from 'components/page-filler/PageFiller';
+import ConnectedStatusBar from 'components/status-bar/ConnectedStatusBar';
+import Button from 'components/button/Button';
+import ConnectedInstructionsSessionCode from 'components/instructions-session-code/ConnectedInstructionsSessionCode';
+import QRCode from 'components/qr-code/QRCode';
+import ConnectedDeviceList from 'components/device-list/ConnectedDeviceList';
 
-import config from '../../config';
+import config from 'config';
 
 import {
   closeInstructions,
-} from '../../template/actions';
+} from 'actions';
 
 const InstructionsPage = ({
   connected,
