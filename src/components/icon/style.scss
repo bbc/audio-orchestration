@@ -2,17 +2,17 @@
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?u14jm9');
-  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?u14jm9#iefix') format('embedded-opentype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?u14jm9') format('truetype'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?u14jm9') format('woff'),
-    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?u14jm9##{$icomoon-font-family}') format('svg');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?5tz166');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?5tz166#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?5tz166') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?5tz166') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?5tz166##{$icomoon-font-family}') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-[class^="bbcat-icon-"], [class*=" bbcat-icon-"] {
+.icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
   speak: none;
@@ -27,6 +27,21 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.bbcat-icon-copy {
+  &:before {
+    content: $bbcat-icon-copy; 
+  }
+}
+.bbcat-icon-paste {
+  &:before {
+    content: $bbcat-icon-paste; 
+  }
+}
+.bbcat-icon-share {
+  &:before {
+    content: $bbcat-icon-share; 
+  }
+}
 .bbcat-icon-bbcrd {
   &:before {
     content: $bbcat-icon-bbcrd; 
