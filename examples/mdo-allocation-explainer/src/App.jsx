@@ -31,7 +31,7 @@ const mockObjects = [
     objectImage: null,
     objectBehaviours: [
       { behaviourType: 'auxDevicesOnly' },
-      { behaviourType: 'spread', behaviourParameters: { perDeviceGainAdjust: 0.8 } },
+      { behaviourType: 'spread', behaviourParameters: { perDeviceGainAdjust: -3 } },
       { behaviourType: 'allowedEverywhere' },
       {
         behaviourType: 'onChange',

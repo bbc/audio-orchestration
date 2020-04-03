@@ -1,3 +1,5 @@
+const convertDecibelsToLinearGain = decibels => 10 ** (decibels / 20);
+
 const spread = ({ behaviourParameters, object, allocations }) => ({
   flags: ['spread'],
   postAllocationBehaviour: () => {
@@ -12,10 +14,11 @@ const spread = ({ behaviourParameters, object, allocations }) => ({
       }
     });
 
-    // get the setting and calculate the desired new gain
-    const { perDeviceGainAdjust = 1.0 } = behaviourParameters;
+    // get the setting (in dB) and calculate the overall gain by applying the adjustment once per
+    // device beyond the first one.
+    const { perDeviceGainAdjust = 0.0 } = behaviourParameters;
     return {
-      gain: perDeviceGainAdjust ** (numDevices - 1),
+      gain: convertDecibelsToLinearGain(perDeviceGainAdjust) ** (numDevices - 1),
     };
   },
 });
