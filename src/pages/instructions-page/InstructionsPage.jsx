@@ -44,7 +44,7 @@ const InstructionsPage = ({
             {config.JOIN_URL}
           </a>
           {' '}
-          and type the pairing code, or scan the QR code with your camera app.
+          and type the pairing code if prompted. Or scan the QR code with your camera app.
         </p>
 
         <PageFiller />

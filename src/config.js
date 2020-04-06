@@ -1,3 +1,13 @@
+// Fallback in case this is not running in a browser with a defined window object
+const location = window ? window.location : {};
+const DEFAULT_JOIN_URL = [
+  `${location.protocol}//`,
+  location.hostname,
+  location.port ? `:${location.port}` : '',
+  location.pathname,
+  '#!/join',
+].join('');
+
 const config = {
   // Content ID for session-wide sync clock - don't change this.
   SYNC_CLOCK_CONTENT_ID: 'github.com/bbc/bbcat-orchestration-template/syncClock',
@@ -39,7 +49,7 @@ const config = {
 
   // The join URL is used to generate the QR code and should correspond to where the template is
   // hosted. The "#!/join" suffix immediately opens the connect-form page.
-  JOIN_URL: '',
+  JOIN_URL: DEFAULT_JOIN_URL,
 
   // Dynamics compression with these settings is applied to the output of all auxiliary devices.
   MDO_COMPRESSOR_RATIO: 4,

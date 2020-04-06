@@ -19,7 +19,8 @@
       const config = {
         ENABLE_TUTORIAL: false,
         DEBUG_UI: true,
-        JOIN_URL: location.protocol + '//' + location.host + '/#!/join',
+        // if JOIN_URL is not set, it will be filled to point to the current page with a #!/join suffix
+        // JOIN_URL: 'https://bbc.in/my-short-joining-link/#!/join',
         LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
         CLOUDSYNC_ENDPOINT: { hostname: 'cloudsync.virt.ch.bbc.co.uk' },
         // CLOUDSYNC_ENDPOINT: { hostname: '127.0.0.1', port: 9001 },
