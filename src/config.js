@@ -90,6 +90,9 @@ const config = {
   ACCENT_COLOUR: '#006DEF',
 
   PLAYER_IMAGE_URL: 'https://placekitten.com/600/600',
+
+  // By default in the orchestration library, auxiliary devices only output mono.
+  ENABLE_STEREO_ON_AUX_DEVICES: true,
 };
 
 export const updateConfig = (newConfig = {}) => {

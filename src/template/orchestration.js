@@ -66,6 +66,7 @@ export const initialiseOrchestration = (dispatch) => {
     loadingTimeout: config.LOADING_TIMEOUT,
     contentId: config.SYNC_CLOCK_CONTENT_ID,
     controls: config.CONTROLS,
+    isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
   });
 
