@@ -17,6 +17,7 @@ class ItemRenderer {
       fadeOutDuration = 0.2,
       stereoOutput = true,
       channelMapping = 'mono',
+      panning,
     } = {},
   ) {
     this._audioContext = audioContext;
@@ -25,36 +26,39 @@ class ItemRenderer {
     this._fadeOutDuration = fadeOutDuration;
     this._stereoOutput = stereoOutput;
     this._channelMapping = channelMapping;
+    this._panning = panning;
 
     this._syncController = new SyncController(this._clock, this._player);
 
-    // TODO: replace with stereo panner in stereo case, or gain node otherwise.
-    this._output = new OutputRouter(this._audioContext, this._stereoOutput);
+    // TODO: Implement handling of stereo files
+
+    // For compatibility with old metadata format, map to new panning parameter
+    if (this._panning === undefined) {
+      switch (this._channelMapping) {
+        case 'left':
+          this._panning = -1;
+          break;
+        case 'right':
+          this._panning = 1;
+          break;
+        case 'mono':
+        default:
+          this._panning = 0;
+          break;
+      }
+    }
+
+    this._outputRouter = new OutputRouter(this._audioContext, this._stereoOutput, this._panning);
 
     this.stopped = false;
   }
 
+  // TODO implement start as separate from constructor
+  // .then(() => this._syncController.start())
   start() {
     this._player.prepare()
-      // TODO implement start as separate from constructor
-      // .then(() => this._syncController.start())
       .then(() => {
-        switch (this._stereoOutput ? this._channelMapping : 'mono') {
-          case 'stereo':
-            this._player.outputs[0].connect(this._output.left);
-            this._player.outputs[1].connect(this._output.right);
-            break;
-          case 'left':
-            this._player.outputs[0].connect(this._output.left);
-            break;
-          case 'right':
-            this._player.outputs[0].connect(this._output.right);
-            break;
-          case 'mono':
-          default:
-            this._player.outputs[0].connect(this._output.mono);
-            break;
-        }
+        this._player.outputs[0].connect(this._outputRouter.input);
       });
   }
 
@@ -66,9 +70,10 @@ class ItemRenderer {
     return Promise.resolve();
   }
 
+  // TODO: Check whether this code is called
   fadeOut(when = this._audioContext.currentTime) {
     return new Promise((resolve) => {
-      this._output.exponentialRamptoValueAtTime(1e-3, this._fadeOutDuration);
+      this._outputRouter.output.gain.exponentialRamptoValueAtTime(1e-3, this._fadeOutDuration);
       setTimeout(() => {
         resolve();
       }, 1000 * ((when - this._audioContext.currentTime) + this._fadeOutDuration));
@@ -76,7 +81,7 @@ class ItemRenderer {
   }
 
   get output() {
-    return this._output.output;
+    return this._outputRouter.output;
   }
 }
 
@@ -117,6 +122,7 @@ class ItemRendererFactory {
       clock,
       Object.assign({}, this._options, {
         channelMapping: source.channelMapping,
+        panning: source.panning,
       }),
     );
   }

@@ -1,76 +1,64 @@
 /**
  * @class
- * @desc The OutputRouter wraps a channel merger node.
+ * @desc OutputRouter provides an interface for a player to the audio output through some routing.
  *
- * Its inputs (left, right, and mono) correspond to the channelMapping specified in MDO objects.
+ * Its input is connected to a stereoPanner node.
  *
- * It does not perform any gain processing; the mono input is routed unchanged to both the left and
- * the right output.
+ * For stereo devices, this is connected directly the output.
  *
- * TODO: Perhaps it should do gain processing and take a numerical pan value for each input.
+ * For mono devices, the panner output is converted to mono and connected to the output.
  *
  * @example
- * output = new OutputRouter(audioContext, true);
- * dashSourceNode.outputs[0].connect(output.left);
- * dashSourceNode.outputs[1].connect(output.right);
- * dashSourceNode.outputs[2].connect(output.mono);
- *
- * output.output.connect(audioContext.destination);
+ * routeAudio = new OutputRouter(audioContext, true, panning);
+ * dashSourceNode.outputs[0].connect(routeAudio.input);
+ * routeAudio.output.connect(audioContext.destination);
  */
 class OutputRouter {
   /**
    * @param {AudioContext} audioContext
    * @param {boolean} isStereo whether the output is treated as stereo (true) or mono (false).
+   * @param {number} panning a panning value between -1 and +1
    */
-  constructor(audioContext, isStereo) {
+  constructor(audioContext, isStereo, panning) {
     this._audioContext = audioContext;
     this._isStereo = isStereo;
+    this._panning = panning;
 
     /**
-     * The left input.
+     * The input.
      * @type {GainNode}
      */
-    this.left = this._audioContext.createGain();
-
-    /**
-     * The left input.
-     * @type {GainNode}
-     */
-    this.right = this._audioContext.createGain();
-
-    /**
-     * The mono input.
-     * @type {GainNode}
-     */
-    this.mono = this._audioContext.createGain();
+    this.input = this._audioContext.createGain();
 
     /**
      * The output.
+     * @type {GainNode}
      */
     this.output = this._audioContext.createGain();
     this.initAudioGraph();
   }
 
   /**
-   * Connects the inputs to the output.
+   * Connects the inputs to the output via the panner.
    *
    * @private
    */
   initAudioGraph() {
-    this._merger = this._audioContext.createChannelMerger(this._isStereo ? 2 : 1);
+    const panner = this._audioContext.createStereoPanner();
+    panner.pan.value = this._panning;
+    this.input.connect(panner);
+
     if (this._isStereo) {
-      // Stereo: left and right routed to their respective output channels, mono to both.
-      this.left.connect(this._merger, 0, 0);
-      this.right.connect(this._merger, 0, 1);
-      this.mono.connect(this.right);
-      this.mono.connect(this.left);
+      panner.connect(this.output);
     } else {
-      // Mono: A single output channel, everything connected to this.
-      this.mono.connect(this._merger, 0, 0);
-      this.left.connect(this.mono);
-      this.right.connect(this.mono);
+      // Create a mono gain node so we explicitly output one channel here for mono devices
+      const monoSum = this._audioContext.createGain();
+      monoSum.channelCountMode = 'explicit';
+      monoSum.channelCount = 1;
+
+      panner.connect(monoSum);
+      monoSum.connect(this.output);
     }
-    this._merger.connect(this.output);
   }
 }
 

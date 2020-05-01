@@ -75,6 +75,7 @@ class Sequence {
           urlSafari,
           adaptationSetId,
           channelMapping,
+          panning,
         } = item.source;
 
         return {
@@ -88,6 +89,7 @@ class Sequence {
             urlSafari,
             adaptationSetId,
             channelMapping,
+            panning,
           },
         };
       })

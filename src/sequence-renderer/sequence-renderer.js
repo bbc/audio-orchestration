@@ -326,7 +326,6 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     // console.debug(`at ${startTime.toFixed(1)}\t start ${itemId} (new item renderer) (sequence loop: ${this._sequence.loop})\n` +
     //               `syncClock.now: ${this._syncClock.now()}\n` +
     //               `clock.now: ${clock.now()}`);
-
     const renderer = this._itemRendererFactory.getInstance(source, clock);
     renderer.output.connect(this._output);
     renderer.start();
