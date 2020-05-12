@@ -9,6 +9,7 @@ import Button from 'components/button/Button';
 import ConnectedInstructionsSessionCode from 'components/instructions-session-code/ConnectedInstructionsSessionCode';
 import QRCode from 'components/qr-code/QRCode';
 import ConnectedDeviceList from 'components/device-list/ConnectedDeviceList';
+import Share from 'components/share/Share';
 
 import config from 'config';
 
@@ -52,6 +53,8 @@ const InstructionsPage = ({
         <ConnectedInstructionsSessionCode />
 
         <QRCode url={joinSessionUrl} />
+
+        <Share url={joinSessionUrl} />
 
         <PageFiller />
 

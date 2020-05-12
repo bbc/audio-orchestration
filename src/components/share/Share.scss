@@ -1,0 +1,42 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.share {
+  display: flex;
+  margin: auto;
+  justify-content: center;
+  width: 100%;
+
+  .leftMargin {
+    margin-left: $gel-spacing-unit;
+  }
+
+  #copy-confirmation-toast {
+    display: none;
+  }
+
+  #copy-confirmation-toast.show {
+    display: block;
+    margin: auto;
+    width: 80%;
+    padding: $gel-spacing-unit $gel-spacing-unit * 3;
+    background-color: $theme-color-grey; 
+    text-align: center;
+    position: fixed;
+    z-index: 20;
+    top: $gel-spacing-unit;
+    animation: slideDown 0.5s, slideUp 0.5s 1.5s;
+  }
+
+  @keyframes slideDown {
+    from {opacity: 0; top: 0}
+    to {opacity: 1; top: $gel-spacing-unit}
+  }
+
+  @keyframes slideUp {
+    from {opacity: 1; top: $gel-spacing-unit}
+    to {opacity: 0; top: 0}
+  }
+}

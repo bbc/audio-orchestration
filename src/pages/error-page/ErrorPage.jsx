@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import PageFiller from 'components/page-filler/PageFiller';
 import PageContents from 'components/page-contents/PageContents';
 import Icon from 'components/icon/Icon';
+import Button from 'components/button/Button';
 
 // TODO make an error icon
 // TODO get error message from state
@@ -21,6 +22,9 @@ const LoadingPage = () => (
       </p>
       <p style={{ textAlign: 'center' }}>
         Sorry; there was an error. Please reload the page to try again.
+      </p>
+      <p style={{ textAlign: 'center' }}>
+        <Button content="Reload" onClick={() => { window.location.href = window.location.origin; }} />
       </p>
       <PageFiller />
     </PageContents>
