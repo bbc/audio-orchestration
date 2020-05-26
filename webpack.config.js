@@ -76,6 +76,7 @@ module.exports = {
       'react-dom': '@hot-loader/react-dom',
       actions: path.resolve(__dirname, 'src/template/actions'),
       components: path.resolve(__dirname, 'src/components'),
+      pages: path.resolve(__dirname, 'src/pages'),
       config: path.resolve(__dirname, 'src/config.js'),
       sagas: path.resolve(__dirname, 'src/sagas.js'),
       theme: path.resolve(__dirname, 'src/theme.scss'),

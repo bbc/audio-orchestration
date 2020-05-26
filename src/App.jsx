@@ -14,15 +14,14 @@ import {
 } from 'sagas';
 
 // Import the page components: only one of these is used at a time.
-import StartPage from './pages/start-page/StartPage';
-import LoadingPage from './pages/loading-page/LoadingPage';
-import LoadingTutorialPage from './pages/loading-tutorial-page/LoadingTutorialPage';
-import InstructionsPage from './pages/instructions-page/InstructionsPage';
-import ErrorPage from './pages/error-page/ErrorPage';
-import PlayingPage from './pages/playing-page/PlayingPage';
-import ConnectFormPage from './pages/connect-form-page/ConnectFormPage';
-import ConnectDirectPage from './pages/connect-direct-page/ConnectDirectPage';
-// import InstructionsPage from './pages/instructions-page/InstructionsPage';
+import StartPage from 'pages/start-page/StartPage';
+import LoadingPage from 'pages/loading-page/LoadingPage';
+import LoadingTutorialPage from 'pages/loading-tutorial-page/LoadingTutorialPage';
+import InstructionsPage from 'pages/instructions-page/InstructionsPage';
+import ErrorPage from 'pages/error-page/ErrorPage';
+import PlayingPage from 'pages/playing-page/PlayingPage';
+import ConnectFormPage from 'pages/connect-form-page/ConnectFormPage';
+import ConnectDirectPage from 'pages/connect-direct-page/ConnectDirectPage';
 
 /**
  * The App is the top level presentational component.
@@ -67,9 +66,6 @@ const App = (props) => {
     case PAGE_CONNECT_DIRECT:
       CurrentPage = ConnectDirectPage;
       break;
-      //    case PAGE_INSTRUCTIONS:
-      //      CurrentPage = InstructionsPage;
-      //      break;
     default:
       CurrentPage = ErrorPage;
   }
