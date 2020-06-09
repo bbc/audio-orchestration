@@ -6,11 +6,9 @@ import PageContents from 'components/page-contents/PageContents';
 import PageFiller from 'components/page-filler/PageFiller';
 import ConnectedStatusBar from 'components/status-bar/ConnectedStatusBar';
 import Button from 'components/button/Button';
-import ConnectedInstructionsSessionCode from 'components/instructions-session-code/ConnectedInstructionsSessionCode';
 import QRCode from 'components/qr-code/QRCode';
 import ConnectedDeviceList from 'components/device-list/ConnectedDeviceList';
 import Share from 'components/share/Share';
-
 import config from 'config';
 
 import {
@@ -31,30 +29,15 @@ const InstructionsPage = ({
       <PageContents>
         <h1>Connect devices</h1>
 
-        <p>You can connect more phones, tablets, or laptops to enhance this audio experience.</p>
-
         <p>
-          Just go to
-          {' '}
-          <a
-            tabIndex={0}
-            href={joinSessionUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {config.JOIN_URL}
-          </a>
-          {' '}
-          and type the pairing code if prompted. Or scan the QR code with your camera app.
+          Use this link to connect more phones, tablets, or laptops to enhance the audio experience.
         </p>
 
-        <PageFiller />
-
-        <ConnectedInstructionsSessionCode />
+        <p>
+          <Share url={joinSessionUrl} />
+        </p>
 
         <QRCode url={joinSessionUrl} />
-
-        <Share url={joinSessionUrl} />
 
         <PageFiller />
 

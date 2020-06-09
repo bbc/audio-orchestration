@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+import config from 'config';
 import Button from 'components/button/Button';
 import PageFiller from 'components/page-filler/PageFiller';
 import PageContents from 'components/page-contents/PageContents';
 import { joinDirect } from 'actions';
+import PlayerImage from 'components/player-image/PlayerImage';
+import PlayerTitle from 'components/player-title/PlayerTitle';
 
 const ConnectDirectPage = ({
   onJoinDirect,
@@ -19,17 +22,20 @@ const ConnectDirectPage = ({
     )}
   >
     <PageContents>
-      <h1>
-        Connect your device
-      </h1>
-
-      <p>Click the button below to join the session and hear additional audio from this device.</p>
-
-      <PageFiller />
+      <PlayerImage src={config.PLAYER_IMAGE_URL} />
+      <PlayerTitle />
 
       <p>
         <Button onClick={onJoinDirect} content="Connect" fluid />
       </p>
+
+      <p>
+        Clicking this button will connect you to an existing session so you can hear synchronised
+        audio from this device.
+      </p>
+
+      <PageFiller />
+
     </PageContents>
   </div>
 );

@@ -20,11 +20,11 @@ const StatusBar = ({
   let statusText = 'Waiting to connect...';
 
   if (instructionsOpen) {
-    statusText = 'Tap to close instructions.';
+    statusText = 'Click to close instructions.';
   } else if (connected) {
     if (isMain) {
       if (numDevices <= 1) {
-        statusText = 'Tap to add devices.';
+        statusText = 'Click to add devices.';
       } else if (numDevices === 2) {
         // numDevices includes the main device, but here we show the number of _additional_ devices.
         statusText = '1 device connected.';

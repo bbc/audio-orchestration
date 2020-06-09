@@ -6,28 +6,25 @@
 .share {
   display: flex;
   margin: auto;
-  justify-content: center;
   width: 100%;
+  
 
-  .leftMargin {
+  input {
+    flex-grow: 1;
+  }
+
+  button.icon {
     margin-left: $gel-spacing-unit;
+    flex-grow: 0;
+    background-color: $theme-color-blue;
   }
 
-  #copy-confirmation-toast {
-    display: none;
-  }
+  .copy-button {
+    transition: background-color 300ms linear;
 
-  #copy-confirmation-toast.show {
-    display: block;
-    margin: auto;
-    width: 80%;
-    padding: $gel-spacing-unit $gel-spacing-unit * 3;
-    background-color: $theme-color-grey; 
-    text-align: center;
-    position: fixed;
-    z-index: 20;
-    top: $gel-spacing-unit;
-    animation: slideDown 0.5s, slideUp 0.5s 1.5s;
+    &.success {
+      background-color: $theme-color-green;
+    }
   }
 
   @keyframes slideDown {

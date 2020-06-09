@@ -1,3 +1,7 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+
 .page-filler {
   flex-grow: 1;
+  min-height: $gel-spacing-unit;
 }

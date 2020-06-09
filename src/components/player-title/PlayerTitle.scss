@@ -4,15 +4,15 @@
 @import '~theme';
 
 .player-title {
-  min-height: 64px;
-  margin-top: -64px;
+  min-height: 96px;
+  margin-top: -96px;
   margin-right: -$gel-spacing-unit;
   margin-bottom: $gel-spacing-unit;
   margin-left: -$gel-spacing-unit;
 
   z-index: 1;
   background: $theme-color-black;
-  background: linear-gradient(0deg, rgba($theme-color-black, 1) 0, rgba($theme-color-black, 0) 100%); 
+  background: linear-gradient(0deg, rgba($theme-color-black, 1) 0, rgba($theme-color-black, 0) 100%);
   padding: 0 $gel-spacing-unit;
   display: flex;
   flex-direction: column;
@@ -36,4 +36,3 @@
   color: $theme-color-light-grey;
   flex-grow: 0;
 }
-

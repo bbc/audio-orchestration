@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+import classnames from 'classnames';
 import Button from 'components/button/Button';
+import Input from 'components/input/Input';
 import Icon from 'components/icon/Icon';
 
 
 import config from 'config';
 
 const Share = ({ url }) => {
-  const [copyToast, setCopyToast] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const inputRef = useRef();
 
   const share = () => {
     navigator.share({
@@ -19,21 +22,41 @@ const Share = ({ url }) => {
   };
 
   const copyToClipboard = () => {
+    if (inputRef.current) {
+      inputRef.current.select();
+    }
+
     copy(url).then(() => {
-      setCopyToast(true);
-      setTimeout(() => setCopyToast(false), 2000);
+      setSuccess(true);
+      setTimeout(() => setSuccess(false), 2000);
     });
   };
 
   return (
-    <div className="share">
-      <Button icon onClick={copyToClipboard}><Icon name="copy" /></Button>
+    <span className="share">
+      <Input readonly value={url} ref={inputRef} onFocus={() => inputRef.current.select()} />
+
+      <Button
+        icon
+        onClick={copyToClipboard}
+        className={classnames(
+          'copy-button',
+          { success },
+        )}
+        title="Copy link to clipboard"
+      >
+        <Icon name={success ? 'check' : 'copy'} />
+      </Button>
 
       { navigator.share && (
-        <Button className="leftMargin" icon onClick={share}><Icon name="share" /></Button>
+      <Button
+        icon
+        onClick={share}
+      >
+        <Icon name="share" />
+      </Button>
       )}
-      <h3 className={copyToast ? 'show' : ''} id="copy-confirmation-toast">Copied to clipboard.</h3>
-    </div>
+    </span>
   );
 };
 

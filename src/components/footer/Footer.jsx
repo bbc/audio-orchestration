@@ -7,7 +7,7 @@ const Footer = () => (
       <Icon title="BBC Research & Development" padded name="bbcrd" />
     </p>
     <p className="small">
-      <a href="https://www.bbc.co.uk/makerbox/tools/orchestrator" target="_blank" rel="noopener noreferrer">Created with Orchestrator</a>
+      <a href="https://www.bbc.co.uk/makerbox/tools/audio-orchestrator" target="_blank" rel="noopener noreferrer">Created with Audio Orchestrator</a>
     </p>
     <p className="small">
       &copy; BBC R&amp;D 2020

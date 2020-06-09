@@ -10,6 +10,7 @@ const Input = React.forwardRef(({
   disabled,
   onKeyPress,
   onChange,
+  onFocus,
   value,
   fluid,
   error,
@@ -17,6 +18,7 @@ const Input = React.forwardRef(({
   min,
   max,
   step,
+  readOnly,
 }, ref) => (
   <input
     className={classnames(
@@ -35,11 +37,13 @@ const Input = React.forwardRef(({
     disabled={disabled}
     onKeyPress={onKeyPress}
     onChange={onChange}
+    onFocus={onFocus}
     value={value}
     checked={checked}
     min={min}
     max={max}
     step={step}
+    readOnly={readOnly}
   />
 ));
 
@@ -58,6 +62,8 @@ Input.propTypes = {
   onKeyPress: PropTypes.func,
   /* onChange handler for the input element */
   onChange: PropTypes.func,
+  /* onFocus handler for the input element */
+  onFocus: PropTypes.func,
   /* current value of the input element; for controlled components */
   value: PropTypes.oneOfType([
     PropTypes.string,
@@ -75,6 +81,8 @@ Input.propTypes = {
   max: PropTypes.number,
   /* step size for a range control */
   step: PropTypes.number,
+  /* whether the input is readonly */
+  readOnly: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -85,6 +93,7 @@ Input.defaultProps = {
   maxLength: undefined,
   onKeyPress: undefined,
   onChange: undefined,
+  onFocus: undefined,
   value: undefined,
   fluid: false,
   error: false,
@@ -92,6 +101,7 @@ Input.defaultProps = {
   min: undefined,
   max: undefined,
   step: undefined,
+  readOnly: false,
 };
 
 export default Input;

@@ -11,6 +11,7 @@
     background-color: $theme-color-white;
     padding: 2 * $gel-spacing-unit;
     border: 0px solid;
+    border-radius: 0;
     box-sizing: border-box;
 
     &.disabled {
