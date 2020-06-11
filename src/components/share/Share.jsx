@@ -34,7 +34,7 @@ const Share = ({ url }) => {
 
   return (
     <span className="share">
-      <Input readonly value={url} ref={inputRef} onFocus={() => inputRef.current.select()} />
+      <Input readOnly value={url} ref={inputRef} onFocus={() => inputRef.current.select()} />
 
       <Button
         icon
