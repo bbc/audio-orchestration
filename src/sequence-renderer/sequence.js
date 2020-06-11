@@ -76,7 +76,6 @@ class Sequence {
           adaptationSetId,
           channelMapping,
           panning,
-          gain,
         } = item.source;
 
         return {
@@ -91,7 +90,6 @@ class Sequence {
             adaptationSetId,
             channelMapping,
             panning,
-            gain,
           },
         };
       })

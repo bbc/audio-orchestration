@@ -435,7 +435,7 @@ class OrchestrationClient extends EventEmitter {
         const sequenceWrapper = this._sequences[contentId];
         if (activeObjects) {
           if (sequenceWrapper !== undefined) {
-            sequenceWrapper.renderer.setActiveObjects(activeObjects);
+            sequenceWrapper.renderer.setActiveObjectIds(activeObjects);
           }
           this._publishObjectsEvent();
         }

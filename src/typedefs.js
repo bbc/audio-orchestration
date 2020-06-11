@@ -3,7 +3,7 @@
  *
  * @desc Represents the allocations determined by the {@link AllocationAlgorithm};
  * each `deviceId` key maps to a list of objects to play on that device. Each such object is
- * represented by its `objectId` and `objectGain`.
+ * represented by its `objectId` and `gain`.
  */
 
 /**
@@ -59,15 +59,6 @@
  * @property {Array<MdoSequenceItem>} items - rendering items for the audio content of this object
  */
 
-/**
- * @typedef {Object} MdoAllocatedObject
- *
- * @desc Represents the allocation parameters for a single object to a particular device. Currently
- * this is only used to store an optional gain value.
- *
- * @property {String} objectId - Unique identifier for this object
- * @property {Number} [objectGain] - gain multiplier (linear)
- */
 
 /**
  * @typedef {Object} MdoSequence
