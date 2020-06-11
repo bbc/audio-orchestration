@@ -8,7 +8,7 @@ const sass = require('sass');
 
 module.exports = {
   mode: 'development',
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV !== 'production' ? 'source-map' : false,
   entry: [
     path.resolve(__dirname, 'src/index.js'),
   ],
