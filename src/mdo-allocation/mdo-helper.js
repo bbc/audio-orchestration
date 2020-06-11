@@ -138,15 +138,16 @@ class MdoHelper extends EventEmitter {
    *
    * @param {string} contentId
    *
-   * @returns {Array<string>} objectIds; an empty list is returned if the contentId or deviceId
-   * does not have any allocations.
-   *
-   * TODO: Gain property is ignored.
+   * @returns {Array<MdoAllocatedObject>} of shape {objectId, objectGain}; an empty list is
+   * returned if the contentId or deviceId does not have any allocations.
    */
   getActiveObjects(contentId = DEFAULT_CONTENT_ID) {
     const allocations = this._objectAllocations[contentId] || {};
     const objectsList = allocations[this._deviceId] || [];
-    return objectsList.map(({ objectId }) => objectId);
+    return objectsList.map(({ objectId, objectGain }) => ({
+      objectId,
+      objectGain,
+    }));
   }
 
   /**

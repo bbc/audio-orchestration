@@ -62,10 +62,10 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     this._isStereo = isStereo;
 
     /**
-     * @type {Array<string>}
+     * @type {Array<MdoAllocatedObject>}
      * @private
      */
-    this._activeObjectIds = [];
+    this._activeObjects = [];
 
     /**
      * @type {Map<ItemRenderer>}
@@ -132,18 +132,18 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * Replace the set of active objects. Will cause new objects to start playing according to the
    * sequence and fade in, and removed objects to fade out immediately.
    *
-   * @param {Array<string>} newObjectIds
+   * @param {Array<MdoAllocatedObject>} newObjects
    */
-  setActiveObjectIds(newObjectIds) {
+  setActiveObjects(newObjects) {
     // trigger addition of objects not present in old list
-    newObjectIds
-      .filter(objectId => !this._activeObjectIds.includes(objectId))
-      .forEach(objectId => this.addObject(objectId));
+    newObjects
+      .filter(object => !this._activeObjects.find((({ objectId }) => object.objectId === objectId)))
+      .forEach(object => this.addObject(object));
 
     // trigger removal of objects not present in new list
-    this._activeObjectIds
-      .filter(objectId => !newObjectIds.includes(objectId))
-      .forEach(objectId => this.removeObject(objectId));
+    this._activeObjects
+      .filter(object => !newObjects.find((({ objectId }) => object.objectId === objectId)))
+      .forEach(object => this.removeObject(object));
 
     // update the audio graph and player instances
     this.notify();
@@ -155,7 +155,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @returns {Array<string>}
    */
   get activeObjectIds() {
-    return this._activeObjectIds.slice();
+    return this._activeObjects.map(({ objectId }) => objectId);
   }
 
   /**
@@ -281,12 +281,23 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    */
   getActiveItems() {
     // Object ids that are valid for the sequence (ensure this now to avoid error checking later)
-    const objectIds = this._activeObjectIds
-      .filter(objectId => this._sequence.objectIds.includes(objectId));
+    const objects = this._activeObjects
+      .filter(({ objectId }) => this._sequence.objectIds.includes(objectId));
 
     // items that are active at or after the current time (or all items for looping sequences)
-    const items = objectIds
-      .map(objectId => this._sequence.items(objectId, this._sequence.loop ? 0 : this.contentTime))
+    const items = objects
+      .map(({ objectId, objectGain }) => {
+        // Get the items, for this object, that are active at or after the current time.
+        const objectItems = this._sequence.items(
+          objectId,
+          this._sequence.loop ? 0 : this.contentTime,
+        );
+        // Add the object's objectGain property to each item for rendering
+        return objectItems.map(item => ({
+          ...item,
+          objectGain,
+        }));
+      })
       .reduce((acc, a) => acc.concat(a), []);
 
     // those active items that start within the lookahead window. Also include those at the start
@@ -312,7 +323,8 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     const existingRenderer = this._activeItemRenderers
       .find(r => r.itemId === itemId && Math.abs(r.startTime - startTime) < 1.0e-3);
     if (existingRenderer !== undefined) {
-      // Already have this item scheduled for the same time.
+      // Already have this item scheduled for the same time, just update the gain
+      existingRenderer.renderer.setObjectGain(item.objectGain);
       return;
     }
 
@@ -327,6 +339,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     //               `syncClock.now: ${this._syncClock.now()}\n` +
     //               `clock.now: ${clock.now()}`);
     const renderer = this._itemRendererFactory.getInstance(source, clock);
+    renderer.setObjectGain(item.objectGain);
     renderer.output.connect(this._output);
     renderer.start();
 
@@ -351,7 +364,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     if (this._stopped) {
       return;
     }
-    // console.debug('SSR: notify', this._sequence, this._activeObjectIds);
+    // console.debug('SSR: notify', this._sequence, this._activeObjects);
     const { contentTime } = this;
     const now = Math.max(this._clock.now() / this._clock.tickRate, 0);
     const sequenceStart = Math.floor(now / this._sequence.duration) * this._sequence.duration;
@@ -405,11 +418,11 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * Add it to the list of active objects, and the next {@link notify} call will create the players
    * and schedule the fade-in once the player has started playing.
    *
-   * @param {string} objectId
+   * @param {MdoAllocatedObject} object
    * @private
    */
-  addObject(objectId) {
-    this._activeObjectIds = [...this.activeObjectIds, objectId];
+  addObject(object) {
+    this._activeObjects = [...this._activeObjects, object];
   }
 
   /**
@@ -417,11 +430,12 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    *
    * If any players are associated with this object, they will fade out and then be destroyed.
    *
-   * @param {string} objectId
+   * @param {MdoAllocatedObject} object
    * @private
    */
-  removeObject(objectId) {
-    this._activeObjectIds = this._activeObjectIds.filter(o => o !== objectId);
+  removeObject(object) {
+    this._activeObjects = this._activeObjects
+      .filter(({ objectId }) => object.objectId !== objectId);
   }
 
   /**

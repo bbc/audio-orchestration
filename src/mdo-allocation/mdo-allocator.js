@@ -149,6 +149,7 @@ class MdoAllocator extends MdoHelper {
    */
   _sendAllocations(contentId) {
     if (this._sync !== null && this._objectAllocations[contentId] !== undefined) {
+      console.log('sendAllocations', this._objectAllocations[contentId]);
       this._sync.sendMessage(TOPICS.ALLOCATIONS, {
         contentId,
         objectAllocations: this._objectAllocations[contentId] || {},
