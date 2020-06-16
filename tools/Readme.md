@@ -21,5 +21,3 @@ Usage: `./prepare.sh` `~/path/to/metadata.csv` `~/path/to/destination-folder` `p
 ```
 ./prepare.sh ~/my-mdo-audio/metadata.csv ~/my-mdo-experience/audio/my-mdo-audio audio/my-mdo-audio
 ```
-
-More details in the template tutorial: https://github.com/bbc/bbcat-orchestration-template/tree/master/tutorial
