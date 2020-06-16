@@ -44,7 +44,7 @@ pipeline {
     }
     stage ("Publish") {
       when {
-        expression { bbcShouldNpmPublish(branches: ["master"], reg: publishReg) }
+        expression { bbcShouldNpmPublish(branches: ["main"], reg: publishReg) }
       }
       steps {
         script {

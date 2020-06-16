@@ -74,7 +74,7 @@ Implements the root saga, which starts three sagas:
 
 * `watcherSaga` (background): listens for asynchronous events, currently only used for when a session code needs to be validated.
 * `orchestrationWatcherSaga` (background): listens for orchestration-related events, described below
-* Depending on parameters passed in the URL, one of the `directJoinFlow`, `joinFlow`, or `startFlow`, which show a join page, a connect page, or the generic start page (allowing to create a session) respectively. Eventually, these defer to either the `slaveFlow` for an auxiliary device, or the `masterFlow` for a main device.
+* Depending on parameters passed in the URL, one of the `directJoinFlow`, `joinFlow`, or `startFlow`, which show a join page, a connect page, or the generic start page (allowing to create a session) respectively. Eventually, these defer to either the `auxiliaryFlow` for an auxiliary device, or the `mainFlow` for a main device.
 
 #### `src/template/orchestration.js`
 
