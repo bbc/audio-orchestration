@@ -20,7 +20,7 @@
           "start": 0,
           "duration": 32.0,
           "source": {
-            "channelMapping": "mono",
+            "panning": 0,
             "type": "buffer",
             "url": "audio/clicks-and-tone/clicks-and-tone.m4a"
           }
