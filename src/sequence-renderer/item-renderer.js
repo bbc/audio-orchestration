@@ -17,8 +17,9 @@ class ItemRenderer {
       fadeOutDuration = 0.2,
       stereoOutput = true,
       channelMapping = 'mono',
-      panning,
-    } = {},
+      panning = 0.0,
+      gain = 0.0, // specified as decibels in metadata
+    } = {}, // item.source
   ) {
     this._audioContext = audioContext;
     this._player = player;
@@ -27,6 +28,8 @@ class ItemRenderer {
     this._stereoOutput = stereoOutput;
     this._channelMapping = channelMapping;
     this._panning = panning;
+    this._gain = 10 ** (gain / 20); // convert fixed gain set in the item.source to linear gain
+    this._objectGain = 1.0; // additional gain set at runtime by the allocation algorithm.
 
     this._syncController = new SyncController(this._clock, this._player);
 
@@ -48,9 +51,26 @@ class ItemRenderer {
       }
     }
 
+    this._gainNode = this._audioContext.createGain();
+    this._gainNode.gain.value = this._gain * this._objectGain;
+
     this._outputRouter = new OutputRouter(this._audioContext, this._stereoOutput, this._panning);
 
     this.stopped = false;
+  }
+
+  /**
+   * Set additional gain for the object, set by the allocation algorithm.
+   * @param {number} gain
+   */
+  setObjectGain(objectGain) {
+    if (objectGain || objectGain === 0) {
+      this._objectGain = objectGain;
+    } else {
+      this._objectGain = 1.0;
+    }
+
+    this._gainNode.gain.value = this._gain * this._objectGain;
   }
 
   // TODO implement start as separate from constructor
@@ -58,7 +78,8 @@ class ItemRenderer {
   start() {
     this._player.prepare()
       .then(() => {
-        this._player.outputs[0].connect(this._outputRouter.input);
+        this._player.outputs[0].connect(this._gainNode);
+        this._gainNode.connect(this._outputRouter.input);
       });
   }
 
@@ -123,6 +144,7 @@ class ItemRendererFactory {
       Object.assign({}, this._options, {
         channelMapping: source.channelMapping,
         panning: source.panning,
+        gain: source.gain,
       }),
     );
   }

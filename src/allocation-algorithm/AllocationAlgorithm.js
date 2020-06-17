@@ -44,8 +44,8 @@ class AllocationAlgorithm {
   }
 
   /**
-   * Runs the allocation algorithm to create a new allocation map with an entry for each device
-   * holding a list of { objectId, gain } objects to be passed on to the renderer on each device.
+   * Runs the allocation algorithm to create a new allocation map with holding for each device
+   * a list of { objectId, objectGain } objects to be passed on to the renderer on each device.
    *
    * @param {Object} options
    * @param {Array<MdoObject>} options.objects - list of objects, representing the production
@@ -268,12 +268,12 @@ class AllocationAlgorithm {
       }
 
       // For now, always set gain to 1.0
-      const gain = 1.0;
+      const objectGain = 1.0;
 
       // Copy selected devices into the allocations map with the gain value, and add any flags to
       // the selected devices.
       [...selectedDevices].forEach((deviceId) => {
-        allocations[deviceId].push({ objectId, gain });
+        allocations[deviceId].push({ objectId, objectGain });
         if (objectFlags.has('exclusive')) {
           deviceFlags.get(deviceId).add('hasExclusiveObject');
         }
@@ -289,7 +289,7 @@ class AllocationAlgorithm {
           const {
             gain = 1.0,
           } = behaviour({ deviceId });
-          allocations[deviceId][i].gain *= gain; // effectively combining multiple gain stages
+          allocations[deviceId][i].objectGain *= gain; // effectively combining multiple gain stages
         });
       });
     });
