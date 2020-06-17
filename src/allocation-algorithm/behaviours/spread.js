@@ -14,12 +14,26 @@ const spread = ({ behaviourParameters, object, allocations }) => ({
       }
     });
 
-    // get the setting (in dB) and calculate the overall gain by applying the adjustment once per
-    // device beyond the first one.
-    const { perDeviceGainAdjust = 0.0 } = behaviourParameters;
-    return {
-      gain: convertDecibelsToLinearGain(perDeviceGainAdjust) ** (numDevices - 1),
-    };
+    // Get the flags for different methods of making gain adjustments for multiple devices
+    const {
+      enableGainCompensation = false,
+      perDeviceGainAdjust = 0.0, // in dB
+    } = behaviourParameters;
+
+    let gain = 1; // linear gain
+
+    // If enableGainCompensation is set:
+    // Assume summing incoherent sources and reduce level of object in each device accordingly
+    if (enableGainCompensation) {
+      gain *= convertDecibelsToLinearGain(0 - (10 * Math.log10(numDevices)));
+    }
+
+    // Add an extra gain adjustment for each connected device (perDeviceGainAdjust)
+    if (perDeviceGainAdjust) {
+      gain *= (convertDecibelsToLinearGain(perDeviceGainAdjust) ** (numDevices - 1));
+    }
+
+    return { gain };
   },
 });
 
