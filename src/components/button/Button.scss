@@ -24,7 +24,7 @@
   width: 100%;
 }
 
-.button.icon {
+.button.icon:not(.accent-colour-background) {
   background-color: transparent;
   padding: $gel-spacing-unit;
 }

@@ -90,6 +90,7 @@ const config = {
   ACCENT_COLOUR: '#006DEF',
 
   PLAYER_IMAGE_URL: 'images/orchestrator-default-image.jpg',
+  TEXT_PLAYER_IMAGE_ALT: 'Audio Orchestrator default image',
 
   // By default in the orchestration library, auxiliary devices only output mono.
   ENABLE_STEREO_ON_AUX_DEVICES: true,

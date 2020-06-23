@@ -22,7 +22,7 @@ const ConnectDirectPage = ({
     )}
   >
     <PageContents>
-      <PlayerImage src={config.PLAYER_IMAGE_URL} />
+      <PlayerImage src={config.PLAYER_IMAGE_URL} alt={config.TEXT_PLAYER_IMAGE_ALT} />
       <PlayerTitle />
 
       <p>

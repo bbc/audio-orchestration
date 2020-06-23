@@ -17,6 +17,7 @@ const PlayerButton = ({
     )}
     icon
     onClick={onClick}
+    title={type}
   >
     <Icon name={type} size="small" className="player-controls-button-icon" />
     <Icon name={type} size="small" className="player-controls-button-icon-hover" />

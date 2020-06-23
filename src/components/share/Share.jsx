@@ -40,6 +40,7 @@ const Share = ({ url }) => {
         icon
         onClick={copyToClipboard}
         className={classnames(
+          'accent-colour-background',
           'copy-button',
           { success },
         )}
@@ -52,6 +53,8 @@ const Share = ({ url }) => {
       <Button
         icon
         onClick={share}
+        className="accent-colour-background"
+        title="share link"
       >
         <Icon name="share" />
       </Button>

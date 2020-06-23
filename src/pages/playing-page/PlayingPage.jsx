@@ -29,7 +29,7 @@ const PlayingPage = ({
     <ConnectedStatusBar instructions />
 
     <PageContents>
-      <PlayerImage src={config.PLAYER_IMAGE_URL} />
+      <PlayerImage src={config.PLAYER_IMAGE_URL} alt={config.TEXT_PLAYER_IMAGE_ALT} />
       <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE} />
       <ConnectedPlayerControls />
 

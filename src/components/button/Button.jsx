@@ -10,6 +10,7 @@ const Button = ({
   onClick,
   children,
   icon,
+  title,
 }) => (
   <button
     type="button"
@@ -25,6 +26,7 @@ const Button = ({
     )}
     disabled={disabled}
     onClick={onClick}
+    title={title}
   >
     {children || content}
   </button>
@@ -45,6 +47,8 @@ Button.propTypes = {
   children: PropTypes.node,
   /* Whether the button is an icon (supply an <Icon /> as a child) - no background, less padding */
   icon: PropTypes.bool,
+  /* Title text describing the button; for icon buttons */
+  title: PropTypes.string,
 };
 
 Button.defaultProps = {
@@ -55,6 +59,7 @@ Button.defaultProps = {
   fluid: false,
   children: undefined,
   icon: false,
+  title: undefined,
 };
 
 export default Button;
