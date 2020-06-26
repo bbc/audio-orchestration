@@ -256,8 +256,15 @@ class OrchestrationClient extends EventEmitter {
     this._volumeControl.connect(this._audioContext.destination);
 
     this._compressor = this._audioContext.createDynamicsCompressor();
+    // threshold and ratio are overwritten later,
+    // initially the threshold is 0, to disable the compressor.
     this._compressor.threshold.value = 0;
-    this._compressor.ratio.value = 8;
+    this._compressor.ratio.value = 2;
+
+    // default timing settings are not exposed explicitly.
+    this._compressor.attack.value = 0.01;
+    this._compressor.release.value = 0.25;
+
     this._compressor.connect(this._volumeControl);
 
     this._rendererOutput = this._audioContext.createGain();
