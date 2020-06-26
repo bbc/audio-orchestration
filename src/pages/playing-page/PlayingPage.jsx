@@ -48,13 +48,11 @@ const PlayingPage = ({
   </div>
 );
 
-
 PlayingPage.propTypes = {
   activeControlIds: PropTypes.arrayOf(
     PropTypes.string,
   ).isRequired,
 };
-
 
 const mapStateToProps = ({
   // state

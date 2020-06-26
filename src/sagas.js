@@ -158,7 +158,6 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
   // the main device).
   yield put({ type: 'REQUEST_SET_CONTROL_VALUES', controlValues: getInitialControlValues() });
 
-
   // once loading is completed, accept the continue action before moving to the playing page.
   if (config.ENABLE_TUTORIAL) {
     yield take('CLICK_TUTORIAL_CONTINUE');

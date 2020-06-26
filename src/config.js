@@ -52,10 +52,11 @@ const config = {
   JOIN_URL: DEFAULT_JOIN_URL,
 
   // Dynamics compression with these settings is applied to the output of all auxiliary devices.
-  MDO_COMPRESSOR_RATIO: 4,
-  MDO_COMPRESSOR_THRESHOLD: -40,
+  // Compression is disabled by default by setting the threshold to 0dB.
+  MDO_COMPRESSOR_RATIO: 2,
+  MDO_COMPRESSOR_THRESHOLD: 0,
 
-  // don't check against a session-id service by (sessionIds are generated and verified locally).
+  // don't check against a session-id service by default (sessionIds are generated locally).
   VALIDATE_SESSION_IDS: false,
 
   // the session-id service to use, not used unless enabled above.

@@ -6,7 +6,6 @@ import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 import Icon from 'components/icon/Icon';
 
-
 import config from 'config';
 
 const Share = ({ url }) => {
