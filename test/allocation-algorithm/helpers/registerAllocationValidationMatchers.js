@@ -76,7 +76,7 @@ const registerAllocationValidationMatchers = () => {
     toHaveObjectInDeviceWithGain(allocations, objectId, deviceId, gain) {
       const objectsInDevice = allocations[deviceId] || [];
       const objectInDevice = objectsInDevice.find(o => o.objectId === objectId);
-      const actualGain = (objectInDevice || {}).gain;
+      const actualGain = (objectInDevice || {}).objectGain;
 
       const delta = 1.0e-3;
       const pass = objectInDevice && actualGain < gain + delta && actualGain > gain - delta;

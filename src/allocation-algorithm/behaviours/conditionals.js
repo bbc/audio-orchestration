@@ -22,6 +22,8 @@ operators.set('moduloIsZero', (lhs, rhs) => lhs % rhs === 0);
 export const evaluateConditions = (deviceId, {
   devices,
   session,
+  objects,
+  allocations,
   behaviourParameters,
 }) => {
   const { conditions } = behaviourParameters;
@@ -45,14 +47,31 @@ export const evaluateConditions = (deviceId, {
     if (propertySource && propertyName) {
       switch (propertySource) {
         case 'device':
-          propertyValue = device[propertyName];
+          if (propertyName === 'objectIds') {
+            // Generate the list of objectIds allocated to the current device so far
+            propertyValue = objects
+              .map(({ objectId }) => objectId)
+              .filter(objectId => (allocations[deviceId] || []).some(a => a.objectId === objectId));
+          } else {
+            propertyValue = device[propertyName];
+          }
           break;
         case 'deviceControls':
           propertyValue = (deviceControls.find(({ controlId }) => controlId === propertyName) || {})
             .controlValues;
           break;
         case 'session':
-          propertyValue = session[propertyName];
+          if (propertyName === 'objectIds') {
+          // To find the allocated objectIds, filter the list of objects to those that are in at
+          // least one device.
+            propertyValue = objects
+              .map(({ objectId }) => objectId)
+              .filter(objectId => Object.values(allocations)
+                .some(da => da
+                  .some(a => a.objectId === objectId)));
+          } else {
+            propertyValue = session[propertyName];
+          }
           break;
         default:
           break;

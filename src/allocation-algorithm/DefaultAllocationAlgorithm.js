@@ -9,6 +9,7 @@ import {
   allowedIf,
   prohibitedIf,
 } from './behaviours/conditionals';
+import muteIf from './behaviours/muteIf';
 
 class DefaultAllocationAlgorithm extends AllocationAlgorithm {
   constructor(options) {
@@ -42,6 +43,9 @@ class DefaultAllocationAlgorithm extends AllocationAlgorithm {
     this.registerBehaviour('allowedEverywhere', ({ devices }) => ({
       allowed: devices.map(({ deviceId }) => deviceId),
     }));
+
+    // muteIf: reduce gain if a specified other object has been allocated
+    this.registerBehaviour('muteIf', muteIf);
   }
 }
 

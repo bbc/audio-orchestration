@@ -546,6 +546,103 @@ describe('DefaultAllocationAlgorithm', () => {
     // TODO: we don't currently have conditions/operators that check metadata of other objects
     test.todo('2 Object only plays if no other object from group X is playing');
     test.todo('3 Object plays only if fewer than 2 other objects from group X are playing');
+
+    test('4 Object does not play if a referenced object is playing in any device', () => {
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+          ],
+        },
+        {
+          objectId: 'object-2',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            {
+              behaviourType: 'prohibitedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'session.objectIds', operator: 'equals', value: 'object-1' },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Object 1 is allowed anywhere.
+      expect(allocations).toHaveObjectInAnyDevice('object-1');
+      // Object 2 is prohibited if object 1 is allocated.
+      expect(allocations).not.toHaveObjectInAnyDevice('object-2');
+    });
+
+    test('5 Object plays if the referenced object is not playing', () => {
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [],
+        },
+        {
+          objectId: 'object-2',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            {
+              behaviourType: 'prohibitedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'session.objectIds', operator: 'equals', value: 'object-1' },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Object 1 is not allowed anywhere.
+      expect(allocations).not.toHaveObjectInAnyDevice('object-1');
+      // Object 2 is allowed everywhere, and only prohibited if object 1 is allocated.
+      expect(allocations).toHaveObjectInAnyDevice('object-2');
+    });
+
+    test('6 Object only plays in devices where the referenced object is not playing', () => {
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [
+            { behaviourType: 'mainDeviceOnly' },
+            { behaviourType: 'allowedEverywhere' },
+          ],
+        },
+        {
+          objectId: 'object-2',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'prohibitedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.objectIds', operator: 'equals', value: 'object-1' },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Object 1 is not allowed in the main device only.
+      expect(allocations).toHaveObjectInDevice('object-1', 'device-1');
+      // Object 2 is allowed everywhere, spread, and prohibited from devices that object 1 is in.
+      expect(allocations).toHaveObjectInNumDevices('object-2', devices.length - 1);
+      expect(allocations).not.toHaveObjectInDevice('object-2', 'device-1');
+    });
   });
 
   describe('D: Spread', () => {
@@ -604,6 +701,39 @@ describe('DefaultAllocationAlgorithm', () => {
       const { allocations } = wrappedAllocate({ objects, devices });
 
       expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+    });
+  });
+
+  describe('E: Mute if', () => {
+    const a = new DefaultAllocationAlgorithm();
+    const wrappedAllocate = wrapAllocate(a);
+
+    const devices = generateDevices([
+      { deviceId: 'device-1' },
+    ]);
+
+    test('1 Object is muted when referenced object is allocated', () => {
+      const objects = [
+        {
+          objectId: 'object-1',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+          ],
+        },
+        {
+          objectId: 'object-2',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'muteIf', behaviourParameters: { objectId: 'object-1' } },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      expect(allocations).toHaveObjectInNumDevices('object-1', 1);
+      expect(allocations).toHaveObjectInNumDevices('object-2', 1);
+      expect(allocations).toHaveObjectInDeviceWithGain('object-2', 'device-1', 0);
     });
   });
 });

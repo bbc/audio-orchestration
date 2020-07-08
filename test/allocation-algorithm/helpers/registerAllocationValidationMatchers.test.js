@@ -75,7 +75,7 @@ describe('registerAllocationValidationMatchers', () => {
   describe('toHaveObjectInDeviceWithGain', () => {
     const expectedGain = 0.667;
     const allocations = {
-      'device-1': [{ objectId: 'object-1', gain: expectedGain }],
+      'device-1': [{ objectId: 'object-1', objectGain: expectedGain }],
     };
 
     it('passes if object is in device with gain', () => {

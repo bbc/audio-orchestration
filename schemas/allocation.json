@@ -13,7 +13,7 @@
           "description": "unique identifier for the object matching the object metadata list",
           "type": "string"
         },
-        "gain": {
+        "objectGain": {
           "description": "gain multiplier for the object, to be applied on this device only",
           "type": "number",
           "minimum": 0
