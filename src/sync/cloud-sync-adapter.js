@@ -242,6 +242,13 @@ class CloudSyncAdapter extends SyncAdapter {
     this._synchroniser.sendApplicationBroadcast(topic, message);
     return Promise.resolve();
   }
+
+  /**
+   * Unregisters the client from Synchronisation Service
+   */
+  destroy() {
+    this._synchroniser.destroy();
+  }
 }
 
 export default CloudSyncAdapter;

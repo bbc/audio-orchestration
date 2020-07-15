@@ -165,6 +165,13 @@ class Sync extends EventEmitter {
   onBroadcast(e) {
     this.emit('broadcast', e);
   }
+
+  /**
+   * Unregisters the sync adapter
+   */
+  destroy() {
+    this.adapter.destroy();
+  }
 }
 
 export default Sync;

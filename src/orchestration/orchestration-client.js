@@ -757,6 +757,13 @@ class OrchestrationClient extends EventEmitter {
   get deviceId() {
     return this._deviceId;
   }
+
+  /**
+   * Cleans up and disconnects from all the required services.
+   */
+  destroy() {
+    this._sync.destroy();
+  }
 }
 
 export default OrchestrationClient;
