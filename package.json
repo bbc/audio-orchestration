@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
   "repository": "git@github.com:bbc/bbcat-orchestration.git",

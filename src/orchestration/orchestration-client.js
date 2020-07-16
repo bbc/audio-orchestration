@@ -530,6 +530,7 @@ class OrchestrationClient extends EventEmitter {
       .then(() => {
         this._ready = true;
         this.emit('loaded');
+        this.play();
         return this;
       })
       .catch((e) => {
