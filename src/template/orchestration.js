@@ -1,5 +1,5 @@
 import bowser from 'bowser';
-import { takeEvery, call } from 'redux-saga/effects';
+import { takeEvery, call, put } from 'redux-saga/effects';
 import { OrchestrationClient } from '@bbc/bbcat-orchestration';
 
 import config from 'config';
@@ -17,7 +17,16 @@ import {
   setConnectedDevices,
   setPlaybackStatus,
   setSequenceChoices,
+  setDeviceGain,
+  setDevicePlaybackOffset,
+  receivedCalibrationMessage,
 } from 'actions/orchestration';
+
+import {
+  initialiseCalibrationOrchestration,
+} from './calibrationOrchestration';
+
+let dispatch = null;
 
 // A global browser detection object
 const browser = bowser.getParser(window.navigator.userAgent);
@@ -45,6 +54,7 @@ export const ensureAudioContext = () => {
   } else {
     globalAudioContext = OrchestrationClient.createAudioContext();
   }
+  return globalAudioContext;
 };
 
 /**
@@ -56,7 +66,8 @@ export const ensureAudioContext = () => {
  *
  * @returns {string} deviceId
  */
-export const initialiseOrchestration = (dispatch) => {
+export const initialiseOrchestration = (dispatchFunction) => {
+  dispatch = dispatchFunction;
   let transitionOnEnded = null;
 
   globalOrchestrationClient = new OrchestrationClient({
@@ -190,6 +201,10 @@ export const initialiseOrchestration = (dispatch) => {
     });
   });
 
+  globalOrchestrationClient.on('message', (message) => {
+    dispatch(receivedCalibrationMessage(message));
+  });
+
   return globalOrchestrationClient.deviceId;
 };
 
@@ -205,6 +220,15 @@ export const connectOrchestration = (master, sessionId) => globalOrchestrationCl
     }
   })
   .then(() => ({ success: true }))
+  .then(() => {
+    initialiseCalibrationOrchestration({
+      dispatch,
+      ensureAudioContext,
+      isSafari,
+      isMain: globalOrchestrationClient.master,
+      deviceId: globalOrchestrationClient.deviceId,
+    });
+  })
   .catch((e) => {
     console.error('connectOrchestration error:', e);
     throw e || new Error('Unknown error in connectOrchestration');
@@ -250,6 +274,20 @@ function* setDeviceControls({ controlValues }) {
   }));
 }
 
+function* setGain({ gain }) {
+  yield call(() => { globalOrchestrationClient.setGain(gain); });
+  yield put(setDeviceGain(gain));
+}
+
+function* setPlaybackOffset({ offset }) {
+  yield call(() => { globalOrchestrationClient.setPlaybackOffset(offset); });
+  yield put(setDevicePlaybackOffset(offset));
+}
+
+function* sendMessage({ message }) {
+  yield call(() => { globalOrchestrationClient.sendMessage(message); });
+}
+
 export const orchestrationWatcherSaga = function* orchestrationWatcherSaga() {
   // Player and orchestration controls
   yield takeEvery('REQUEST_PLAY', play);
@@ -260,9 +298,11 @@ export const orchestrationWatcherSaga = function* orchestrationWatcherSaga() {
   yield takeEvery('REQUEST_UNMUTE_LOCAL', unmute);
   yield takeEvery('REQUEST_SET_CONTROL_VALUES', setDeviceControls);
   yield takeEvery('REQUEST_TRANSITION_TO_SEQUENCE', transitionToSequence);
-
+  yield takeEvery('REQUEST_SET_GAIN', setGain);
+  yield takeEvery('REQUEST_SET_PLAYBACK_OFFSET', setPlaybackOffset);
   yield takeEvery('REQUEST_COMPRESSOR_SETTINGS', function* setCompressorSettings(action) {
     yield call(() => globalOrchestrationClient.setCompressorRatio(action.ratio));
     yield call(() => globalOrchestrationClient.setCompressorThreshold(action.threshold));
   });
+  yield takeEvery('REQUEST_SEND_MESSAGE', sendMessage);
 };

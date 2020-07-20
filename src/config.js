@@ -95,6 +95,14 @@ const config = {
 
   // By default in the orchestration library, auxiliary devices only output mono.
   ENABLE_STEREO_ON_AUX_DEVICES: true,
+
+  // Default settings for the calibration orchestration client.
+  // Disabled if CALIBRATION_SEQUENCE_URL is not set,
+  // to enable set it to 'audio/calibration/sequence.json' or a custom sequence.
+  CALIBRATION_SEQUENCE_URL: null,
+  CALIBRATION_SEQUENCE_TRANSITION_DELAY: 0.1,
+  CALIBRATION_LOADING_TIMEOUT: 5 * 1000,
+  ALLOW_CALIBRATION_FROM_AUX: true,
 };
 
 export const updateConfig = (newConfig = {}) => {

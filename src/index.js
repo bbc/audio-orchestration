@@ -59,11 +59,12 @@ import 'components/input/Input.scss';
 import 'components/choices/Choices.scss';
 import 'components/controls/Controls.scss';
 import 'components/object-list/ObjectList.scss';
-import './components/instructions-session-code/InstructionsSessionCode.scss';
-import './components/qr-code/QRCode.scss';
-import './components/device-list/DeviceList.scss';
-import './components/share/Share.scss';
-import './components/footer/Footer.scss';
+import 'components/share/Share.scss';
+import 'components/footer/Footer.scss';
+import 'components/instructions-session-code/InstructionsSessionCode.scss';
+import 'components/qr-code/QRCode.scss';
+import 'components/device-list/DeviceList.scss';
+import 'components/calibration-controls/CalibrationControls.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
@@ -97,6 +98,7 @@ global.initOrchestrationTemplate = (element, userConfig = {}) => {
   if (config.ACCENT_COLOUR) {
     const styleBlock = document.createElement('style');
     styleBlock.innerHTML = [
+      `body { --accent-color: ${config.ACCENT_COLOUR}; }`,
       `.accent-colour-background { background-color: ${config.ACCENT_COLOUR}; }`,
       `.accent-colour-text { color: ${config.ACCENT_COLOUR}; }`,
       `.accent-colour-border { border-color: ${config.ACCENT_COLOUR}; }`,

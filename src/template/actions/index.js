@@ -10,7 +10,12 @@ export {
   requestUnmute,
   requestSetControlValues,
   requestSetVolume,
+  requestSetPlaybackOffset,
   requestTransitionToSequence,
+  requestToggleCalibrationMode,
+  requestStartCalibrationSession,
+  requestEndCalibrationSession,
+  requestCalibrationSetPlaybackOffset,
 } from './orchestration';
 
 export const startSession = () => ({

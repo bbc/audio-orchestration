@@ -34,6 +34,11 @@ const initialState = {
   sequenceHold: false,
   sequenceNext: [],
   help: false,
+  calibration: { enabled: false },
+  deviceGain: 0,
+  devicePlaybackOffset: 0,
+  globalCalibrationState: 'available',
+  localCalibrationState: 'disconnected',
 };
 
 const exposed = (state = initialState, action) => {
@@ -127,6 +132,16 @@ const exposed = (state = initialState, action) => {
       return { ...state, activeObjectIds: action.activeObjectIds };
     case 'SET_ACTIVE_CONTROL_IDS':
       return { ...state, activeControlIds: action.activeControlIds };
+    case 'SET_CALIBRATION':
+      return { ...state, calibration: action.calibration };
+    case 'SET_DEVICE_GAIN':
+      return { ...state, deviceGain: action.deviceGain };
+    case 'SET_DEVICE_PLAYBACK_OFFSET':
+      return { ...state, devicePlaybackOffset: action.devicePlaybackOffset };
+    case 'SET_GLOBAL_CALIBRATION_STATE':
+      return { ...state, globalCalibrationState: action.globalCalibrationState };
+    case 'SET_LOCAL_CALIBRATION_STATE':
+      return { ...state, localCalibrationState: action.localCalibrationState };
     default:
       return state;
   }

@@ -1,0 +1,57 @@
+@import '~gel-sass-tools/sass-tools';
+@import '~theme';
+
+.control-buttons {
+  display: flex;
+  margin: auto;
+  width: 80%;
+  justify-content: space-around;
+  align-items: center;
+
+  .value-display {
+    min-width: 4em;
+    text-align: center;
+  }
+}
+
+// Generated using http://doodlenerd.com/html-control/css-input-range-generator
+.slider {
+  -webkit-appearance: none;
+  background-color: $theme-color-black;
+  width: 100%;
+  margin: 40px 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  @mixin track {
+    width: 100%;
+    height: 27.6px;
+    cursor: pointer;
+    background: $theme-color-white;
+  }
+
+  &::-webkit-slider-runnable-track { @include track; }
+  &::-moz-range-track { @include track; }
+  &::-ms-track { @include track; }
+
+  @mixin thumb {
+    border: 1px solid #000000;
+    height: 36px;
+    width: 16px;
+    background: $theme-color-blue;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -3.9px;
+  }
+
+  &::-webkit-slider-thumb { @include thumb; }
+  &::-moz-range-thumb { @include thumb; }
+  &::-ms-thumb { @include thumb; }
+
+  &:focus::-webkit-slider-runnable-track {
+    background: $theme-color-white;
+  }
+
+}

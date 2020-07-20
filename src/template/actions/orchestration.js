@@ -98,6 +98,39 @@ export const setSequenceChoices = ({
   hold,
 });
 
+export const setDeviceGain = (
+  gain,
+) => ({
+  type: 'SET_DEVICE_GAIN',
+  deviceGain: gain,
+});
+
+export const setDevicePlaybackOffset = (
+  playbackOffset,
+) => ({
+  type: 'SET_DEVICE_PLAYBACK_OFFSET',
+  devicePlaybackOffset: playbackOffset,
+});
+
+export const setGlobalCalibrationState = (
+  globalCalibrationState,
+) => ({
+  type: 'SET_GLOBAL_CALIBRATION_STATE',
+  globalCalibrationState,
+});
+
+export const setLocalCalibrationState = (
+  localCalibrationState,
+) => ({
+  type: 'SET_LOCAL_CALIBRATION_STATE',
+  localCalibrationState,
+});
+
+export const receivedCalibrationMessage = (message) => ({
+  type: 'RECEIVED_CALIBRATION_MESSAGE',
+  message,
+});
+
 // ------------------------------------------------------------------------------------------------
 // actions intended to be called by the user interface to request changes, watched for by a saga
 
@@ -137,6 +170,39 @@ export const requestSetControlValues = (controlValues) => ({
 export const requestTransitionToSequence = (contentId) => ({
   type: 'REQUEST_TRANSITION_TO_SEQUENCE',
   contentId,
+});
+
+export const requestSetGain = (gain) => ({
+  type: 'REQUEST_SET_GAIN',
+  gain,
+});
+
+export const requestSetPlaybackOffset = (offset) => ({
+  type: 'REQUEST_SET_PLAYBACK_OFFSET',
+  offset,
+});
+
+export const requestToggleCalibrationMode = (calibrationMode) => ({
+  type: 'REQUEST_CALIBRATION_MODE',
+  calibrationMode,
+});
+
+export const requestStartCalibrationSession = () => ({
+  type: 'REQUEST_START_CALIBRATION_SESSION',
+});
+
+export const requestEndCalibrationSession = () => ({
+  type: 'REQUEST_END_CALIBRATION_SESSION',
+});
+
+export const requestCalibrationSetPlaybackOffset = (offset) => ({
+  type: 'REQUEST_CALIBRATION_SET_PLAYBACK_OFFSET',
+  offset,
+});
+
+export const requestSendMessage = (message) => ({
+  type: 'REQUEST_SEND_MESSAGE',
+  message,
 });
 
 // ------------------------------------------------------------------------------------------------

@@ -9,6 +9,7 @@ import {
 
 import config from 'config';
 import { orchestrationWatcherSaga, connectOrchestration } from './template/orchestration';
+import { GLOBAL_CALIBRATION_STATES, calibrationWatcherSaga } from './template/calibrationOrchestration';
 import { createSession, validateSession } from './session';
 
 export const PAGE_START = 'start';
@@ -19,6 +20,7 @@ export const PAGE_ERROR = 'error';
 export const PAGE_PLAYING = 'main-playing';
 export const PAGE_CONNECT_FORM = 'connect-form';
 export const PAGE_CONNECT_DIRECT = 'connect-direct';
+export const PAGE_CALIBRATION = 'calibration';
 
 export const ROLE_MAIN = 'main';
 export const ROLE_AUXILIARY = 'auxiliary';
@@ -231,6 +233,15 @@ function* watcherSaga() {
   yield takeEvery('CLICK_CLOSE_INSTRUCTIONS', function* closeInstructionsPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
   });
+
+  yield takeEvery('SET_GLOBAL_CALIBRATION_STATE', function* toggleCalibrationPage({ globalCalibrationState }) {
+    if (globalCalibrationState === GLOBAL_CALIBRATION_STATES.CALIBRATION_MODE
+      || globalCalibrationState === GLOBAL_CALIBRATION_STATES.ONGOING) {
+      yield put({ type: 'SET_PAGE', page: PAGE_CALIBRATION });
+    } else {
+      yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
+    }
+  });
 }
 
 function* rootSaga({
@@ -241,6 +252,7 @@ function* rootSaga({
   yield put({ type: 'SET_DEVICE_ID', deviceId });
   yield fork(watcherSaga);
   yield fork(orchestrationWatcherSaga);
+  yield fork(calibrationWatcherSaga);
 
   if (join && sessionCode !== null) {
     yield call(directJoinFlow, { sessionCode });

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
+
 import config from 'config';
 import PageOverflow from 'components/page-overflow/PageOverflow';
 import PageContents from 'components/page-contents/PageContents';
