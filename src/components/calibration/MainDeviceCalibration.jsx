@@ -42,6 +42,7 @@ const MainDeviceCalibration = ({ globalCalibrationState, localCalibrationState }
       : (
         <>
           This is the main device. On each connected device, you&apos;ll see a button labelled
+          {' '}
           <i>&quot;Calibrate this device&quot;</i>
           . Click to start the calibration process.
           <br />
