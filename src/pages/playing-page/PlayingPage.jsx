@@ -14,14 +14,6 @@ import ConnectedChoices from 'components/choices/ConnectedChoices';
 import ConnectedControls from 'components/controls/ConnectedControls';
 import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
 
-import {
-  startSession,
-  joinSession,
-} from 'actions';
-
-// TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
-import { ensureAudioContext } from '../../template/orchestration';
-
 const PlayingPage = ({
   // Get activeControlIds from state
   activeControlIds,
@@ -62,15 +54,4 @@ const mapStateToProps = ({
   activeControlIds,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  onClickStart: () => {
-    ensureAudioContext();
-    dispatch(startSession());
-  },
-  onClickJoin: () => {
-    ensureAudioContext();
-    dispatch(joinSession());
-  },
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PlayingPage);
+export default connect(mapStateToProps)(PlayingPage);

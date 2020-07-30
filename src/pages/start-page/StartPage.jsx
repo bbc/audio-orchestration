@@ -15,6 +15,7 @@ import {
 } from 'actions';
 
 // TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
+import { acquireWakeLock } from 'sagas';
 import { ensureAudioContext } from '../../template/orchestration';
 
 const StartPage = ({
@@ -60,10 +61,12 @@ const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   onClickStart: () => {
+    acquireWakeLock();
     ensureAudioContext();
     dispatch(startSession());
   },
   onClickJoin: () => {
+    acquireWakeLock();
     ensureAudioContext();
     dispatch(joinSession());
   },

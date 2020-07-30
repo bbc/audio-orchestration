@@ -7,6 +7,9 @@ import {
   fork,
 } from 'redux-saga/effects';
 
+import NoSleep from 'nosleep.js';
+import bowser from 'bowser';
+
 import config from 'config';
 import { orchestrationWatcherSaga, connectOrchestration } from './template/orchestration';
 import { GLOBAL_CALIBRATION_STATES, calibrationWatcherSaga } from './template/calibrationOrchestration';
@@ -24,6 +27,15 @@ export const PAGE_CALIBRATION = 'calibration';
 
 export const ROLE_MAIN = 'main';
 export const ROLE_AUXILIARY = 'auxiliary';
+
+const noSleep = new NoSleep();
+const browser = bowser.parse(window.navigator.userAgent);
+// Firefox mobile browsers seem to have issues with noSleep so it is not activated on those browsers
+const isMobile = ['mobile', 'tablet'].includes(browser.platform.type) && browser.engine.name !== 'Gecko';
+
+export const acquireWakeLock = () => {
+  if (isMobile && config.ENABLE_WAKE_LOCK) noSleep.enable();
+};
 
 function getInitialControlValues() {
   // set control default values from config, must be after orchestrationWatcherSaga is running
@@ -241,6 +253,10 @@ function* watcherSaga() {
     } else {
       yield put({ type: 'SET_PAGE', page: PAGE_PLAYING });
     }
+  });
+
+  yield takeEvery('SET_PAGE', function* releaseWakeLockOnError({ page }) {
+    yield call(() => { if (page === PAGE_ERROR) noSleep.disable(); });
   });
 }
 

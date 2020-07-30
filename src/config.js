@@ -103,6 +103,9 @@ const config = {
   CALIBRATION_SEQUENCE_TRANSITION_DELAY: 0.1,
   CALIBRATION_LOADING_TIMEOUT: 5 * 1000,
   ALLOW_CALIBRATION_FROM_AUX: true,
+
+  // If true enables additional features to keep mobile devices awake
+  ENABLE_WAKE_LOCK: true,
 };
 
 export const updateConfig = (newConfig = {}) => {

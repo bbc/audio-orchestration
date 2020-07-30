@@ -10,6 +10,10 @@ import { joinDirect } from 'actions';
 import PlayerImage from 'components/player-image/PlayerImage';
 import PlayerTitle from 'components/player-title/PlayerTitle';
 
+// TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
+import { acquireWakeLock } from 'sagas';
+import { ensureAudioContext } from '../../template/orchestration';
+
 const ConnectDirectPage = ({
   onJoinDirect,
   // sessionCode,
@@ -53,7 +57,11 @@ ConnectDirectPage.propTypes = {
 // });
 
 const mapDispatchToProps = (dispatch) => ({
-  onJoinDirect: () => dispatch(joinDirect()),
+  onJoinDirect: () => {
+    acquireWakeLock();
+    ensureAudioContext();
+    dispatch(joinDirect());
+  },
 });
 
 export default connect(null, mapDispatchToProps)(ConnectDirectPage);
