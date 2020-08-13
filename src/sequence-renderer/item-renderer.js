@@ -61,7 +61,7 @@ class ItemRenderer {
 
   /**
    * Set additional gain for the object, set by the allocation algorithm.
-   * @param {number} gain
+   * @param {number} objectGain - linear gain multiplier
    */
   setObjectGain(objectGain) {
     if (objectGain || objectGain === 0) {

@@ -17,9 +17,6 @@
  * @property {string} deviceType - Device type, can be e.g. mobile, tablet, desktop, or unknown
  * @property {integer} deviceJoiningNumber - Original position in the joining order
  * @property {integer} deviceCurrentNumber - Current position in the joining order
- * @property {integer} deviceLatency - Emission delay, in milliseconds, if known
- * @property {number} deviceGain - Calibration gain multiplier to be applied to the output from the
- * device, if known
  * @property {Array<MdoControlSelection>} deviceControls - List of controls and their current
  * values for the device
  */

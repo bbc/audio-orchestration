@@ -17,10 +17,8 @@ export const DEVICE_STATUS = {
 };
 
 export const TOPICS = {
-  DEVICE_METADATA: 'mdo-device-metadata',
+  DEVICE_METADATA: 'mdo-set-device-metadata',
   ALLOCATIONS: 'mdo-allocations',
-  REQUEST_ALLOCATIONS_AND_SCHEDULE: 'mdo-request-allocations-and-schedule',
-  SCHEDULE: 'mdo-schedule',
   CUSTOM: 'mdo-custom',
 };
 
@@ -49,8 +47,6 @@ class MdoHelper extends EventEmitter {
       deviceId,
       deviceIsMain: false,
       deviceControls: [],
-      deviceLatency: 0,
-      deviceGain: 1,
       deviceType: null,
     };
 
@@ -91,12 +87,6 @@ class MdoHelper extends EventEmitter {
    */
   setObjectAllocations(objectAllocations, contentId = DEFAULT_CONTENT_ID) {
     this._objectAllocations[contentId] = objectAllocations;
-    // TODO combine with setControlAllocations and only send one change event?
-    // TODO consider storing only the allocations for this device?
-    this.emit('change', {
-      contentId,
-      activeObjects: this.getActiveObjects(contentId),
-    });
   }
 
   /**
@@ -105,10 +95,19 @@ class MdoHelper extends EventEmitter {
    */
   setControlAllocations(controlAllocations, contentId = DEFAULT_CONTENT_ID) {
     this._controlAllocations[contentId] = controlAllocations;
-    this.emit('change', {
-      contentId,
-      activeControls: this.getActiveControls(contentId),
-    });
+  }
+
+  setDevices(devices) {
+    this._devices = devices;
+  }
+
+  /**
+   * Notifies the OrchestrationClient that the devices, object, or control allocations have changed.
+   *
+   * @param {string} contentId
+   */
+  _sendChangeEvent(contentId) {
+    this.emit('change', { contentId });
   }
 
   /**
@@ -180,18 +179,15 @@ class MdoHelper extends EventEmitter {
       }
       switch (topic) {
         case TOPICS.ALLOCATIONS:
-          this._handleRemoteAllocations(content);
+          // main device broadcasts object and/or control allocations
+          this._handleRemoteAllocationsAndDevices(content);
           break;
         case TOPICS.DEVICE_METADATA:
+          // aux device sends its updated metadata
           this._handleRemoteDeviceMetadata(deviceId, content);
           break;
-        case TOPICS.SCHEDULE:
-          this._handleRemoteSchedule(content);
-          break;
-        case TOPICS.REQUEST_ALLOCATIONS_AND_SCHEDULE:
-          this._handleRequestAllocationsAndSchedule();
-          break;
         case TOPICS.CUSTOM:
+          // any device may send a custom message
           this.emit('message', content.message);
           break;
         default:
@@ -211,8 +207,6 @@ class MdoHelper extends EventEmitter {
    * Update a subset of the device metadata. The main device metadata properties are:
    *
    * * `deviceType`
-   * * `deviceGain`
-   * * `deviceLatency`
    * * `deviceControls`
    *
    * @param {Object} metadata
@@ -235,7 +229,6 @@ class MdoHelper extends EventEmitter {
   /**
    * Send a custom message to all devices in the same session.
    *
-   * @param {string} topic
    * @param {object} message
    */
   sendCustomMessage(message) {
@@ -248,16 +241,26 @@ class MdoHelper extends EventEmitter {
   _handleRemotePresence() {}
 
   // eslint-disable-next-line class-methods-use-this
-  _handleRemoteAllocations() {}
-
-  // eslint-disable-next-line class-methods-use-this
-  _handleRemoteSchedule() {}
-
-  // eslint-disable-next-line class-methods-use-this
-  _handleRequestAllocationsAndSchedule() {}
+  _handleRemoteAllocationsAndDevices() {}
 
   // eslint-disable-next-line class-methods-use-this
   _handleRemoteDeviceMetadata() {}
+
+  get devices() {
+    return this._devices;
+  }
+
+  get objectAllocations() {
+    return this._objectAllocations;
+  }
+
+  get controlAllocations() {
+    return this._controlAllocations;
+  }
+
+  get schedule() {
+    return this._schedule;
+  }
 }
 
 export default MdoHelper;

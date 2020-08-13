@@ -1,4 +1,4 @@
-import MdoHelper, { TOPICS } from './mdo-helper';
+import MdoHelper, { TOPICS, DEVICE_TYPE } from './mdo-helper';
 
 /**
  * Maintains the local state necessary for an auxiliary device. Sends updates on this device's
@@ -8,16 +8,18 @@ class MdoReceiver extends MdoHelper {
   /**
    * Called when an allocations message is received, updates the locally held allocations.
    */
-  _handleRemoteAllocations({ objectAllocations, controlAllocations, contentId }) {
+  _handleRemoteAllocationsAndDevices({
+    objectAllocations,
+    controlAllocations,
+    devices,
+    schedule,
+    contentId,
+  }) {
     if (objectAllocations) this.setObjectAllocations(objectAllocations, contentId);
     if (controlAllocations) this.setControlAllocations(controlAllocations, contentId);
-  }
-
-  /**
-   * Called when a schedule message is received, updates teh locally held schedule.
-   */
-  _handleRemoteSchedule({ schedule }) {
-    this.setSchedule(schedule);
+    if (devices) this.setDevices(devices);
+    if (schedule) this.setSchedule(schedule);
+    this._sendChangeEvent(contentId);
   }
 
   /**
@@ -31,17 +33,13 @@ class MdoReceiver extends MdoHelper {
       this._sync.sendMessage(TOPICS.DEVICE_METADATA, this._deviceMetadata);
     });
 
-    this._sendRequestScheduleAndAllocations();
-  }
-
-  /**
-   * Sends a message for the main device to resend the current allocations and schedule
-   * information.
-   */
-  _sendRequestScheduleAndAllocations() {
-    if (this._sync !== null) {
-      this._sync.sendMessage(TOPICS.REQUEST_ALLOCATIONS_AND_SCHEDULE, {});
-    }
+    // The new device will only be recognised after this first metadata update; and this update
+    // also triggers an allocation and schedule update, needed for the orchestration client to
+    // complete its initialisation.
+    this.setDeviceMetadata({
+      deviceType: DEVICE_TYPE.UNKNOWN,
+      deviceIsMain: false,
+    });
   }
 }
 

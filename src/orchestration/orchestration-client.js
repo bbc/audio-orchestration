@@ -42,7 +42,7 @@ const TIMELINE_TYPE_TICK_RATE = 1000;
  * orchestration.on('loaded', () => { console.log('loaded sequences'); });
  * orchestration.on('connected', () => { console.log('connected'); });
  * orchestration.on('disconnected', () => { console.log('disconnected'); });
- * orchestration.on('change', (e) => { console.log('playback status changed.', e); });
+ * orchestration.on('status', (e) => { console.log('playback status changed.', e); });
  * orchestration.on('ready', () => { console.log('ready to interact'); });
  *
  * orchestration.start(true, sessionId).then(() => {
@@ -189,6 +189,10 @@ class OrchestrationClient extends EventEmitter {
     const currentContentId = this._currentContentId;
     const activeControlIds = this._activeControlIds[currentContentId];
 
+    if (!activeControlIds) {
+      return;
+    }
+
     this.emit('controls', {
       activeControlIds,
     });
@@ -223,7 +227,6 @@ class OrchestrationClient extends EventEmitter {
           renderer.stop(this._syncClock.now());
         }
       });
-    this.play();
     this._publishStatusEvent();
     this._publishObjectsEvent();
     this._publishControlsEvent();
@@ -429,33 +432,33 @@ class OrchestrationClient extends EventEmitter {
             allocationAlgorithm: this._allocationAlgorithm,
           },
         );
-
-        this._mdoHelper.on('change', () => {
-          this.emit('devices', this._mdoHelper.getDevices());
-        });
       } else {
         this._mdoHelper = new MdoReceiver(this._deviceId);
       }
 
-      this._mdoHelper.on('change', ({ contentId, activeObjects, activeControls }) => {
+      this._mdoHelper.on('change', ({ contentId }) => {
         // Update all sequence renderers with new allocations
         const sequenceWrapper = this._sequences[contentId];
-        if (activeObjects) {
-          if (sequenceWrapper !== undefined) {
-            sequenceWrapper.renderer.setActiveObjects(activeObjects);
-          }
+        if (sequenceWrapper !== undefined) {
+          sequenceWrapper.renderer.setActiveObjects(this._mdoHelper.getActiveObjects(contentId));
           this._publishObjectsEvent();
         }
 
-        if (activeControls) {
-          this._activeControlIds[contentId] = activeControls;
-          this._publishControlsEvent();
-        }
-      });
+        // Update the list of controls assigned to this device
+        this._activeControlIds[contentId] = this._mdoHelper.getActiveControls(contentId);
+        this._publishControlsEvent();
 
-      // resolve the promise once the schedule with the initial sequence has been received.
-      this._mdoHelper.on('schedule', (schedule) => {
-        this._scheduleSequences(schedule);
+        // Emit a change event with all allocations and device metadata
+        this.emit('change', {
+          objectAllocations: this.objectAllocations,
+          controlAllocations: this.controlAllocations,
+          devices: this.devices,
+        });
+
+        // Schedule the sequence renderers
+        this._scheduleSequences(this.schedule);
+
+        // resolve the createHelper promise once the first metadata change has been received.
         resolve(this._mdoHelper);
       });
 
@@ -656,6 +659,8 @@ class OrchestrationClient extends EventEmitter {
       this._mdoHelper.stopSequence(this._currentContentId, syncTime);
       this._mdoHelper.startSequence(contentId, syncTime);
     }
+
+    this.play();
   }
 
   /**
@@ -743,7 +748,6 @@ class OrchestrationClient extends EventEmitter {
   /**
    * Send a custom message to all devices in the same session.
    *
-   * @param {string} topic
    * @param {object} message
    */
   sendMessage(message) {
@@ -757,6 +761,34 @@ class OrchestrationClient extends EventEmitter {
    */
   get deviceId() {
     return this._deviceId;
+  }
+
+  /**
+   * Returns all object allocations for all sequences for all devices.
+   */
+  get objectAllocations() {
+    return (this._mdoHelper || {}).objectAllocations || {};
+  }
+
+  /**
+   * Returns all control allocations for all devices.
+   */
+  get controlAllocations() {
+    return (this._mdoHelper || {}).controlAllocations || {};
+  }
+
+  /**
+   * Returns all devices and their metadata
+   */
+  get devices() {
+    return (this._mdoHelper || {}).devices || [];
+  }
+
+  /**
+   * Returns scheduled start and end times for all scheduled sequences
+   */
+  get schedule() {
+    return (this._mdoHelper || {}).schedule || [];
   }
 
   /**
