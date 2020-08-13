@@ -9,12 +9,12 @@ import {
   setDisconnected,
   setEnded,
   setErrorMessage,
+  setAllocationsAndDevices,
   setPrimaryObject,
   setActiveObjectIds,
   setActiveControlIds,
   setMuted,
   setTransportCapabilities,
-  setConnectedDevices,
   setPlaybackStatus,
   setSequenceChoices,
   setDeviceGain,
@@ -127,20 +127,20 @@ export const initialiseOrchestration = (dispatchFunction) => {
     }
   });
 
-  globalOrchestrationClient.on('devices', (e) => {
-    const devices = e.map((d) => {
-      const {
-        deviceId,
-        deviceType,
-      } = d;
+  globalOrchestrationClient.on('change', () => {
+    const {
+      currentContentId,
+      objectAllocations,
+      controlAllocations,
+      devices,
+    } = globalOrchestrationClient;
 
-      return {
-        deviceId,
-        deviceType,
-      };
-    });
-
-    dispatch(setConnectedDevices(devices));
+    // Only put allocations for the current sequence into the state.
+    dispatch(setAllocationsAndDevices({
+      objectAllocations: objectAllocations[currentContentId] || {},
+      controlAllocations: controlAllocations[currentContentId] || {},
+      connectedDevices: devices || [],
+    }));
   });
 
   globalOrchestrationClient.on('objects', (e) => {

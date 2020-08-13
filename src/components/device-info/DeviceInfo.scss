@@ -1,0 +1,20 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.device-info {
+  .device {
+    border-bottom: 1px solid $theme-color-white;
+    margin-bottom: $gel-spacing-unit;
+    padding: $gel-spacing-unit 0;
+
+    h3 {
+      @include gel-typography('pica-bold');
+    }
+
+    p {
+      @include gel-typography('pica');
+    }
+  }
+}

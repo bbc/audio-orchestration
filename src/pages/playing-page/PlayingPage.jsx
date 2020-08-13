@@ -13,6 +13,7 @@ import ConnectedPlayerControls from 'components/player-controls/ConnectedPlayerC
 import ConnectedChoices from 'components/choices/ConnectedChoices';
 import ConnectedControls from 'components/controls/ConnectedControls';
 import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
+import ConnectedDeviceInfo from 'components/device-info/ConnectedDeviceInfo';
 
 const PlayingPage = ({
   // Get activeControlIds from state
@@ -37,6 +38,7 @@ const PlayingPage = ({
           </PageOverflow>
         ) : null }
 
+      { config.DEVICE_DEBUG_UI ? <ConnectedDeviceInfo /> : null }
     </PageContents>
   </div>
 );

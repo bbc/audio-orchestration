@@ -19,6 +19,7 @@
       const config = {
         ENABLE_TUTORIAL: false,
         DEBUG_UI: true,
+        DEVICE_DEBUG_UI: true,
         // if JOIN_URL is not set, it will be filled to point to the current page with a #!/join suffix
         // JOIN_URL: 'https://bbc.in/my-short-joining-link/#!/join',
         LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
@@ -169,6 +170,8 @@
             ],
           },
         ],
+        // To enable the calibration menu, provide a sequence URL with equivalent metadata to:
+        // CALIBRATION_SEQUENCE_URL: 'audio/calibration/sequence.json',
       };
 
       // Instantiate the React app to render into the #app div:

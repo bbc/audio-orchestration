@@ -65,8 +65,14 @@ export const setTransportCapabilities = ({ canPause, canSeek }) => ({
   canSeek,
 });
 
-export const setConnectedDevices = (connectedDevices) => ({
-  type: 'SET_CONNECTED_DEVICES',
+export const setAllocationsAndDevices = ({
+  objectAllocations,
+  controlAllocations,
+  connectedDevices,
+}) => ({
+  type: 'SET_ALLOCATIONS_AND_DEVICES',
+  objectAllocations,
+  controlAllocations,
   connectedDevices,
 });
 

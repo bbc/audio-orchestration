@@ -39,6 +39,8 @@ const initialState = {
   devicePlaybackOffset: 0,
   globalCalibrationState: 'available',
   localCalibrationState: 'disconnected',
+  objectAllocations: {},
+  controlAllocations: {},
 };
 
 const exposed = (state = initialState, action) => {
@@ -63,7 +65,6 @@ const exposed = (state = initialState, action) => {
       };
     case 'SESSION_CODE_VALIDATING':
       return { ...state, sessionCodeIsValidating: true };
-
     case 'SET_LOADING':
       return {
         ...state,
@@ -120,8 +121,13 @@ const exposed = (state = initialState, action) => {
           childTime: action.childTime,
         },
       };
-    case 'SET_CONNECTED_DEVICES':
-      return { ...state, connectedDevices: action.connectedDevices };
+    case 'SET_ALLOCATIONS_AND_DEVICES':
+      return {
+        ...state,
+        objectAllocations: action.objectAllocations,
+        controlAllocations: action.controlAllocations,
+        connectedDevices: action.connectedDevices,
+      };
     case 'SET_PRIMARY_OBJECT':
       return {
         ...state,

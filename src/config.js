@@ -88,6 +88,10 @@ const config = {
   // useful for prototyping.
   DEBUG_UI: false,
 
+  // the device debug UI displays all current device metadata, including allocated objects,
+  // controls, and control values for all devices.
+  DEVICE_DEBUG_UI: false,
+
   ACCENT_COLOUR: '#006DEF',
 
   PLAYER_IMAGE_URL: 'images/orchestrator-default-image.jpg',
