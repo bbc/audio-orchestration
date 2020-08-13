@@ -77,7 +77,6 @@ class OrchestrationClient extends EventEmitter {
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
     this._isSafari = options.isSafari || false;
-    this._isStereo = options.isStereo || false;
     this._controls = options.controls || [];
     this._activeControlIds = {};
     this._allocationAlgorithm = options.allocationAlgorithm || null;
@@ -390,7 +389,6 @@ class OrchestrationClient extends EventEmitter {
             this._audioContext,
             this._syncClock,
             sequence,
-            this._isStereo,
             this._isSafari,
           );
 
@@ -517,11 +515,6 @@ class OrchestrationClient extends EventEmitter {
       this._master = master;
       this._sessionId = sessionId;
 
-      // If client was not explicitly configured to support stereo playback, enable it on the main
-      // device only.
-      if (!this._isStereo) {
-        this._isStereo = master;
-      }
       resolve();
     })
       .then(() => this._createAudioGraph())

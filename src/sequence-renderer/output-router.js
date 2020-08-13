@@ -16,19 +16,23 @@
 class OutputRouter {
   /**
    * @param {AudioContext} audioContext
-   * @param {boolean} isStereo whether the output is treated as stereo (true) or mono (false).
    * @param {number} panning a panning value between -1 and +1
    */
-  constructor(audioContext, isStereo, panning) {
+  constructor(audioContext, panning) {
     this._audioContext = audioContext;
-    this._isStereo = isStereo;
     this._panning = panning;
 
     /**
-     * The input.
+     * The input for mono sources to be panned
      * @type {GainNode}
      */
     this.input = this._audioContext.createGain();
+
+    /**
+     * The input for stereo sources, to bypass the panner
+     * @type {GainNode}
+     */
+    this.stereoInput = this._audioContext.createGain();
 
     /**
      * The output.
@@ -45,6 +49,8 @@ class OutputRouter {
    */
   initAudioGraph() {
     let panner;
+
+    this.stereoInput.connect(this.output);
 
     if (this._audioContext.createStereoPanner) {
       // If available, use a simple StereoPannerNode
@@ -80,17 +86,7 @@ class OutputRouter {
       panner = merger;
     }
 
-    if (this._isStereo) {
-      panner.connect(this.output);
-    } else {
-      // Create a mono gain node so we explicitly output one channel here for mono devices
-      const monoSum = this._audioContext.createGain();
-      monoSum.channelCountMode = 'explicit';
-      monoSum.channelCount = 1;
-
-      panner.connect(monoSum);
-      monoSum.connect(this.output);
-    }
+    panner.connect(this.output);
   }
 }
 

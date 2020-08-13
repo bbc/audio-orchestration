@@ -15,7 +15,6 @@ class ItemRenderer {
     clock,
     {
       fadeOutDuration = 0.2,
-      stereoOutput = true,
       channelMapping = 'mono',
       panning = 0.0,
       gain = 0.0, // specified as decibels in metadata
@@ -25,15 +24,12 @@ class ItemRenderer {
     this._player = player;
     this._clock = clock;
     this._fadeOutDuration = fadeOutDuration;
-    this._stereoOutput = stereoOutput;
     this._channelMapping = channelMapping;
     this._panning = panning;
     this._gain = 10 ** (gain / 20); // convert fixed gain set in the item.source to linear gain
     this._objectGain = 1.0; // additional gain set at runtime by the allocation algorithm.
 
     this._syncController = new SyncController(this._clock, this._player);
-
-    // TODO: Implement handling of stereo files
 
     // For compatibility with old metadata format, map to new panning parameter
     if (this._panning === undefined) {
@@ -54,7 +50,7 @@ class ItemRenderer {
     this._gainNode = this._audioContext.createGain();
     this._gainNode.gain.value = this._gain * this._objectGain;
 
-    this._outputRouter = new OutputRouter(this._audioContext, this._stereoOutput, this._panning);
+    this._outputRouter = new OutputRouter(this._audioContext, this._panning);
 
     this.stopped = false;
   }
@@ -78,8 +74,18 @@ class ItemRenderer {
   start() {
     this._player.prepare()
       .then(() => {
-        this._player.outputs[0].connect(this._gainNode);
-        this._gainNode.connect(this._outputRouter.input);
+        if (this._channelMapping === 'stereo' && this._player.outputs.length >= 2) {
+          // stereo source, represented at this stage as two mono outputs from the player
+          const channelMerger = this._audioContext.createChannelMerger();
+          this._player.outputs[0].connect(channelMerger, 0, 0);
+          this._player.outputs[1].connect(channelMerger, 0, 1);
+          channelMerger.connect(this._gainNode);
+          this._gainNode.connect(this._outputRouter.stereoInput);
+        } else {
+          // mono/left/right source
+          this._player.outputs[0].connect(this._gainNode);
+          this._gainNode.connect(this._outputRouter.input);
+        }
       });
   }
 

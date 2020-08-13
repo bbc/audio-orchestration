@@ -16,10 +16,9 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {AudioContext} audioContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
-   * @param {bool} isStereo
    * @param {bool} isSafari
    */
-  constructor(audioContext, syncClock, sequence, isStereo, isSafari) {
+  constructor(audioContext, syncClock, sequence, isSafari) {
     super();
 
     /**
@@ -54,12 +53,6 @@ class SynchronisedSequenceRenderer extends EventEmitter {
      * @private
      */
     this._sequence = sequence;
-
-    /**
-     * @type {boolean}
-     * @private
-     */
-    this._isStereo = isStereo;
 
     /**
      * @type {Array<MdoAllocatedObject>}
@@ -118,7 +111,6 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     this._itemRendererFactory = new ItemRendererFactory(
       this._audioContext,
       {
-        stereoOutput: isStereo,
         isSafari,
       },
     );
