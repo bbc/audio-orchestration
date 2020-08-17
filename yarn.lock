@@ -903,10 +903,10 @@
     weak-map "^1.0.5"
     winston "^2.4.0"
 
-"@bbc/bbcat-orchestration@^0.9.0":
-  version "0.9.0"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.9.0.tgz#e5430394bc86aa74d69adbd7df4a3c192d310607"
-  integrity sha1-5UMDlLyGqnTWmtvX30o8GS0xBgc=
+"@bbc/bbcat-orchestration@^0.9.1":
+  version "0.9.1"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.9.1.tgz#fc100d34a56e6d7f3d9821543940ae3c7eac4103"
+  integrity sha1-/BANNKVubX89mCFUOUCuPH6sQQM=
   dependencies:
     "@bbc/bbcat-orchestration-bbcat" "^0.2.0"
     "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.0"

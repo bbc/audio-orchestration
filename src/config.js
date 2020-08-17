@@ -97,9 +97,6 @@ const config = {
   PLAYER_IMAGE_URL: 'images/orchestrator-default-image.jpg',
   TEXT_PLAYER_IMAGE_ALT: 'Audio Orchestrator default image',
 
-  // By default in the orchestration library, auxiliary devices only output mono.
-  ENABLE_STEREO_ON_AUX_DEVICES: true,
-
   // Default settings for the calibration orchestration client.
   // Disabled if CALIBRATION_SEQUENCE_URL is not set,
   // to enable set it to 'audio/calibration/sequence.json' or a custom sequence.
