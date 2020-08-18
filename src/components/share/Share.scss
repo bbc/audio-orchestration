@@ -11,6 +11,7 @@
 
   input {
     flex-grow: 1;
+    min-width: 0;
   }
 
   button {
@@ -24,15 +25,5 @@
     &.success {
       background-color: $theme-color-green;
     }
-  }
-
-  @keyframes slideDown {
-    from {opacity: 0; top: 0}
-    to {opacity: 1; top: $gel-spacing-unit}
-  }
-
-  @keyframes slideUp {
-    from {opacity: 1; top: $gel-spacing-unit}
-    to {opacity: 0; top: 0}
   }
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import classnames from 'classnames';
@@ -12,7 +12,20 @@ const Share = ({ url }) => {
   const [success, setSuccess] = useState(false);
   const inputRef = useRef();
 
-  const share = () => {
+  // Set a timer to reset the success state, but cancel it if the component is unmounted.
+  useEffect(() => {
+    let timeout;
+
+    if (success) {
+      timeout = setTimeout(() => setSuccess(false), 2000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [inputRef, success, setSuccess]);
+
+  const handleShare = () => {
     navigator.share({
       title: config.TEXT_TITLE,
       text: config.TEXT_INTRODUCTION,
@@ -20,14 +33,13 @@ const Share = ({ url }) => {
     });
   };
 
-  const copyToClipboard = () => {
+  const handleCopy = () => {
     if (inputRef.current) {
       inputRef.current.select();
     }
 
     copy(url).then(() => {
       setSuccess(true);
-      setTimeout(() => setSuccess(false), 2000);
     });
   };
 
@@ -37,7 +49,7 @@ const Share = ({ url }) => {
 
       <Button
         icon
-        onClick={copyToClipboard}
+        onClick={handleCopy}
         className={classnames(
           'accent-colour-background',
           'copy-button',
@@ -49,14 +61,14 @@ const Share = ({ url }) => {
       </Button>
 
       { navigator.share && (
-      <Button
-        icon
-        onClick={share}
-        className="accent-colour-background"
-        title="share link"
-      >
-        <Icon name="share" />
-      </Button>
+        <Button
+          icon
+          onClick={handleShare}
+          className="accent-colour-background"
+          title="share link"
+        >
+          <Icon name="share" />
+        </Button>
       )}
     </span>
   );
