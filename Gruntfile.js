@@ -7,9 +7,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  ****************************************************************************/
-var path = require("path"),
-    libRoot = [],
-    testRoot = [];
+var path = require("path");
+var libRoot = [];
 
 // Paths to source files for library builds
 libRoot.push(path.resolve("src/client"));
@@ -22,11 +21,6 @@ libRoot.push(path.resolve("src/common/topicparser"));
 libRoot.push(path.resolve("src/common/util"));
 libRoot.push(path.resolve("src/common/timeline"));
 libRoot.push(path.resolve("src"));
-
-// Paths to source files for test builds
-testRoot.push(path.resolve("tests/specs"));
-testRoot.push(path.resolve("tests/mocks"));
-testRoot = testRoot.concat(libRoot);
 
 module.exports = function(grunt) {
 
@@ -145,18 +139,14 @@ module.exports = function(grunt) {
 
 
   grunt.loadNpmTasks('grunt-webpack');
-  grunt.loadNpmTasks('grunt-contrib-jasmine');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-jsdoc');
-  grunt.loadNpmTasks('grunt-ts');
   grunt.loadNpmTasks('grunt-md');
 
   // default do nothing
   grunt.registerTask('default', ['build_lib', 'watch:scripts']);
-  grunt.registerTask('test', ['build_tests', 'watch:tests']);
 
-  grunt.registerTask('build_tests', ['build_lib', 'clean:tests', 'webpack:specs', 'jasmine:tests']);
   grunt.registerTask('build_lib', ['clean:dist', 'clean:build', 'webpack:lib_browser', 'webpack:lib_browser2', 'clean:tmp' ]);
   grunt.registerTask('doc', [ 'jsdoc', 'md' ]);
 

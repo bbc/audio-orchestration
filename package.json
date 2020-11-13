@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration-cloud-sync-client",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Library implementing client code for cloud synchronisation",
   "main": "dist/browser/CloudSyncKit.js",
   "directories": {
@@ -29,15 +29,10 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-jasmine": "^1.0.3",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-jsdoc": "^2.1.0",
     "grunt-md": "0.0.4",
-    "grunt-ts": "^6.0.0-beta.16",
-    "grunt-typescript": "^0.8.0",
     "grunt-webpack": "^1.0.14",
-    "jasmine-node": "^1.14.5",
-    "typescript": "^2.4.2",
     "webpack": "^1.14.1",
     "webpack-dev-server": "^3.2.1"
   }
