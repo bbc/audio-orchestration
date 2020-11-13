@@ -415,9 +415,9 @@ function performWallclockSync () {
     priv.wallclock = new Clocks.CorrelatedClock(priv.sysClock);
     priv.wallclock.on("available", this.emit.bind(this, "WallClockAvailable"));
     priv.wallclock.on("unavailable", this.emit.bind(this, "WallClockUnAvailable"));
-    
+
     priv.wallclockSynchroniser = new WallclockSynchroniser(
-        priv.wcUrl.protocol + "//" + priv.wcUrl.hostname,
+        priv.wcUrl.protocol + "//" + priv.wcUrl.hostname + priv.wcUrl.pathname,
         priv.wcUrl.port,
         priv.wallclock
     );
