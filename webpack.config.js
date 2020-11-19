@@ -3,11 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const sass = require('sass');
 
 module.exports = {
-  mode: 'development',
+  mode: process.env.NODE_ENV !== 'production' ? 'development' : 'production',
   devtool: process.env.NODE_ENV !== 'production' ? 'source-map' : false,
   entry: [
     path.resolve(__dirname, 'src/index.js'),
@@ -100,15 +99,4 @@ module.exports = {
     }),
     new CleanWebpackPlugin(),
   ],
-  optimization: {
-    minimizer: [
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          mangle: {
-            safari10: true,
-          },
-        },
-      }),
-    ],
-  },
 };

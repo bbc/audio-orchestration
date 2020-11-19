@@ -12,8 +12,8 @@ import Button from 'components/button/Button';
 const CalibrationControls = ({
   onChange,
 }) => {
-  const min = -300;
-  const max = 300;
+  const min = -500;
+  const max = 500;
   const step = 1;
 
   const devicePlaybackOffset = useSelector((state) => state.devicePlaybackOffset);

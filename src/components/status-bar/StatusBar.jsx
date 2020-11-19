@@ -66,13 +66,13 @@ const StatusBar = ({
         <div className="status-bar-right">
           { instructionsOpen
             ? (
-              <Button icon title="close instructions" onClick={onCloseInstructions} className="status-bar-button-instructions">
+              <Button icon title="Close instructions" onClick={onCloseInstructions} className="status-bar-button-instructions">
                 <Icon name="cross" />
               </Button>
             ) : null }
           { instructions
             ? (
-              <Button icon title="open connection instructions" onClick={onOpenInstructions} className="status-bar-button-instructions">
+              <Button icon title="Open connection instructions" onClick={onOpenInstructions} className="status-bar-button-instructions">
                 <Icon name="plus" />
               </Button>
             ) : null }

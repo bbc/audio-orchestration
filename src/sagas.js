@@ -114,10 +114,18 @@ function* mainFlow() {
     yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
     yield call(connectOrchestration, true, sessionId);
   } catch (e) {
-    console.error(e);
-    yield put({ type: 'SET_ERROR', errorMessage: e.message });
+    let errorMessage = `${e}`;
+    if (!errorMessage || errorMessage.includes('undefined')) {
+      errorMessage = 'Could not connect to the synchronisation server, please make sure you have a working internet connection.';
+    }
+
+    yield put({
+      type: 'SET_ERROR',
+      errorMessage,
+      errorShowRetry: true,
+    });
     yield take('CLICK_ERROR_RETRY');
-    window.location.reload(); // TODO okay to do that here?
+    window.location.reload();
     return;
   }
 
@@ -155,17 +163,31 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
   });
 
   yield takeEvery('SET_DISCONNECTED', function* openAuxDisconnectedPage() {
-    // TODO set error message/use special page
-    yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
+    yield put({
+      type: 'SET_ERROR',
+      errorMessage: 'The connection to the main device has been lost.',
+      errorShowRetry: false,
+    });
   });
 
   try {
     yield call(connectOrchestration, false, sessionId);
   } catch (e) {
     console.error(e);
-    yield put({ type: 'SET_ERROR', errorMessage: e.message });
+    let errorMessage = `${e}`;
+    if (errorMessage.includes('undefined')) {
+      errorMessage = 'Could not connect to the synchronisation server, please make sure you have a working internet connection.';
+    }
+
+    yield put({
+      type: 'SET_ERROR',
+      errorMessage,
+      errorShowRetry: true,
+    });
     yield take('CLICK_ERROR_RETRY');
-    yield call(joinFlow);
+    window.location.hash = '#!/join';
+    window.location.reload();
+    return;
   }
 
   // Now we are connected we can set the initial control values (because they need to be sent to

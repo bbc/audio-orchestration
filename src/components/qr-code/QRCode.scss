@@ -5,9 +5,14 @@
 
 .qr-code {
   text-align: center;
+  min-height: 136px;
 
-  img {
+  img, canvas {
+    width: 128px;
+    height: 128px;
     border: 4px solid #fff;
     margin: 0 auto;
+    display: block; // because qr code library sets this on the img tag
+    background: #fff;
   }
 }

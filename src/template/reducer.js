@@ -86,7 +86,11 @@ const exposed = (state = initialState, action) => {
         sessionId: action.sessionId,
       };
     case 'SET_ERROR':
-      return { ...state, errorMessage: action.errorMessage };
+      return {
+        ...state,
+        errorMessage: action.errorMessage,
+        errorShowRetry: action.errorShowRetry,
+      };
     case 'SET_ENDED':
       return { ...state, sequenceEnded: action.ended };
     case 'SET_SEQUENCE_CHOICES':

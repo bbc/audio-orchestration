@@ -6,6 +6,7 @@ import Icon from 'components/icon/Icon';
 
 const PlayerButton = ({
   type,
+  title,
   onClick,
   className,
   disabled,
@@ -18,7 +19,7 @@ const PlayerButton = ({
     )}
     icon
     onClick={onClick}
-    title={type}
+    title={title}
     disabled={disabled}
   >
     <Icon name={type} size="small" className="player-controls-button-icon" />
@@ -35,11 +36,14 @@ PlayerButton.propTypes = {
   className: PropTypes.string,
   /* whether the button is disabled */
   disabled: PropTypes.bool,
+  /* tooltip title for the button */
+  title: PropTypes.string,
 };
 
 PlayerButton.defaultProps = {
   className: undefined,
   disabled: false,
+  title: undefined,
 };
 
 export default PlayerButton;

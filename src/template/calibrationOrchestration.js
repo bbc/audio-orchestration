@@ -240,6 +240,6 @@ export const calibrationWatcherSaga = function* calibrationWatcherSaga() {
   yield takeEvery('REQUEST_CALIBRATION_MODE', toggleCalibrationMode);
   yield takeEvery('REQUEST_START_CALIBRATION_SESSION', requestStartCalibrationSession);
   yield takeEvery('REQUEST_END_CALIBRATION_SESSION', requestEndCalibrationSession);
-  yield takeEvery('SET_CONNECTED_DEVICES', handleDeviceChange);
+  yield takeEvery('SET_ALLOCATIONS_AND_DEVICES', handleDeviceChange);
   yield takeEvery('RECEIVED_CALIBRATION_MESSAGE', handleMessage);
 };

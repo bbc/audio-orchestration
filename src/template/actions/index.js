@@ -54,3 +54,7 @@ export const connectFormOnSubmit = (sessionCode) => ({
 export const mainSetupOnContinue = () => ({
   type: 'CLICK_MAIN_SETUP_CONTINUE',
 });
+
+export const errorOnRetry = () => ({
+  type: 'CLICK_ERROR_RETRY',
+});

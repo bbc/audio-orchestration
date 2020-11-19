@@ -5,8 +5,10 @@ import classnames from 'classnames';
 import Button from 'components/button/Button';
 import Input from 'components/input/Input';
 import Icon from 'components/icon/Icon';
-
 import config from 'config';
+import bowser from 'bowser';
+
+const browser = bowser.getParser(window.navigator.userAgent);
 
 const Share = ({ url }) => {
   const [success, setSuccess] = useState(false);
@@ -25,12 +27,19 @@ const Share = ({ url }) => {
     };
   }, [inputRef, success, setSuccess]);
 
+  // TODO: not showing share button in macOS Chrome, based on a single browser crash report.
+  const showShareButton = !!navigator.share && !(browser.is('Chrome') && browser.is('macOS'));
+
   const handleShare = () => {
-    navigator.share({
-      title: config.TEXT_TITLE,
-      text: config.TEXT_INTRODUCTION,
-      url,
-    });
+    try {
+      navigator.share({
+        title: config.TEXT_TITLE,
+        text: config.TEXT_INTRODUCTION,
+        url,
+      });
+    } catch (e) {
+      console.error('navigator.share failed', e);
+    }
   };
 
   const handleCopy = () => {
@@ -60,12 +69,12 @@ const Share = ({ url }) => {
         <Icon name={success ? 'check' : 'copy'} />
       </Button>
 
-      { navigator.share && (
+      { showShareButton && (
         <Button
           icon
           onClick={handleShare}
           className="accent-colour-background"
-          title="share link"
+          title="Share link"
         >
           <Icon name="share" />
         </Button>
