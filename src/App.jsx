@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Import names used for identifying the current page
@@ -12,7 +13,11 @@ import {
   PAGE_INSTRUCTIONS,
   PAGE_LOADING_TUTORIAL,
   PAGE_CALIBRATION,
+  ROLE_MAIN,
 } from 'sagas';
+
+// Import configuration object derived from index.html settings
+import config from 'config';
 
 // Import the page components: only one of these is used at a time.
 import StartPage from 'pages/start-page/StartPage';
@@ -25,6 +30,12 @@ import ConnectFormPage from 'pages/connect-form-page/ConnectFormPage';
 import ConnectDirectPage from 'pages/connect-direct-page/ConnectDirectPage';
 import CalibrationPage from 'pages/calibration-page/CalibrationPage';
 
+// Import the TasterBadge shown on the main device, if enabled in the settings
+import TasterBadge from 'components/taster-badge/TasterBadge';
+
+// set this to true, set PILOT_ID, and add script tag to index.html to use this
+const enableTasterBadge = false;
+
 /**
  * The App is the top level presentational component.
  *
@@ -36,10 +47,10 @@ import CalibrationPage from 'pages/calibration-page/CalibrationPage';
  *
  * Finally, there is a footer that is common to all pages. This is included directly here.
  */
-const App = (props) => {
-  const {
-    page,
-  } = props;
+const App = ({
+  page,
+}) => {
+  const role = useSelector((state) => state.role);
 
   let CurrentPage;
 
@@ -75,7 +86,22 @@ const App = (props) => {
       CurrentPage = ErrorPage;
   }
 
-  return <CurrentPage />;
+  let tasterBadge = null;
+  if (enableTasterBadge && role === ROLE_MAIN && config.PILOT_ID) {
+    tasterBadge = (
+      <TasterBadge
+        visible={page === PAGE_PLAYING}
+        pilotId={config.PILOT_ID}
+      />
+    );
+  }
+
+  return (
+    <div className="app">
+      <CurrentPage />
+      {tasterBadge}
+    </div>
+  );
 };
 
 App.defaultProps = {

@@ -179,6 +179,18 @@
         ],
         // To enable the calibration menu, provide a sequence URL with equivalent metadata to:
         // CALIBRATION_SEQUENCE_URL: 'audio/calibration/sequence.json',
+
+        // To show a BBC Taster badge, set the pilot ID here, enable the badge in App.jsx,
+        // and add an extra script tag (above bundle.js in this index.html) with
+        // src="//www.bbc.co.uk/taster/pilot-lib.js"
+        PILOT_ID: null,
+
+        // To show a rating prompt, define the text and set a list of sequence contentIds here:
+        PROMPT_SEQUENCES: [],
+        PROMPT_TITLE: 'We\'d like to hear what you thought',
+        PROMPT_BODY: 'Please fill in our short survey.',
+        PROMPT_BUTTON_LINK: 'https://bbc.co.uk/taster/pilots/demo/rate',
+        PROMPT_BUTTON_TEXT: 'Rate this on Taster',
       };
 
       // Instantiate the React app to render into the #app div:

@@ -31,15 +31,25 @@ body.b-reith-sans-loaded {
   }
 }
 
-#app {
+#app, .app {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   overflow-x: hidden;
   position: relative;
+
+  &>* {
+    flex-shrink: 0;
+    flex-basis: auto;
+  }
 }
 
 .page {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
   box-sizing: border-box;
-  height: 100%;
   width: 100%;
   max-width: 600px;
 

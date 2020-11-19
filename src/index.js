@@ -66,6 +66,8 @@ import 'components/qr-code/QRCode.scss';
 import 'components/device-list/DeviceList.scss';
 import 'components/calibration-controls/CalibrationControls.scss';
 import 'components/device-info/DeviceInfo.scss';
+import 'components/taster-badge/TasterBadge.scss';
+import 'components/rating-prompt/RatingPrompt.scss';
 
 // Import additional styles for components not included in the default build, if needed:
 // import 'components/gel-icon/GelIcon.scss';

@@ -107,6 +107,16 @@ const config = {
 
   // If true enables additional features to keep mobile devices awake
   ENABLE_WAKE_LOCK: true,
+
+  // BBC Taster pilot ID
+  PILOT_ID: null,
+
+  // Optional prompt to display in some sequences
+  PROMPT_SEQUENCES: [],
+  PROMPT_TITLE: '',
+  PROMPT_BODY: '',
+  PROMPT_BUTTON_LINK: '',
+  PROMPT_BUTTON_TEXT: '',
 };
 
 export const updateConfig = (newConfig = {}) => {
