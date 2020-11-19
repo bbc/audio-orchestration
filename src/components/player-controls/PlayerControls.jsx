@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import PlayerButton from './PlayerButton';
 import PlayerProgressBar from './PlayerProgressBar';
 import PlayerProgressText from './PlayerProgressText';
+import getCurrentTime from './getCurrentTime';
 
 const PlayerControls = ({
   correlation,
@@ -12,12 +13,31 @@ const PlayerControls = ({
   loop,
   canPause,
   canSeek,
+  onTransitionToSequence,
+  replayContentId,
   className,
   onPlay,
   onPause,
   onSeek,
 }) => {
   const isPlaying = speed > 0;
+  const isNearEnd = getCurrentTime(correlation, speed, duration, loop) >= duration - 0.1;
+  const showReplay = !!replayContentId && isNearEnd && onTransitionToSequence;
+
+  let playButton = null;
+
+  if (canPause) {
+    if (isPlaying) {
+      // Pause (currently playing and can pause)
+      playButton = <PlayerButton type="pause" title="Pause" onClick={onPause} />;
+    } else if (!showReplay) {
+      // Play (currently paused and cannot replay)
+      playButton = <PlayerButton type="play" title="Play" disabled={isNearEnd} onClick={onPlay} />;
+    } else {
+      // Replay (currently paused and should show replay)
+      playButton = <PlayerButton type="replay" title="Replay" onClick={() => onTransitionToSequence(replayContentId)} />;
+    }
+  }
 
   return (
     <div
@@ -35,8 +55,7 @@ const PlayerControls = ({
         onSeek={onSeek}
       />
       <div className="player-controls-buttons">
-        { canPause && isPlaying ? <PlayerButton type="pause" onClick={onPause} /> : null }
-        { canPause && !isPlaying ? <PlayerButton type="play" onClick={onPlay} /> : null }
+        {playButton}
       </div>
       <PlayerProgressText
         correlation={correlation}
@@ -73,6 +92,10 @@ PlayerControls.propTypes = {
   onPause: PropTypes.func,
   /* Event handler for seeking on the progress bar (if not set, playhead will not show). */
   onSeek: PropTypes.func,
+  /* Event handler for requesting a sequence transition. */
+  onTransitionToSequence: PropTypes.func,
+  /* contentId to transition to on clicking the replay button (if not set, it is not shown). */
+  replayContentId: PropTypes.string,
 };
 
 PlayerControls.defaultProps = {
@@ -81,6 +104,8 @@ PlayerControls.defaultProps = {
   onPause: undefined,
   onSeek: undefined,
   loop: false,
+  onTransitionToSequence: undefined,
+  replayContentId: undefined,
 };
 
 export default PlayerControls;

@@ -1,0 +1,27 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.landing-icons {
+  display: flex;
+
+  &>div {
+    width: 30%;
+    flex-grow: 1;
+    text-align: center;
+  }
+
+  svg path {
+    fill: $theme-color-light-grey;
+  }
+
+  .landing-icons-label {
+    @include gel-typography('brevier-bold');
+    color: $theme-color-light-grey;
+
+    display: block;
+    padding: $gel-spacing-unit;
+    text-align: center;
+  }
+}

@@ -67,6 +67,11 @@ import 'components/device-list/DeviceList.scss';
 import 'components/calibration-controls/CalibrationControls.scss';
 import 'components/device-info/DeviceInfo.scss';
 
+// Import additional styles for components not included in the default build, if needed:
+// import 'components/gel-icon/GelIcon.scss';
+// import 'components/guidance/Guidance.scss';
+// import 'components/landing-icons/LandingIcons.scss';
+
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
 // The redux devtools are also enabled: https://github.com/zalmoxisus/redux-devtools-extension

@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'bbcat-icon';
-  src:  url('fonts/bbcat-icon.eot?5tz166');
-  src:  url('fonts/bbcat-icon.eot?5tz166#iefix') format('embedded-opentype'),
-    url('fonts/bbcat-icon.ttf?5tz166') format('truetype'),
-    url('fonts/bbcat-icon.woff?5tz166') format('woff'),
-    url('fonts/bbcat-icon.svg?5tz166#bbcat-icon') format('svg');
+  src:  url('fonts/bbcat-icon.eot?fq6lrm');
+  src:  url('fonts/bbcat-icon.eot?fq6lrm#iefix') format('embedded-opentype'),
+    url('fonts/bbcat-icon.ttf?fq6lrm') format('truetype'),
+    url('fonts/bbcat-icon.woff?fq6lrm') format('woff'),
+    url('fonts/bbcat-icon.svg?fq6lrm#bbcat-icon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -13,7 +13,7 @@
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'bbcat-icon' !important;
-  speak: none;
+  speak: never;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -25,6 +25,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.bbcat-icon-metronome:before {
+  content: "\e904";
+}
+.bbcat-icon-replay:before {
+  content: "\e905";
+}
 .bbcat-icon-copy:before {
   content: "\e901";
 }

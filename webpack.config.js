@@ -80,6 +80,7 @@ module.exports = {
       config: path.resolve(__dirname, 'src/config.js'),
       sagas: path.resolve(__dirname, 'src/sagas.js'),
       theme: path.resolve(__dirname, 'src/theme.scss'),
+      'reith-fonts': path.resolve(__dirname, 'src/reith-fonts.scss'),
     },
   },
   plugins: [

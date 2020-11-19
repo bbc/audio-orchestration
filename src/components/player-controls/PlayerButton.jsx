@@ -8,6 +8,7 @@ const PlayerButton = ({
   type,
   onClick,
   className,
+  disabled,
 }) => (
   <Button
     className={classnames(
@@ -18,6 +19,7 @@ const PlayerButton = ({
     icon
     onClick={onClick}
     title={type}
+    disabled={disabled}
   >
     <Icon name={type} size="small" className="player-controls-button-icon" />
     <Icon name={type} size="small" className="player-controls-button-icon-hover" />
@@ -31,10 +33,13 @@ PlayerButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   /* additional classes to apply to the button */
   className: PropTypes.string,
+  /* whether the button is disabled */
+  disabled: PropTypes.bool,
 };
 
 PlayerButton.defaultProps = {
   className: undefined,
+  disabled: false,
 };
 
 export default PlayerButton;

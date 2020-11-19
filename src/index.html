@@ -35,6 +35,14 @@
             next: [
               {
                 contentId: CONTENT_ID_MAIN,
+                label: 'Hidden default choice',
+                // The 'hidden' flag hides the button associated with this choice. It might be used
+                // as a hidden default choice, or as a debug tool (e.g. by having short cuts only
+                // visible during development.
+                hidden: true,
+              },
+              {
+                contentId: CONTENT_ID_MAIN,
                 label: 'Go left',
               },
               {

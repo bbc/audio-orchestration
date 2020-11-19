@@ -12,7 +12,7 @@ const Choices = ({
       'choices',
     )}
   >
-    { choices.map(({ label, contentId }) => (
+    { choices.filter(({ hidden }) => !hidden).map(({ label, contentId }) => (
       <Button key={label} content={label} onClick={() => onSelectChoice(contentId)} />
     ))}
   </div>
