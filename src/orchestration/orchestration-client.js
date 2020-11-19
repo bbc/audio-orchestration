@@ -150,6 +150,22 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
+   * Emits a 'change' event with the current content id and all allocations and device information.
+   *
+   * @private
+   *
+   * @fires 'change'
+   */
+  _publishChangeEvent() {
+    this.emit('change', {
+      currentContentId: this.currentContentId,
+      objectAllocations: this.objectAllocations,
+      controlAllocations: this.controlAllocations,
+      devices: this.devices,
+    });
+  }
+
+  /**
    * Emits an 'objects' event with information about the currently active objects,
    * and the selected primary object if available.
    *
@@ -229,6 +245,7 @@ class OrchestrationClient extends EventEmitter {
     this._publishStatusEvent();
     this._publishObjectsEvent();
     this._publishControlsEvent();
+    this._publishChangeEvent();
   }
 
   /**
@@ -439,21 +456,12 @@ class OrchestrationClient extends EventEmitter {
         const sequenceWrapper = this._sequences[contentId];
         if (sequenceWrapper !== undefined) {
           sequenceWrapper.renderer.setActiveObjects(this._mdoHelper.getActiveObjects(contentId));
-          this._publishObjectsEvent();
         }
 
         // Update the list of controls assigned to this device
         this._activeControlIds[contentId] = this._mdoHelper.getActiveControls(contentId);
-        this._publishControlsEvent();
 
-        // Emit a change event with all allocations and device metadata
-        this.emit('change', {
-          objectAllocations: this.objectAllocations,
-          controlAllocations: this.controlAllocations,
-          devices: this.devices,
-        });
-
-        // Schedule the sequence renderers
+        // Schedule the sequence renderers and dispatch change events
         this._scheduleSequences(this.schedule);
 
         // resolve the createHelper promise once the first metadata change has been received.
