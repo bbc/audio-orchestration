@@ -922,7 +922,7 @@
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-bbcat/-/@bbc/bbcat-orchestration-bbcat-0.2.0.tgz#45e8836e56f79296bf876724a176055c4d1e9053"
   integrity sha1-ReiDblb3kpa/h2ckoXYFXE0ekFM=
 
-"@bbc/bbcat-orchestration-cloud-sync-client@^2.2.0":
+"@bbc/bbcat-orchestration-cloud-sync-client@^2.2.2":
   version "2.2.2"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-cloud-sync-client/-/@bbc/bbcat-orchestration-cloud-sync-client-2.2.2.tgz#b1c16eb17d606d3e4ccab872afaf6eabe3c5057f"
   integrity sha1-scFusX1gbT5Myrhyr69uq+PFBX8=
@@ -938,13 +938,13 @@
     weak-map "^1.0.5"
     winston "^2.4.0"
 
-"@bbc/bbcat-orchestration@^0.9.1":
-  version "0.9.1"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.9.1.tgz#fc100d34a56e6d7f3d9821543940ae3c7eac4103"
-  integrity sha1-/BANNKVubX89mCFUOUCuPH6sQQM=
+"@bbc/bbcat-orchestration@^0.10.1":
+  version "0.10.1"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.10.1.tgz#abe3dc488b9019d0f70e1a7d1cce2de6277c6fb4"
+  integrity sha1-q+PcSIuQGdD3Dhp9HM4t5id8b7Q=
   dependencies:
     "@bbc/bbcat-orchestration-bbcat" "^0.2.0"
-    "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.0"
+    "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.2"
     dvbcss-clocks "^0.0.4"
     dvbcss-protocols "^0.0.2"
     events "^3.0.0"

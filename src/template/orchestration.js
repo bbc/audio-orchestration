@@ -102,11 +102,11 @@ export const initialiseOrchestration = (dispatchFunction) => {
     }));
 
     dispatch(setTransportCapabilities({
-      canSeek: globalOrchestrationClient.master,
-      canPause: globalOrchestrationClient.master,
+      canSeek: globalOrchestrationClient.isMain,
+      canPause: globalOrchestrationClient.isMain,
     }));
 
-    if (globalOrchestrationClient.master) {
+    if (globalOrchestrationClient.isMain) {
       const {
         next,
         skippable,
@@ -171,7 +171,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
   globalOrchestrationClient.on('ended', (ended) => {
     dispatch(setEnded(ended));
 
-    if (ended && globalOrchestrationClient.master && transitionOnEnded !== null) {
+    if (ended && globalOrchestrationClient.isMain && transitionOnEnded !== null) {
       const nextContentId = transitionOnEnded;
       transitionOnEnded = null;
       // TODO: the orchestration client/renderer pause after emitting the ended event, so can't
@@ -208,13 +208,13 @@ export const initialiseOrchestration = (dispatchFunction) => {
   return globalOrchestrationClient.deviceId;
 };
 
-export const connectOrchestration = (master, sessionId) => globalOrchestrationClient.start(
-  master,
+export const connectOrchestration = (isMain, sessionId) => globalOrchestrationClient.start(
+  isMain,
   sessionId,
   globalAudioContext,
 )
   .then(() => {
-    if (!master) {
+    if (!isMain) {
       globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
       globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
     }
@@ -225,7 +225,7 @@ export const connectOrchestration = (master, sessionId) => globalOrchestrationCl
       dispatch,
       ensureAudioContext,
       isSafari,
-      isMain: globalOrchestrationClient.master,
+      isMain: globalOrchestrationClient.isMain,
       deviceId: globalOrchestrationClient.deviceId,
     });
   })

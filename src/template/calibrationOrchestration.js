@@ -76,7 +76,7 @@ const handleLoaded = () => {
     }],
   });
   dispatch(setLocalCalibrationState(LOCAL_CALIBRATION_STATES.CONNECTED));
-  // if (calibrationOrchestrationClient.master) calibrationOrchestrationClient.play();
+  // if (calibrationOrchestrationClient.isMain) calibrationOrchestrationClient.play();
 };
 
 export const endCalibrationClient = () => {
