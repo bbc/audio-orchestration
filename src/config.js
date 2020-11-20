@@ -117,6 +117,9 @@ const config = {
   PROMPT_BODY: '',
   PROMPT_BUTTON_LINK: '',
   PROMPT_BUTTON_TEXT: '',
+
+  // Whether to show play/pause/replay buttons on the auxiliary devices too
+  ENABLE_PLAY_PAUSE_ON_AUX: false,
 };
 
 export const updateConfig = (newConfig = {}) => {

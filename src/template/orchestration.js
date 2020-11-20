@@ -103,7 +103,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
 
     dispatch(setTransportCapabilities({
       canSeek: globalOrchestrationClient.isMain,
-      canPause: globalOrchestrationClient.isMain,
+      canPause: globalOrchestrationClient.isMain || config.ENABLE_PLAY_PAUSE_ON_AUX,
     }));
 
     if (globalOrchestrationClient.isMain) {
@@ -202,7 +202,25 @@ export const initialiseOrchestration = (dispatchFunction) => {
   });
 
   globalOrchestrationClient.on('message', (message) => {
-    dispatch(receivedCalibrationMessage(message));
+    switch (message.type) {
+      case 'pause':
+        if (globalOrchestrationClient.isMain) {
+          globalOrchestrationClient.pause();
+        }
+        break;
+      case 'play':
+        if (globalOrchestrationClient.isMain) {
+          globalOrchestrationClient.play();
+        }
+        break;
+      case 'transitionToSequence':
+        if (globalOrchestrationClient.isMain) {
+          globalOrchestrationClient.transitionToSequence(message.contentId);
+        }
+        break;
+      default:
+        dispatch(receivedCalibrationMessage(message));
+    }
   });
 
   return globalOrchestrationClient.deviceId;
@@ -235,15 +253,34 @@ export const connectOrchestration = (isMain, sessionId) => globalOrchestrationCl
   });
 
 function* transitionToSequence({ contentId }) {
-  yield call(() => globalOrchestrationClient.transitionToSequence(contentId));
+  if (globalOrchestrationClient.isMain) {
+    yield call(() => globalOrchestrationClient.transitionToSequence(contentId));
+  } else {
+    yield call(() => globalOrchestrationClient.sendMessage({
+      type: 'transitionToSequence',
+      contentId,
+    }));
+  }
 }
 
 function* play() {
-  yield call(() => globalOrchestrationClient.play());
+  if (globalOrchestrationClient.isMain) {
+    yield call(() => globalOrchestrationClient.play());
+  } else {
+    yield call(() => globalOrchestrationClient.sendMessage({
+      type: 'play',
+    }));
+  }
 }
 
 function* pause() {
-  yield call(() => globalOrchestrationClient.pause());
+  if (globalOrchestrationClient.isMain) {
+    yield call(() => globalOrchestrationClient.pause());
+  } else {
+    yield call(() => globalOrchestrationClient.sendMessage({
+      type: 'pause',
+    }));
+  }
 }
 
 function* seek({ relativeOffset }) {
