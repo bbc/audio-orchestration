@@ -5,7 +5,6 @@ import CloudSyncAdapter from '../../src/sync/cloud-sync-adapter';
 
 const url = 'audio/vostok-intro.m4a';
 const timelineType = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
-const cloudSyncEndpoint = 'cloudsync.virt.ch.bbc.co.uk';
 const contentId = url;
 
 const audioContext = new AudioContext();
@@ -15,12 +14,16 @@ const sysClock = new AudioContextClock({}, audioContext);
 const sync = new Sync(new CloudSyncAdapter({ sysClock }));
 const { wallClock } = sync;
 
-// the master clock can be updated to send updates, but will also be updated by the sync service.
-const masterClock = new CorrelatedClock(wallClock, { speed: 0 });
+// the primary clock can be updated to send updates, but will also be updated by the sync service.
+const primaryClock = new CorrelatedClock(wallClock, { speed: 0 });
 
 function connect(isMaster = false) {
   const sessionId = document.getElementById('input-session-id').value;
   const deviceId = document.getElementById('input-device-id').value;
+  const cloudSyncEndpoint = {
+    hostname: document.getElementById('input-hostname').value,
+    port: parseInt(document.getElementById('input-port').value, 10) || undefined,
+  };
 
   sync.connect(cloudSyncEndpoint, sessionId, deviceId).then(() => {
     console.debug('cloud-sync connected');
@@ -44,14 +47,14 @@ function connect(isMaster = false) {
 
   player.prepare()
     .then(() => {
-      // master device: publish updates from the timeline clock
+      // main device: publish updates from the timeline clock
       player.outputs[0].connect(audioContext.destination);
 
       if (isMaster) {
-        return sync.provideTimelineClock(masterClock, timelineType, contentId);
+        return sync.provideTimelineClock(primaryClock, timelineType, contentId);
       }
 
-      // slave device: receive updates only.
+      // aux device: receive updates only.
       return sync.requestTimelineClock(timelineType, contentId);
     })
     .then((timelineClock) => {
@@ -74,11 +77,11 @@ function connect(isMaster = false) {
 }
 
 function updateTimeline({
-  speed = masterClock.getSpeed(),
-  contentTime = masterClock.now(),
+  speed = primaryClock.getSpeed(),
+  contentTime = primaryClock.now(),
 } = {}) {
-  masterClock.setCorrelationAndSpeed({
-    parentTime: masterClock.getParent().now(),
+  primaryClock.setCorrelationAndSpeed({
+    parentTime: primaryClock.getParent().now(),
     childTime: contentTime,
   }, speed);
 }
@@ -93,7 +96,7 @@ function initButtons() {
     connect(true);
   });
 
-  document.getElementById('btn-connect-slave').addEventListener('click', (e) => {
+  document.getElementById('btn-connect-aux').addEventListener('click', (e) => {
     e.target.disabled = true;
     connect(false);
   });
@@ -120,7 +123,7 @@ function initButtons() {
   });
 
   document.getElementById('btn-seek-forward').addEventListener('click', () => {
-    updateTimeline({ contentTime: masterClock.now() + (10 * 1000) });
+    updateTimeline({ contentTime: primaryClock.now() + (10 * 1000) });
   });
 
   document.getElementById('btn-broadcast').addEventListener('click', () => {

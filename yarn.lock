@@ -662,10 +662,10 @@
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-bbcat/-/@bbc/bbcat-orchestration-bbcat-0.2.0.tgz#45e8836e56f79296bf876724a176055c4d1e9053"
   integrity sha1-ReiDblb3kpa/h2ckoXYFXE0ekFM=
 
-"@bbc/bbcat-orchestration-cloud-sync-client@^2.2.0":
-  version "2.2.0"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-cloud-sync-client/-/@bbc/bbcat-orchestration-cloud-sync-client-2.2.0.tgz#c4d4e1a71dd74a038ab444a9a70bda972781ef7e"
-  integrity sha1-xNThpx3XSgOKtESppwvalyeB734=
+"@bbc/bbcat-orchestration-cloud-sync-client@^2.3.0":
+  version "2.2.2"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-cloud-sync-client/-/@bbc/bbcat-orchestration-cloud-sync-client-2.2.2.tgz#b1c16eb17d606d3e4ccab872afaf6eabe3c5057f"
+  integrity sha1-scFusX1gbT5Myrhyr69uq+PFBX8=
   dependencies:
     dvbcss-clocks "0.0.4"
     dvbcss-protocols "^0.0.2"

@@ -3,11 +3,18 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cloud sync player example</title>
+    <title>Cloud-Sync player example</title>
   </head>
   <body>
-    <h1>Cloud Sync</h1>
+    <h1>Cloud-Sync player example </h1>
+    <p>Connect two devices to the same cloud-sync service with the same session ID and a different device ID, and hear some synchronised audio.
     <h2>Session</h2>
+    <p>
+      <input type="text" id="input-hostname" value="cloudsync.virt.ch.bbc.co.uk" style="width: 240px" />
+      <label for="input-hostname">Hostname</label>,
+      <input type="text" id="input-port" default="" />
+      <label for="input-port">Port (leave empty for wss:// connection)</label>
+    </p>
     <p>
       <input type="text" id="input-session-id" />
       <label for="input-session-id">Session ID</label>
@@ -17,8 +24,8 @@
       <label for="input-device-id">Device ID</label>
     </p>
     <p>
-      <button id="btn-connect">Connect as master</button>
-      <button id="btn-connect-slave">Connect as slave</button>
+      <button id="btn-connect">Connect as main device</button>
+      <button id="btn-connect-aux">Connect as aux device</button>
     </p>
     <h2>Player</h2>
     <p>Wall Clock dispersion: <span id="dispersion">...</span></p>
