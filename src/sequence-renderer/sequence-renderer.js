@@ -115,7 +115,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       },
     );
 
-    // listen for changes to the master clock object
+    // listen for changes to the primary clock object
     this._clock.on('change', this.notify.bind(this));
     setInterval(this.notify.bind(this), 1000 * (this._lookaheadDuration / 2));
   }

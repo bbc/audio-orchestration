@@ -92,8 +92,8 @@ class Sync extends EventEmitter {
    * Waits for a sync timeline of given type and contentId to be registered in the session and
    * provides a CorrelatedClock for it when it becomes available.
    *
-   * * Use this method for a 'slave' client to be controlled by a remote timeline.
-   * * Use {@link provideTimelineClock} for a 'master' client also providing updates to the server.
+   * * Use this method for an auxiliary client to be controlled by a remote timeline.
+   * * Use {@link provideTimelineClock} for a main device also providing updates to the server.
    *
    * @param {string} timelineType
    * @param {string} contentId
@@ -111,9 +111,9 @@ class Sync extends EventEmitter {
    *
    * The provided clock may be changed by the Sync service.
    *
-   * * Use this method for a 'master' client controlling the experience. Multiple masters will
-   *   elect a leader for updating the session-wide timeline.
-   * * Use {@link synchroniseToTimeline} for a 'slave' client to wait until
+   * * Use this method for a main device client controlling the experience. Multiple main devices
+   *   will elect a leader for updating the session-wide timeline.
+   * * Use {@link synchroniseToTimeline} for a auxiliary client to wait until
    *   another device provides a timeline to synchronise to.
    *
    * @param {CorrelatedClock} timelineClock

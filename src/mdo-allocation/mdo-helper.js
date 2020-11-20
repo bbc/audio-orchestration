@@ -67,7 +67,7 @@ class MdoHelper extends EventEmitter {
     /**
      * @private
      *
-     * The locally held schedule for when sequences should start playing relative to the master
+     * The locally held schedule for when sequences should start playing relative to the primary
      * experience timeline.
      */
     this._schedule = [];

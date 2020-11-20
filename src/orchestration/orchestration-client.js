@@ -293,10 +293,10 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Creates a system clock, sync component, and master clock.
+   * Creates a system clock, sync component, and main clock.
    *
-   * @returns {CorrelatedClock} - the master clock used on the main device to control the experience
-   * timeline.
+   * @returns {CorrelatedClock} - the primary clock used on the main device to control the
+   * experience timeline.
    *
    * @private
    */
@@ -305,7 +305,7 @@ class OrchestrationClient extends EventEmitter {
     this._sysClock = new AudioContextClock({}, this._audioContext);
     this._sync = new Sync(new CloudSyncAdapter({ sysClock: this._sysClock }));
     const { wallClock } = this._sync;
-    this._masterClock = new CorrelatedClock(wallClock, {
+    this._primaryClock = new CorrelatedClock(wallClock, {
       correlation: {
         parentTime: wallClock.now(),
         childTime: 0,
@@ -314,7 +314,7 @@ class OrchestrationClient extends EventEmitter {
       tickRate: TIMELINE_TYPE_TICK_RATE,
     });
 
-    return this._masterClock;
+    return this._primaryClock;
   }
 
   /**
@@ -351,8 +351,8 @@ class OrchestrationClient extends EventEmitter {
    */
   _requestSyncClock() {
     this.emit('loading', 'synchronising clocks');
-    if (this._master) {
-      this._sync.provideTimelineClock(this._masterClock, TIMELINE_TYPE, this._contentId);
+    if (this._isMain) {
+      this._sync.provideTimelineClock(this._primaryClock, TIMELINE_TYPE, this._contentId);
     }
 
     return new Promise((resolve, reject) => {
@@ -440,7 +440,7 @@ class OrchestrationClient extends EventEmitter {
 
     return new Promise((resolve, reject) => {
       // Create mdoHelper
-      if (this._master) {
+      if (this._isMain) {
         this._mdoHelper = new MdoAllocator(
           this._deviceId,
           {
@@ -477,8 +477,8 @@ class OrchestrationClient extends EventEmitter {
       this._mdoHelper.start(this._sync);
 
       // Register the sequence objects and start playing the first one.
-      // The master device transitionToSequence causes a schedule event on all devices.
-      if (this._master) {
+      // The main device transitionToSequence causes a schedule event on all devices.
+      if (this._isMain) {
         // set the controls
         this._mdoHelper.setControls(this._controls);
         // register the objects for all sequences.
@@ -499,15 +499,15 @@ class OrchestrationClient extends EventEmitter {
   /**
    * Initialises the class and connects to all the required services.
    *
-   * @param {boolean} master - whether this client acts as a master, controlling the experience, or
-   * a slave, synchronising to a master running on another device.
+   * @param {boolean} isMain - whether this client acts as a main main, controlling the experience,
+   * or an aux device, synchronising to another device.
    * @param {string} sessionId - a unique session id.
    * @param {AudioContext?} audioContext - an AudioContext to use, if one has already been created
    * by the application.
    *
    * @returns {Promise}
    */
-  start(master, sessionId, audioContext = null) {
+  start(isMain, sessionId, audioContext = null) {
     return new Promise((resolve) => {
       if (this._initialised) {
         throw new Error('Orchestration client is already initialised.');
@@ -520,7 +520,7 @@ class OrchestrationClient extends EventEmitter {
       }
 
       this._initialised = true;
-      this._master = master;
+      this._isMain = isMain;
       this._sessionId = sessionId;
 
       resolve();
@@ -575,61 +575,61 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
-   * Continues playing the current sequence from the current time. Can only be used on the master
+   * Continues playing the current sequence from the current time. Can only be used on the main
    * device.
    */
   play() {
-    if (!this._ready || !this._master) {
+    if (!this._ready || !this._isMain) {
       return;
     }
 
-    this._masterClock.setCorrelationAndSpeed({
-      childTime: this._masterClock.now(),
+    this._primaryClock.setCorrelationAndSpeed({
+      childTime: this._primaryClock.now(),
       parentTime: this._sync.wallClock.now(),
     }, 1);
   }
 
   /**
    * Pauses the experience timeline and any content currently playing. Can only be used on the
-   * master device.
+   * main device.
    */
   pause() {
-    if (!this._ready || !this._master) {
+    if (!this._ready || !this._isMain) {
       return;
     }
 
-    this._masterClock.setCorrelationAndSpeed({
-      childTime: this._masterClock.now(),
+    this._primaryClock.setCorrelationAndSpeed({
+      childTime: this._primaryClock.now(),
       parentTime: this._sync.wallClock.now(),
     }, 0);
   }
 
   /**
    * Seeks in the experience timeline by a relative amount of seconds. Can only be used on the
-   * master device.
+   * main device.
    *
    * @param {number} relativeOffset - relative seek offset in seconds
    */
   seek(relativeOffset) {
-    if (!this._ready || !this._master) {
+    if (!this._ready || !this._isMain) {
       return;
     }
 
-    this._masterClock.setCorrelation({
-      childTime: this._masterClock.now() + (relativeOffset * this._masterClock.tickRate),
+    this._primaryClock.setCorrelation({
+      childTime: this._primaryClock.now() + (relativeOffset * this._primaryClock.tickRate),
       parentTime: this._sync.wallClock.now(),
     });
   }
 
   /**
    * Schedules a transition from the current sequence to the given contentId. Can only be used
-   * on the master device.
+   * on the main device.
    *
    * @param {string} contentId
    */
   transitionToSequence(contentId) {
     // used internally, during startup, so cannot test for _ready here.
-    if (!this._master || !this._initialised) {
+    if (!this._isMain || !this._initialised) {
       return;
     }
 
@@ -696,8 +696,13 @@ class OrchestrationClient extends EventEmitter {
     this._mdoHelper.setDeviceMetadata(metadata);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   get master() {
-    return this._master;
+    throw new Error('OrchestrationClient.master has been renamed to isMain.');
+  }
+
+  get isMain() {
+    return this._isMain;
   }
 
   get currentContentId() {

@@ -130,8 +130,8 @@ class CloudSyncAdapter extends SyncAdapter {
    * Registers a correlated clock to provide timeline updates to the
    * service, and receive updates from it.
    *
-   * * Use this method for a 'master' client controlling the experience.
-   * * Use {@link synchroniseToTimeline} for a 'slave' client to wait until
+   * * Use this method for a main device client controlling the experience.
+   * * Use {@link synchroniseToTimeline} for an auxiliary device client to wait until
    * another device provides a timeline to synchronise to.
    *
    * @param {CorrelatedClock} timelineClock
@@ -155,8 +155,8 @@ class CloudSyncAdapter extends SyncAdapter {
    * Waits for a timeline of given type and contentId and provides a
    * CorrelatedClock for it when it becomes available.
    *
-   * * Use this method for a 'slave' client to be controlled by a remote timeline.
-   * * Use {@link synchronise} for a 'master' client also providing updates to the server.
+   * * Use this method for an auxiliary device client to be controlled by a remote timeline.
+   * * Use {@link synchronise} for a main device client also providing updates to the server.
    *
    * @param {string} timelineType
    * @param {string} contentId
