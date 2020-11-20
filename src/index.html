@@ -32,6 +32,9 @@
             url: SEQUENCE_URL_LOOP,
             hold: false,
             skippable: true,
+            // You can set a sequence to automatically follow the first choice listed below once
+            // as soon as this many aux devices have been connected.
+            transitionOnMinNumberOfAuxDevices: 3,
             next: [
               {
                 contentId: CONTENT_ID_MAIN,

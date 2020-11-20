@@ -69,6 +69,8 @@ export const ensureAudioContext = () => {
 export const initialiseOrchestration = (dispatchFunction) => {
   dispatch = dispatchFunction;
   let transitionOnEnded = null;
+  let transitionOnCondition = null;
+  let lastStatusContentId = null;
 
   globalOrchestrationClient = new OrchestrationClient({
     initialContentId: config.INITIAL_CONTENT_ID,
@@ -106,12 +108,28 @@ export const initialiseOrchestration = (dispatchFunction) => {
       canPause: globalOrchestrationClient.isMain || config.ENABLE_PLAY_PAUSE_ON_AUX,
     }));
 
-    if (globalOrchestrationClient.isMain) {
+    if (globalOrchestrationClient.isMain && lastStatusContentId !== e.currentContentId) {
       const {
         next,
         skippable,
         hold,
+        transitionOnMinNumberOfAuxDevices,
       } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === e.currentContentId);
+
+      if (!hold && !e.loop && next.length > 0) {
+        transitionOnEnded = next[0].contentId;
+      } else {
+        transitionOnEnded = null;
+      }
+
+      if (transitionOnMinNumberOfAuxDevices && next.length > 0) {
+        transitionOnCondition = {
+          minNumberOfAuxDevices: transitionOnMinNumberOfAuxDevices,
+          contentId: next[0].contentId,
+        };
+      } else {
+        transitionOnCondition = null;
+      }
 
       if (!hold && !e.loop && next.length > 0) {
         transitionOnEnded = next[0].contentId;
@@ -124,6 +142,8 @@ export const initialiseOrchestration = (dispatchFunction) => {
         skippable,
         hold,
       }));
+
+      lastStatusContentId = e.currentContentId;
     }
   });
 
@@ -141,6 +161,19 @@ export const initialiseOrchestration = (dispatchFunction) => {
       controlAllocations: controlAllocations[currentContentId] || {},
       connectedDevices: devices || [],
     }));
+
+    if (globalOrchestrationClient.isMain && transitionOnCondition) {
+      const {
+        minNumberOfAuxDevices,
+        contentId,
+      } = transitionOnCondition;
+
+      // devices.length includes main device in count
+      if (devices.length >= minNumberOfAuxDevices + 1) {
+        transitionOnCondition = null;
+        globalOrchestrationClient.transitionToSequence(contentId);
+      }
+    }
   });
 
   globalOrchestrationClient.on('objects', (e) => {
