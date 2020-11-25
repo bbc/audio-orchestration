@@ -81,6 +81,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
     controls: config.CONTROLS,
     isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
+    objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {

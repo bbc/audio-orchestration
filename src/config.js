@@ -120,6 +120,9 @@ const config = {
 
   // Whether to show play/pause/replay buttons on the auxiliary devices too
   ENABLE_PLAY_PAUSE_ON_AUX: false,
+
+  // Fade out objects that are being moved away from a device for this duration (in seconds)
+  OBJECT_FADE_OUT_DURATION: 0.5,
 };
 
 export const updateConfig = (newConfig = {}) => {
