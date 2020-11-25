@@ -14,7 +14,8 @@ class ItemRenderer {
     player,
     clock,
     {
-      fadeOutDuration = 0.2,
+      fadeOutDelay = 0.0,
+      fadeOutDuration = 0.0,
       channelMapping = 'mono',
       panning = 0.0,
       gain = 0.0, // specified as decibels in metadata
@@ -23,11 +24,13 @@ class ItemRenderer {
     this._audioContext = audioContext;
     this._player = player;
     this._clock = clock;
+    this._fadeOutDelay = fadeOutDelay;
     this._fadeOutDuration = fadeOutDuration;
     this._channelMapping = channelMapping;
     this._panning = panning;
     this._gain = 10 ** (gain / 20); // convert fixed gain set in the item.source to linear gain
     this._objectGain = 1.0; // additional gain set at runtime by the allocation algorithm.
+    this._fadingOut = false;
 
     this._syncController = new SyncController(this._clock, this._player);
 
@@ -97,14 +100,37 @@ class ItemRenderer {
     return Promise.resolve();
   }
 
-  // TODO: Check whether this code is called
+  cancelFadeOut() {
+    if (this._fadingOut) {
+      this._fadingOut = false;
+      this.output.gain.cancelScheduledValues(0.0);
+      this.output.gain.setTargetAtTime(
+        1.0,
+        this._audioContext.currentTime,
+        this._fadeOutDuration / 3,
+      );
+    }
+  }
+
   fadeOut(when = this._audioContext.currentTime) {
-    return new Promise((resolve) => {
-      this._outputRouter.output.gain.exponentialRamptoValueAtTime(1e-3, this._fadeOutDuration);
-      setTimeout(() => {
-        resolve();
-      }, 1000 * ((when - this._audioContext.currentTime) + this._fadeOutDuration));
-    }).then(() => this.stop());
+    if (this._fadingOut) {
+      return;
+    }
+
+    this._fadingOut = true;
+    this.output.gain.setTargetAtTime(
+      0,
+      this._audioContext.currentTime + this._fadeOutDelay,
+      this._fadeOutDuration / 3,
+    );
+
+    setTimeout(() => {
+      if (!this._fadingOut) {
+        return;
+      }
+      this.fadingOut = false;
+      this.stop();
+    }, 1000 * ((when - this._audioContext.currentTime) + this._fadeOutDuration));
   }
 
   get output() {

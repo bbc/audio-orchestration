@@ -82,6 +82,7 @@ class OrchestrationClient extends EventEmitter {
     this._allocationAlgorithm = options.allocationAlgorithm || null;
     this._gain = 1.0;
     this._playbackOffset = 0;
+    this._objectFadeOutDuration = options.objectFadeOutDuration || 0;
   }
 
   /**
@@ -406,7 +407,10 @@ class OrchestrationClient extends EventEmitter {
             this._audioContext,
             this._syncClock,
             sequence,
-            this._isSafari,
+            {
+              isSafari: this._isSafari,
+              objectFadeOutDuration: this._objectFadeOutDuration,
+            },
           );
 
           renderer.on('ended', () => {

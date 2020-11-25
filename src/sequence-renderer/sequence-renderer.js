@@ -3,8 +3,6 @@ import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Sequence from './sequence';
 import ItemRendererFactory from './item-renderer';
 
-const MUTE_GAIN = 1.0e-6;
-
 /**
  * @class
  * @desc
@@ -16,9 +14,14 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @param {AudioContext} audioContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
-   * @param {bool} isSafari
+   * @param Object [options]
+   * @param bool [options.isSafari]
+   * @param number [options.objectFadeOutDuration]
    */
-  constructor(audioContext, syncClock, sequence, isSafari) {
+  constructor(audioContext, syncClock, sequence, {
+    isSafari = false,
+    objectFadeOutDuration = 0,
+  } = {}) {
     super();
 
     /**
@@ -75,16 +78,16 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     this._lookaheadDuration = 2.0;
 
     /**
-     * @type {fadeInDuration}
-     * How long does the transition on newly enabled objects last (seconds).
+     * @type {number}
+     * duration of the fade to apply when a sequence renderer is stopped.
      */
-    this.fadeInDuration = 0.2;
+    this.sequenceFadeOutDuration = 0.2;
 
     /**
-     * @type {fadeOutDuration}
-     * How long does the transition on newly removed objects last (seconds).
+     * @type {number}
+     * duration of the fade to apply when an object is removed from this device.
      */
-    this.fadeOutDuration = 0.2;
+    this._objectFadeOutDuration = objectFadeOutDuration;
 
     /**
      * @type {RendererOutputRouter}
@@ -112,6 +115,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       this._audioContext,
       {
         isSafari,
+        fadeOutDuration: this._objectFadeOutDuration,
       },
     );
 
@@ -216,9 +220,9 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     this._activeItemRenderers.forEach(({ renderer }) => {
       try {
         if (fade) {
-          renderer.output.gain.setTargetAtTime(MUTE_GAIN, syncTime, this.fadeOutDuration / 3);
+          renderer.output.gain.setTargetAtTime(0, syncTime, this.sequenceFadeOutDuration / 3);
         } else {
-          renderer.output.gain.setValueAtTime(MUTE_GAIN, syncTime);
+          renderer.output.gain.setValueAtTime(0, syncTime);
         }
       } catch (e) {
         // TODO nothing to do here (reached when trying to stop a non-running renderer)
@@ -229,7 +233,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
           /* eslint-disable-next-line */
           // console.debug(`renderer.stop at ${this._audioContext.currentTime} (output cut at ${syncTime}).`);
         },
-        1000 * ((syncTime - this._audioContext.currentTime) + this.fadeOutDuration),
+        1000 * ((syncTime - this._audioContext.currentTime) + this.sequenceFadeOutDuration),
       );
     });
     this._activeItemRenderers = [];
@@ -326,6 +330,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       .find(r => r.itemId === itemId && Math.abs(r.startTime - startTime) < 1.0e-3);
     if (existingRenderer !== undefined) {
       // Already have this item scheduled for the same time, just update the gain
+      existingRenderer.renderer.cancelFadeOut();
       existingRenderer.renderer.setObjectGain(item.objectGain);
       return;
     }
@@ -392,14 +397,24 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     });
 
 
-    // deactivate all renderers for abandoned items: Those that have run to completion,
-    // and those for items not in the activeItems list.
+    // Immediately deactivate all renderers for abandoned items, that have run to completion since
+    // the last notify call.
     this._activeItemRenderers
-      .filter(({ itemId, startTime, duration }) =>
-        (startTime + duration < now)
-          || (activeItems.find(item => item.itemId === itemId) === undefined))
-      .forEach((r) => {
-        r.renderer.stop();
+      .filter(({ startTime, duration }) => (startTime + duration < now))
+      .forEach(({ renderer }) => {
+        renderer.stop();
+      });
+
+    // Trigger a fade out for renderers that are no longer in the activeItems list, assuming it is
+    // because the object has been removed.
+    this._activeItemRenderers
+      .filter(({ itemId }) =>
+        (activeItems.find(item => item.itemId === itemId) === undefined))
+      .forEach(({ renderer }) => {
+        if (!renderer.stopped) {
+          // fadeOut calls stop() after the fade has completed.
+          renderer.fadeOut();
+        }
       });
 
     // delete references to all stopped item renderers
