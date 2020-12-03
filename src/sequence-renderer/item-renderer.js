@@ -3,6 +3,7 @@ import {
   SyncController,
   BufferPlayer,
   DashPlayer,
+  ImagePlayer,
 } from '../sync-players';
 
 /**
@@ -17,9 +18,9 @@ class ItemRenderer {
       fadeOutDelay = 0.0,
       fadeOutDuration = 0.0,
       channelMapping = 'mono',
-      panning = 0.0,
+      panning = 0.0, // specified as [-1, 1]
       gain = 0.0, // specified as decibels in metadata
-    } = {}, // item.source
+    } = {}, // from options and item.source
   ) {
     this._audioContext = audioContext;
     this._player = player;
@@ -84,7 +85,7 @@ class ItemRenderer {
           this._player.outputs[1].connect(channelMerger, 0, 1);
           channelMerger.connect(this._gainNode);
           this._gainNode.connect(this._outputRouter.stereoInput);
-        } else {
+        } else if (this._channelMapping !== 'none') {
           // mono/left/right source
           this._player.outputs[0].connect(this._gainNode);
           this._gainNode.connect(this._outputRouter.input);
@@ -139,8 +140,9 @@ class ItemRenderer {
 }
 
 class ItemRendererFactory {
-  constructor(audioContext, options = {}) {
+  constructor(audioContext, imageContext, options = {}) {
     this._audioContext = audioContext;
+    this._imageContext = imageContext;
     this._options = options;
     this._isSafari = options.isSafari || false;
   }
@@ -148,8 +150,11 @@ class ItemRendererFactory {
   /**
    * @returns {ItemRenderer}
    */
-  getInstance(source, clock) {
+  getInstance(item, clock) {
     let player = null;
+
+    const { source, duration } = item;
+    let { channelMapping } = source;
 
     switch (source.type) {
       case 'dash':
@@ -165,6 +170,15 @@ class ItemRendererFactory {
           source.url,
         );
         break;
+      case 'image':
+        channelMapping = 'none'; // to avoid setting up audio connections from the image player
+        player = new ImagePlayer(
+          this._audioContext,
+          this._imageContext,
+          source,
+          duration,
+        );
+        break;
       default:
         throw new Error(`Cannot create a player for unknown source type ${source.type}`);
     }
@@ -174,7 +188,7 @@ class ItemRendererFactory {
       player,
       clock,
       Object.assign({}, this._options, {
-        channelMapping: source.channelMapping,
+        channelMapping,
         panning: source.panning,
         gain: source.gain,
       }),

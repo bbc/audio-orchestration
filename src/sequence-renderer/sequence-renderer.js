@@ -12,13 +12,14 @@ import ItemRendererFactory from './item-renderer';
 class SynchronisedSequenceRenderer extends EventEmitter {
   /**
    * @param {AudioContext} audioContext
+   * @param {ImageContext} imageContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
    * @param Object [options]
    * @param bool [options.isSafari]
    * @param number [options.objectFadeOutDuration]
    */
-  constructor(audioContext, syncClock, sequence, {
+  constructor(audioContext, imageContext, syncClock, sequence, {
     isSafari = false,
     objectFadeOutDuration = 0,
   } = {}) {
@@ -29,6 +30,12 @@ class SynchronisedSequenceRenderer extends EventEmitter {
      * @private
      */
     this._audioContext = audioContext;
+
+    /**
+     * @type {ImageContext}
+     * @private
+     */
+    this._imageContext = imageContext;
 
     /**
      * @type {CorrelatedClock}
@@ -113,6 +120,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
      */
     this._itemRendererFactory = new ItemRendererFactory(
       this._audioContext,
+      this._imageContext,
       {
         isSafari,
         fadeOutDuration: this._objectFadeOutDuration,
@@ -323,7 +331,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
    * @private
    */
   scheduleItem(item, startTime) {
-    const { itemId, duration, source } = item;
+    const { itemId, duration } = item;
 
     // define 'starting at the same time' to be within one milliseconds (10^-3)
     const existingRenderer = this._activeItemRenderers
@@ -345,7 +353,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     // console.debug(`at ${startTime.toFixed(1)}\t start ${itemId} (new item renderer) (sequence loop: ${this._sequence.loop})\n` +
     //               `syncClock.now: ${this._syncClock.now()}\n` +
     //               `clock.now: ${clock.now()}`);
-    const renderer = this._itemRendererFactory.getInstance(source, clock);
+    const renderer = this._itemRendererFactory.getInstance(item, clock);
     renderer.setObjectGain(item.objectGain);
     renderer.output.connect(this._output);
     renderer.start();

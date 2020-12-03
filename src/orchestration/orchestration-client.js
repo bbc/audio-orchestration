@@ -8,6 +8,7 @@ import MdoAllocator from '../mdo-allocation/mdo-allocator';
 import MdoReceiver from '../mdo-allocation/mdo-receiver';
 import CloudSyncAdapter from '../sync/cloud-sync-adapter';
 import Sync from '../sync/sync';
+import ImageContext from '../image-context/image-context';
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
@@ -83,6 +84,7 @@ class OrchestrationClient extends EventEmitter {
     this._gain = 1.0;
     this._playbackOffset = 0;
     this._objectFadeOutDuration = options.objectFadeOutDuration || 0;
+    this._imageContext = null;
   }
 
   /**
@@ -135,7 +137,6 @@ class OrchestrationClient extends EventEmitter {
       const speed = this._syncClock.getEffectiveSpeed();
 
       const { duration, loop } = sequence;
-
 
       this.emit('status', {
         currentContentId,
@@ -405,6 +406,7 @@ class OrchestrationClient extends EventEmitter {
           // create a renderer but don't start it yet.
           const renderer = new SynchronisedSequenceRenderer(
             this._audioContext,
+            this._imageContext,
             this._syncClock,
             sequence,
             {
@@ -500,6 +502,10 @@ class OrchestrationClient extends EventEmitter {
     });
   }
 
+  _emitImage(image) {
+    this.emit('image', image);
+  }
+
   /**
    * Initialises the class and connects to all the required services.
    *
@@ -522,6 +528,9 @@ class OrchestrationClient extends EventEmitter {
       } else {
         this._audioContext = OrchestrationClient.createAudioContext();
       }
+
+      this._imageContext = new ImageContext(image => this._emitImage(image), this._audioContext);
+      this._imageContext.resume();
 
       this._initialised = true;
       this._isMain = isMain;

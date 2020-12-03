@@ -175,9 +175,9 @@ class DashPlayer extends Player {
         this.lastPrimePromise.then(() => {
           if (this.source.state === 'primed') {
             this.source.start(this.when);
-          } else {
-            console.warn('PrimePromise resolved but source not primed. Source may have changed?');
-          }
+          } // else {
+          // console.warn('PrimePromise resolved but source not primed. Source may have changed?');
+          // }
         });
       });
   }

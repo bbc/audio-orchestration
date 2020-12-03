@@ -1,5 +1,5 @@
 /**
- * The SyncController slaves a {@link Player} to a clock. It will play, pause, and seek
+ * The SyncController ties a {@link Player} to a clock. It will play, pause, and seek
  * the media to keep it in sync with the given {@link CorrelatedClock}.
  */
 
