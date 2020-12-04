@@ -4,25 +4,20 @@
 @import '~theme';
 
 .player-title {
-  min-height: 96px;
+  min-height: (96px - $gel-spacing-unit);
+
   margin-top: -96px;
   margin-right: -$gel-spacing-unit;
   margin-bottom: $gel-spacing-unit;
   margin-left: -$gel-spacing-unit;
 
-  z-index: 1;
-  background: $theme-color-black;
-  background: linear-gradient(0deg, rgba($theme-color-black, 1) 0, rgba($theme-color-black, 0) 100%);
   padding: 0 $gel-spacing-unit;
   display: flex;
   flex-direction: column;
-
-  &::before {
-    content: ' ';
-    flex-grow: 1;
-  }
+  justify-content: flex-end;
+  position: relative;
+  z-index: 5; // above player-image components (vignette is at 4)
 }
-
 
 .player-title-title {
   @include gel-typography('double-pica');

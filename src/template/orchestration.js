@@ -20,6 +20,7 @@ import {
   setDeviceGain,
   setDevicePlaybackOffset,
   receivedCalibrationMessage,
+  setImage,
 } from 'actions/orchestration';
 
 import {
@@ -254,6 +255,14 @@ export const initialiseOrchestration = (dispatchFunction) => {
         break;
       default:
         dispatch(receivedCalibrationMessage(message));
+    }
+  });
+
+  globalOrchestrationClient.on('image', (image) => {
+    if (!image) {
+      dispatch(setImage(null));
+    } else {
+      dispatch(setImage(image));
     }
   });
 

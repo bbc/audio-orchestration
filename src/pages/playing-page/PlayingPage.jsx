@@ -20,19 +20,39 @@ const PlayingPage = () => {
   const activeControlIds = useSelector((state) => state.activeControlIds);
   const currentContentId = useSelector((state) => state.currentContentId);
   const role = useSelector((state) => state.role);
+  const image = useSelector((state) => state.image);
+  const effect = image ? image.effect : null;
 
   const isMain = role === ROLE_MAIN;
   const showRating = isMain && config.PROMPT_SEQUENCES.includes(currentContentId);
+  const showTitle = !showRating;
 
+  const playerImage = {
+    src: image ? image.src : config.PLAYER_IMAGE_URL,
+    alt: (image && image.src && image.alt) || config.PLAYER_IMAGE_ALT,
+  };
+
+  const playerImageClassName = classnames({
+    'player-image-with-gradient': showTitle,
+    'player-image-with-vignette': !!effect,
+  });
+
+  // TODO removed player-image-stretch, is it needed?
   return (
     <div className={classnames('page', 'page-playing', 'page-with-status-bar')}>
       <ConnectedStatusBar instructions />
 
       <PageContents>
-        <PlayerImage src={config.PLAYER_IMAGE_URL} alt={config.TEXT_PLAYER_IMAGE_ALT}>
-          { showRating && <RatingPrompt pilotId={config.PILOT_ID} /> }
+        <PlayerImage
+          image={playerImage}
+          effect={effect}
+          className={playerImageClassName}
+        >
+          { showRating && <RatingPrompt /> }
         </PlayerImage>
-        <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE} />
+
+        { showTitle && <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE} />}
+
         <ConnectedPlayerControls />
 
         <ConnectedChoices />

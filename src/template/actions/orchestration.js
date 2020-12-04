@@ -137,6 +137,13 @@ export const receivedCalibrationMessage = (message) => ({
   message,
 });
 
+export const setImage = (
+  image,
+) => ({
+  type: 'SET_IMAGE',
+  image,
+});
+
 // ------------------------------------------------------------------------------------------------
 // actions intended to be called by the user interface to request changes, watched for by a saga
 

@@ -1,4 +1,5 @@
 @import '~gel-sass-tools/sass-tools';
+@import '~theme';
 
 .player-image {
   position: relative;
@@ -19,4 +20,110 @@
   background: #c30;
   width: 100%;
   padding-bottom: 100%;
+}
+
+.player-image {
+  position: relative;
+  // TODO do not add negative margin on screens larger than page min width
+  margin-left: -$gel-spacing-unit; // undo padding on .page-contents
+  margin-right: -$gel-spacing-unit;
+  text-align: center;
+
+  margin-bottom: 2*$gel-spacing-unit;
+
+  /* force square aspect ratio for div created by react css transition-replace */
+  .player-image-aspect {
+    width: 100%;
+    padding-bottom: 100%;
+    position: relative;
+ 
+    .player-image-aspect-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      div {
+        // This div is created by the ReactCSSTransitionReplace library
+        // ignore the (wrong) height the library tries to compute and always set it to 100%:
+        height: 100% !important;
+      }
+    }
+  }
+
+  &:after {
+    content: ' ';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    // replaces fade in PlayerTitle
+    // TODO may only want the fade when showing the title though
+    background: linear-gradient(0deg, rgba($theme-color-black, 1) 0, rgba($theme-color-black, 0) 100%);
+    z-index: 4; // above lighting effect, and vignette
+    opacity: 0;
+    transition: opacity 0.5s linear, height 0.5s linear;
+  }
+
+  &.player-image-with-gradient, &.player-image-start-page {
+    &:after {
+      opacity: 1;
+    }
+  }
+}
+
+.player-image-image, .player-image-vignette {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: top;
+  z-index: 0;
+}
+
+.player-image-vignette {
+  // lighting-effect has z-index: 1
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 1s ease;
+  object-fit: fill;
+
+  .player-image-with-vignette & {
+    opacity: 1;
+  }
+}
+
+.player-image-placeholder {
+  display: block;
+  background: #c30;
+  width: 100%;
+  padding-bottom: 100%;
+}
+
+
+// For ReactCSSTransitionReplace library
+.cross-fade-leave {
+  opacity: 1;
+}
+.cross-fade-leave.cross-fade-leave-active {
+  opacity: 0;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-enter {
+  opacity: 0;
+}
+.cross-fade-enter.cross-fade-enter-active {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+}
+
+.cross-fade-height {
+  // commented out because it breaks when transitioning to an empty placeholder
+  // transition: height 0.5s ease-in-out;
 }

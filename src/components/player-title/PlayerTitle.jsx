@@ -6,6 +6,7 @@ const PlayerTitle = ({
   title,
   subtitle,
   className,
+  children,
 }) => (
   <div
     className={classnames(
@@ -15,6 +16,7 @@ const PlayerTitle = ({
   >
     { title && <h1 className="player-title-title">{title}</h1> }
     { subtitle && <p className="player-title-meta">{subtitle}</p> }
+    { children }
   </div>
 );
 
@@ -25,12 +27,15 @@ PlayerTitle.propTypes = {
   subtitle: PropTypes.string, // TODO rename; as it's presented as metadata
   /* Additional classes to apply to the container div */
   className: PropTypes.string,
+  /* Additional elements to render in the container after the title */
+  children: PropTypes.node,
 };
 
 PlayerTitle.defaultProps = {
   title: undefined,
   subtitle: undefined,
   className: undefined,
+  children: null,
 };
 
 export default PlayerTitle;

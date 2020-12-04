@@ -24,12 +24,18 @@ const StartPage = ({
 }) => (
   <div className={classnames('page', 'page-start')}>
     <PageContents>
-      <PlayerImage src={config.PLAYER_IMAGE_URL} alt={config.TEXT_PLAYER_IMAGE_ALT} />
-      <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE} />
-
-      <p>
-        {config.TEXT_INTRODUCTION}
-      </p>
+      <PlayerImage
+        image={{
+          src: config.LANDING_IMAGE_URL || config.PLAYER_IMAGE_URL,
+          alt: config.LANDING_IMAGE_ALT || config.PLAYER_IMAGE_ALT,
+        }}
+        className="player-image-start-page"
+      />
+      <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE}>
+        <p>
+          {config.TEXT_INTRODUCTION}
+        </p>
+      </PlayerTitle>
 
       <PageFiller />
 

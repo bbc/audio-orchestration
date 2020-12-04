@@ -41,6 +41,7 @@ const initialState = {
   localCalibrationState: 'disconnected',
   objectAllocations: {},
   controlAllocations: {},
+  image: null,
 };
 
 const exposed = (state = initialState, action) => {
@@ -152,6 +153,8 @@ const exposed = (state = initialState, action) => {
       return { ...state, globalCalibrationState: action.globalCalibrationState };
     case 'SET_LOCAL_CALIBRATION_STATE':
       return { ...state, localCalibrationState: action.localCalibrationState };
+    case 'SET_IMAGE':
+      return { ...state, image: action.image };
     default:
       return state;
   }

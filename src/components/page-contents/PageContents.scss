@@ -4,6 +4,12 @@
 .page-contents {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   min-height: 100%;
   padding: 0 $gel-spacing-unit;
+
+  &>* {
+    flex-shrink: 0;
+    flex-basis: auto;
+  }
 }

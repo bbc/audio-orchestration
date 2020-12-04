@@ -26,8 +26,19 @@ const ConnectDirectPage = ({
     )}
   >
     <PageContents>
-      <PlayerImage src={config.PLAYER_IMAGE_URL} alt={config.TEXT_PLAYER_IMAGE_ALT} />
-      <PlayerTitle />
+      <PlayerImage
+        image={{
+          src: config.LANDING_IMAGE_URL || config.PLAYER_IMAGE_URL,
+          alt: config.LANDING_IMAGE_ALT || config.PLAYER_IMAGE_ALT,
+        }}
+        className="player-image-start-page"
+      />
+
+      <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE}>
+        <p>
+          {config.TEXT_INTRODUCTION}
+        </p>
+      </PlayerTitle>
 
       <p>
         <Button onClick={onJoinDirect} content="Connect" fluid />
