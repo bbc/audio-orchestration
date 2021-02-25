@@ -657,12 +657,12 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@bbc/bbcat-orchestration-bbcat@^0.2.0":
-  version "0.2.0"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-bbcat/-/@bbc/bbcat-orchestration-bbcat-0.2.0.tgz#45e8836e56f79296bf876724a176055c4d1e9053"
-  integrity sha1-ReiDblb3kpa/h2ckoXYFXE0ekFM=
+"@bbc/bbcat-orchestration-bbcat@^0.2.1":
+  version "0.2.1"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-bbcat/-/@bbc/bbcat-orchestration-bbcat-0.2.1.tgz#546337d9851f8c00e63e1c2ad98852b6f50ae480"
+  integrity sha1-VGM32YUfjADmPhwq2YhStvUK5IA=
 
-"@bbc/bbcat-orchestration-cloud-sync-client@^2.3.0":
+"@bbc/bbcat-orchestration-cloud-sync-client@^2.2.2":
   version "2.2.2"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration-cloud-sync-client/-/@bbc/bbcat-orchestration-cloud-sync-client-2.2.2.tgz#b1c16eb17d606d3e4ccab872afaf6eabe3c5057f"
   integrity sha1-scFusX1gbT5Myrhyr69uq+PFBX8=
