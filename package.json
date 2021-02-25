@@ -1,6 +1,6 @@
 {
   "name": "@bbc/bbcat-orchestration-bbcat",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
   "main": "dist/bbcat.js",
   "files": [

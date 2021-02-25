@@ -58,7 +58,7 @@ export default class ManifestLoader extends Loader {
    *         A Promise that resolves when the manifest blob has been converted.
    */
   _parse(string) {
-    const xml = this._parser.parseFromString(string, 'text/xml', 0);
+    const xml = this._parser.parseFromString(string, 'text/xml');
     return Promise.resolve(xml);
   }
 }

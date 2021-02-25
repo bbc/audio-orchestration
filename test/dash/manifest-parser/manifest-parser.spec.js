@@ -7,7 +7,7 @@ describe('ManifestParser', () => {
     const domParser = new DOMParser();
 
     mockMpds.forEach((mpd) => {
-      const mpdXml = domParser.parseFromString(mpd.text, 'text/xml', 0);
+      const mpdXml = domParser.parseFromString(mpd.text, 'text/xml');
       const mpdJson = manifestParser.parse(mpdXml);
       expect(mpdJson).toEqual(mpd.json);
     });
