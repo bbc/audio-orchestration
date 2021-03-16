@@ -1,4 +1,4 @@
-const convertDecibelsToLinearGain = decibels => 10 ** (decibels / 20);
+import { convertDecibelsToLinearGain } from './gainCalculations';
 
 const spread = ({ behaviourParameters, object, allocations }) => ({
   flags: ['spread'],

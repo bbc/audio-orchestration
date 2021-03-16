@@ -736,4 +736,178 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInDeviceWithGain('object-2', 'device-1', 0);
     });
   });
+
+  describe('F: modulo with offset', () => {
+    const a = new DefaultAllocationAlgorithm();
+    const wrappedAllocate = wrapAllocate(a);
+
+    const devices = generateDevices([
+      { deviceId: 'device-1', deviceJoiningNumber: 1 },
+      { deviceId: 'device-2', deviceJoiningNumber: 2 },
+      { deviceId: 'device-3', deviceJoiningNumber: 3 },
+      { deviceId: 'device-4', deviceJoiningNumber: 4 },
+      { deviceId: 'device-5', deviceJoiningNumber: 5 },
+    ]);
+
+    test('single parameter (old behaviour)', () => {
+      const objects = [
+        {
+          objectId: 'object-mod-only',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: 3 },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      expect(allocations).toHaveObjectInNumDevices('object-mod-only', 1);
+    });
+
+    test('modulus and offset (new behaviour)', () => {
+      const objects = [
+        {
+          objectId: 'object-offset-0',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: [3, 0] },
+                ],
+              },
+            },
+          ],
+        },
+        {
+          objectId: 'object-offset-1',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: [3, 1] },
+                ],
+              },
+            },
+          ],
+        },
+        {
+          objectId: 'object-offset-2',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: [3, 2] },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // (mod 3, offset 0) should be in 3 only
+      expect(allocations).toHaveObjectInNumDevices('object-offset-0', 1);
+      expect(allocations).toHaveObjectInDevice('object-offset-0', 'device-3');
+
+      // (mod 3, offset 1) should be in 1 and 4
+      expect(allocations).toHaveObjectInNumDevices('object-offset-1', 2);
+      expect(allocations).toHaveObjectInDevice('object-offset-1', 'device-1');
+      expect(allocations).toHaveObjectInDevice('object-offset-1', 'device-4');
+
+      // (mod 3, offset 1) should be in 2 and 5
+      expect(allocations).toHaveObjectInNumDevices('object-offset-2', 2);
+      expect(allocations).toHaveObjectInDevice('object-offset-2', 'device-2');
+      expect(allocations).toHaveObjectInDevice('object-offset-2', 'device-5');
+    });
+
+    test('modulus and offset > modulus (experimental behaviour)', () => {
+      const objects = [
+        {
+          objectId: 'object-offset-3',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: [2, 3] },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // (mod 2, offset 3) should be in 3 and 5 (but not 1)
+      expect(allocations).toHaveObjectInNumDevices('object-offset-3', 2);
+      expect(allocations).not.toHaveObjectInDevice('object-offset-3', 'device-1');
+      expect(allocations).toHaveObjectInDevice('object-offset-3', 'device-3');
+      expect(allocations).toHaveObjectInDevice('object-offset-3', 'device-5');
+    });
+  });
+
+  describe('G: gain adjustment if', () => {
+    const a = new DefaultAllocationAlgorithm();
+    const wrappedAllocate = wrapAllocate(a);
+
+    const devices = generateDevices([
+      { deviceId: 'device-1', deviceJoiningNumber: 1 },
+      { deviceId: 'device-2', deviceJoiningNumber: 2 },
+      { deviceId: 'device-3', deviceJoiningNumber: 3 },
+      { deviceId: 'device-4', deviceJoiningNumber: 4 },
+      { deviceId: 'device-5', deviceJoiningNumber: 5 },
+    ]);
+
+    test('1 reduced gain on every second device', () => {
+      const objects = [
+        {
+          objectId: 'object-0',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: -6,
+                conditions: [
+                  { property: 'device.deviceJoiningNumber', operator: 'modulo', value: [2, 0] },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Object should be allocated to all devices
+      expect(allocations).toHaveObjectInNumDevices('object-0', 5);
+
+      // Gain should be unmodified when the condition does not match (1, 3, 5)
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-1', 1.0);
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-3', 1.0);
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-5', 1.0);
+
+      // Gain should be reduced by 6dB when the condition does match (2, 4)
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-2', 10 ** (-6 / 20));
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-4', 10 ** (-6 / 20));
+    });
+  });
 });

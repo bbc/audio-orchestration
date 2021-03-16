@@ -1,3 +1,5 @@
+import { convertDecibelsToLinearGain } from './gainCalculations';
+
 // left-hand side is the value of the property being tested
 // right-hand side is the value from the object metadata that we have to compare it to
 const operators = new Map();
@@ -17,6 +19,20 @@ operators.set('greaterThanOrEqual', (lhs, rhs) => lhs >= rhs);
 // even if they are numbers (e.g. device.currentNumber).
 operators.set('anyOf', (lhs, rhs) => rhs.includes(`${lhs}`));
 
+
+operators.set('modulo', (lhs, rhs) => {
+  // if rhs is an array, treat it as [modulus, offset]
+  if (Array.isArray(rhs)) {
+    const [modulus, offset] = rhs;
+    // offset % modulus because offset might be bigger than modulus, so not strictly a remainder.
+    return lhs % modulus === (offset % modulus) && lhs >= offset;
+  }
+
+  // legacy: emulate moduloIsZero operator when rhs is not an array.
+  return lhs % rhs === 0;
+});
+
+// legacy operator, does not have an offset
 operators.set('moduloIsZero', (lhs, rhs) => lhs % rhs === 0);
 
 export const evaluateConditions = (deviceId, {
@@ -116,4 +132,20 @@ export const prohibitedIf = args => ({
   prohibited: args.devices
     .filter(({ deviceId }) => evaluateConditions(deviceId, args))
     .map(({ deviceId }) => deviceId),
+});
+
+export const gainAdjustmentIf = args => ({
+  postAllocationBehaviour: ({ deviceId }) => {
+    // by default leave the gain unchanged (multiply by 1)
+    let gain = 1.0;
+
+    // if the conditions are now met, apply the selected adjustment
+    if (evaluateConditions(deviceId, args)) {
+      gain = convertDecibelsToLinearGain(args.behaviourParameters.gainAdjust);
+    }
+
+    return {
+      gain,
+    };
+  },
 });

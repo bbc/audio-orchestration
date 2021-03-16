@@ -8,6 +8,7 @@ import {
   preferredIf,
   allowedIf,
   prohibitedIf,
+  gainAdjustmentIf,
 } from './behaviours/conditionals';
 import muteIf from './behaviours/muteIf';
 
@@ -38,6 +39,9 @@ class DefaultAllocationAlgorithm extends AllocationAlgorithm {
 
     // prohibitedIf (conditional)
     this.registerBehaviour('prohibitedIf', prohibitedIf);
+
+    // gainAdjustmentIf (conditional)
+    this.registerBehaviour('gainAdjustmentIf', gainAdjustmentIf);
 
     // Allowed on every device, mainly for testing
     this.registerBehaviour('allowedEverywhere', ({ devices }) => ({
