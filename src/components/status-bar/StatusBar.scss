@@ -46,6 +46,12 @@
   padding: $gel-spacing-unit;
 }
 
+.status-bar-num-devices {
+  display: flex;
+  align-items: center;
+  padding: $gel-spacing-unit;
+}
+
 @keyframes status-bar-loaded-icon-fading {
   from {
     opacity: 1.0;
@@ -54,6 +60,10 @@
   to {
     opacity: 0.0;
   }
+}
+
+.status-bar-animated-device-indicator {
+  animation: status-bar-loaded-icon-fading 0.3s 3 linear;
 }
 
 .status-bar-loaded-icon {
@@ -75,3 +85,4 @@
     top: 0;
   }
 }
+

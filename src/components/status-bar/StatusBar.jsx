@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Button from 'components/button/Button';
@@ -15,6 +15,24 @@ const StatusBar = ({
   isMain,
   className,
 }) => {
+  const [lastNumDevices, setLastNumDevices] = useState(numDevices);
+  const [animateDeviceIndicator, setAnimateDeviceIndicator] = useState(false);
+
+  useEffect(() => {
+    let timeout;
+
+    if (numDevices !== lastNumDevices) {
+      setLastNumDevices(numDevices);
+      setAnimateDeviceIndicator(true);
+
+      timeout = setTimeout(() => setAnimateDeviceIndicator(false), 1000);
+    }
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [numDevices]);
+
   // TODO review copy for different statuses
   // TODO show 'tick' icon after loading only once (when connected changes?)
   let statusText = 'Waiting to connect...';
@@ -48,10 +66,17 @@ const StatusBar = ({
     >
       <div className="status-bar-content">
         <div className="status-bar-left">
-          { connected
-            ? <Icon padded name="check" className="status-bar-loaded-icon" />
-            : <Icon padded name="loading" loading />}
+          <div className="status-bar-num-devices" title={`${numDevices} device${numDevices === 1 ? '' : 's'} connected`}>
+            <Icon name="loudspeaker" size="normal" />
+            { numDevices > 1 && (
+              <span className={classnames({ 'status-bar-animated-device-indicator': animateDeviceIndicator })}>
+                &times;
+                { numDevices }
+              </span>
+            )}
+          </div>
         </div>
+
         <div className="status-bar-middle">
           { statusText }
           <br />
