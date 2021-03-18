@@ -41,7 +41,7 @@
                 label: 'Hidden default choice',
                 // The 'hidden' flag hides the button associated with this choice. It might be used
                 // as a hidden default choice, or as a debug tool (e.g. by having short cuts only
-                // visible during development.
+                // visible during development).
                 hidden: true,
               },
               {
@@ -58,7 +58,10 @@
               },
               {
                 contentId: CONTENT_ID_MAIN,
-                label: 'Listen again',
+                label: 'Main content',
+                // The 'thumbnail' flag shows this choice in a separate block, pulling an image and
+                // URL from the entry for the sequence referred to by the contentId.
+                thumbnail: true,
               },
             ],
           },
@@ -73,6 +76,18 @@
                 label: 'Listen Again',
               },
             ],
+
+            // A sequence that is used in a choice with the thumbnail flag should have these
+            // additional properties to set the image, text labels, and duration in seconds.
+            // If they are defined, the image, title, and subtitle will also be shown in the
+            // player instead of the default while this sequence is playing.
+            // TODO add flags to configure this behaviour per sequence (showTitle, useDefaultTitle)
+            // TODO should there be a sequenceThumbnailImage for a smaller image?
+            // sequenceImage: 'images/orchestrator-default-image.jpg',
+            sequenceImage: 'https://placekitten.com/g/600/600',
+            sequenceTitle: 'Main sequence',
+            sequenceSubtitle: 'More tone and clicks',
+            duration: 30.0,
           },
         ],
         TEXT_TITLE: 'Device Orchestration Template',

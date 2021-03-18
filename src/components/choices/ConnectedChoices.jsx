@@ -4,7 +4,7 @@ import { requestTransitionToSequence } from 'actions';
 import Choices from './Choices';
 
 const mapStateToProps = ({
-  sequenceChoices,
+  sequenceChoices = [],
   role,
   sequenceEnded,
   sequenceSkippable,
@@ -13,8 +13,11 @@ const mapStateToProps = ({
   const displayChoices = (role === ROLE_MAIN)
     && ((sequenceEnded && sequenceHold) || sequenceSkippable);
 
+  // Only show choices in this block that do not have a thumbnail
+  const filteredChoices = sequenceChoices.filter(({ thumbnail }) => !thumbnail);
+
   return {
-    choices: displayChoices ? sequenceChoices || [] : [],
+    choices: displayChoices ? filteredChoices || [] : [],
   };
 };
 

@@ -32,7 +32,7 @@ const initialState = {
   sequenceEnded: false,
   sequenceSkippable: false,
   sequenceHold: false,
-  sequenceNext: [],
+  sequenceChoices: [],
   help: false,
   calibration: { enabled: false },
   deviceGain: 0,

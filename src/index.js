@@ -69,6 +69,7 @@ import 'components/device-info/DeviceInfo.scss';
 import 'components/taster-badge/TasterBadge.scss';
 import 'components/rating-prompt/RatingPrompt.scss';
 import 'components/lighting-effect/LightingEffect.scss';
+import 'components/thumbnail-choices/ThumbnailChoices.scss';
 
 // Import additional styles for components not included in the default build, if needed:
 // import 'components/gel-icon/GelIcon.scss';

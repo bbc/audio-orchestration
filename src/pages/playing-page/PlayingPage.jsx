@@ -10,6 +10,7 @@ import PlayerImage from 'components/player-image/PlayerImage';
 import PlayerTitle from 'components/player-title/PlayerTitle';
 import ConnectedPlayerControls from 'components/player-controls/ConnectedPlayerControls';
 import ConnectedChoices from 'components/choices/ConnectedChoices';
+import ConnectedThumbnailChoices from 'components/thumbnail-choices/ConnectedThumbnailChoices';
 import ConnectedControls from 'components/controls/ConnectedControls';
 import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
 import ConnectedDeviceInfo from 'components/device-info/ConnectedDeviceInfo';
@@ -27,9 +28,32 @@ const PlayingPage = () => {
   const showRating = isMain && config.PROMPT_SEQUENCES.includes(currentContentId);
   const showTitle = !showRating;
 
+  let defaultImage = config.PLAYER_IMAGE_URL;
+  let defaultImageAlt = config.PLAYER_IMAGE_ALT;
+
+  let title = config.TEXT_TITLE;
+  let subtitle = config.TEXT_SUBTITLE;
+
+  const {
+    sequenceImage,
+    sequenceImageAlt,
+    sequenceTitle,
+    sequenceSubtitle,
+  } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === currentContentId) || {};
+
+  if (sequenceImage) {
+    defaultImage = sequenceImage;
+    defaultImageAlt = sequenceImageAlt;
+  }
+
+  if (sequenceTitle) {
+    title = sequenceTitle;
+    subtitle = sequenceSubtitle;
+  }
+
   const playerImage = {
-    src: image ? image.src : config.PLAYER_IMAGE_URL,
-    alt: (image && image.src && image.alt) || config.PLAYER_IMAGE_ALT,
+    src: image ? image.src : defaultImage,
+    alt: (image && image.src && image.alt) || defaultImageAlt,
   };
 
   const playerImageClassName = classnames({
@@ -51,11 +75,13 @@ const PlayingPage = () => {
           { showRating && <RatingPrompt /> }
         </PlayerImage>
 
-        { showTitle && <PlayerTitle title={config.TEXT_TITLE} subtitle={config.TEXT_SUBTITLE} />}
+        { showTitle && <PlayerTitle title={title} subtitle={subtitle} />}
 
         <ConnectedPlayerControls />
 
         <ConnectedChoices />
+
+        <ConnectedThumbnailChoices />
 
         { config.DEBUG_UI ? <ConnectedObjectList /> : null }
 

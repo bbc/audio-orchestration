@@ -904,10 +904,10 @@
     weak-map "^1.0.5"
     winston "^2.4.0"
 
-"@bbc/bbcat-orchestration@^0.11.2":
-  version "0.11.2"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.11.2.tgz#3d0304f47e357dcd275fc3c571147af984f1c2f2"
-  integrity sha1-PQME9H41fc0nX8PFcRR6+YTxwvI=
+"@bbc/bbcat-orchestration@^0.11.3":
+  version "0.11.3"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/@bbc/bbcat-orchestration/-/@bbc/bbcat-orchestration-0.11.3.tgz#498b459875792031e666077070791e3e4bc5c157"
+  integrity sha1-SYtFmHV5IDHmZgdwcHkePkvFwVc=
   dependencies:
     "@bbc/bbcat-orchestration-bbcat" "^0.2.1"
     "@bbc/bbcat-orchestration-cloud-sync-client" "^2.2.2"
@@ -2763,9 +2763,9 @@ detect-file@^1.0.0:
   integrity sha1-8NZtA2cqglyxtzvbP+YjEMjlUrc=
 
 detect-node@^2.0.4:
-  version "2.0.4"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/detect-node/-/detect-node-2.0.4.tgz#014ee8f8f669c5c58023da64b8179c083a28c46c"
-  integrity sha1-AU7o+PZpxcWAI9pkuBecCDooxGw=
+  version "2.0.5"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/detect-node/-/detect-node-2.0.5.tgz#9d270aa7eaa5af0b72c4c9d9b814e7f4ce738b79"
+  integrity sha1-nScKp+qlrwtyxMnZuBTn9M5zi3k=
 
 diffie-hellman@^5.0.0:
   version "5.0.3"
@@ -2961,9 +2961,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.649:
-  version "1.3.689"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/electron-to-chromium/-/electron-to-chromium-1.3.689.tgz#0f4082467c109844b79a7b32a2649c9ab6a6c822"
-  integrity sha1-D0CCRnwQmES3mnsyomScmramyCI=
+  version "1.3.691"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/electron-to-chromium/-/electron-to-chromium-1.3.691.tgz#a671eaf135a3ccec0915eb8d844a0952aba79f3b"
+  integrity sha1-pnHq8TWjzOwJFeuNhEoJUqunnzs=
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -3411,9 +3411,9 @@ events@^3.0.0:
   integrity sha1-Mala0Kkk4tLEGagTrrLE6HjqdAA=
 
 eventsource@^1.0.7:
-  version "1.0.7"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/eventsource/-/eventsource-1.0.7.tgz#8fbc72c93fcd34088090bc0a4e64f4b5cee6d8d0"
-  integrity sha1-j7xyyT/NNAiAkLwKTmT0tc7m2NA=
+  version "1.1.0"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/eventsource/-/eventsource-1.1.0.tgz#00e8ca7c92109e94b0ddf32dac677d841028cfaf"
+  integrity sha1-AOjKfJIQnpSw3fMtrGd9hBAoz68=
   dependencies:
     original "^1.0.0"
 
@@ -3630,6 +3630,11 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   version "2.0.6"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/fast-levenshtein/-/fast-levenshtein-2.0.6.tgz#3d8a5c66883a16a30ca8643e851f19baa7797917"
   integrity sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
+
+fast-xml-parser@^3.19.0:
+  version "3.19.0"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/fast-xml-parser/-/fast-xml-parser-3.19.0.tgz#cb637ec3f3999f51406dd8ff0e6fc4d83e520d01"
+  integrity sha1-y2N+w/OZn1FAbdj/Dm/E2D5SDQE=
 
 faye-websocket@^0.11.3:
   version "0.11.3"
@@ -4338,11 +4343,6 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
-html-comment-regex@^1.1.2:
-  version "1.1.2"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/html-comment-regex/-/html-comment-regex-1.1.2.tgz#97d4688aeb5c81886a364faa0cad1dda14d433a7"
-  integrity sha1-l9RoiutcgYhqNk+qDK0d2hTUM6c=
-
 html-entities@^1.3.1:
   version "1.4.0"
   resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/html-entities/-/html-entities-1.4.0.tgz#cfbd1b01d2afaf9adca1b10ae7dffab98c71d2dc"
@@ -4995,11 +4995,11 @@ is-string@^1.0.5:
   integrity sha1-QEk+0ZjvP/R3uMf5L2ROyCpc06Y=
 
 is-svg@^4.2.1:
-  version "4.2.2"
-  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/is-svg/-/is-svg-4.2.2.tgz#a4ea0f3f78dada7085db88f1e85b6f845626cfae"
-  integrity sha1-pOoPP3ja2nCF24jx6FtvhFYmz64=
+  version "4.3.1"
+  resolved "https://artifactory.virt.ch.bbc.co.uk:443/artifactory/api/npm/npm/is-svg/-/is-svg-4.3.1.tgz#8c63ec8c67c8c7f0a8de0a71c8c7d58eccf4406b"
+  integrity sha1-jGPsjGfIx/Co3gpxyMfVjsz0QGs=
   dependencies:
-    html-comment-regex "^1.1.2"
+    fast-xml-parser "^3.19.0"
 
 is-symbol@^1.0.2, is-symbol@^1.0.3:
   version "1.0.3"
