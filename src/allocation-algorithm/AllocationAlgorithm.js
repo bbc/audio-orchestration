@@ -285,14 +285,23 @@ class AllocationAlgorithm {
     // run any post-allocation behaviours that might modify rendering parameters
     Object.entries(allocations).forEach(([deviceId, deviceAllocations]) => {
       deviceAllocations.forEach(({ objectId }, i) => {
+        let objectGainPostAllocation = allocations[deviceId][i].objectGain;
+
         postAllocationBehaviours.get(objectId).forEach((behaviour) => {
+          // get gain multiplier from the current post-allocation behaviour
           const {
             gain = 1.0,
           } = behaviour({ deviceId });
-          allocations[deviceId][i].objectGain *= gain; // effectively combining multiple gain stages
+
+          // combine with any previous adjustments by multiplying together
+          objectGainPostAllocation *= gain;
         });
+
+        // Cap total object gain adjustment to a multiplier of 4 (+12dB)
+        allocations[deviceId][i].objectGain = Math.min(4, objectGainPostAllocation);
       });
     });
+
 
     if (trace) trace.postAllocationBehaviourResults();
 

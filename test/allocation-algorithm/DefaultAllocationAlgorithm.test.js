@@ -909,5 +909,99 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-2', 10 ** (-6 / 20));
       expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-4', 10 ** (-6 / 20));
     });
+
+    test('2 gain is applied if no conditions are specified', () => {
+      const objects = [
+        {
+          objectId: 'object-0',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: -6,
+                conditions: [],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Gain should be reduced by 6dB in all devices
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-1', 10 ** (-6 / 20));
+    });
+
+    test('3 multiple gain adjustments are combined', () => {
+      const objects = [
+        {
+          objectId: 'object-0',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: -6,
+                conditions: [],
+              },
+            },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: -3,
+                conditions: [],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Gain should be reduced by 6dB in all devices
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-1', 10 ** (-9 / 20));
+    });
+
+    test('3 positive gain adjustments are capped', () => {
+      const objects = [
+        {
+          objectId: 'object-0',
+          objectBehaviours: [
+            { behaviourType: 'allowedEverywhere' },
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: 6,
+                conditions: [],
+              },
+            },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: 3,
+                conditions: [],
+              },
+            },
+            {
+              behaviourType: 'gainAdjustmentIf',
+              behaviourParameters: {
+                gainAdjust: 6,
+                conditions: [],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Gain should be reduced by 6dB in all devices
+      expect(allocations).not.toHaveObjectInDeviceWithGain('object-0', 'device-1', 10 ** (18 / 20));
+      expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-1', 4); // approx +12 dB
+    });
   });
 });
