@@ -26,4 +26,10 @@
       background-color: $theme-color-green;
     }
   }
+
+  &.small {
+    input {
+      padding: 4px;
+    }
+  }
 }

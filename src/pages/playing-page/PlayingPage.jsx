@@ -15,6 +15,7 @@ import ConnectedControls from 'components/controls/ConnectedControls';
 import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
 import ConnectedDeviceInfo from 'components/device-info/ConnectedDeviceInfo';
 import RatingPrompt from 'components/rating-prompt/RatingPrompt';
+import OnboardingInstructions from 'components/onboarding-instructions/OnboardingInstructions';
 import { ROLE_MAIN } from 'sagas';
 
 const PlayingPage = () => {
@@ -24,8 +25,17 @@ const PlayingPage = () => {
   const image = useSelector((state) => state.image);
   const effect = image ? image.effect : null;
 
+  const {
+    sequenceImage,
+    sequenceImageAlt,
+    sequenceTitle,
+    sequenceSubtitle,
+    instructions,
+  } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === currentContentId) || {};
+
   const isMain = role === ROLE_MAIN;
   const showRating = isMain && config.PROMPT_SEQUENCES.includes(currentContentId);
+  const showInstructions = isMain && instructions && !showRating;
   const showTitle = !showRating;
 
   let defaultImage = config.PLAYER_IMAGE_URL;
@@ -33,13 +43,6 @@ const PlayingPage = () => {
 
   let title = config.TEXT_TITLE;
   let subtitle = config.TEXT_SUBTITLE;
-
-  const {
-    sequenceImage,
-    sequenceImageAlt,
-    sequenceTitle,
-    sequenceSubtitle,
-  } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === currentContentId) || {};
 
   if (sequenceImage) {
     defaultImage = sequenceImage;
@@ -61,7 +64,6 @@ const PlayingPage = () => {
     'player-image-with-vignette': !!effect,
   });
 
-  // TODO removed player-image-stretch, is it needed?
   return (
     <div className={classnames('page', 'page-playing', 'page-with-status-bar')}>
       <ConnectedStatusBar instructions />
@@ -73,6 +75,7 @@ const PlayingPage = () => {
           className={playerImageClassName}
         >
           { showRating && <RatingPrompt /> }
+          { showInstructions && <OnboardingInstructions /> }
         </PlayerImage>
 
         { showTitle && <PlayerTitle title={title} subtitle={subtitle} />}

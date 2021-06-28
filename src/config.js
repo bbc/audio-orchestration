@@ -118,11 +118,16 @@ const config = {
   PROMPT_BUTTON_LINK: '',
   PROMPT_BUTTON_TEXT: '',
 
+  // Onboarding instructions to display in some sequences
+  TEXT_ONBOARDING_TITLE: 'Connect devices',
+  TEXT_ONBOARDING_DESCRIPTION: 'Share the link or scan the QR code to connect your phones, tablets, or laptops.',
+
   // Whether to show play/pause/replay buttons on the auxiliary devices too
   ENABLE_PLAY_PAUSE_ON_AUX: false,
 
   // Fade out objects that are being moved away from a device for this duration (in seconds)
   OBJECT_FADE_OUT_DURATION: 0.5,
+
 };
 
 export const updateConfig = (newConfig = {}) => {

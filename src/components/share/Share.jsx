@@ -10,7 +10,10 @@ import bowser from 'bowser';
 
 const browser = bowser.getParser(window.navigator.userAgent);
 
-const Share = ({ url }) => {
+const Share = ({
+  url,
+  small,
+}) => {
   const [success, setSuccess] = useState(false);
   const inputRef = useRef();
 
@@ -53,7 +56,7 @@ const Share = ({ url }) => {
   };
 
   return (
-    <span className="share">
+    <span className={classnames('share', { small })}>
       <Input readOnly value={url} ref={inputRef} onFocus={() => inputRef.current.select()} />
 
       <Button
@@ -66,7 +69,10 @@ const Share = ({ url }) => {
         )}
         title="Copy link to clipboard"
       >
-        <Icon name={success ? 'check' : 'copy'} />
+        <Icon
+          name={success ? 'check' : 'copy'}
+          size={small ? 'small' : 'normal'}
+        />
       </Button>
 
       { showShareButton && (
@@ -76,7 +82,10 @@ const Share = ({ url }) => {
           className="accent-colour-background"
           title="Share link"
         >
-          <Icon name="share" />
+          <Icon
+            name="share"
+            size={small ? 'small' : 'normal'}
+          />
         </Button>
       )}
     </span>
@@ -85,6 +94,11 @@ const Share = ({ url }) => {
 
 Share.propTypes = {
   url: PropTypes.string.isRequired,
+  small: PropTypes.bool,
+};
+
+Share.defaultProps = {
+  small: false,
 };
 
 export default Share;

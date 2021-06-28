@@ -6,8 +6,9 @@ import Icon from 'components/icon/Icon';
 const DeviceList = ({
   devices,
   ownDeviceId,
+  className,
 }) => (
-  <ul className={classnames('device-list')}>
+  <ul className={classnames('device-list', className)}>
     {devices.map(({
       deviceId,
       deviceType,
@@ -33,6 +34,11 @@ DeviceList.propTypes = {
     deviceType: PropTypes.string.isRequired,
   })).isRequired,
   ownDeviceId: PropTypes.string.isRequired,
+  className: PropTypes.string,
+};
+
+DeviceList.defaultProps = {
+  className: undefined,
 };
 
 export default DeviceList;
