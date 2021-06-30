@@ -46,6 +46,7 @@ const StartPage = ({
           fluid
         />
       </p>
+
       <p>
         <Button
           content={config.TEXT_JOIN_LABEL}
