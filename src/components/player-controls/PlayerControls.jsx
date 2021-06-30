@@ -1,16 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import {
+  selectIsNearEnd,
+  selectEnableCalibration,
+} from 'selectors';
 import PlayerButton from './PlayerButton';
 import PlayerProgressBar from './PlayerProgressBar';
 import PlayerProgressText from './PlayerProgressText';
-import getCurrentTime from './getCurrentTime';
 
 const PlayerControls = ({
-  correlation,
-  duration,
-  speed,
-  loop,
   canPause,
   canSeek,
   onTransitionToSequence,
@@ -19,10 +19,15 @@ const PlayerControls = ({
   onPlay,
   onPause,
   onSeek,
+  isMain,
+  onEnterCalibrationMode,
 }) => {
-  const isPlaying = speed > 0;
-  const isNearEnd = getCurrentTime(correlation, speed, duration, loop) >= duration - 0.1;
+  const isPlaying = useSelector((state) => state.contentSpeed > 0);
+  const isNearEnd = useSelector(selectIsNearEnd);
+  const enableCalibration = useSelector(selectEnableCalibration);
+
   const showReplay = !!replayContentId && isNearEnd && onTransitionToSequence;
+  const showCalibrationButton = !isMain && !isNearEnd && enableCalibration;
 
   let playButton = null;
 
@@ -47,39 +52,19 @@ const PlayerControls = ({
       )}
     >
       <PlayerProgressBar
-        correlation={correlation}
-        speed={speed}
-        duration={duration}
-        loop={loop}
         canSeek={canSeek}
         onSeek={onSeek}
       />
       <div className="player-controls-buttons">
         {playButton}
+        { showCalibrationButton && <PlayerButton type="metronome" title="Calibration mode" onClick={onEnterCalibrationMode} />}
       </div>
-      <PlayerProgressText
-        correlation={correlation}
-        speed={speed}
-        duration={duration}
-        loop={loop}
-      />
+      <PlayerProgressText />
     </div>
   );
 };
 
 PlayerControls.propTypes = {
-  /* Correlation defining the relation between the media time (childTime) and the current
-   * Date.now() time (parentTime). */
-  correlation: PropTypes.shape({
-    parentTime: PropTypes.number.isRequired,
-    childTime: PropTypes.number.isRequired,
-  }).isRequired,
-  /* The total duration of the current media, in seconds. */
-  duration: PropTypes.number.isRequired,
-  /* The current playback speed (1.0 for playing; 0 for paused). */
-  speed: PropTypes.number.isRequired,
-  /* Whether the current media is playing in a loop. */
-  loop: PropTypes.bool,
   /* Whether this player can play/pause */
   canPause: PropTypes.bool.isRequired,
   /* Whether this player can seek */
@@ -96,6 +81,10 @@ PlayerControls.propTypes = {
   onTransitionToSequence: PropTypes.func,
   /* contentId to transition to on clicking the replay button (if not set, it is not shown). */
   replayContentId: PropTypes.string,
+  /* Whether this is the main device */
+  isMain: PropTypes.bool.isRequired,
+  /* Event handler for requestion to open calibration mode */
+  onEnterCalibrationMode: PropTypes.func.isRequired,
 };
 
 PlayerControls.defaultProps = {
@@ -103,7 +92,6 @@ PlayerControls.defaultProps = {
   onPlay: undefined,
   onPause: undefined,
   onSeek: undefined,
-  loop: false,
   onTransitionToSequence: undefined,
   replayContentId: undefined,
 };

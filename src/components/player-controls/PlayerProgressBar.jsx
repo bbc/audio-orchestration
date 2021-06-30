@@ -1,26 +1,30 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import getCurrentTime from './getCurrentTime';
+import {
+  selectGetCurrentTime,
+} from 'selectors';
 import formatTime from './formatTime';
 
 // TODO uses pointer events; may need to include a polyfill for older browsers (esp iOS < 13).
 
 const PlayerProgressBar = ({
-  correlation,
-  speed,
-  duration,
-  loop,
   canSeek,
   onSeek,
 }) => {
+  const speed = useSelector((state) => state.contentSpeed);
+  const duration = useSelector((state) => state.contentDuration);
+  const correlation = useSelector((state) => state.contentCorrelation);
+  const getCurrentTime = useSelector(selectGetCurrentTime);
+
   const ref = useRef();
   const [isDragging, setIsDragging] = useState(false);
   const [dragPosition, setDragPosition] = useState(0);
   const [containerOffsetX, setContainerOffsetX] = useState(0);
 
   // Calculate currentTime to include in accessibility labels (recalculated when component renders).
-  const currentTime = getCurrentTime(correlation, speed, duration, loop);
+  const currentTime = getCurrentTime();
 
   // Helper to calculate the time corresponding to a pixel offset on the playbar
   const calculateDragPosition = (clientX) => {
@@ -35,7 +39,7 @@ const PlayerProgressBar = ({
   // Handler for the mousedown/touchstart event that starts a drag action.
   const handleStartDragging = (e) => {
     setContainerOffsetX(ref.current.getBoundingClientRect().left);
-    setDragPosition(getCurrentTime(correlation, speed, duration, loop));
+    setDragPosition(getCurrentTime());
     setIsDragging(true);
     e.preventDefault();
   };
@@ -50,7 +54,7 @@ const PlayerProgressBar = ({
     const update = () => {
       const progressBarTime = isDragging
         ? dragPosition
-        : getCurrentTime(correlation, speed, duration, loop);
+        : getCurrentTime();
 
       if (ref.current) {
         ref.current.style.paddingLeft = `${((progressBarTime) / duration) * 100}%`;
@@ -69,10 +73,8 @@ const PlayerProgressBar = ({
     };
   }, [
     ref,
-    correlation,
     speed,
-    duration,
-    loop,
+    getCurrentTime,
     isDragging,
     dragPosition,
   ]);
@@ -91,7 +93,7 @@ const PlayerProgressBar = ({
     const handleDragEnd = (e) => {
       setIsDragging(false);
       // seeking is relative to current time :(
-      onSeek(calculateDragPosition(e.clientX) - getCurrentTime(correlation, speed, duration, loop));
+      onSeek(calculateDragPosition(e.clientX) - getCurrentTime());
     };
 
     ref.current.addEventListener('pointermove', handleDragMove, false);
@@ -105,15 +107,12 @@ const PlayerProgressBar = ({
     };
   }, [
     ref,
-    duration,
     isDragging,
     setIsDragging,
     setDragPosition,
     calculateDragPosition,
     correlation,
-    speed,
     duration,
-    loop,
   ]);
 
   return (
@@ -158,27 +157,14 @@ const PlayerProgressBar = ({
 };
 
 PlayerProgressBar.propTypes = {
-  /* Correlation defining the relation between the media time (childTime) and the current
-   * Date.now() time (parentTime). */
-  correlation: PropTypes.shape({
-    parentTime: PropTypes.number.isRequired,
-    childTime: PropTypes.number.isRequired,
-  }).isRequired,
-  /* Current playback speed, 0 if paused/1 if playing normally. */
-  speed: PropTypes.number.isRequired,
-  /* The total duration of the current media, in seconds. */
-  duration: PropTypes.number.isRequired,
   /* Whether the user can seek using the PlayerProgressBar */
   canSeek: PropTypes.bool,
-  /* Whether the current sequence is played in a loop */
-  loop: PropTypes.bool,
   /* seek handler, taking as argument a relative offset from the current position */
   onSeek: PropTypes.func.isRequired,
 };
 
 PlayerProgressBar.defaultProps = {
   canSeek: false,
-  loop: false,
 };
 
 export default PlayerProgressBar;

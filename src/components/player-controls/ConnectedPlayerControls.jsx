@@ -4,7 +4,9 @@ import {
   requestPause,
   requestSeek,
   requestTransitionToSequence,
+  requestToggleCalibrationMode,
 } from 'actions';
+import { ROLE_MAIN } from 'sagas';
 import PlayerControls from './PlayerControls';
 
 // Set to true to show a replay button at the end of the sequence. This will be shown in place of
@@ -15,21 +17,15 @@ import PlayerControls from './PlayerControls';
 const enableReplayButton = false;
 
 const mapStateToProps = ({
-  contentDuration,
-  contentSpeed,
-  contentCorrelation,
-  loop,
   canPause,
   canSeek,
   currentContentId,
+  role,
 }) => ({
-  correlation: contentCorrelation,
-  duration: contentDuration,
-  speed: contentSpeed,
-  loop,
   canPause,
   canSeek,
   replayContentId: enableReplayButton ? currentContentId : undefined,
+  isMain: role === ROLE_MAIN,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -37,6 +33,7 @@ const mapDispatchToProps = (dispatch) => ({
   onPause: () => dispatch(requestPause()),
   onSeek: (seekOffset) => dispatch(requestSeek(seekOffset)),
   onTransitionToSequence: (contentId) => dispatch(requestTransitionToSequence(contentId)),
+  onEnterCalibrationMode: () => dispatch(requestToggleCalibrationMode(true)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PlayerControls);

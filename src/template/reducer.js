@@ -42,6 +42,7 @@ const initialState = {
   objectAllocations: {},
   controlAllocations: {},
   image: null,
+  dismissedPrompts: [],
 };
 
 const exposed = (state = initialState, action) => {
@@ -155,6 +156,14 @@ const exposed = (state = initialState, action) => {
       return { ...state, localCalibrationState: action.localCalibrationState };
     case 'SET_IMAGE':
       return { ...state, image: action.image };
+    case 'ADD_DISMISSED_PROMPT':
+      return {
+        ...state,
+        dismissedPrompts: [
+          ...state.dismissedPrompts.filter((promptId) => promptId !== action.promptId),
+          action.promptId,
+        ],
+      };
     default:
       return state;
   }

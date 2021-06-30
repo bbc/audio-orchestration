@@ -58,3 +58,8 @@ export const mainSetupOnContinue = () => ({
 export const errorOnRetry = () => ({
   type: 'CLICK_ERROR_RETRY',
 });
+
+export const addDismissedPrompt = (promptId) => ({
+  type: 'ADD_DISMISSED_PROMPT',
+  promptId,
+});

@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import config from 'config';
 import PageOverflow from 'components/page-overflow/PageOverflow';
@@ -16,6 +16,15 @@ import ConnectedObjectList from 'components/object-list/ConnectedObjectList';
 import ConnectedDeviceInfo from 'components/device-info/ConnectedDeviceInfo';
 import RatingPrompt from 'components/rating-prompt/RatingPrompt';
 import OnboardingInstructions from 'components/onboarding-instructions/OnboardingInstructions';
+import OverlayPrompt from 'components/overlay-prompt/OverlayPrompt';
+import Icon from 'components/icon/Icon';
+import {
+  selectIsNearEnd,
+  selectEnableCalibration,
+} from 'selectors';
+import {
+  requestToggleCalibrationMode,
+} from 'actions';
 import { ROLE_MAIN } from 'sagas';
 
 const PlayingPage = () => {
@@ -23,6 +32,12 @@ const PlayingPage = () => {
   const currentContentId = useSelector((state) => state.currentContentId);
   const role = useSelector((state) => state.role);
   const image = useSelector((state) => state.image);
+  const isNearEnd = useSelector(selectIsNearEnd);
+  const enableCalibration = useSelector(selectEnableCalibration);
+  const dispatch = useDispatch();
+
+  const enterCalibrationMode = () => dispatch(requestToggleCalibrationMode(true));
+
   const effect = image ? image.effect : null;
 
   const {
@@ -37,6 +52,8 @@ const PlayingPage = () => {
   const showRating = isMain && config.PROMPT_SEQUENCES.includes(currentContentId);
   const showInstructions = isMain && instructions && !showRating;
   const showTitle = !showRating;
+  const showCalibrationPrompt = enableCalibration && !isMain && !isNearEnd
+    && !showInstructions && !showRating;
 
   let defaultImage = config.PLAYER_IMAGE_URL;
   let defaultImageAlt = config.PLAYER_IMAGE_ALT;
@@ -76,6 +93,17 @@ const PlayingPage = () => {
         >
           { showRating && <RatingPrompt /> }
           { showInstructions && <OnboardingInstructions /> }
+
+          { showCalibrationPrompt && (
+            <OverlayPrompt
+              promptId="calibration"
+              iconComponent={<Icon name="metronome" title="Metronome" />}
+              header="Out of sync?"
+              content="Calibrate your device"
+              onClick={enterCalibrationMode}
+            />
+          )}
+
         </PlayerImage>
 
         { showTitle && <PlayerTitle title={title} subtitle={subtitle} />}
