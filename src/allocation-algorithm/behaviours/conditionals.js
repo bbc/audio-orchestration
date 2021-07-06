@@ -14,10 +14,10 @@ operators.set('greaterThan', (lhs, rhs) => lhs > rhs);
 
 operators.set('greaterThanOrEqual', (lhs, rhs) => lhs >= rhs);
 
-// expects rhs to be an array
-// Convert lhs to a string; because bbcat-orchestration-builder outputs condition values as strings
-// even if they are numbers (e.g. device.currentNumber).
-operators.set('anyOf', (lhs, rhs) => rhs.includes(`${lhs}`));
+// expects rhs to be an array,
+// convert all elements of rhs to string, as well as lhs, to ensure they can be exactly compared.
+// builder tool may output numbers or booleans as strings.
+operators.set('anyOf', (lhs, rhs) => rhs.map(v => `${v}`).includes(`${lhs}`));
 
 
 operators.set('modulo', (lhs, rhs) => {

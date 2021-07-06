@@ -1004,4 +1004,67 @@ describe('DefaultAllocationAlgorithm', () => {
       expect(allocations).toHaveObjectInDeviceWithGain('object-0', 'device-1', 4); // approx +12 dB
     });
   });
+
+  describe('F: smoke testing', () => {
+    const a = new DefaultAllocationAlgorithm();
+    const wrappedAllocate = wrapAllocate(a);
+
+    test('anyOf works with deviceIsMain', () => {
+      const devices = generateDevices([
+        { deviceId: 'device-1', deviceJoiningNumber: 1, deviceIsMain: true },
+        { deviceId: 'device-2', deviceJoiningNumber: 2, deviceIsMain: false },
+      ]);
+
+      const objects = [
+        {
+          objectId: 'object-a',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  {
+                    property: 'device.deviceIsMain',
+                    operator: 'anyOf',
+                    value: [true, false],
+                    invertCondition: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+        {
+          objectId: 'object-b',
+          objectBehaviours: [
+            { behaviourType: 'spread' },
+            {
+              behaviourType: 'allowedIf',
+              behaviourParameters: {
+                conditions: [
+                  {
+                    property: 'device.deviceIsMain',
+                    operator: 'anyOf',
+                    value: [true],
+                    invertCondition: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      ];
+
+      const { allocations } = wrappedAllocate({ objects, devices });
+
+      // Object A should be in all devices.
+      expect(allocations).toHaveObjectInDevice('object-a', 'device-1');
+      expect(allocations).toHaveObjectInDevice('object-a', 'device-2');
+
+      // Object B should only be in main device.
+      expect(allocations).toHaveObjectInDevice('object-b', 'device-1');
+      expect(allocations).not.toHaveObjectInDevice('object-b', 'device-2');
+    });
+  });
 });
