@@ -27,6 +27,7 @@ const mapStateToProps = ({
         sequenceTitle,
         sequenceSubtitle,
         sequenceImage,
+        sequenceImageAlt,
         duration,
       } = sequence;
 
@@ -35,6 +36,7 @@ const mapStateToProps = ({
         sequenceTitle,
         sequenceSubtitle,
         sequenceImage,
+        sequenceImageAlt,
         duration,
       };
     });

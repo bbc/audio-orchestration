@@ -40,9 +40,6 @@ module.exports = {
               limit: 1000,
             },
           },
-          {
-            loader: 'image-webpack-loader',
-          },
         ],
       },
       {
