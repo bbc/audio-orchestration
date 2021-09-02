@@ -1,5 +1,3 @@
-// const nodeExternals = require('webpack-node-externals');
-
 const path = require('path');
 
 module.exports = {
@@ -12,12 +10,11 @@ module.exports = {
     library: 'bbcatOrchestration',
     libraryTarget: 'umd',
   },
-  // externals: nodeExternals(),
   module: {
     rules: [
       {
-        test: [/\.js?$/],
-        exclude: [/node_modules/],
+        test: [/\.m?js$/],
+        exclude: /node_modules/,
         loader: 'babel-loader',
       },
     ],
