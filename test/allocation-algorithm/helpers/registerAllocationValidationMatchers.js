@@ -4,8 +4,8 @@ const registerAllocationValidationMatchers = () => {
     toHaveObjectInAnyDevice(allocations, objectId) {
       // Test that at least one objectInDevice, in at least one allocation, has the given objectId,
       const pass = Object.values(allocations)
-        .some(allocation => allocation
-          .some(objectInDevice => objectInDevice.objectId === objectId));
+        .some((allocation) => allocation
+          .some((objectInDevice) => objectInDevice.objectId === objectId));
 
       if (pass) {
         return {
@@ -24,20 +24,20 @@ const registerAllocationValidationMatchers = () => {
   expect.extend({
     toHaveObjectInDevice(allocations, objectId, deviceId) {
       const pass = allocations[deviceId]
-        && allocations[deviceId].some(objectInDevice => objectInDevice.objectId === objectId);
+        && allocations[deviceId].some((objectInDevice) => objectInDevice.objectId === objectId);
 
       if (pass) {
         return {
-          message: () => `Expected object ${objectId} not to be in device ${deviceId}` +
-            '\n\n' +
-            `Allocations: ${this.utils.printReceived(allocations)}`,
+          message: () => `Expected object ${objectId} not to be in device ${deviceId}`
+            + '\n\n'
+            + `Allocations: ${this.utils.printReceived(allocations)}`,
           pass: true,
         };
       }
       return {
-        message: () => `Expected object ${objectId} to be in device ${deviceId}.` +
-          '\n\n' +
-          `Allocations: ${this.utils.printReceived(allocations)}`,
+        message: () => `Expected object ${objectId} to be in device ${deviceId}.`
+          + '\n\n'
+          + `Allocations: ${this.utils.printReceived(allocations)}`,
         pass: false,
       };
     },
@@ -47,25 +47,25 @@ const registerAllocationValidationMatchers = () => {
   expect.extend({
     toHaveObjectOnlyInDevice(allocations, objectId, deviceId) {
       const allocationsWithObject = Object.values(allocations)
-        .filter(allocation => allocation.some(a => a.objectId === objectId));
+        .filter((allocation) => allocation.some((a) => a.objectId === objectId));
       const actualNumDevices = allocationsWithObject.length;
 
       const pass = allocations[deviceId]
-        && allocations[deviceId].some(objectInDevice => objectInDevice.objectId === objectId)
+        && allocations[deviceId].some((objectInDevice) => objectInDevice.objectId === objectId)
         && actualNumDevices === 1;
 
       if (pass) {
         return {
-          message: () => `Expected object ${objectId} not to be in device ${deviceId} or not to be in multiple devices` +
-            '\n\n' +
-            `Allocations: ${this.utils.printReceived(allocations)}`,
+          message: () => `Expected object ${objectId} not to be in device ${deviceId} or not to be in multiple devices`
+            + '\n\n'
+            + `Allocations: ${this.utils.printReceived(allocations)}`,
           pass: true,
         };
       }
       return {
-        message: () => `Expected object ${objectId} to be in device ${deviceId} only.` +
-          '\n\n' +
-          `Allocations: ${this.utils.printReceived(allocations)}`,
+        message: () => `Expected object ${objectId} to be in device ${deviceId} only.`
+          + '\n\n'
+          + `Allocations: ${this.utils.printReceived(allocations)}`,
         pass: false,
       };
     },
@@ -75,7 +75,7 @@ const registerAllocationValidationMatchers = () => {
   expect.extend({
     toHaveObjectInDeviceWithGain(allocations, objectId, deviceId, gain) {
       const objectsInDevice = allocations[deviceId] || [];
-      const objectInDevice = objectsInDevice.find(o => o.objectId === objectId);
+      const objectInDevice = objectsInDevice.find((o) => o.objectId === objectId);
       const actualGain = (objectInDevice || {}).objectGain;
 
       const delta = 1.0e-3;
@@ -98,7 +98,7 @@ const registerAllocationValidationMatchers = () => {
   expect.extend({
     toHaveObjectInNumDevices(allocations, objectId, numDevices) {
       const allocationsWithObject = Object.values(allocations)
-        .filter(allocation => allocation.some(a => a.objectId === objectId));
+        .filter((allocation) => allocation.some((a) => a.objectId === objectId));
       const actualNumDevices = allocationsWithObject.length;
       const pass = actualNumDevices === numDevices;
 

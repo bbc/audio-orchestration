@@ -54,14 +54,12 @@ class DashPlayer extends Player {
       return manifest;
     }
 
-    const filteredManifest = Object.assign({}, manifest);
+    const filteredManifest = { ...manifest };
 
     // Remove all adaptation sets from the parsed manifest, except for those matching this
     // player's adaptationSetIds.
     manifest.periods.forEach((p) => {
-      filteredManifest.periods[p.id] = Object.assign({}, p, {
-        adaptationSets: p.adaptationSets.filter(a => this.adaptationSetIds.includes(a.id)),
-      });
+      filteredManifest.periods[p.id] = { ...p, adaptationSets: p.adaptationSets.filter((a) => this.adaptationSetIds.includes(a.id)) };
     });
 
     return filteredManifest;
@@ -86,7 +84,7 @@ class DashPlayer extends Player {
       const oldSource = this.source;
 
       // disconnect the outputs of the old source to mute it immediately.
-      oldSource.outputs.forEach(output => output.disconnect());
+      oldSource.outputs.forEach((output) => output.disconnect());
 
       // wait for the priming to complete, because we can't cancel promises, then stop the source.
       this.lastPrimePromise.then(() => {
@@ -135,8 +133,8 @@ class DashPlayer extends Player {
 
     this.preparePromise = this.manifestLoader
       .load(this.manifestUrl)
-      .then(manifestBlob => this.manifestParser.parse(manifestBlob))
-      .then(manifest => this.filterManifest(manifest))
+      .then((manifestBlob) => this.manifestParser.parse(manifestBlob))
+      .then((manifest) => this.filterManifest(manifest))
       .then((manifest) => {
         this.manifest = manifest;
       })

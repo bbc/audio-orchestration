@@ -6,7 +6,7 @@ import {
 
 /** Function that adds all items in a set (or an array) to another set */
 const addSetToSet = (setToAdd, targetSet) => {
-  [...setToAdd].forEach(deviceId => targetSet.add(deviceId));
+  [...setToAdd].forEach((deviceId) => targetSet.add(deviceId));
 };
 
 /**
@@ -23,16 +23,16 @@ const applyOnChangeBehaviour = ({
   const preferredAndAllowedDevices = setUnion(preferredDevices, allowedDevices);
 
   // Check whether the object is allowed to start
-  if (objectFlags.has('onChange-canOnlyStartOnFirstRun') &&
-      !objectFlags.has('onChange-objectWasInPreviousAllocation')) {
+  if (objectFlags.has('onChange-canOnlyStartOnFirstRun')
+      && !objectFlags.has('onChange-objectWasInPreviousAllocation')) {
     addSetToSet(preferredAndAllowedDevices, prohibitedDevices);
     return;
   }
 
   if (
-    objectFlags.has('onChange-canNeverRestart') &&
-    objectFlags.has('onChange-objectWasEverAllocated') &&
-    !objectFlags.has('onChange-objectWasInPreviousAllocation')
+    objectFlags.has('onChange-canNeverRestart')
+    && objectFlags.has('onChange-objectWasEverAllocated')
+    && !objectFlags.has('onChange-objectWasInPreviousAllocation')
   ) {
     addSetToSet(preferredAndAllowedDevices, prohibitedDevices);
     return;

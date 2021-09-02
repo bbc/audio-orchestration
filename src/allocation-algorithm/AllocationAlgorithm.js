@@ -126,8 +126,8 @@ class AllocationAlgorithm {
       }
 
       if (Object.values(previousAllocations)
-        .some(deviceAllocation => deviceAllocation
-          .some(objectInDevice => objectInDevice.objectId === objectId))) {
+        .some((deviceAllocation) => deviceAllocation
+          .some((objectInDevice) => objectInDevice.objectId === objectId))) {
         objectFlags.add('onChange-objectWasInPreviousAllocation');
       }
 
@@ -152,7 +152,7 @@ class AllocationAlgorithm {
       // previousDevices does not include devices that dropped out
       devices.forEach(({ deviceId }) => {
         if (previousAllocations[deviceId]) {
-          if (previousAllocations[deviceId].some(x => x.objectId === objectId)) {
+          if (previousAllocations[deviceId].some((x) => x.objectId === objectId)) {
             previousDevices.add(deviceId);
           }
         }
@@ -196,13 +196,13 @@ class AllocationAlgorithm {
           });
 
           // Add the returned deviceIds for each list to the corresponding set.
-          previous.forEach(deviceId => previousDevices.add(deviceId));
-          preferred.forEach(deviceId => preferredDevices.add(deviceId));
-          allowed.forEach(deviceId => allowedDevices.add(deviceId));
-          prohibited.forEach(deviceId => prohibitedDevices.add(deviceId));
+          previous.forEach((deviceId) => previousDevices.add(deviceId));
+          preferred.forEach((deviceId) => preferredDevices.add(deviceId));
+          allowed.forEach((deviceId) => allowedDevices.add(deviceId));
+          prohibited.forEach((deviceId) => prohibitedDevices.add(deviceId));
 
           // Save the returned object flags.
-          flags.forEach(flag => objectFlags.add(flag));
+          flags.forEach((flag) => objectFlags.add(flag));
 
           // Save the returned post-allocation behaviour
           if (postAllocationBehaviour) {
@@ -244,7 +244,7 @@ class AllocationAlgorithm {
         // Select all remaining devices (preferred, allowed) for spread objects
         [
           ...preferredDevices, ...allowedDevices,
-        ].forEach(deviceId => selectedDevices.add(deviceId));
+        ].forEach((deviceId) => selectedDevices.add(deviceId));
 
         if (trace) traceUpdateObjectState('select spread devices');
       } else {
@@ -302,14 +302,13 @@ class AllocationAlgorithm {
       });
     });
 
-
     if (trace) trace.postAllocationBehaviourResults();
 
     // Create a new list of objectIds that were ever allocated by finding all objects allocated in
     // this run of the algorithm and then calculating the set union with the previous list.
     const objectIdsAllocated = [];
     Object.values(allocations)
-      .forEach(deviceAllocations => deviceAllocations
+      .forEach((deviceAllocations) => deviceAllocations
         .forEach(({ objectId }) => objectIdsAllocated.push(objectId)));
     const objectIdsEverAllocated = [...setUnion(
       new Set(previousObjectIdsEverAllocated),

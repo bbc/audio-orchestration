@@ -1,4 +1,6 @@
-import MdoHelper, { DEFAULT_CONTENT_ID, DEVICE_STATUS, DEVICE_TYPE, TOPICS } from './mdo-helper';
+import MdoHelper, {
+  DEFAULT_CONTENT_ID, DEVICE_STATUS, DEVICE_TYPE, TOPICS,
+} from './mdo-helper';
 import { DefaultAllocationAlgorithm } from '../allocation-algorithm';
 
 const LOG_ALLOCATION_REASON = false;
@@ -16,9 +18,7 @@ class MdoAllocator extends MdoHelper {
 
     // create the list of devices with only this device in it.
     this._allDevices = [
-      Object.assign({
-        deviceJoiningNumber: 1,
-      }, this._deviceMetadata),
+      { deviceJoiningNumber: 1, ...this._deviceMetadata },
     ];
 
     // create the set of enabled deviceIds with this device initially enabled
@@ -193,13 +193,13 @@ class MdoAllocator extends MdoHelper {
    */
   _handleRemoteDeviceMetadata(deviceId, metadata) {
     // console.debug('remote device metadata', deviceId, metadata);
-    if (this._allDevices.find(d => d.deviceId === deviceId) === undefined) {
+    if (this._allDevices.find((d) => d.deviceId === deviceId) === undefined) {
       this._addDevice(deviceId);
     }
 
     this._allDevices = this._allDevices.map((d) => {
       if (d.deviceId === deviceId) {
-        return Object.assign({}, d, metadata);
+        return { ...d, ...metadata };
       }
       return d;
     });
@@ -238,7 +238,7 @@ class MdoAllocator extends MdoHelper {
   _addDevice(deviceId) {
     this._lastJoiningNumber += 1;
     this._allDevices = [
-      ...this._allDevices.filter(d => d.deviceId !== deviceId),
+      ...this._allDevices.filter((d) => d.deviceId !== deviceId),
       {
         deviceId,
         deviceIsMain: false,
@@ -258,7 +258,7 @@ class MdoAllocator extends MdoHelper {
         startOffset,
         stopSyncTime: null,
       },
-      ...this._schedule.filter(schedule => schedule.contentId !== contentId),
+      ...this._schedule.filter((schedule) => schedule.contentId !== contentId),
     ]);
   }
 
@@ -269,7 +269,7 @@ class MdoAllocator extends MdoHelper {
         startSyncTime: null,
         stopSyncTime,
       },
-      ...this._schedule.filter(schedule => schedule.contentId !== contentId),
+      ...this._schedule.filter((schedule) => schedule.contentId !== contentId),
     ]);
   }
 
@@ -300,10 +300,9 @@ class MdoAllocator extends MdoHelper {
 
     // For each device, count the number of devices that have a lower or equal joining number to
     // find the deviceCurrentNumber (filling the gaps left by dropped out device).
-    return devices.map(device => ({
+    return devices.map((device) => ({
       ...device,
-      deviceCurrentNumber: devices.filter((d =>
-        d.deviceJoiningNumber <= device.deviceJoiningNumber)).length,
+      deviceCurrentNumber: devices.filter(((d) => d.deviceJoiningNumber <= device.deviceJoiningNumber)).length,
     }));
   }
 }

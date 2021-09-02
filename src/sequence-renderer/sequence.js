@@ -59,7 +59,7 @@ class Sequence {
    * @returns {Array[PlaybackItem]}
    */
   items(objectId, after = 0) {
-    const object = this._sequence.objects.find(o => o.objectId === objectId);
+    const object = this._sequence.objects.find((o) => o.objectId === objectId);
 
     if (object === undefined) {
       return [];
@@ -67,8 +67,8 @@ class Sequence {
 
     // Find all items starting after the given time, or starting before and ending after.
     return object.items
-      .filter(item => (item.start >= after ||
-                      (item.start < after && item.start + item.duration >= after)))
+      .filter((item) => (item.start >= after
+                      || (item.start < after && item.start + item.duration >= after)))
       .map((item, i) => ({
         ...item,
         itemId: `item-${objectId}-${i}`,
@@ -100,7 +100,7 @@ class Sequence {
    * @returns {Array<string>}
    */
   get objectIds() {
-    return this._sequence.objects.map(object => object.objectId);
+    return this._sequence.objects.map((object) => object.objectId);
   }
 
   get objects() {
@@ -124,7 +124,7 @@ class Sequence {
     }
 
     const next = this.outPoints
-      .filter(o => o >= (wrap === false ? after : (after % this.duration)))
+      .filter((o) => o >= (wrap === false ? after : (after % this.duration)))
       .sort((a, b) => a - b)
       .shift();
 

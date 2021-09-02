@@ -17,8 +17,7 @@ operators.set('greaterThanOrEqual', (lhs, rhs) => lhs >= rhs);
 // expects rhs to be an array,
 // convert all elements of rhs to string, as well as lhs, to ensure they can be exactly compared.
 // builder tool may output numbers or booleans as strings.
-operators.set('anyOf', (lhs, rhs) => rhs.map(v => `${v}`).includes(`${lhs}`));
-
+operators.set('anyOf', (lhs, rhs) => rhs.map((v) => `${v}`).includes(`${lhs}`));
 
 operators.set('modulo', (lhs, rhs) => {
   // if rhs is an array, treat it as [modulus, offset]
@@ -43,7 +42,7 @@ export const evaluateConditions = (deviceId, {
   behaviourParameters,
 }) => {
   const { conditions } = behaviourParameters;
-  const device = devices.find((d => d.deviceId === deviceId));
+  const device = devices.find(((d) => d.deviceId === deviceId));
   const { deviceControls = [] } = device;
 
   // Conditions are AND'ed - all have to be true for this function to return true.
@@ -67,7 +66,7 @@ export const evaluateConditions = (deviceId, {
             // Generate the list of objectIds allocated to the current device so far
             propertyValue = objects
               .map(({ objectId }) => objectId)
-              .filter(objectId => (allocations[deviceId] || []).some(a => a.objectId === objectId));
+              .filter((objectId) => (allocations[deviceId] || []).some((a) => a.objectId === objectId));
           } else {
             propertyValue = device[propertyName];
           }
@@ -82,9 +81,9 @@ export const evaluateConditions = (deviceId, {
           // least one device.
             propertyValue = objects
               .map(({ objectId }) => objectId)
-              .filter(objectId => Object.values(allocations)
-                .some(da => da
-                  .some(a => a.objectId === objectId)));
+              .filter((objectId) => Object.values(allocations)
+                .some((da) => da
+                  .some((a) => a.objectId === objectId)));
           } else {
             propertyValue = session[propertyName];
           }
@@ -100,7 +99,7 @@ export const evaluateConditions = (deviceId, {
       const operatorFn = operators.get(operator);
 
       if (Array.isArray(propertyValue)) {
-        conditionResult = propertyValue.some(pv => operatorFn(pv, value));
+        conditionResult = propertyValue.some((pv) => operatorFn(pv, value));
       } else {
         conditionResult = operatorFn(propertyValue, value);
       }
@@ -116,25 +115,25 @@ export const evaluateConditions = (deviceId, {
   return result;
 };
 
-export const preferredIf = args => ({
+export const preferredIf = (args) => ({
   preferred: args.devices
     .filter(({ deviceId }) => evaluateConditions(deviceId, args))
     .map(({ deviceId }) => deviceId),
 });
 
-export const allowedIf = args => ({
+export const allowedIf = (args) => ({
   allowed: args.devices
     .filter(({ deviceId }) => evaluateConditions(deviceId, args))
     .map(({ deviceId }) => deviceId),
 });
 
-export const prohibitedIf = args => ({
+export const prohibitedIf = (args) => ({
   prohibited: args.devices
     .filter(({ deviceId }) => evaluateConditions(deviceId, args))
     .map(({ deviceId }) => deviceId),
 });
 
-export const gainAdjustmentIf = args => ({
+export const gainAdjustmentIf = (args) => ({
   postAllocationBehaviour: ({ deviceId }) => {
     // by default leave the gain unchanged (multiply by 1)
     let gain = 1.0;

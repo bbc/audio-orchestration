@@ -118,7 +118,7 @@ class MdoHelper extends EventEmitter {
    * @returns {MdoAllocations}
    */
   getObjectAllocations(contentId = DEFAULT_CONTENT_ID) {
-    return Object.assign({}, this._objectAllocations[contentId]);
+    return { ...this._objectAllocations[contentId] };
   }
 
   /**
@@ -129,7 +129,7 @@ class MdoHelper extends EventEmitter {
    * @returns {MdoAllocations}
    */
   getControlAllocations(contentId = DEFAULT_CONTENT_ID) {
-    return Object.assign({}, this._controlAllocations[contentId]);
+    return { ...this._controlAllocations[contentId] };
   }
 
   /**
@@ -212,7 +212,7 @@ class MdoHelper extends EventEmitter {
    * @param {Object} metadata
    */
   setDeviceMetadata(metadata) {
-    this._deviceMetadata = Object.assign({}, this._deviceMetadata, metadata);
+    this._deviceMetadata = { ...this._deviceMetadata, ...metadata };
     this.emit('metadata', this._deviceMetadata);
   }
 

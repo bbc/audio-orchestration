@@ -38,7 +38,6 @@ class CloudSyncAdapter extends SyncAdapter {
     this._connectPromise = null;
     this._synchroniser = null;
 
-
     /**
      * Create a wall clock (units milliseconds)
      * @type {CorrelatedClock}
@@ -172,8 +171,8 @@ class CloudSyncAdapter extends SyncAdapter {
     }
 
     // method to use in find() to test if a timeline object matches the timelineType and contentid.
-    const matchTimeline = tl => tl.timelineType === timelineType &&
-                                tl.contentId === contentId;
+    const matchTimeline = (tl) => tl.timelineType === timelineType
+                                && tl.contentId === contentId;
 
     // console.warn('called requestTimelineClock');
 
@@ -252,4 +251,3 @@ class CloudSyncAdapter extends SyncAdapter {
 }
 
 export default CloudSyncAdapter;
-

@@ -1,4 +1,4 @@
-const wrapAllocate = algorithm => (args = {}) => {
+const wrapAllocate = (algorithm) => (args = {}) => {
   // Check the input arguments
   expect(args.devices || []).toMatchSchema('devices');
   expect(args.objects || []).toMatchSchema('objects');

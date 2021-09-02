@@ -9,7 +9,7 @@ const spread = ({ behaviourParameters, object, allocations }) => ({
     // find the number of devices this object is assigned to
     let numDevices = 0;
     Object.values(allocations).forEach((deviceAllocations) => {
-      if (deviceAllocations.find(a => a.objectId === objectId)) {
+      if (deviceAllocations.find((a) => a.objectId === objectId)) {
         numDevices += 1;
       }
     });

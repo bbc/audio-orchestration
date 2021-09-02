@@ -71,7 +71,6 @@ describe('registerAllocationValidationMatchers', () => {
     });
   });
 
-
   describe('toHaveObjectInDeviceWithGain', () => {
     const expectedGain = 0.667;
     const allocations = {

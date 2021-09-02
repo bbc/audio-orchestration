@@ -349,7 +349,7 @@ describe('DefaultAllocationAlgorithm', () => {
       'Y',
       'YZ',
       'Z',
-    ].map(deviceId => ({
+    ].map((deviceId) => ({
       deviceId,
       deviceControls: [
         { controlId: 'control', controlValues: deviceId.split('') },

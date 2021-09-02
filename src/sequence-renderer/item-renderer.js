@@ -187,7 +187,8 @@ class ItemRendererFactory {
       this._audioContext,
       player,
       clock,
-      Object.assign({}, this._options, {
+      ({
+        ...this._options,
         channelMapping,
         panning: source.panning,
         gain: source.gain,

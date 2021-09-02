@@ -23,7 +23,6 @@ const onChange = ({ behaviourParameters }) => {
     allocate = allAllocateOptions,
   } = behaviourParameters;
 
-
   // Set flags based on start options
   if (allStartOptions.includes(start)) {
     flagsToAdd.push(`onChange-${start}`);

@@ -21,7 +21,6 @@ import EventEmitter from 'events';
  * @property {object} content
  */
 
-
 /**
  * This class defines a common interface -- events and methods -- for the different sync
  * and communication back-ends.

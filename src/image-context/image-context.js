@@ -19,7 +19,7 @@ class ImageContext {
     // Set iteration is in insertion order, so we should always choose the oldest active node if
     // there are multiple with the same priority.
     const newSource = [...this._nodes]
-      .filter(node => node.isActive())
+      .filter((node) => node.isActive())
       .reduce((highestPriorityNode, node) => {
         if (!highestPriorityNode || node.priority > highestPriorityNode.priority) {
           return node;

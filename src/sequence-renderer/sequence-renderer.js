@@ -141,13 +141,13 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   setActiveObjects(newObjects) {
     // trigger addition of objects not present in old list
     newObjects
-      .filter(object => !this._activeObjects.find((({ objectId }) => object.objectId === objectId)))
-      .forEach(object => this.addObject(object));
+      .filter((object) => !this._activeObjects.find((({ objectId }) => object.objectId === objectId)))
+      .forEach((object) => this.addObject(object));
 
     // trigger removal of objects not present in new list
     this._activeObjects
-      .filter(object => !newObjects.find((({ objectId }) => object.objectId === objectId)))
-      .forEach(object => this.removeObject(object));
+      .filter((object) => !newObjects.find((({ objectId }) => object.objectId === objectId)))
+      .forEach((object) => this.removeObject(object));
 
     // update gains for all objects - as now all should be present
     newObjects
@@ -284,7 +284,6 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     return syncClockTime;
   }
 
-
   /**
    * Gets all items active at the current time, or within the lookahead window.
    *
@@ -307,7 +306,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
           this._sequence.loop ? 0 : this.contentTime,
         );
         // Add the object's objectGain property to each item for rendering
-        return objectItems.map(item => ({
+        return objectItems.map((item) => ({
           ...item,
           objectGain,
         }));
@@ -317,7 +316,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     // those active items that start within the lookahead window. Also include those at the start
     // of the sequence if contentTime + lookahead > duration.
     const activeItems = items
-      .filter(item => item.start <= this.contentTime + this._lookaheadDuration
+      .filter((item) => item.start <= this.contentTime + this._lookaheadDuration
         || item.start <= (this.contentTime + this._lookaheadDuration) % this._sequence.duration);
 
     return activeItems;
@@ -335,7 +334,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
 
     // define 'starting at the same time' to be within one milliseconds (10^-3)
     const existingRenderer = this._activeItemRenderers
-      .find(r => r.itemId === itemId && Math.abs(r.startTime - startTime) < 1.0e-3);
+      .find((r) => r.itemId === itemId && Math.abs(r.startTime - startTime) < 1.0e-3);
     if (existingRenderer !== undefined) {
       // Already have this item scheduled for the same time, just update the gain
       existingRenderer.renderer.cancelFadeOut();
@@ -404,7 +403,6 @@ class SynchronisedSequenceRenderer extends EventEmitter {
       }
     });
 
-
     // Immediately deactivate all renderers for abandoned items, that have run to completion since
     // the last notify call.
     this._activeItemRenderers
@@ -416,8 +414,7 @@ class SynchronisedSequenceRenderer extends EventEmitter {
     // Trigger a fade out for renderers that are no longer in the activeItems list, assuming it is
     // because the object has been removed.
     this._activeItemRenderers
-      .filter(({ itemId }) =>
-        (activeItems.find(item => item.itemId === itemId) === undefined))
+      .filter(({ itemId }) => (activeItems.find((item) => item.itemId === itemId) === undefined))
       .forEach(({ renderer }) => {
         if (!renderer.stopped) {
           // fadeOut calls stop() after the fade has completed.

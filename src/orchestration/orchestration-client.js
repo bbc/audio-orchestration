@@ -223,9 +223,9 @@ class OrchestrationClient extends EventEmitter {
    */
   _scheduleSequences(schedule) {
     this._contentIds
-      .map(contentId => this._sequences[contentId])
+      .map((contentId) => this._sequences[contentId])
       .forEach(({ renderer, contentId }) => {
-        const sequenceSchedule = schedule.find(s => s.contentId === contentId);
+        const sequenceSchedule = schedule.find((s) => s.contentId === contentId);
 
         if (sequenceSchedule) {
           const { startSyncTime, stopSyncTime, startOffset } = sequenceSchedule;
@@ -399,7 +399,7 @@ class OrchestrationClient extends EventEmitter {
           }
           return response.json();
         })
-        .then(data => new Sequence(data))
+        .then((data) => new Sequence(data))
         .then((sequence) => {
           sequenceWrapper.sequence = sequence;
 
@@ -529,7 +529,7 @@ class OrchestrationClient extends EventEmitter {
         this._audioContext = OrchestrationClient.createAudioContext();
       }
 
-      this._imageContext = new ImageContext(image => this._emitImage(image), this._audioContext);
+      this._imageContext = new ImageContext((image) => this._emitImage(image), this._audioContext);
       this._imageContext.resume();
 
       this._initialised = true;
@@ -572,7 +572,7 @@ class OrchestrationClient extends EventEmitter {
    */
   registerSequence(contentId, url) {
     this._contentIds = [
-      ...this._contentIds.filter(c => c !== contentId),
+      ...this._contentIds.filter((c) => c !== contentId),
       contentId,
     ];
 

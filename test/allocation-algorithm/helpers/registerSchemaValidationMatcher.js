@@ -47,4 +47,3 @@ const registerSchemaValidationMatcher = () => {
 };
 
 export default registerSchemaValidationMatcher;
-

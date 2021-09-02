@@ -15,7 +15,6 @@ const DEFAULT_S_L_AUDIO = 0.06; // 60ms, was 30ms
  */
 const DEFAULT_T_BUFDELAY_AUDIO = 1.0;
 
-
 /**
  * The interval period for checking the player progress, in addition to checks on clock change
  * events.

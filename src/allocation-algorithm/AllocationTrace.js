@@ -23,7 +23,7 @@ class AllocationTrace {
     if (this.allocations && this.deviceFlags) {
       this.devices.forEach(({ deviceId }) => {
         deviceState[deviceId] = {
-          flags: [...this.deviceFlags.get(deviceId)].map(flag => ({ name: flag, value: true })),
+          flags: [...this.deviceFlags.get(deviceId)].map((flag) => ({ name: flag, value: true })),
           objects: this.allocations[deviceId].map(({ objectId, gain }) => `${objectId} (${gain})`),
         };
       });
@@ -67,10 +67,10 @@ class AllocationTrace {
     const { activeObject } = this;
 
     const activeObjectState = {
-      lists: Object.keys(objectLists).map(name => ({
+      lists: Object.keys(objectLists).map((name) => ({
         name, items: [...objectLists[name]],
       })),
-      flags: [...objectFlags].map(f => ({ name: f, value: true })),
+      flags: [...objectFlags].map((f) => ({ name: f, value: true })),
     };
 
     this.addStep(step, { activeObjectBehaviour, activeObject, activeObjectState });

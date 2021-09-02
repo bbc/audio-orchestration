@@ -3,7 +3,7 @@ const muteIf = ({ behaviourParameters, allocations }) => ({
     const { objectId: otherObjectId } = behaviourParameters;
 
     const otherObjectWasAllocated = !!Object.values(allocations)
-      .find(deviceAllocations => deviceAllocations.find(a => a.objectId === otherObjectId));
+      .find((deviceAllocations) => deviceAllocations.find((a) => a.objectId === otherObjectId));
 
     if (otherObjectWasAllocated) {
       return { gain: 0 }; // linear gain

@@ -1,1 +1,1 @@
-export const convertDecibelsToLinearGain = decibels => 10 ** (decibels / 20);
+export const convertDecibelsToLinearGain = (decibels) => 10 ** (decibels / 20);
