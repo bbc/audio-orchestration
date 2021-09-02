@@ -66,7 +66,8 @@ export const evaluateConditions = (deviceId, {
             // Generate the list of objectIds allocated to the current device so far
             propertyValue = objects
               .map(({ objectId }) => objectId)
-              .filter((objectId) => (allocations[deviceId] || []).some((a) => a.objectId === objectId));
+              .filter((objectId) => (allocations[deviceId] || [])
+                .some((a) => a.objectId === objectId));
           } else {
             propertyValue = device[propertyName];
           }

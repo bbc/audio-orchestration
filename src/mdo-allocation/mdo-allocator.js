@@ -302,7 +302,9 @@ class MdoAllocator extends MdoHelper {
     // find the deviceCurrentNumber (filling the gaps left by dropped out device).
     return devices.map((device) => ({
       ...device,
-      deviceCurrentNumber: devices.filter(((d) => d.deviceJoiningNumber <= device.deviceJoiningNumber)).length,
+      deviceCurrentNumber: devices
+        .filter(((d) => d.deviceJoiningNumber <= device.deviceJoiningNumber))
+        .length,
     }));
   }
 }

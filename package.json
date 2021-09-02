@@ -11,6 +11,7 @@
     "dist"
   ],
   "devDependencies": {
+    "@babel/cli": "^7.14.8",
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
     "ajv": "^6.10.2",
@@ -33,7 +34,7 @@
     "events": "^3.0.0"
   },
   "scripts": {
-    "dev": "webpack",
+    "dev": "webpack --mode=development",
     "build": "webpack --mode=production",
     "doc": "esdoc",
     "test": "jest",

@@ -260,7 +260,7 @@ class AllocationAlgorithm {
           if (s.size < 1 || selectedDevices.size > 0) {
             return;
           }
-          const randomIndex = parseInt(Math.random() * s.size, 0);
+          const randomIndex = Math.floor(Math.random() * s.size);
           selectedDevices.add([...s][randomIndex]);
         });
 

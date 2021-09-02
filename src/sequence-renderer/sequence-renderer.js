@@ -1,7 +1,7 @@
 import EventEmitter from 'events';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import Sequence from './sequence';
-import ItemRendererFactory from './item-renderer';
+import ItemRendererFactory from './item-renderer-factory';
 
 /**
  * @class
@@ -141,7 +141,8 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   setActiveObjects(newObjects) {
     // trigger addition of objects not present in old list
     newObjects
-      .filter((object) => !this._activeObjects.find((({ objectId }) => object.objectId === objectId)))
+      .filter((object) => !this._activeObjects
+        .find((({ objectId }) => object.objectId === objectId)))
       .forEach((object) => this.addObject(object));
 
     // trigger removal of objects not present in new list

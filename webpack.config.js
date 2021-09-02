@@ -7,8 +7,10 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bbcat-orchestration.js',
-    library: 'bbcatOrchestration',
-    libraryTarget: 'umd',
+    library: {
+      name: 'bbcatOrchestration',
+      type: 'umd',
+    },
   },
   module: {
     rules: [
