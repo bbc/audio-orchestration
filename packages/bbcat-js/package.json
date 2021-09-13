@@ -1,0 +1,48 @@
+{
+  "name": "@bbc/bbcat-orchestration-bbcat",
+  "version": "0.2.1",
+  "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
+  "main": "dist/bbcat.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "yarn run lint && yarn run test && yarn run doc && yarn run webpack",
+    "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
+    "webpack": "webpack --optimize-minimize ",
+    "debug": "webpack ",
+    "test": "karma start --singleRun",
+    "watch:test": "karma start",
+    "lint": "eslint src/ test/",
+    "doc": "esdoc -c esdoc.json"
+  },
+  "repository": "https://github.com/bbc/bbcat-orchestration-bbcat",
+  "author": "BBC",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "babel-core": "^6.5.2",
+    "babel-loader": "^6.2.3",
+    "babel-plugin-__coverage__": "^0.111111.1",
+    "babel-plugin-transform-runtime": "^6.7.5",
+    "babel-preset-es2015": "^6.5.0",
+    "babel-runtime": "^6.9.2",
+    "esdoc": "^0.4.6",
+    "esdoc-es7-plugin": "0.0.3",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.1.0",
+    "eslint-plugin-jasmine": "^1.8.1",
+    "eslint-plugin-react": "^4.3.0",
+    "jasmine": "^2.4.1",
+    "jasmine-ajax": "^3.2.0",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-coverage": "^0.5.5",
+    "karma-firefox-launcher": "^0.1.7",
+    "karma-jasmine": "^0.3.8",
+    "karma-webpack": "^1.7.0",
+    "path": "^0.12.7",
+    "webpack": "^1.12.14"
+  },
+  "dependencies": {}
+}
