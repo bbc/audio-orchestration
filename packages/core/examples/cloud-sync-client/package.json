@@ -1,0 +1,22 @@
+{
+  "name": "cloud-sync-client",
+  "version": "0.0.1",
+  "description": "An example implementation of a synchronised audio player using the cloud sync service.",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
+    "copy-webpack-plugin": "^4.5.1",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.7",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  }
+}

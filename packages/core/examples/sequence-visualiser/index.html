@@ -1,0 +1,134 @@
+<html>
+  <head>
+    <title>Sequence item visualiser</title>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+
+      textarea {
+        width: 80%;
+        max-width: 1024px;
+        height: 200px;
+      }
+
+      #output {
+        width: 80%;
+        max-width: 1024px;
+        border: 10px solid #333;
+        background: #333;
+        box-sizing: border-box;
+      }
+
+      .object {
+        width: 100%;
+        position: relative;
+        padding-bottom: 14px;
+      }
+
+      .object:hover {
+        background-color: #666;
+      }
+
+      .item {
+        position: absolute;
+        top: 2px;
+        height: 10px;
+        background: #7080FF;
+        box-sizing: border-box;
+      }
+
+      .item.dash {
+        background: #FF4855;
+      }
+      
+      .item.buffer {
+        background: #12A87A;
+      }
+
+      .item:hover, .item:focus {
+        opacity: 0.75;
+        border: 1px dotted #ccc;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Sequence item visualiser</h1>
+    <p>Paste the contents of your <code>sequence.json</code> file below, then click <em>Redraw</em>.</p>
+    <p>
+      <textarea id="input">
+  {
+    "duration": 33.34,
+    "loop": false,
+    "outPoints": [],
+    "objects": [
+      {
+        "objectId": "1-Outro Music.L",
+        "objectBehaviours": [],
+        "items": [
+          {
+            "start": 0,
+            "duration": 33.34,
+            "source": {
+              "channelMapping": "left",
+              "panning": -1,
+              "type": "dash",
+              "url": "audio/ab464336-4aa1-42b2-b05b-3613199ac4f9/1 Outro Music.L_000000/manifest.mpd",
+              "urlSafari": "audio/ab464336-4aa1-42b2-b05b-3613199ac4f9/1 Outro Music.L_000000/manifest-safari.mpd"
+            }
+          }
+        ]
+      },
+      {
+        "objectId": "2-Outro Music.R",
+        "objectBehaviours": [],
+        "items": [
+          {
+            "start": 0,
+            "duration": 33.34,
+            "source": {
+              "channelMapping": "right",
+              "panning": 1,
+              "type": "dash",
+              "url": "audio/ab464336-4aa1-42b2-b05b-3613199ac4f9/2 Outro Music.R_000000/manifest.mpd",
+              "urlSafari": "audio/ab464336-4aa1-42b2-b05b-3613199ac4f9/2 Outro Music.R_000000/manifest-safari.mpd"
+            }
+          }
+        ]
+      },
+      {
+        "objectId": "3-Outro Vocal",
+        "objectBehaviours": [],
+        "items": [
+          {
+            "start": 3.24,
+            "duration": 9.61,
+            "source": {
+              "channelMapping": "mono",
+              "panning": 0,
+              "type": "buffer",
+              "url": "audio/ab464336-4aa1-42b2-b05b-3613199ac4f9/3 Outro Vocal_000000.m4a",
+              "urlSafari": null
+            }
+          }
+        ]
+      }
+    ]
+  }
+      </textarea>
+    </p>
+
+    <p>
+      <button id="redraw">Redraw</button>
+    </p>
+
+    <div id="output"></div>
+
+    <pre id="objectInfo"></pre>
+
+    <pre id="itemInfo"></pre>
+
+    <script src="main.js"></script>
+  </body>
+</html>

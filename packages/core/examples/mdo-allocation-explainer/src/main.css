@@ -1,0 +1,167 @@
+body, html {
+  font-family: sans-serif;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+div, p, ul {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.metadata-entry, .allocation-replay {
+  margin: 4px;
+  padding: 4px;
+  border: 1px solid #ccc;
+}
+
+.metadata-field {
+  min-height: 400px;
+}
+
+.flex-row {
+  display: flex; flex-direction: row;
+  /* height: 100%; */
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  /* width: 100%; */
+}
+
+.metadata-field {
+  padding: 4px;
+}
+
+.metadata-field h1 {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+textarea.error {
+  border-color: #c99;
+  background-color: #fee;
+}
+
+button {
+  border: 0;
+  background-color: #fc3;
+  padding: 8px 16px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin: 4px;
+}
+
+button:hover {
+  background-color: #fe4;
+}
+
+.hidden {
+  display: none;
+}
+
+.object, .device {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 4px;
+  overflow: hidden;
+}
+
+.object h2, .device h2 {
+  margin: 0;
+  margin-bottom: 0.5em;
+  padding: 4px;
+  background-color: #ccc;
+  font-size: 1em;
+  text-align: center;
+}
+
+
+.object:not(.active) h2 {
+  cursor: pointer;
+}
+
+.device.active, .object.active {
+  background-color: #ffc;
+}
+
+.object.active h2::before { content: '>> '; }
+.object.active h2::after { content: ' <<'; }
+
+.device.active h2::before { content: '>> '; }
+.device.active h2::after { content: ' <<'; }
+
+.named-list {
+  font-size: 0.75em;
+  margin: 4px;
+  width: 100%;
+  flex-shrink: 1;
+  overflow: hidden;
+  border: 1px dotted #ccc;
+  padding: 4px;
+  text-align: center;
+}
+
+.named-list li {
+  margin: 4px;
+  padding: 4px;
+  background-color: #f93;
+}
+
+.named-list h3 {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+.named-list ul {
+  margin: 0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
+
+.object-behaviour, .flag {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 0.75em;
+  margin: 4px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: 1px solid #393;
+}
+
+.flag input {
+  margin: 0;
+  margin-right: 4px;
+  vertical-align: bottom;
+}
+
+.flag {
+  border: 1px solid #933;
+}
+
+.object-behaviour.active {
+  background: #6c6;
+}
+
+.flag.checked {
+  background: #f66;
+}

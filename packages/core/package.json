@@ -1,0 +1,48 @@
+{
+  "name": "@bbc/bbcat-orchestration",
+  "version": "0.11.4",
+  "description": "Components for synchronised object based audio experiences.",
+  "main": "dist/bbcat-orchestration.js",
+  "repository": "git@github.com:bbc/bbcat-orchestration.git",
+  "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
+  "license": "UNLICENSED",
+  "private": false,
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "ajv": "^6.10.2",
+    "babel-loader": "^8.2.2",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "jest": "^27.1.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "dependencies": {
+    "@bbc/bbcat-orchestration-bbcat": "^0.2.1",
+    "@bbc/bbcat-orchestration-cloud-sync-client": "^2.2.2",
+    "dvbcss-clocks": "^0.0.4",
+    "dvbcss-protocols": "^0.0.4",
+    "events": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "doc": "esdoc",
+    "test": "jest",
+    "lint": "eslint src test"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  }
+}

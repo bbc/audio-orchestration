@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bbc.github.io/bbcat-orchestration/schemas/behaviour.json",
+  "title": "Behaviour",
+  "description": "A behaviour specification added to an object or control, influencing the allocation algorithm",
+  "type": "object",
+  "required": [
+    "behaviourType"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "behaviourType": {
+      "description": "Type identifier of the behaviour, must be registered with the allocation algorithm",
+      "type": "string"
+    },
+    "behaviourParameters": {
+      "descriptions": "Parameters for the behaviour, specific to the behaviourType, can be any JSON object",
+      "type": "object"
+    }
+  }
+}

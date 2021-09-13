@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calibration example</title>
+    <style type="text/css">
+      html, body {
+        font-family: sans-serif;
+        font-size: 12pt;
+      }
+
+      #page {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 0 1rem;
+      }
+
+      button {
+        border: 0;
+        background-color: #fc3;
+        color: #000;
+        padding: 1rem;
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      button.large {
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+      
+      h1 {
+        text-align: center;
+      }
+
+      #current-offset {
+        font-size: 3rem;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      p {
+        margin: 1em 0;
+      }
+
+      #calibrate {
+        display: none;
+      }
+
+      #progress-bar {
+        position: relative;
+        padding: 0;
+        padding-bottom: 4px;
+        margin-bottom: 1rem;
+      }
+
+      #current-time {
+        position: absolute;
+        height: 100%;
+        background-color: #fc3;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="connect">
+        <h1>Calibration example</h1>
+        <button class="large" id="btn-init">Connect</button>
+      </div>
+
+      <div id="calibrate">
+        <h1>Set device latency</h1>
+
+        <div id="progress-bar">
+          <div id="current-time">&nbsp;</div>
+        </div>
+
+        <p>
+          <button id="btn-increase" class="large">+10</button>
+        </p>
+        <p id="current-offset">&hellip;</p>
+        <p>
+          <button id="btn-decrease" class="large">-10</button>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
+
