@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: messenger/messagedispatcher/MessageDispatcher.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: messenger/messagedispatcher/MessageDispatcher.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var WeakMap = require("weak-map"),
+    PRIVATE = new WeakMap(),
+    MessageDispatcher;
+
+/**
+ * @class MessageDispatcher
+ * 
+ * @classdesc ...
+ * 
+ * @example
+ * var MessageFactory, MessageIdGenerator,
+ *     dispatcher, message;
+ * 
+ * MessageFactory = require("MessageFactory");
+ * MessageIdGenerator = require("MessageIdGenerator");
+ * 
+ * message = MessageFactory.create(
+ *     "JoinREQ",
+ *     "123",
+ *     "abc",
+ *     MessageIdGenerator.getNewId(),
+ *     "0.1"
+ * );
+ * 
+ * // Create instance
+ * dispatcher = new MessageDispatcher(2000);
+ * 
+ * // Add handler for responses to this message
+ * // Also add a handler for expired timeouts (time to response)
+ * dispatcher.set(message, handleResponse, handleTimeout);
+ * 
+ * function handleResponse (res) {
+ *     // Do something with the response
+ * }
+ * 
+ * function handleTimeout (res) {
+ *     // Do something, e.g. retry
+ * }
+ * 
+ * // Send message ...
+ * 
+ * // Process message and create response
+ * var response = MessageFactory.create(
+ *     "JoinRESP",
+ *     message.sessionId,
+ *     0,
+ *     "ws://wallclock.example.com:8080",
+ *     "ws://sessionsynccontroller.example.com",
+ *     message.id,
+ *     message.version
+ * );
+ * 
+ * // ... Receive response
+ * dispatcher.call(response);
+ * // --> 'handleResponse' is called
+ * 
+ * @constructor
+ * @param {number} [reponseTimeoutMS=1000] Time in miliseconds by when a response
+ *      is expected to requests
+ */
+MessageDispatcher = function (responseTimeoutMS) {
+    var priv;
+    PRIVATE.set(this, {});
+    priv = PRIVATE.get(this);
+    priv.messageMap = {};
+    priv.responseTimeout = responseTimeoutMS || 1000;
+};
+
+/**
+ * Sets a callback for a given message. The callback is invoked, if a message 
+ * with the same 'id' is passed to method 'call'. Callback can be fired multiple times.
+ * 
+ * @memberof MessageDispatcher
+ * @param {Message} message
+ * @param {function} onresponse Callback function to be called. In this function
+ *      this refers to the message that invoked its call, i.e. the message that
+ *      is passed to method 'call'.
+ * @param {function} [onresponsetimeout] Callback function which is called if a response has not
+ *      been received within timeoout.
+ * @param {number} [responseTimeoutMS] Timeout in miliseconds by when a response is expected.
+ *      Defaults to the value passed to the constructor.
+ */
+MessageDispatcher.prototype.set = function (message, onresponse, onresponsetimeout, responseTimeoutMS, once) {
+    
+    var priv, typeOfHandler, handleTimeout;
+    priv = PRIVATE.get(this);
+    
+    typeOfHandler = typeof onresponse;
+    if (typeOfHandler !== "function") {
+        throw new Error("Expected 'onresponse' to be of type function. Saw '" + typeOfHandler + "' instead");
+    }
+
+    handleTimeout = onresponsetimeout || function () {};
+    typeOfHandler = typeof handleTimeout;
+    if (typeOfHandler !== "function") {
+        throw new Error("Expected 'onresponsetimeout' to be of type function. Saw '" + typeOfHandler + "' instead");
+    }
+
+    priv.messageMap[message.id] = {
+        onresponse: onresponse,
+        onresponsetimeout: handleTimeout,
+        timeout: setTimeout(handleTimeoutExpired.bind(this, message.id), responseTimeoutMS || priv.responseTimeout),
+        once: once || false
+    };
+};
+
+/**
+ * Sets a callback for a given message. The callback is invoked, if a message 
+ * with the same 'id' is passed to method 'call'. Callback is fired only once.
+ * 
+ * @memberof MessageDispatcher
+ * @param {Message} message
+ * @param {function} onresponse Callback function to be called. In this function
+ *      this refers to the message that invoked its call, i.e. the message that
+ *      is passed to method 'call'.
+ * @param {function} [onresponsetimeout] Callback function which is called if a response has not
+ *      been received within timeoout.
+ * @param {number} [responseTimeoutMS] Timeout in miliseconds by when a response is expected.
+ *      Defaults to the value set passed to the constructor.
+ */
+MessageDispatcher.prototype.setOnce = function (message, onresponse, onresponsetimeout, responseTimeoutMS) {
+    var priv = PRIVATE.get(this);
+    this.set(message, onresponse, onresponsetimeout || function () {}, responseTimeoutMS || priv.responseTimeoutMS, true);
+}
+
+/**
+ * Invokes the call of the handler set with method 'set', if the 'id' property
+ * value of the message passed to call equals the 'id' of a previousely set
+ * handler.
+ * 
+ * @memberof MessageDispatcher
+ * @param {Message} message
+ * @returns {boolean} TRUE if a handler was registered for this message, else FALSE.
+ */
+MessageDispatcher.prototype.call = function (message) {
+    var priv = PRIVATE.get(this);
+    if (priv.messageMap.hasOwnProperty(message.id)) {
+        priv.messageMap[message.id].onresponse(message);
+        clearTimeout(priv.messageMap[message.id].timeout);
+        if (priv.messageMap[message.id].once === true) {
+            delete priv.messageMap[message.id];
+        }
+        return true;
+    }
+    return false;
+};
+
+function handleTimeoutExpired (messageId) {
+    var priv, timeoutHandler; 
+    priv = PRIVATE.get(this);
+    timeoutHandler = priv.messageMap[messageId].onresponsetimeout;
+    if (priv.messageMap.hasOwnProperty(messageId)) {
+        delete priv.messageMap[messageId];
+        timeoutHandler();
+    }
+}
+
+module.exports = MessageDispatcher;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-MessageFactory.html">MessageFactory</a></li><li><a href="module-MessageIdGenerator.html">MessageIdGenerator</a></li></ul><h3>Classes</h3><ul><li><a href="ChannelMap.html">ChannelMap</a></li><li><a href="ContentIdChange.html">ContentIdChange</a></li><li><a href="ContextREQ.html">ContextREQ</a></li><li><a href="ContextRESP.html">ContextRESP</a></li><li><a href="DeviceREQ.html">DeviceREQ</a></li><li><a href="DeviceRESP.html">DeviceRESP</a></li><li><a href="JoinREQ.html">JoinREQ</a></li><li><a href="JoinRESP.html">JoinRESP</a></li><li><a href="LeaveREQ.html">LeaveREQ</a></li><li><a href="LeaveRESP.html">LeaveRESP</a></li><li><a href="Message.html">Message</a></li><li><a href="MessageDispatcher.html">MessageDispatcher</a></li><li><a href="MessageParams.html">MessageParams</a></li><li><a href="MessagingAdapter.html">MessagingAdapter</a></li><li><a href="Messenger.html">Messenger</a></li><li><a href="MqttMessagingAdapter.html">MqttMessagingAdapter</a></li><li><a href="PahoMqttMessagingAdapter.html">PahoMqttMessagingAdapter</a></li><li><a href="ParameterList.html">ParameterList</a></li><li><a href="PingREQ.html">PingREQ</a></li><li><a href="PingRESP.html">PingRESP</a></li><li><a href="REQParams.html">REQParams</a></li><li><a href="RESParams.html">RESParams</a></li><li><a href="StopTimelineUpdateREQ.html">StopTimelineUpdateREQ</a></li><li><a href="TimelineDeRegistrationREQ.html">TimelineDeRegistrationREQ</a></li><li><a href="TimelineDeRegistrationRESP.html">TimelineDeRegistrationRESP</a></li><li><a href="TimelineEndRegistrationREQ.html">TimelineEndRegistrationREQ</a></li><li><a href="TimelineEndSubscriptionRESP.html">TimelineEndSubscriptionRESP</a></li><li><a href="TimelineQuery.html">TimelineQuery</a></li><li><a href="TimelineRegistrationREQ.html">TimelineRegistrationREQ</a></li><li><a href="TimelineRegistrationRESP.html">TimelineRegistrationRESP</a></li><li><a href="TimelineREQ.html">TimelineREQ</a></li><li><a href="TimelineRESP.html">TimelineRESP</a></li><li><a href="TimelineSubscriptionREQ.html">TimelineSubscriptionREQ</a></li><li><a href="TimelineSubscriptionRESP.html">TimelineSubscriptionRESP</a></li><li><a href="TimelineUpdate.html">TimelineUpdate</a></li><li><a href="TimelineUpdateREQ.html">TimelineUpdateREQ</a></li><li><a href="TimelineUpdateRESP.html">TimelineUpdateRESP</a></li></ul><h3>Events</h3><ul><li><a href="MessagingAdapter.html#event:connectionestablished">connectionestablished</a></li><li><a href="MessagingAdapter.html#event:connectionfailure">connectionfailure</a></li><li><a href="MessagingAdapter.html#event:connectionlost">connectionlost</a></li><li><a href="MessagingAdapter.html#event:message">message</a></li><li><a href="Messenger.html#event:message">message</a></li><li><a href="Messenger.html#event:request">request</a></li><li><a href="MqttMessagingAdapter.html#event:connectionestablished">connectionestablished</a></li><li><a href="MqttMessagingAdapter.html#event:connectionfailure">connectionfailure</a></li><li><a href="MqttMessagingAdapter.html#event:connectionlost">connectionlost</a></li><li><a href="MqttMessagingAdapter.html#event:message">message</a></li><li><a href="PahoMqttMessagingAdapter.html#event:connectionestablished">connectionestablished</a></li><li><a href="PahoMqttMessagingAdapter.html#event:connectionfailure">connectionfailure</a></li><li><a href="PahoMqttMessagingAdapter.html#event:connectionlost">connectionlost</a></li><li><a href="PahoMqttMessagingAdapter.html#event:message">message</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.4</a> on Thu Dec 07 2017 14:44:57 GMT+0000 (GMT)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
