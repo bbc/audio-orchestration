@@ -1,5 +1,5 @@
 {
-  "name": "@bbc/bbcat-orchestration-bbcat",
+  "name": "@bbc/audio-orchestration-bbcat-js",
   "version": "0.2.1",
   "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
   "main": "dist/bbcat.js",
@@ -17,9 +17,12 @@
     "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
   },
-  "repository": "https://github.com/bbc/bbcat-orchestration-bbcat",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbc/audio-orchestration.git"
+  },
   "author": "BBC",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
   "devDependencies": {
     "babel-core": "^6.5.2",
     "babel-loader": "^6.2.3",

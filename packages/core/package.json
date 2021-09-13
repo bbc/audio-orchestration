@@ -1,12 +1,14 @@
 {
-  "name": "@bbc/bbcat-orchestration",
+  "name": "@bbc/audio-orchestration-core",
   "version": "0.11.4",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/bbcat-orchestration.js",
-  "repository": "git@github.com:bbc/bbcat-orchestration.git",
-  "author": "Kristian Hentschel <Kristian.Hentschel@bbc.co.uk>",
-  "license": "UNLICENSED",
-  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbc/audio-orchestration.git"
+  },
+  "author": "BBC",
+  "license": "Apache-2.0",
   "files": [
     "dist"
   ],
