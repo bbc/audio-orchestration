@@ -1,0 +1,88 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.status-bar {
+  @include gel-typography('brevier');
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+  text-align: center;
+  color: $theme-color-white;
+  background-color: $theme-color-grey;
+  box-sizing: border-box;
+  height: 48px; // TODO hard-coded height
+}
+
+.status-bar.connected {
+  background-color: $theme-color-green;
+}
+
+.status-bar-content {
+  display: flex;
+  flex-direction: row;
+  box-sizing: border-box;
+
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.status-bar-session-code {
+  letter-spacing: 0.1em;
+}
+
+.status-bar-left, .status-bar-right {
+  flex-grow: 0;
+  width: 48px;
+  text-align: center;
+}
+
+.status-bar-middle {
+  flex-grow: 1;
+  padding: $gel-spacing-unit;
+}
+
+.status-bar-num-devices {
+  display: flex;
+  align-items: center;
+  padding: $gel-spacing-unit;
+}
+
+@keyframes status-bar-loaded-icon-fading {
+  from {
+    opacity: 1.0;
+  }
+
+  to {
+    opacity: 0.0;
+  }
+}
+
+.status-bar-animated-device-indicator {
+  animation: status-bar-loaded-icon-fading 0.3s 3 linear;
+}
+
+.status-bar-loaded-icon {
+  opacity: 0;
+  animation: status-bar-loaded-icon-fading 1s ease-out;
+}
+
+// TODO remove if we make the whole status-bar-content clickable; this hack prevents the code
+// being selected and copied because the transparent button is extended over it.
+.status-bar-button-instructions {
+  &::after {
+    content: ' ';
+    display: block;
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+  }
+}
+

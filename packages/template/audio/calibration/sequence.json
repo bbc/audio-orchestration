@@ -1,0 +1,43 @@
+{
+  "duration": 6,
+  "loop": true,
+  "outPoints": [],
+  "objects": [
+    {
+      "objectId": "calibration",
+      "objectBehaviours": [
+        {
+          "behaviourType": "allowedIf",
+          "behaviourParameters": {
+            "conditions": [
+              {
+                "property": "deviceControls.type",
+                "operator": "anyOf",
+                "value": [
+                  "target",
+                  "reference"
+                ],
+                "invertCondition": false
+              }
+            ]
+          }
+        },
+        {
+          "behaviourType": "spread"
+        }
+      ],
+      "items": [
+        {
+          "start": 1,
+          "duration": 5,
+          "source": {
+            "panning": 0,
+            "type": "buffer",
+            "url": "audio/calibration/calibration.m4a",
+            "urlSafari": null
+          }
+        }
+      ]
+    }
+  ]
+}

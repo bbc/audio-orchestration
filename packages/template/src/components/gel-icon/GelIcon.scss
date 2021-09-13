@@ -1,0 +1,45 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import 'theme';
+
+.gel-icon {
+  display: inline-block;
+
+  &.padded {
+    padding: $gel-spacing-unit;
+  }
+
+  &.tiny svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &.small svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.normal svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  &.icon.large svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  &.icon.huge svg {
+    width: 64px;
+    height: 64px;
+  }
+
+  svg {
+    display: inline-block;
+    vertical-align: bottom;
+  }
+
+  svg path {
+    fill: $theme-color-white;
+  }
+}

@@ -1,0 +1,175 @@
+@import "variables";
+
+@font-face {
+  font-family: '#{$icomoon-font-family}';
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?fq6lrm');
+  src:  url('#{$icomoon-font-path}/#{$icomoon-font-family}.eot?fq6lrm#iefix') format('embedded-opentype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.ttf?fq6lrm') format('truetype'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.woff?fq6lrm') format('woff'),
+    url('#{$icomoon-font-path}/#{$icomoon-font-family}.svg?fq6lrm##{$icomoon-font-family}') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: '#{$icomoon-font-family}' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.bbcat-icon-metronome {
+  &:before {
+    content: $bbcat-icon-metronome; 
+  }
+}
+.bbcat-icon-replay {
+  &:before {
+    content: $bbcat-icon-replay; 
+  }
+}
+.bbcat-icon-copy {
+  &:before {
+    content: $bbcat-icon-copy; 
+  }
+}
+.bbcat-icon-paste {
+  &:before {
+    content: $bbcat-icon-paste; 
+  }
+}
+.bbcat-icon-share {
+  &:before {
+    content: $bbcat-icon-share; 
+  }
+}
+.bbcat-icon-bbcrd {
+  &:before {
+    content: $bbcat-icon-bbcrd; 
+  }
+}
+.bbcat-icon-check {
+  &:before {
+    content: $bbcat-icon-check; 
+  }
+}
+.bbcat-icon-cog {
+  &:before {
+    content: $bbcat-icon-cog; 
+  }
+}
+.bbcat-icon-cross {
+  &:before {
+    content: $bbcat-icon-cross; 
+  }
+}
+.bbcat-icon-desktop {
+  &:before {
+    content: $bbcat-icon-desktop; 
+  }
+}
+.bbcat-icon-down {
+  &:before {
+    content: $bbcat-icon-down; 
+  }
+}
+.bbcat-icon-help {
+  &:before {
+    content: $bbcat-icon-help; 
+  }
+}
+.bbcat-icon-left {
+  &:before {
+    content: $bbcat-icon-left; 
+  }
+}
+.bbcat-icon-light {
+  &:before {
+    content: $bbcat-icon-light; 
+  }
+}
+.bbcat-icon-loading {
+  &:before {
+    content: $bbcat-icon-loading; 
+  }
+}
+.bbcat-icon-loudspeaker {
+  &:before {
+    content: $bbcat-icon-loudspeaker; 
+  }
+}
+.bbcat-icon-minus {
+  &:before {
+    content: $bbcat-icon-minus; 
+  }
+}
+.bbcat-icon-mobile {
+  &:before {
+    content: $bbcat-icon-mobile; 
+  }
+}
+.bbcat-icon-pause {
+  &:before {
+    content: $bbcat-icon-pause; 
+  }
+}
+.bbcat-icon-play {
+  &:before {
+    content: $bbcat-icon-play; 
+  }
+}
+.bbcat-icon-plus {
+  &:before {
+    content: $bbcat-icon-plus; 
+  }
+}
+.bbcat-icon-radio {
+  &:before {
+    content: $bbcat-icon-radio; 
+  }
+}
+.bbcat-icon-right {
+  &:before {
+    content: $bbcat-icon-right; 
+  }
+}
+.bbcat-icon-tablet {
+  &:before {
+    content: $bbcat-icon-tablet; 
+  }
+}
+.bbcat-icon-tv {
+  &:before {
+    content: $bbcat-icon-tv; 
+  }
+}
+.bbcat-icon-up {
+  &:before {
+    content: $bbcat-icon-up; 
+  }
+}
+.bbcat-icon-volume-low {
+  &:before {
+    content: $bbcat-icon-volume-low; 
+  }
+}
+.bbcat-icon-volume-mute {
+  &:before {
+    content: $bbcat-icon-volume-mute; 
+  }
+}
+.bbcat-icon-volume {
+  &:before {
+    content: $bbcat-icon-volume; 
+  }
+}
+

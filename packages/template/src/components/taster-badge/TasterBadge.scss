@@ -1,0 +1,15 @@
+.taster-badge {
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.taster-offsite-panel {
+  position: relative;
+  width: 100%;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+}

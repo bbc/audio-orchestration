@@ -1,0 +1,13 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.footer {
+  margin-top: 10*$gel-spacing-unit;
+  text-align: center;
+
+  .small {
+    @include gel-typography('brevier');
+  }
+}

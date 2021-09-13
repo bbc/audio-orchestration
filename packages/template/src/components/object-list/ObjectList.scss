@@ -1,0 +1,21 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.object-list {
+  list-style: none;
+  padding: 0;
+  margin: $gel-spacing-unit (-$gel-spacing-unit);
+  
+  li {
+    @include gel-typography('brevier');
+
+    border-radius: 4px;
+    display: inline-block;
+    margin: $gel-spacing-unit;
+    padding: $gel-spacing-unit;
+    border: 1px solid $theme-color-grey;
+    color: $theme-color-grey;
+  }
+}

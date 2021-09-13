@@ -1,0 +1,35 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.share {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  
+
+  input {
+    flex-grow: 1;
+    min-width: 0;
+  }
+
+  button {
+    margin-left: $gel-spacing-unit;
+    flex-grow: 0;
+  }
+
+  .copy-button {
+    transition: background-color 300ms linear;
+
+    &.success {
+      background-color: $theme-color-green;
+    }
+  }
+
+  &.small {
+    input {
+      padding: 4px;
+    }
+  }
+}

@@ -1,0 +1,66 @@
+.lighting-effect {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 1;
+
+  &.lighting-effect-sine {
+    background-color: var(--effect-color);
+    animation: lighting-effect-sine;
+    animation-timing-function: linear;
+  }
+
+  &.lighting-effect-breathe {
+    background-color: var(--effect-color);
+    animation: lighting-effect-breathe;
+    animation-timing-function: linear;
+  }
+
+  &.lighting-effect-heartbeat {
+    background-color: var(--effect-color);
+    animation: lighting-effect-heartbeat;
+    animation-timing-function: linear;
+  }
+
+  &.lighting-effect-static {
+    background: var(--effect-color); // fallback
+    // stacking: define top layer first, a transparent gradient; with color fill as the bottom layer.
+    background: radial-gradient(circle at 50% 25%, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 1) 200%),
+                var(--effect-color);
+  }
+}
+
+@keyframes lighting-effect-sine {
+  0% { opacity: 0.9; }
+  10% { opacity: 0.9587785252292473; }
+  20% { opacity: 0.9951056516295154; }
+  30% { opacity: 0.9951056516295154; }
+  40% { opacity: 0.9587785252292473; }
+  50% { opacity: 0.9; }
+  60% { opacity: 0.8412214747707527; }
+  70% { opacity: 0.8048943483704847; }
+  80% { opacity: 0.8048943483704847; }
+  90% { opacity: 0.8412214747707527; }
+  100% { opacity: 0.9; }
+}
+
+@keyframes lighting-effect-heartbeat {
+  0% { opacity: 0.5; }
+  10% { opacity: 0.5; }
+  20% { opacity: 0.7; }
+  30% { opacity: 0.3; }
+  40% { opacity: 0.5; }
+  43% { opacity: 0.9; }
+  47% { opacity: 0.1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.5; }
+}
+
+@keyframes lighting-effect-breathe {
+  0% { opacity: 0.5; }
+  75% { opacity: 1.0; }
+  100% { opacity: 0.5; }
+}

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="bundle.css" />
+    <title>Device Orchestration Template</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="bundle.js"></script>
+    <script>
+      const SEQUENCE_URL_LOOP = 'audio/clicks-and-tone/loop.json';
+      const SEQUENCE_URL_MAIN = 'audio/clicks-and-tone/sequence.json';
+      const CONTENT_ID_LOOP = 'bbcat-orchestration-template:loop';
+      const CONTENT_ID_MAIN = 'bbcat-orchestration-template:main';
+
+      // Any value specified in config.js may be overwritten here without having to rebuild the app.
+      const config = {
+        ENABLE_TUTORIAL: false,
+        DEBUG_UI: true,
+        DEVICE_DEBUG_UI: true,
+        // if JOIN_URL is not set, it will be filled to point to the current page with a #!/join suffix
+        // JOIN_URL: 'https://bbc.in/my-short-joining-link/#!/join',
+        LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
+        CLOUDSYNC_ENDPOINT: { hostname: 'cloudsync.virt.ch.bbc.co.uk' },
+        // CLOUDSYNC_ENDPOINT: { hostname: '127.0.0.1', port: 9001 },
+        INITIAL_CONTENT_ID: CONTENT_ID_LOOP,
+        SEQUENCE_URLS: [
+          {
+            contentId: CONTENT_ID_LOOP,
+            url: SEQUENCE_URL_LOOP,
+            hold: false,
+            skippable: true,
+            // Show the joining instructions overlay during this sequence.
+            instructions: true,
+            // You can set a sequence to automatically follow the first choice listed below once
+            // as soon as this many aux devices have been connected.
+            transitionOnMinNumberOfAuxDevices: 3,
+            next: [
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Hidden default choice',
+                // The 'hidden' flag hides the button associated with this choice. It might be used
+                // as a hidden default choice, or as a debug tool (e.g. by having short cuts only
+                // visible during development).
+                hidden: true,
+              },
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Go left',
+              },
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Go right',
+              },
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Look around you some more',
+              },
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Main content',
+                // The 'thumbnail' flag shows this choice in a separate block, pulling an image and
+                // URL from the entry for the sequence referred to by the contentId.
+                thumbnail: true,
+              },
+            ],
+          },
+          {
+            contentId: CONTENT_ID_MAIN,
+            url: SEQUENCE_URL_MAIN,
+            hold: true,
+            skippable: false,
+            next: [
+              {
+                contentId: CONTENT_ID_MAIN,
+                label: 'Listen Again',
+              },
+            ],
+
+            // A sequence that is used in a choice with the thumbnail flag should have these
+            // additional properties to set the image, text labels, and duration in seconds.
+            // If they are defined, the image, title, and subtitle will also be shown in the
+            // player instead of the default while this sequence is playing.
+            // TODO add flags to configure this behaviour per sequence (showTitle, useDefaultTitle)
+            // TODO should there be a sequenceThumbnailImage for a smaller image?
+            // sequenceImage: 'images/orchestrator-default-image.jpg',
+            sequenceImage: 'https://placekitten.com/g/600/600',
+            sequenceImageAlt: 'a randomly selected placeholder kitten',
+            sequenceTitle: 'Main sequence',
+            sequenceSubtitle: 'More tone and clicks',
+            duration: 30.0,
+          },
+        ],
+        TEXT_TITLE: 'Device Orchestration Template',
+        TEXT_SUBTITLE: 'A development starting point',
+        TEXT_INTRODUCTION: 'This template is a starting point for a custom user interface for your orchestrated audio experience.',
+        TEXT_START_LABEL: 'Start',
+        TEXT_JOIN_LABEL: 'Join',
+        TEXT_PLAYER_IMAGE_URL: 'images/orchestrator-default-image.jpg',
+        TEXT_PLAYER_IMAGE_ALT: 'Audio Orchestrator default image.',
+        TEXT_ONBOARDING_TITLE: 'Connect devices',
+        TEXT_ONBOARDING_DESCRIPTION: 'Share the link or scan the QR code to connect your phones, tablets, or laptops.',
+
+        ACCENT_COLOUR: '#006DEF',
+        ENABLE_WAKE_LOCK: true,
+        CONTROLS: [
+          {
+            controlId: 'radio-buttons',
+            controlName: 'Radio buttons',
+            controlType: 'radio',
+            controlDefaultValues: ['none'],
+            controlParameters: {
+              options: [
+                { value: 'foo', label: 'Foo' },
+                { value: 'bar', label: 'Bar' },
+                { value: 'other', label: 'Other' },
+              ],
+            },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
+          },
+          {
+            controlId: 'checkboxes',
+            controlName: 'Checkboxes',
+            controlType: 'checkbox',
+            controlDefaultValues: ['foo', 'bar'],
+            controlParameters: {
+              options: [
+                { value: 'foo', label: 'Foo' },
+                { value: 'bar', label: 'Bar' },
+                { value: 'other', label: 'Other' },
+              ],
+            },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
+          },
+          {
+            controlId: 'slider',
+            controlName: 'Slider',
+            controlType: 'range',
+            controlDefaultValues: [0],
+            controlParameters: {
+              min: -1.0,
+              max: 1.0,
+              step: 0.1,
+            },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
+          },
+          // {
+          //   controlId: 'map-position',
+          //   controlName: 'Map position',
+          //   controlType: 'coordinate',
+          //   controlDefaultValues: [0, 0],
+          //   controlParameters: {
+          //     xMin: 0,
+          //     xMax: 1,
+          //     xStep: 0.1,
+          //     yMin: 0,
+          //     yMax: 1,
+          //     yStep: 0.1,
+          //   },
+          //   controlBehaviours: [
+          //     { behaviourType: 'spread' },
+          //     { behaviourType: 'allowedEverywhere' },
+          //   ],
+          // },
+          // {
+          //   controlId: 'text',
+          //   controlName: 'Text',
+          //   controlType: 'text',
+          //   controlDefaultValues: ['hello world'],
+          //   controlParameters: {
+          //     length: 128,
+          //   },
+          //   controlBehaviours: [
+          //     { behaviourType: 'spread' },
+          //     { behaviourType: 'allowedEverywhere' },
+          //   ],
+          // },
+          {
+            controlId: 'counter-button',
+            controlName: 'Counter button',
+            controlType: 'counter',
+            controlDefaultValues: [0],
+            controlParameters: {
+              step: 1,
+              label: 'Shuffle',
+            },
+            controlBehaviours: [
+              { behaviourType: 'spread' },
+              { behaviourType: 'allowedEverywhere' },
+            ],
+          },
+        ],
+        // To enable the calibration menu, provide a sequence URL with equivalent metadata to:
+        CALIBRATION_SEQUENCE_URL: 'audio/calibration/sequence.json',
+
+        // To show a BBC Taster badge, set the pilot ID here, enable the badge in App.jsx,
+        // and add an extra script tag (above bundle.js in this index.html) with
+        // src="//www.bbc.co.uk/taster/pilot-lib.js"
+        PILOT_ID: null,
+
+        // To show a rating prompt, define the text and set a list of sequence contentIds here:
+        PROMPT_SEQUENCES: [],
+        PROMPT_TITLE: 'We\'d like to hear what you thought',
+        PROMPT_BODY: 'Please fill in our short survey.',
+        PROMPT_BUTTON_LINK: 'https://bbc.co.uk/taster/pilots/demo/rate',
+        PROMPT_BUTTON_TEXT: 'Rate this on Taster',
+
+        // Whether to show play and pause buttons on aux devices.
+        ENABLE_PLAY_PAUSE_ON_AUX: false,
+
+        // Fade out objects that are being moved away from a device for this duration (in seconds)
+        OBJECT_FADE_OUT_DURATION: 0.5,
+      };
+
+      // Instantiate the React app to render into the #app div:
+      initOrchestrationTemplate(document.getElementById('app'), config);
+    </script>
+    <noscript>
+      This page requires JavaScript to be enabled.
+    </noscript>
+  </body>
+</html>

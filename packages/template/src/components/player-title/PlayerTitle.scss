@@ -1,0 +1,33 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.player-title {
+  min-height: (96px - $gel-spacing-unit);
+
+  margin-top: -96px;
+  margin-right: -$gel-spacing-unit;
+  margin-bottom: $gel-spacing-unit;
+  margin-left: -$gel-spacing-unit;
+
+  padding: 0 $gel-spacing-unit;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  position: relative;
+  z-index: 5; // above player-image components (vignette is at 4)
+}
+
+.player-title-title {
+  @include gel-typography('double-pica');
+  margin: 0;
+  flex-grow: 0;
+}
+
+.player-title-meta {
+  @include gel-typography('brevier');
+  margin: 0;
+  color: $theme-color-light-grey;
+  flex-grow: 0;
+}

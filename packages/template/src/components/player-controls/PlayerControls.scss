@@ -1,0 +1,116 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.player-controls {
+  margin: $gel-spacing-unit 0;
+
+  &::after {
+    content: ' ';
+    display: block;
+    clear: both;
+  }
+}
+
+.player-controls-progress-bar {
+  height: 4px;
+  background-color: $theme-color-blue;
+  overflow-x: hidden;
+  margin: 2px 0; // 2px to make room for play head
+
+  &.canSeek {
+    cursor: pointer;
+  }
+
+  &::after {
+    content: ' ';
+    display: block;
+    background-color: $theme-color-light-grey;
+    width: 100%;
+    padding-bottom: 4px;
+  }
+
+  // Larger region for capturing mouse move events
+  &.dragging::before {
+    position: absolute;
+    left: 0;
+    content: ' ';
+    display: block;
+    background-color: transparent;
+    width: 100%;
+    padding-bottom: 4px;
+    transform: scaleY(100);
+    z-index: 100;
+  }
+}
+
+.player-controls-progress-bar-playhead {
+  position: absolute;
+  display: inline-block;
+  border-radius: 50%;
+  width: 12px;
+  padding-bottom: 12px;
+  margin: -4px -6px;
+  background-color: $theme-color-blue;
+  box-sizing: border-box;
+  cursor: pointer;
+  transform: scale(1.0);
+  transition: transform 0.1s ease-in;
+
+  // Prevent default touch actions such as scrolling
+  touch-action: none;
+
+  // larger touch area
+  &::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: scale(2.0);
+    display: inline-block;
+    border-radius: 50%;
+    width: 100%;
+    padding-bottom: 100%;
+    background: transparent;
+  }
+}
+
+.player-controls-progress-bar-playhead {
+  &:hover, &.dragging, &.dragging:active {
+    transform: scale(1.5);
+    outline: 0;
+  }
+}
+
+.player-controls-buttons {
+  float: left;
+}
+
+.player-controls-button {
+  color: $theme-color-white;
+
+  &>.player-controls-button-icon-hover {
+    display: none;
+  }
+}
+
+.player-controls-button-icon-hover {
+  color: $theme-color-light-grey; // TODO may be simpler to change color on hover, if it's not an overridable color
+}
+
+.player-controls-button:hover {
+  &>.player-controls-button-icon-hover {
+    display: inline;
+  }
+  &>.player-controls-button-icon {
+    display: none;
+  }
+}
+
+.player-controls-progress-text {
+  @include gel-typography('brevier');
+  color: $theme-color-grey;
+  text-align: right;
+  margin: 0;
+}
