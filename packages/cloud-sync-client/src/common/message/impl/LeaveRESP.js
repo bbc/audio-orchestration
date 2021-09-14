@@ -1,6 +1,6 @@
 var inherits = require("inherits"),
-    Message = require("Message"),
-    RESPParams = require("RESPParams"),
+    Message = require("./Message"),
+    RESPParams = require("./RESPParams"),
     params = RESPParams().get(),
     LeaveRESP;
 

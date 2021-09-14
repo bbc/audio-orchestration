@@ -1,4 +1,4 @@
-var Timestamp = require("Timestamp");
+var Timestamp = require("$common/timeline/Timestamp");
 
 /**
  * @class PresentationTimestamp

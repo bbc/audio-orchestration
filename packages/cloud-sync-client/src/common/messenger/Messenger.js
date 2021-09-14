@@ -4,7 +4,7 @@ var Messenger, MessageDispatcher, MessageFactory, MaxRequestRetryExceedError,
 WeakMap = require("weak-map");
 events = require("events");
 inherits = require("inherits");
-MessageFactory = require("MessageFactory");
+MessageFactory = require("$common/message/MessageFactory");
 MessageDispatcher = require("./messagedispatcher/MessageDispatcher");
 
 PRIVATE = new WeakMap();

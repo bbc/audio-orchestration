@@ -1,6 +1,6 @@
 var inherits = require("inherits"),
-    Message = require("Message"),
-    MessageParams = require("MessageParams"),
+    Message = require("./Message"),
+    MessageParams = require("./MessageParams"),
     params, TimelineUpdate;
 
 params = MessageParams().extend([

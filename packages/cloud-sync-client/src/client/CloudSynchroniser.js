@@ -11,41 +11,41 @@ var // Prototype inheritance
     PRIVATE = new WeakMap(),
 
     // Generic broker for messages to and from the sync service
-    Messenger = require("Messenger"),
+    Messenger = require("$common/messenger/Messenger"),
 
     // Adapter for a concrete messaging library
     // (Instance is passed to constructor of Messenger)
-    MessagingAdapter = require("messagingadapter/MqttMessagingAdapter"),
+    MessagingAdapter = require("$common/messenger/messagingadapter/MqttMessagingAdapter"),
 
     // Generates unique IDs for protocol messages sent to the sync service
-    MessageIdGenerator = require("MessageIdGenerator"),
+    MessageIdGenerator = require("$common/message/MessageIdGenerator"),
 
     // Creates protocol messages to be sent to the sync service
-    MessageFactory = require("MessageFactory"),
+    MessageFactory = require("$common/message/MessageFactory"),
 
     // Synchronises the local copy of the wallclock to wallclock service
-    WallclockSynchroniser = require("WallClockSynchroniser"),
+    WallclockSynchroniser = require("./WallClockSynchroniser"),
 
     // Utilities to model clocks
     Clocks = require("dvbcss-clocks"),
 
     // Models a timeline
-    Timeline = require("Timeline"),
+    Timeline = require("$common/timeline/Timeline"),
 
     // Generates a unique identifier for a timeline
-    TimelineId = require("TimelineId"),
+    TimelineId = require("$common/timeline/TimelineId"),
 
     // Stores timeline references
-    TimelineArray = require("TimelineArray"),
+    TimelineArray = require("$common/timeline/TimelineArray"),
 
     // Models presentation timestamps
-    PresentationTimestamp = require("timeline/PresentationTimestamp"),
+    PresentationTimestamp = require("$common/timeline/PresentationTimestamp"),
 
     // Token buket for rate limiting of timeline upates
-    TokenBucket = require("../common/util/TokenBucket"),
+    TokenBucket = require("$common/util/TokenBucket"),
 
     // SyncTLElection enum
-    SYNC_TL_ELECTION = require("../common/state/SyncTLElection"),
+    SYNC_TL_ELECTION = require("$common/state/SyncTLElection"),
 
     // URL parser
     parseUrl = require("url-parse"),
@@ -54,9 +54,9 @@ var // Prototype inheritance
 var ENABLE_LOGGING = false;
 
 function log() {
-  if (ENABLE_LOGGING) {
-    console.log(arguments);
-  }
+    if (ENABLE_LOGGING) {
+        console.log(arguments);
+    }
 }
 
 // Old versions of the "dvbcss-clocks" library have a incorrect
@@ -113,12 +113,12 @@ function log() {
 /** 
  * The Synchronisation Service has requested a timeline update.
  * @event CloudSynchroniser#TimelineRequest
- */ 
+ */
 
 /** 
  * The Synchronisation Service has requested a content ID update.
  * @event CloudSynchroniser#ContentIDRequest
- */ 
+ */
 
 /**
  * A requested timeline is available to this client.
@@ -150,7 +150,7 @@ function log() {
  * @type {Object}
  * @property {number} returnCode
  * @property {number} error
- */ 
+ */
 
 /** 
  * The content ID changed on a monitored device. 
@@ -187,10 +187,10 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
 
     // Private properties
     PRIVATE.set(this, {
-        
+
         // Timelines provided by this devices
         ownTimelines: new TimelineArray(),
-        
+
         // Timeline shadows, i.e. copies of timelines of other devices in this session
         timelineShadows: new TimelineArray(),
 
@@ -229,7 +229,7 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
         messenger: null,
 
         // Send setup messages to this topic
-        onboardingTopic:  "Sessions/REQ",
+        onboardingTopic: "Sessions/REQ",
 
         // Send requests to this topics
         reqTopic: "Sessions/REQ",
@@ -256,17 +256,17 @@ CloudSynchroniser = function (syncUrl, sessionId, contextId, deviceId, options) 
     });
 
     setupSyncServiceConnection.call(this).
-        catch( onSyncServiceConnectionFailure.bind(this)).
-    
-    then( joinSession.bind(this)).
-        catch( this.emit.bind(this, "DeviceRegistrationFailure")).
-    
-    then( handleJoinResponse.bind(this)).
-        catch( this.emit.bind(this, "DeviceRegistrationFailure")).
-    
-    then( this.emit.bind(this, "DeviceRegistrationSuccess")).
-    
-    then( performWallclockSync.bind(this));
+        catch(onSyncServiceConnectionFailure.bind(this)).
+
+        then(joinSession.bind(this)).
+        catch(this.emit.bind(this, "DeviceRegistrationFailure")).
+
+        then(handleJoinResponse.bind(this)).
+        catch(this.emit.bind(this, "DeviceRegistrationFailure")).
+
+        then(this.emit.bind(this, "DeviceRegistrationSuccess")).
+
+        then(performWallclockSync.bind(this));
 };
 
 inherits(CloudSynchroniser, events);
@@ -276,8 +276,8 @@ inherits(CloudSynchroniser, events);
 // PRIVATE
 // ************************************
 
-function setupSyncServiceConnection () {
-    
+function setupSyncServiceConnection() {
+
     var priv, adapterOptions;
 
     priv = PRIVATE.get(this);
@@ -288,18 +288,18 @@ function setupSyncServiceConnection () {
 
     priv.adapter = new MessagingAdapter(priv.syncUrl.hostname, priv.syncUrl.port, priv.deviceId, adapterOptions);
     priv.adapter.on("connectionlost", onSyncServiceConnectionLost.bind(this));
-    
+
     priv.messenger = new Messenger(priv.adapter);
     priv.messenger.on("message", onMessageReceived.bind(this));
     priv.messenger.on("request", onRequestReceived.bind(this));
-    
+
     return new Promise(function (resolve, reject) {
         priv.adapter.on("connectionestablished", resolve);
         priv.adapter.on("connectionfailure", reject);
     });
 }
 
-function onMessageReceived (message) {
+function onMessageReceived(message) {
     log("Received message", message);
     switch (message.type) {
         case "TimelineUpdate":
@@ -319,7 +319,7 @@ function onMessageReceived (message) {
     }
 }
 
-function onRequestReceived (request) {
+function onRequestReceived(request) {
     log("Received request", request);
     switch (request.type) {
         case "TimelineUpdateREQ":
@@ -336,22 +336,22 @@ function onRequestReceived (request) {
     }
 }
 
-function onSyncServiceConnectionLost (e) {
+function onSyncServiceConnectionLost(e) {
     this.emit("SyncServiceUnavailable", {
         errorCode: 1,
         errorMessage: "Sync-Service connection terminated"
     });
 }
 
-function onSyncServiceConnectionFailure (e) {
+function onSyncServiceConnectionFailure(e) {
     this.emit("DeviceRegistrationError", {
         errorCode: 1,
         errorMessage: e
     });
 }
 
-function joinSession () {
-    
+function joinSession() {
+
     var priv, self;
 
     self = this;
@@ -368,7 +368,7 @@ function joinSession () {
     });
 }
 
-function handleJoinResponse (res) {
+function handleJoinResponse(res) {
 
     var priv = PRIVATE.get(this);
     log("Handling JoinRESP", res);
@@ -382,7 +382,7 @@ function handleJoinResponse (res) {
             });
             return;
         }
-    
+
         if (typeof res.sessionSyncControllerUrl !== "string" || res.sessionSyncControllerUrl.length < ("ws://").length) {
             reject({
                 errorCode: 4,
@@ -407,11 +407,11 @@ function handleJoinResponse (res) {
     });
 }
 
-function performWallclockSync () {
-    
+function performWallclockSync() {
+
     var priv;
     priv = PRIVATE.get(this);
-    
+
     priv.wallclock = new Clocks.CorrelatedClock(priv.sysClock);
     priv.wallclock.on("available", this.emit.bind(this, "WallClockAvailable"));
     priv.wallclock.on("unavailable", this.emit.bind(this, "WallClockUnAvailable"));
@@ -425,7 +425,7 @@ function performWallclockSync () {
     priv.wallclockSynchroniser.start();
 }
 
-function handleResponse (response, resolve, reject) {
+function handleResponse(response, resolve, reject) {
     log("Handling reponse:", response);
     if (response.responseCode === 0) {
         resolve(response);
@@ -440,7 +440,7 @@ function handleResponse (response, resolve, reject) {
 // ************************************
 
 Object.defineProperties(CloudSynchroniser.prototype, {
-    
+
     /**
      * [Clock]{@link https://doclets.io/bbc/dvbcss-clocks/master#dl-CorrelatedClock}
      * object representing the wallclock. The wallclock is available after the
@@ -508,9 +508,9 @@ Object.defineProperties(CloudSynchroniser.prototype, {
  * @fires CloudSynchroniser#SyncServiceUnavailable
  */
 CloudSynchroniser.prototype.destroy = function () {
-    
+
     var priv = PRIVATE.get(this);
-    
+
     priv.wallclockSynchroniser.stop();
     // TODO: Check: emits: WallClockUnAvailable
 
@@ -518,7 +518,7 @@ CloudSynchroniser.prototype.destroy = function () {
     // TODO: Unsubscribe from timelines
     // TODO: Emit: SyncTimelineUnavailable
 
-    sendRequest.call(this, "LeaveREQ", priv.reqTopic, function () {}, {});
+    sendRequest.call(this, "LeaveREQ", priv.reqTopic, function () { }, {});
     priv.messenger.stopListenAll();
     priv.messenger.disconnect();
 };
@@ -528,21 +528,21 @@ CloudSynchroniser.prototype.destroy = function () {
  * @returns {Promise<string[]>} List of device identifier strings
  */
 CloudSynchroniser.prototype.getAvailableDevices = function () {
-    var  self = this;
+    var self = this;
     return new Promise(function (resolve, reject) {
         sendRequest.call(self, "DeviceREQ", PRIVATE.get(self).reqTopic, handleDeviceResponse.bind(self, resolve, reject), {});
     });
 };
 
-function handleDeviceResponse (resolve, reject, response) {
+function handleDeviceResponse(resolve, reject, response) {
     var ownId = PRIVATE.get(this).deviceId;
     handleResponse(response, function (r) {
         var res = r.devices;
         res = res.filter(function (id) {
-			if (id !== ownId) { return true; }
-			return false 
-		});
-        resolve(res); 
+            if (id !== ownId) { return true; }
+            return false
+        });
+        resolve(res);
     }, reject);
 }
 
@@ -557,7 +557,7 @@ CloudSynchroniser.prototype.getAvailableContexts = function () {
     });
 };
 
-function handleContextResponse (resolve, reject, response) {
+function handleContextResponse(resolve, reject, response) {
     handleResponse(response, function (r) { resolve(r.contexts); }, reject);
 }
 
@@ -587,12 +587,12 @@ CloudSynchroniser.prototype.getContentId = function () {
  * @param {string} contentId
  */
 CloudSynchroniser.prototype.setContentId = function (contentId) {
-    
+
     var priv, message;
-    
+
     priv = PRIVATE.get(this);
     priv.contentId = contentId;
-    
+
     message = MessageFactory.create(
         "ContentIdChange",
         priv.sessionId,
@@ -615,7 +615,7 @@ CloudSynchroniser.prototype.setContentId = function (contentId) {
  * @param {string} contentId
  * @return {Promise<number>} returnCode
  */
-CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineType, contentId, otherParams) {  
+CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineType, contentId, otherParams) {
     throw "Not implemented";
 };
 
@@ -631,13 +631,13 @@ CloudSynchroniser.prototype.addTimelineSource = function (mediaObject, timelineT
  * @return {Promise<number>} returnCode
  */
 CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, contentId, options) {
-    
+
     var priv, self, timelineId, opts;
-    
+
     priv = PRIVATE.get(this);
 
     opts = options || {};
-    
+
     timelineId = new TimelineId(priv.contextId, priv.deviceId, contentId).toUrnString();
     timeline = new Timeline(timelineId);
     timeline.timelineType = timelineType;
@@ -656,11 +656,11 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
 
     // Add token bucket for rate limiting of timeline updates sent to sync service
     timeline.tokenBucket = new TokenBucket(priv.rateLimit.numUpdates, priv.rateLimit.interval);
-    
+
     priv.ownTimelines.add(timeline);
-    
+
     self = this;
-    log("Wallclocktime: ", priv.wallclock.now(), " clocktime:" , clock.now());
+    log("Wallclocktime: ", priv.wallclock.now(), " clocktime:", clock.now());
 
     return new Promise(function (resolve, reject) {
 
@@ -671,7 +671,8 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
 
         var correlation = new Clocks.Correlation(priv.wallclock.now(), clock.now(), errorNow, 0);
 
-        var corr = { parentTime: correlation.parentTime,
+        var corr = {
+            parentTime: correlation.parentTime,
             childTime: correlation.childTime,
             initialError: errorNow,
             errorGrowthRate: 0.0,
@@ -692,7 +693,7 @@ CloudSynchroniser.prototype.addTimelineClock = function (clock, timelineType, co
             timeline.frequency,
             timeline.updateChannel,
             timeline.useForSessionSync,
-            timeline.writable            
+            timeline.writable
 
         );
     });
@@ -706,29 +707,29 @@ function handleTimelineRegistrationResponse(resolve, reject, timelineId, respons
     handleResponse(response, resolve, reject);
 }
 
-function handleSyncTimelinesAvailable (message) {
+function handleSyncTimelinesAvailable(message) {
     log("[CloudSynchroniser.js]:", "SyncTimelinesAvailable", message.timelineInfo);
     this.emit("SyncTimelinesAvailable", message.timelineInfo);
 }
 
-function handleApplicationBroadcast (message) {
+function handleApplicationBroadcast(message) {
     log("[CloudSynchroniser.js]:", "ApplicationBroadcast", message.broadcastTopic, message.broadcastContent);
     this.emit("ApplicationBroadcast", {
-      deviceId: message.deviceId,
-      topic: message.broadcastTopic,
-      content: message.broadcastContent,
+        deviceId: message.deviceId,
+        topic: message.broadcastTopic,
+        content: message.broadcastContent,
     });
 }
 
-function handleDeviceStatus (message) {
+function handleDeviceStatus(message) {
     log("[CloudSynchroniser.js]:", "DeviceStatus");
     this.emit("DeviceStatus", {
-      deviceId: message.deviceId,
-      status: message.status,
+        deviceId: message.deviceId,
+        status: message.status,
     });
 }
 
-function handleTimelineUpdateRequest (request) {
+function handleTimelineUpdateRequest(request) {
     var priv, message, clock, self, timeline;
 
     priv = PRIVATE.get(this);
@@ -755,15 +756,15 @@ function handleTimelineUpdateRequest (request) {
         }
         sendTimelineUpdateRESP.call(this, request);
         sendTimelineUpdate.call(this, timeline);
-    } 
-    
+    }
+
     else {
         // TODO: some kind of error MGMT
         return;
     }
 }
 
-function sendTimelineUpdateRESP (request) {
+function sendTimelineUpdateRESP(request) {
     var priv, message;
     priv = PRIVATE.get(this);
     message = MessageFactory.create("TimelineUpdateRESP", priv.sessionId, 0, request.id, priv.version);
@@ -780,7 +781,7 @@ CloudSynchroniser.prototype.sendApplicationBroadcast = function (topic, content)
     log("Sent:", message);
 }
 
-function handleStopTimelineUpdateRequest () {
+function handleStopTimelineUpdateRequest() {
     var priv, timeline;
     priv = PRIVATE.get(this);
     timeline = priv.ownTimelines.getById(request.timelineId);
@@ -790,9 +791,9 @@ function handleStopTimelineUpdateRequest () {
 }
 
 function sendTimelineUpdate(timeline) {
-    
+
     var priv, message;
-    
+
     priv = PRIVATE.get(this);
 
     // Rate limit timeline updates sent to sync service
@@ -807,7 +808,7 @@ function sendTimelineUpdate(timeline) {
         timeline.contentId,
         new PresentationTimestamp(timeline.clock, priv.wallclock, 0, 0),
         {
-            timeS: timeline.clock.getNanos()/Math.pow(10, 9),
+            timeS: timeline.clock.getNanos() / Math.pow(10, 9),
             dispersionS: timeline.clock.dispersionAtTime(timeline.clock.now())
         },
         null,
@@ -838,16 +839,16 @@ CloudSynchroniser.prototype.removeTimeline = function (timelineId) {
  */
 CloudSynchroniser.prototype.getAvailableTimelines = function () {
     var priv, self;
-    
+
     priv = PRIVATE.get(this);
     self = this;
-    
+
     return new Promise(function (resolve, reject) {
         var message = sendRequest.call(self, "TimelineREQ", priv.reqTopic, handleTimelineREQResponse.bind(null, resolve, reject), {});
     });
 };
 
-function handleTimelineREQResponse (resolve, reject, response) {
+function handleTimelineREQResponse(resolve, reject, response) {
     handleResponse(response, function (r) { resolve(r.timelineInfo); }, reject);
 }
 
@@ -856,9 +857,9 @@ function handleTimelineREQResponse (resolve, reject, response) {
  */
 CloudSynchroniser.prototype.getAvailableSyncTimelines = function () {
     var request, priv;
-    
+
     priv = PRIVATE.get(this);
-    
+
     request = MessageFactory.create(
         "TimelineREQ",
         priv.sessionId,
@@ -889,11 +890,11 @@ CloudSynchroniser.prototype.getAvailableSyncTimelines = function () {
  */
 CloudSynchroniser.prototype.subscribeTimeline = function (timelineId) {
     var priv, self;
-    
+
     priv = PRIVATE.get(this);
     self = this;
 
-    return new Promise (function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
         sendRequest.call(self, "TimelineSubscriptionREQ",
             priv.reqTopic,
             handleTimelineSubscriptionResponse.bind(self, resolve, reject, timelineId),
@@ -904,22 +905,22 @@ CloudSynchroniser.prototype.subscribeTimeline = function (timelineId) {
 };
 
 
-function handleTimelineSubscriptionResponse (resolve, reject, timelineId, response) {
+function handleTimelineSubscriptionResponse(resolve, reject, timelineId, response) {
     var priv, timeline;
-    
+
     priv = PRIVATE.get(this);
     log("Received 'TimelineSubscriptionRESP':", response);
 
     if (response.responseCode === 0) {
-        resolve(0); 
+        resolve(0);
         timeline = getTimelineShadow.call(this, timelineId);
         timeline.updateChannel = response.providerChannel;
         priv.messenger.listen(timeline.updateChannel);
-        
+
         if (response.presentationTimestamp !== null) {
             updateTimelineShadow.call(this, timelineId, response.presentationTimestamp);
         }
-        
+
     } else {
         // TODO: error MGMT
         console.error("enableTimelineSync:", response);
@@ -927,12 +928,12 @@ function handleTimelineSubscriptionResponse (resolve, reject, timelineId, respon
     }
 }
 
-function handleTimelineUpdate (message) {
+function handleTimelineUpdate(message) {
     updateTimelineShadow.call(this, message.timelineId, message.presentationTimestamp);
     log("Received timeline update", message);
 }
 
-function getTimelineShadow (timelineId) {
+function getTimelineShadow(timelineId) {
     var priv, timeline;
 
     priv = PRIVATE.get(this);
@@ -945,14 +946,14 @@ function getTimelineShadow (timelineId) {
         timeline.clock.setAvailabilityFlag(false);
         timeline.clock.on("available", this.emit.bind(this, "TimelineAvailable", timelineId));
         log("Set 'available' listener on clock", timeline.clock.id);
-        
+
         priv.timelineShadows.add(timeline);
     }
-    
+
     return timeline;
 }
 
-function updateTimelineShadow (timelineId, presentationTimestamp) {
+function updateTimelineShadow(timelineId, presentationTimestamp) {
     var priv, timeline;
     priv = PRIVATE.get(this);
     timeline = getTimelineShadow.call(this, timelineId);
@@ -972,7 +973,7 @@ CloudSynchroniser.prototype.synchronise = function (clock, timelineType, content
     this.on("SyncTimelinesAvailable", pairTimeline.bind(this, timeline));
 };
 
-function pairTimeline (timeline, syncTimelines) {
+function pairTimeline(timeline, syncTimelines) {
     var stlShadow, self;
 
     self = this;
@@ -1007,16 +1008,16 @@ function pairTimeline (timeline, syncTimelines) {
  */
 CloudSynchroniser.prototype.syncClockToThisTimeline = function (clock, timelineId, correlation) {
     var priv, timeline, corr;
-    
+
     priv = PRIVATE.get(this);
     timeline = priv.timelineShadows.getById(timelineId);
-    corr = correlation || new Clocks.Correlation({ parentTime:0, childTime:0, errorGrowthRate: 0, initialError: 0 });
-    
+    corr = correlation || new Clocks.Correlation({ parentTime: 0, childTime: 0, errorGrowthRate: 0, initialError: 0 });
+
     clock.setCorrelationAndSpeed(timeline.clock.getCorrelation(), timeline.clock.speed);
     timeline.clock.on("change", function () {
         clock.setCorrelationAndSpeed(timeline.clock.getCorrelation(), timeline.clock.speed);
     });
-    
+
     log("Synchronising clock ID:", clock.id, "to timeline ID:", timelineId);
 };
 
@@ -1026,7 +1027,7 @@ CloudSynchroniser.prototype.getTimelineClockById = function (timelineId) {
     priv = PRIVATE.get(this);
     res = priv.timelineShadows.getById(timelineId) || priv.ownTimelines.getById(timelineId);
     res = res.clock;
-    return res; 
+    return res;
 };
 
 
@@ -1041,7 +1042,7 @@ CloudSynchroniser.prototype.createSyncController = function (mediaObject, timeli
 };
 
 
-function handlePingRequest (request) {
+function handlePingRequest(request) {
     var priv, message;
     priv = PRIVATE.get(this);
     message = MessageFactory.create("PingRESP", priv.sessionId, 0, request.id, priv.version);
@@ -1049,8 +1050,8 @@ function handlePingRequest (request) {
     log("Sent:", message);
 }
 
-function sendRequest (type, channel, onresponse, options) {
-    
+function sendRequest(type, channel, onresponse, options) {
+
     var args, priv, i, request, opt;
 
     priv = PRIVATE.get(this);
@@ -1068,12 +1069,12 @@ function sendRequest (type, channel, onresponse, options) {
     // Add optional arguments
     if (arguments.length > 4) {
         for (; i < arguments.length; i++) {
-            args[i+1] = arguments[i];
+            args[i + 1] = arguments[i];
         }
     }
 
-    args[i+1] = MessageIdGenerator.getNewId();
-    args[i+2] = priv.version;
+    args[i + 1] = MessageIdGenerator.getNewId();
+    args[i + 2] = priv.version;
     request = MessageFactory.create.apply(null, args);
     priv.messenger.sendRequest(request, channel, onresponse, options);
 

@@ -1,7 +1,7 @@
 var CloudSynchroniser, instance;
 
-CloudSynchroniser = require("CloudSynchroniser");
-const SyncTLElection = require("../common/state/SyncTLElection");
+CloudSynchroniser = require("./CloudSynchroniser");
+const SyncTLElection = require("$common/state/SyncTLElection");
 
 /**
  * @namespace CloudSyncKit

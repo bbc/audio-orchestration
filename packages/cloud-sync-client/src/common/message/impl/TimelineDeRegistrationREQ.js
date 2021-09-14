@@ -1,6 +1,6 @@
 var inherits = require("inherits"),
-    Message = require("Message"),
-    REQParams = require("REQParams"),
+    Message = require("./Message"),
+    REQParams = require("./REQParams"),
     params, TimelineDeRegistrationREQ;
 
 params = REQParams().extend([
