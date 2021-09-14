@@ -1,5 +1,5 @@
 import EventEmitter from 'events';
-import uuidv4 from 'uuid/v4';
+import { v4 as uuidv4 } from 'uuid';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import AudioContextClock from '../sync-players/audio-context-clock';
 import Sequence from '../sequence-renderer/sequence';

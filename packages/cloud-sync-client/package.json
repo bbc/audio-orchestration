@@ -17,7 +17,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "dvbcss-clocks": "0.0.4",
-    "dvbcss-protocols": "^0.0.2",
+    "dvbcss-protocols": "^0.0.4",
     "events": "^1.1.1",
     "inherits": "^2.0.1",
     "mdn-polyfills": "^3.6.0",
@@ -28,13 +28,5 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-jsdoc": "^2.1.0",
-    "grunt-md": "0.0.4",
-    "grunt-webpack": "^1.0.14",
-    "webpack": "^1.14.1",
-    "webpack-dev-server": "^3.2.1"
   }
 }
