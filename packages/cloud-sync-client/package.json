@@ -1,6 +1,6 @@
 {
   "name": "@bbc/audio-orchestration-cloud-sync-client",
-  "version": "2.2.2",
+  "version": "0.0.1",
   "description": "Library implementing client code for cloud synchronisation",
   "main": "dist/browser/CloudSyncKit.js",
   "directories": {
@@ -17,9 +17,9 @@
   "author": "BBC",
   "license": "Apache-2.0",
   "dependencies": {
-    "dvbcss-clocks": "0.0.4",
+    "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.4",
-    "events": "^1.1.1",
+    "events": "^3.0.0",
     "inherits": "^2.0.1",
     "mdn-polyfills": "^3.6.0",
     "mqtt": "^4.2.8",

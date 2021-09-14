@@ -1,6 +1,6 @@
 {
   "name": "@bbc/audio-orchestration-template",
-  "version": "0.16.9",
+  "version": "0.0.1",
   "description": "A user interface template showing how to integrate the bbcat-orchestration toolkit for orchestrated personal audio devices with React components.",
   "browser": "dist/bundle.js",
   "repository": {
@@ -21,7 +21,7 @@
     ".gitignore"
   ],
   "dependencies": {
-    "@bbc/audio-orchestration-core": "^0.11.4",
+    "@bbc/audio-orchestration-core": "^0.0.1",
     "@hot-loader/react-dom": "^16.11.0",
     "bowser": "^2.9.0",
     "classnames": "^2.2.6",
@@ -43,8 +43,7 @@
     "uuid": "^8.3.2",
     "whatwg-fetch": "^3.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "NODE_ENV=production webpack --mode production",
     "dev": "NODE_ENV=development webpack-dev-server --hot --host 0.0.0.0",
