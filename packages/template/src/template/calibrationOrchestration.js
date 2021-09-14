@@ -1,4 +1,4 @@
-import { OrchestrationClient } from '@bbc/bbcat-orchestration';
+import { OrchestrationClient } from '@bbc/audio-orchestration-core';
 import {
   takeEvery,
   call,

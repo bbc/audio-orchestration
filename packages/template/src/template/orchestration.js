@@ -1,6 +1,6 @@
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { OrchestrationClient } from '@bbc/bbcat-orchestration';
+import { OrchestrationClient } from '@bbc/audio-orchestration-core';
 
 import config from 'config';
 import {

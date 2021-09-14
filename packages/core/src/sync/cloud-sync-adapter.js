@@ -1,4 +1,4 @@
-import cloudSyncKit from '@bbc/bbcat-orchestration-cloud-sync-client';
+import cloudSyncKit from '@bbc/audio-orchestration-cloud-sync-client';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
 

@@ -21,7 +21,7 @@
     ".gitignore"
   ],
   "dependencies": {
-    "@bbc/bbcat-orchestration": "^0.11.4",
+    "@bbc/audio-orchestration-core": "^0.11.4",
     "@hot-loader/react-dom": "^16.11.0",
     "bowser": "^2.9.0",
     "classnames": "^2.2.6",
