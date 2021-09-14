@@ -1,2 +1,3034 @@
-!function(t,e){"object"==typeof exports&&"object"==typeof module?module.exports=e():"function"==typeof define&&define.amd?define([],e):"object"==typeof exports?exports.bbcat=e():t.bbcat=e()}(this,function(){return function(t){function e(r){if(n[r])return n[r].exports;var i=n[r]={exports:{},id:r,loaded:!1};return t[r].call(i.exports,i,i.exports,e),i.loaded=!0,i.exports}var n={};return e.m=t,e.c=n,e.p="",e(0)}([function(t,e,n){"use strict";function r(t){if(t&&t.__esModule)return t;var e={};if(null!=t)for(var n in t)Object.prototype.hasOwnProperty.call(t,n)&&(e[n]=t[n]);return e.default=t,e}Object.defineProperty(e,"__esModule",{value:!0}),e.dash=e.core=void 0;var i=n(1),o=r(i),a=n(118),u=r(a);e.core=o,e.dash=u,e.default={core:o,dash:u}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0}),e.AudioLoader=e.Loader=e.DocumentParser=e.CompoundNode=e.EventTarget=void 0;var i=n(2),o=r(i),a=n(24),u=r(a),s=n(89),f=r(s),c=n(90),l=r(c),p=n(113),d=r(p);e.EventTarget=o.default,e.CompoundNode=u.default,e.DocumentParser=f.default,e.Loader=l.default,e.AudioLoader=d.default},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(3),o=r(i),a=n(4),u=r(a),s=function(){function t(){(0,o.default)(this,t),this._listeners={}}return(0,u.default)(t,[{key:"addEventListener",value:function(t,e){this._getListenerIdx(t,e)===-1&&(this._listeners[t]||(this._listeners[t]=[]),this._listeners[t].push(e))}},{key:"removeEventListener",value:function(t,e){var n=this._getListenerIdx(t,e);n>=0&&this._listeners[t].splice(n,1)}},{key:"dispatchEvent",value:function(t){var e=this._listeners[t.type];if(e)for(var n=0;n<e.length;n++)e[n].call(null,t)}},{key:"_getListenerIdx",value:function(t,e){var n=this._listeners[t];if(n)for(var r=0;r<n.length;r++)if(n[r]===e)return r;return-1}}]),t}();e.default=s},function(t,e){"use strict";e.__esModule=!0,e.default=function(t,e){if(!(t instanceof e))throw new TypeError("Cannot call a class as a function")}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var i=n(5),o=r(i);e.default=function(){function t(t,e){for(var n=0;n<e.length;n++){var r=e[n];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),(0,o.default)(t,r.key,r)}}return function(e,n,r){return n&&t(e.prototype,n),r&&t(e,r),e}}()},function(t,e,n){t.exports={default:n(6),__esModule:!0}},function(t,e,n){n(7);var r=n(10).Object;t.exports=function(t,e,n){return r.defineProperty(t,e,n)}},function(t,e,n){var r=n(8);r(r.S+r.F*!n(18),"Object",{defineProperty:n(14).f})},function(t,e,n){var r=n(9),i=n(10),o=n(11),a=n(13),u=n(23),s="prototype",f=function(t,e,n){var c,l,p,d=t&f.F,h=t&f.G,_=t&f.S,m=t&f.P,v=t&f.B,y=t&f.W,g=h?i:i[e]||(i[e]={}),b=g[s],S=h?r:_?r[e]:(r[e]||{})[s];h&&(n=e);for(c in n)l=!d&&S&&void 0!==S[c],l&&u(g,c)||(p=l?S[c]:n[c],g[c]=h&&"function"!=typeof S[c]?n[c]:v&&l?o(p,r):y&&S[c]==p?function(t){var e=function(e,n,r){if(this instanceof t){switch(arguments.length){case 0:return new t;case 1:return new t(e);case 2:return new t(e,n)}return new t(e,n,r)}return t.apply(this,arguments)};return e[s]=t[s],e}(p):m&&"function"==typeof p?o(Function.call,p):p,m&&((g.virtual||(g.virtual={}))[c]=p,t&f.R&&b&&!b[c]&&a(b,c,p)))};f.F=1,f.G=2,f.S=4,f.P=8,f.B=16,f.W=32,f.U=64,f.R=128,t.exports=f},function(t,e){var n=t.exports="undefined"!=typeof window&&window.Math==Math?window:"undefined"!=typeof self&&self.Math==Math?self:Function("return this")();"number"==typeof __g&&(__g=n)},function(t,e){var n=t.exports={version:"2.6.12"};"number"==typeof __e&&(__e=n)},function(t,e,n){var r=n(12);t.exports=function(t,e,n){if(r(t),void 0===e)return t;switch(n){case 1:return function(n){return t.call(e,n)};case 2:return function(n,r){return t.call(e,n,r)};case 3:return function(n,r,i){return t.call(e,n,r,i)}}return function(){return t.apply(e,arguments)}}},function(t,e){t.exports=function(t){if("function"!=typeof t)throw TypeError(t+" is not a function!");return t}},function(t,e,n){var r=n(14),i=n(22);t.exports=n(18)?function(t,e,n){return r.f(t,e,i(1,n))}:function(t,e,n){return t[e]=n,t}},function(t,e,n){var r=n(15),i=n(17),o=n(21),a=Object.defineProperty;e.f=n(18)?Object.defineProperty:function(t,e,n){if(r(t),e=o(e,!0),r(n),i)try{return a(t,e,n)}catch(t){}if("get"in n||"set"in n)throw TypeError("Accessors not supported!");return"value"in n&&(t[e]=n.value),t}},function(t,e,n){var r=n(16);t.exports=function(t){if(!r(t))throw TypeError(t+" is not an object!");return t}},function(t,e){t.exports=function(t){return"object"==typeof t?null!==t:"function"==typeof t}},function(t,e,n){t.exports=!n(18)&&!n(19)(function(){return 7!=Object.defineProperty(n(20)("div"),"a",{get:function(){return 7}}).a})},function(t,e,n){t.exports=!n(19)(function(){return 7!=Object.defineProperty({},"a",{get:function(){return 7}}).a})},function(t,e){t.exports=function(t){try{return!!t()}catch(t){return!0}}},function(t,e,n){var r=n(16),i=n(9).document,o=r(i)&&r(i.createElement);t.exports=function(t){return o?i.createElement(t):{}}},function(t,e,n){var r=n(16);t.exports=function(t,e){if(!r(t))return t;var n,i;if(e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;if("function"==typeof(n=t.valueOf)&&!r(i=n.call(t)))return i;if(!e&&"function"==typeof(n=t.toString)&&!r(i=n.call(t)))return i;throw TypeError("Can't convert object to primitive value")}},function(t,e){t.exports=function(t,e){return{enumerable:!(1&t),configurable:!(2&t),writable:!(4&t),value:e}}},function(t,e){var n={}.hasOwnProperty;t.exports=function(t,e){return n.call(t,e)}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(25),o=r(i),a=n(3),u=r(a),s=n(4),f=r(s),c=n(36),l=r(c),p=n(81),d=r(p),h=n(2),_=r(h),m=function(t){function e(t){(0,u.default)(this,e);var n=(0,l.default)(this,(e.__proto__||(0,o.default)(e)).call(this));return n._context=t,n._inputs=[],n._outputs=[],n}return(0,d.default)(e,t),(0,f.default)(e,[{key:"connect",value:function(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0;return t instanceof e?this._outputs[n].connect(t._inputs[r]):this._outputs[n].connect(t,0,r),t}},{key:"disconnect",value:function(t){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:0,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0;t instanceof e?this._outputs[n].disconnect(t._inputs[r]):this._outputs[n].disconnect(t,0,r)}},{key:"context",get:function(){return this._context}},{key:"input",get:function(){return this._inputs[0]}},{key:"inputs",get:function(){return this._inputs}},{key:"output",get:function(){return this._outputs[0]}},{key:"outputs",get:function(){return this._outputs}}]),e}(_.default);e.default=m},function(t,e,n){t.exports={default:n(26),__esModule:!0}},function(t,e,n){n(27),t.exports=n(10).Object.getPrototypeOf},function(t,e,n){var r=n(28),i=n(30);n(35)("getPrototypeOf",function(){return function(t){return i(r(t))}})},function(t,e,n){var r=n(29);t.exports=function(t){return Object(r(t))}},function(t,e){t.exports=function(t){if(void 0==t)throw TypeError("Can't call method on  "+t);return t}},function(t,e,n){var r=n(23),i=n(28),o=n(31)("IE_PROTO"),a=Object.prototype;t.exports=Object.getPrototypeOf||function(t){return t=i(t),r(t,o)?t[o]:"function"==typeof t.constructor&&t instanceof t.constructor?t.constructor.prototype:t instanceof Object?a:null}},function(t,e,n){var r=n(32)("keys"),i=n(34);t.exports=function(t){return r[t]||(r[t]=i(t))}},function(t,e,n){var r=n(10),i=n(9),o="__core-js_shared__",a=i[o]||(i[o]={});(t.exports=function(t,e){return a[t]||(a[t]=void 0!==e?e:{})})("versions",[]).push({version:r.version,mode:n(33)?"pure":"global",copyright:"© 2020 Denis Pushkarev (zloirock.ru)"})},function(t,e){t.exports=!0},function(t,e){var n=0,r=Math.random();t.exports=function(t){return"Symbol(".concat(void 0===t?"":t,")_",(++n+r).toString(36))}},function(t,e,n){var r=n(8),i=n(10),o=n(19);t.exports=function(t,e){var n=(i.Object||{})[t]||Object[t],a={};a[t]=e(n),r(r.S+r.F*o(function(){n(1)}),"Object",a)}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var i=n(37),o=r(i);e.default=function(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!==("undefined"==typeof e?"undefined":(0,o.default)(e))&&"function"!=typeof e?t:e}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var i=n(38),o=r(i),a=n(66),u=r(a),s="function"==typeof u.default&&"symbol"==typeof o.default?function(t){return typeof t}:function(t){return t&&"function"==typeof u.default&&t.constructor===u.default&&t!==u.default.prototype?"symbol":typeof t};e.default="function"==typeof u.default&&"symbol"===s(o.default)?function(t){return"undefined"==typeof t?"undefined":s(t)}:function(t){return t&&"function"==typeof u.default&&t.constructor===u.default&&t!==u.default.prototype?"symbol":"undefined"==typeof t?"undefined":s(t)}},function(t,e,n){t.exports={default:n(39),__esModule:!0}},function(t,e,n){n(40),n(61),t.exports=n(65).f("iterator")},function(t,e,n){"use strict";var r=n(41)(!0);n(43)(String,"String",function(t){this._t=String(t),this._i=0},function(){var t,e=this._t,n=this._i;return n>=e.length?{value:void 0,done:!0}:(t=r(e,n),this._i+=t.length,{value:t,done:!1})})},function(t,e,n){var r=n(42),i=n(29);t.exports=function(t){return function(e,n){var o,a,u=String(i(e)),s=r(n),f=u.length;return s<0||s>=f?t?"":void 0:(o=u.charCodeAt(s),o<55296||o>56319||s+1===f||(a=u.charCodeAt(s+1))<56320||a>57343?t?u.charAt(s):o:t?u.slice(s,s+2):(o-55296<<10)+(a-56320)+65536)}}},function(t,e){var n=Math.ceil,r=Math.floor;t.exports=function(t){return isNaN(t=+t)?0:(t>0?r:n)(t)}},function(t,e,n){"use strict";var r=n(33),i=n(8),o=n(44),a=n(13),u=n(45),s=n(46),f=n(59),c=n(30),l=n(60)("iterator"),p=!([].keys&&"next"in[].keys()),d="@@iterator",h="keys",_="values",m=function(){return this};t.exports=function(t,e,n,v,y,g,b){s(n,e,v);var S,x,O,k=function(t){if(!p&&t in P)return P[t];switch(t){case h:return function(){return new n(this,t)};case _:return function(){return new n(this,t)}}return function(){return new n(this,t)}},w=e+" Iterator",M=y==_,T=!1,P=t.prototype,j=P[l]||P[d]||y&&P[y],E=j||k(y),D=y?M?k("entries"):E:void 0,L="Array"==e?P.entries||j:j;if(L&&(O=c(L.call(new t)),O!==Object.prototype&&O.next&&(f(O,w,!0),r||"function"==typeof O[l]||a(O,l,m))),M&&j&&j.name!==_&&(T=!0,E=function(){return j.call(this)}),r&&!b||!p&&!T&&P[l]||a(P,l,E),u[e]=E,u[w]=m,y)if(S={values:M?E:k(_),keys:g?E:k(h),entries:D},b)for(x in S)x in P||o(P,x,S[x]);else i(i.P+i.F*(p||T),e,S);return S}},function(t,e,n){t.exports=n(13)},function(t,e){t.exports={}},function(t,e,n){"use strict";var r=n(47),i=n(22),o=n(59),a={};n(13)(a,n(60)("iterator"),function(){return this}),t.exports=function(t,e,n){t.prototype=r(a,{next:i(1,n)}),o(t,e+" Iterator")}},function(t,e,n){var r=n(15),i=n(48),o=n(57),a=n(31)("IE_PROTO"),u=function(){},s="prototype",f=function(){var t,e=n(20)("iframe"),r=o.length,i="<",a=">";for(e.style.display="none",n(58).appendChild(e),e.src="javascript:",t=e.contentWindow.document,t.open(),t.write(i+"script"+a+"document.F=Object"+i+"/script"+a),t.close(),f=t.F;r--;)delete f[s][o[r]];return f()};t.exports=Object.create||function(t,e){var n;return null!==t?(u[s]=r(t),n=new u,u[s]=null,n[a]=t):n=f(),void 0===e?n:i(n,e)}},function(t,e,n){var r=n(14),i=n(15),o=n(49);t.exports=n(18)?Object.defineProperties:function(t,e){i(t);for(var n,a=o(e),u=a.length,s=0;u>s;)r.f(t,n=a[s++],e[n]);return t}},function(t,e,n){var r=n(50),i=n(57);t.exports=Object.keys||function(t){return r(t,i)}},function(t,e,n){var r=n(23),i=n(51),o=n(54)(!1),a=n(31)("IE_PROTO");t.exports=function(t,e){var n,u=i(t),s=0,f=[];for(n in u)n!=a&&r(u,n)&&f.push(n);for(;e.length>s;)r(u,n=e[s++])&&(~o(f,n)||f.push(n));return f}},function(t,e,n){var r=n(52),i=n(29);t.exports=function(t){return r(i(t))}},function(t,e,n){var r=n(53);t.exports=Object("z").propertyIsEnumerable(0)?Object:function(t){return"String"==r(t)?t.split(""):Object(t)}},function(t,e){var n={}.toString;t.exports=function(t){return n.call(t).slice(8,-1)}},function(t,e,n){var r=n(51),i=n(55),o=n(56);t.exports=function(t){return function(e,n,a){var u,s=r(e),f=i(s.length),c=o(a,f);if(t&&n!=n){for(;f>c;)if(u=s[c++],u!=u)return!0}else for(;f>c;c++)if((t||c in s)&&s[c]===n)return t||c||0;return!t&&-1}}},function(t,e,n){var r=n(42),i=Math.min;t.exports=function(t){return t>0?i(r(t),9007199254740991):0}},function(t,e,n){var r=n(42),i=Math.max,o=Math.min;t.exports=function(t,e){return t=r(t),t<0?i(t+e,0):o(t,e)}},function(t,e){t.exports="constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf".split(",")},function(t,e,n){var r=n(9).document;t.exports=r&&r.documentElement},function(t,e,n){var r=n(14).f,i=n(23),o=n(60)("toStringTag");t.exports=function(t,e,n){t&&!i(t=n?t:t.prototype,o)&&r(t,o,{configurable:!0,value:e})}},function(t,e,n){var r=n(32)("wks"),i=n(34),o=n(9).Symbol,a="function"==typeof o,u=t.exports=function(t){return r[t]||(r[t]=a&&o[t]||(a?o:i)("Symbol."+t))};u.store=r},function(t,e,n){n(62);for(var r=n(9),i=n(13),o=n(45),a=n(60)("toStringTag"),u="CSSRuleList,CSSStyleDeclaration,CSSValueList,ClientRectList,DOMRectList,DOMStringList,DOMTokenList,DataTransferItemList,FileList,HTMLAllCollection,HTMLCollection,HTMLFormElement,HTMLSelectElement,MediaList,MimeTypeArray,NamedNodeMap,NodeList,PaintRequestList,Plugin,PluginArray,SVGLengthList,SVGNumberList,SVGPathSegList,SVGPointList,SVGStringList,SVGTransformList,SourceBufferList,StyleSheetList,TextTrackCueList,TextTrackList,TouchList".split(","),s=0;s<u.length;s++){var f=u[s],c=r[f],l=c&&c.prototype;l&&!l[a]&&i(l,a,f),o[f]=o.Array}},function(t,e,n){"use strict";var r=n(63),i=n(64),o=n(45),a=n(51);t.exports=n(43)(Array,"Array",function(t,e){this._t=a(t),this._i=0,this._k=e},function(){var t=this._t,e=this._k,n=this._i++;return!t||n>=t.length?(this._t=void 0,i(1)):"keys"==e?i(0,n):"values"==e?i(0,t[n]):i(0,[n,t[n]])},"values"),o.Arguments=o.Array,r("keys"),r("values"),r("entries")},function(t,e){t.exports=function(){}},function(t,e){t.exports=function(t,e){return{value:e,done:!!t}}},function(t,e,n){e.f=n(60)},function(t,e,n){t.exports={default:n(67),__esModule:!0}},function(t,e,n){n(68),n(78),n(79),n(80),t.exports=n(10).Symbol},function(t,e,n){"use strict";var r=n(9),i=n(23),o=n(18),a=n(8),u=n(44),s=n(69).KEY,f=n(19),c=n(32),l=n(59),p=n(34),d=n(60),h=n(65),_=n(70),m=n(71),v=n(74),y=n(15),g=n(16),b=n(28),S=n(51),x=n(21),O=n(22),k=n(47),w=n(75),M=n(77),T=n(72),P=n(14),j=n(49),E=M.f,D=P.f,L=w.f,C=r.Symbol,I=r.JSON,A=I&&I.stringify,N="prototype",F=d("_hidden"),U=d("toPrimitive"),R={}.propertyIsEnumerable,B=c("symbol-registry"),G=c("symbols"),z=c("op-symbols"),W=Object[N],$="function"==typeof C&&!!T.f,q=r.QObject,H=!q||!q[N]||!q[N].findChild,V=o&&f(function(){return 7!=k(D({},"a",{get:function(){return D(this,"a",{value:7}).a}})).a})?function(t,e,n){var r=E(W,e);r&&delete W[e],D(t,e,n),r&&t!==W&&D(W,e,r)}:D,K=function(t){var e=G[t]=k(C[N]);return e._k=t,e},J=$&&"symbol"==typeof C.iterator?function(t){return"symbol"==typeof t}:function(t){return t instanceof C},Z=function(t,e,n){return t===W&&Z(z,e,n),y(t),e=x(e,!0),y(n),i(G,e)?(n.enumerable?(i(t,F)&&t[F][e]&&(t[F][e]=!1),n=k(n,{enumerable:O(0,!1)})):(i(t,F)||D(t,F,O(1,{})),t[F][e]=!0),V(t,e,n)):D(t,e,n)},Y=function(t,e){y(t);for(var n,r=m(e=S(e)),i=0,o=r.length;o>i;)Z(t,n=r[i++],e[n]);return t},Q=function(t,e){return void 0===e?k(t):Y(k(t),e)},X=function(t){var e=R.call(this,t=x(t,!0));return!(this===W&&i(G,t)&&!i(z,t))&&(!(e||!i(this,t)||!i(G,t)||i(this,F)&&this[F][t])||e)},tt=function(t,e){if(t=S(t),e=x(e,!0),t!==W||!i(G,e)||i(z,e)){var n=E(t,e);return!n||!i(G,e)||i(t,F)&&t[F][e]||(n.enumerable=!0),n}},et=function(t){for(var e,n=L(S(t)),r=[],o=0;n.length>o;)i(G,e=n[o++])||e==F||e==s||r.push(e);return r},nt=function(t){for(var e,n=t===W,r=L(n?z:S(t)),o=[],a=0;r.length>a;)!i(G,e=r[a++])||n&&!i(W,e)||o.push(G[e]);return o};$||(C=function(){if(this instanceof C)throw TypeError("Symbol is not a constructor!");var t=p(arguments.length>0?arguments[0]:void 0),e=function(n){this===W&&e.call(z,n),i(this,F)&&i(this[F],t)&&(this[F][t]=!1),V(this,t,O(1,n))};return o&&H&&V(W,t,{configurable:!0,set:e}),K(t)},u(C[N],"toString",function(){return this._k}),M.f=tt,P.f=Z,n(76).f=w.f=et,n(73).f=X,T.f=nt,o&&!n(33)&&u(W,"propertyIsEnumerable",X,!0),h.f=function(t){return K(d(t))}),a(a.G+a.W+a.F*!$,{Symbol:C});for(var rt="hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables".split(","),it=0;rt.length>it;)d(rt[it++]);for(var ot=j(d.store),at=0;ot.length>at;)_(ot[at++]);a(a.S+a.F*!$,"Symbol",{for:function(t){return i(B,t+="")?B[t]:B[t]=C(t)},keyFor:function(t){if(!J(t))throw TypeError(t+" is not a symbol!");for(var e in B)if(B[e]===t)return e},useSetter:function(){H=!0},useSimple:function(){H=!1}}),a(a.S+a.F*!$,"Object",{create:Q,defineProperty:Z,defineProperties:Y,getOwnPropertyDescriptor:tt,getOwnPropertyNames:et,getOwnPropertySymbols:nt});var ut=f(function(){T.f(1)});a(a.S+a.F*ut,"Object",{getOwnPropertySymbols:function(t){return T.f(b(t))}}),I&&a(a.S+a.F*(!$||f(function(){var t=C();return"[null]"!=A([t])||"{}"!=A({a:t})||"{}"!=A(Object(t))})),"JSON",{stringify:function(t){for(var e,n,r=[t],i=1;arguments.length>i;)r.push(arguments[i++]);if(n=e=r[1],(g(e)||void 0!==t)&&!J(t))return v(e)||(e=function(t,e){if("function"==typeof n&&(e=n.call(this,t,e)),!J(e))return e}),r[1]=e,A.apply(I,r)}}),C[N][U]||n(13)(C[N],U,C[N].valueOf),l(C,"Symbol"),l(Math,"Math",!0),l(r.JSON,"JSON",!0)},function(t,e,n){var r=n(34)("meta"),i=n(16),o=n(23),a=n(14).f,u=0,s=Object.isExtensible||function(){return!0},f=!n(19)(function(){return s(Object.preventExtensions({}))}),c=function(t){a(t,r,{value:{i:"O"+ ++u,w:{}}})},l=function(t,e){if(!i(t))return"symbol"==typeof t?t:("string"==typeof t?"S":"P")+t;if(!o(t,r)){if(!s(t))return"F";if(!e)return"E";c(t)}return t[r].i},p=function(t,e){if(!o(t,r)){if(!s(t))return!0;if(!e)return!1;c(t)}return t[r].w},d=function(t){return f&&h.NEED&&s(t)&&!o(t,r)&&c(t),t},h=t.exports={KEY:r,NEED:!1,fastKey:l,getWeak:p,onFreeze:d}},function(t,e,n){var r=n(9),i=n(10),o=n(33),a=n(65),u=n(14).f;t.exports=function(t){var e=i.Symbol||(i.Symbol=o?{}:r.Symbol||{});"_"==t.charAt(0)||t in e||u(e,t,{value:a.f(t)})}},function(t,e,n){var r=n(49),i=n(72),o=n(73);t.exports=function(t){var e=r(t),n=i.f;if(n)for(var a,u=n(t),s=o.f,f=0;u.length>f;)s.call(t,a=u[f++])&&e.push(a);return e}},function(t,e){e.f=Object.getOwnPropertySymbols},function(t,e){e.f={}.propertyIsEnumerable},function(t,e,n){var r=n(53);t.exports=Array.isArray||function(t){return"Array"==r(t)}},function(t,e,n){var r=n(51),i=n(76).f,o={}.toString,a="object"==typeof window&&window&&Object.getOwnPropertyNames?Object.getOwnPropertyNames(window):[],u=function(t){try{return i(t)}catch(t){return a.slice()}};t.exports.f=function(t){return a&&"[object Window]"==o.call(t)?u(t):i(r(t))}},function(t,e,n){var r=n(50),i=n(57).concat("length","prototype");e.f=Object.getOwnPropertyNames||function(t){return r(t,i)}},function(t,e,n){var r=n(73),i=n(22),o=n(51),a=n(21),u=n(23),s=n(17),f=Object.getOwnPropertyDescriptor;e.f=n(18)?f:function(t,e){if(t=o(t),e=a(e,!0),s)try{return f(t,e)}catch(t){}if(u(t,e))return i(!r.f.call(t,e),t[e])}},function(t,e){},function(t,e,n){n(70)("asyncIterator")},function(t,e,n){n(70)("observable")},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var i=n(82),o=r(i),a=n(86),u=r(a),s=n(37),f=r(s);e.default=function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+("undefined"==typeof e?"undefined":(0,f.default)(e)));t.prototype=(0,u.default)(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(o.default?(0,o.default)(t,e):t.__proto__=e)}},function(t,e,n){t.exports={default:n(83),__esModule:!0}},function(t,e,n){n(84),t.exports=n(10).Object.setPrototypeOf},function(t,e,n){var r=n(8);r(r.S,"Object",{setPrototypeOf:n(85).set})},function(t,e,n){var r=n(16),i=n(15),o=function(t,e){if(i(t),!r(e)&&null!==e)throw TypeError(e+": can't set as prototype!")};t.exports={set:Object.setPrototypeOf||("__proto__"in{}?function(t,e,r){try{r=n(11)(Function.call,n(77).f(Object.prototype,"__proto__").set,2),r(t,[]),e=!(t instanceof Array)}catch(t){e=!0}return function(t,n){return o(t,n),e?t.__proto__=n:r(t,n),t}}({},!1):void 0),check:o}},function(t,e,n){t.exports={default:n(87),__esModule:!0}},function(t,e,n){n(88);var r=n(10).Object;t.exports=function(t,e){return r.create(t,e)}},function(t,e,n){var r=n(8);r(r.S,"Object",{create:n(47)})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(3),o=r(i),a=n(4),u=r(a),s=function(){function t(e){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[];(0,o.default)(this,t),this._models=e,this._parsers=n}return(0,u.default)(t,[{key:"parse",value:function(t){var e=t.childNodes[0],n=this._models[e.nodeName];return this._parse(e,n)}},{key:"_parse",value:function(t,e){for(var n=e.attributes||[],r=e.nodes||[],i={},o=0;o<n.length;o++){var a=n[o];i[a.name]=this._parseAttribute(t,a)}for(var u=0;u<r.length;u++){var s=r[u];i[s.name]=this._parseNode(t,s)}return i}},{key:"_parseAttribute",value:function(t,e){var n=t.getAttribute(e.name)||e.default,r=this._parsers[e.type];return r?r.call(null,n):n}},{key:"_parseNode",value:function(t,e){var n=e.node||e.name,r=this._getChildNodes(t,n);return 0===r.length?null:"many"===e.mapping?this._parseNodeMany(r,e):this._parseNodeOne(r[0],e)}},{key:"_parseNodeMany",value:function(t,e){for(var n=[],r=0;r<t.length;r++)n.push(this._parseNodeOne(t[r],e));return n}},{key:"_parseNodeOne",value:function(t,e){var n=this._models[e.type];return n?this._parse(t,n):this._flattenNodeToAttribute(t,e)}},{key:"_flattenNodeToAttribute",value:function(t,e){var n=t.textContent||e.default,r=this._parsers[e.type];return r?r.call(null,n):n}},{key:"_getChildNodes",value:function(t,e){for(var n=[],r=0;r<t.childNodes.length;r++){var i=t.childNodes[r],o=i.nodeName;e.toLowerCase()===o.toLowerCase()&&n.push(i)}return n}}]),t}();e.default=s},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(3),u=r(a),s=n(4),f=r(s),c=function(){function t(e){(0,u.default)(this,t),this._responseType=e||"arraybuffer"}return(0,f.default)(t,[{key:"load",value:function(t){return t instanceof Array?this._loadAll(t):this._loadOne(t)}},{key:"_loadOne",value:function(t){return this._request(t)}},{key:"_loadAll",value:function(t){var e=this;return o.default.all(t.map(function(t){return e._loadOne(t)}))}},{key:"_request",value:function(t){var e=this;return new o.default(function(n,r){var i=new XMLHttpRequest;i.open("GET",t,!0),i.responseType=e._responseType,i.addEventListener("load",function(){200===this.status||304===this.status?n(i.response):r(new Error(this.statusText))}),i.addEventListener("error",function(){r(new Error("A transport error has occured."))}),i.send()})}}]),t}();e.default=c},function(t,e,n){t.exports={default:n(92),__esModule:!0}},function(t,e,n){n(78),n(40),n(61),n(93),n(111),n(112),t.exports=n(10).Promise},function(t,e,n){"use strict";var r,i,o,a,u=n(33),s=n(9),f=n(11),c=n(94),l=n(8),p=n(16),d=n(12),h=n(95),_=n(96),m=n(100),v=n(101).set,y=n(103)(),g=n(104),b=n(105),S=n(106),x=n(107),O="Promise",k=s.TypeError,w=s.process,M=w&&w.versions,T=M&&M.v8||"",P=s[O],j="process"==c(w),E=function(){},D=i=g.f,L=!!function(){try{var t=P.resolve(1),e=(t.constructor={})[n(60)("species")]=function(t){t(E,E)};return(j||"function"==typeof PromiseRejectionEvent)&&t.then(E)instanceof e&&0!==T.indexOf("6.6")&&S.indexOf("Chrome/66")===-1}catch(t){}}(),C=function(t){var e;return!(!p(t)||"function"!=typeof(e=t.then))&&e},I=function(t,e){if(!t._n){t._n=!0;var n=t._c;y(function(){for(var r=t._v,i=1==t._s,o=0,a=function(e){var n,o,a,u=i?e.ok:e.fail,s=e.resolve,f=e.reject,c=e.domain;try{u?(i||(2==t._h&&F(t),t._h=1),u===!0?n=r:(c&&c.enter(),n=u(r),c&&(c.exit(),a=!0)),n===e.promise?f(k("Promise-chain cycle")):(o=C(n))?o.call(n,s,f):s(n)):f(r)}catch(t){c&&!a&&c.exit(),f(t)}};n.length>o;)a(n[o++]);t._c=[],t._n=!1,e&&!t._h&&A(t)})}},A=function(t){v.call(s,function(){var e,n,r,i=t._v,o=N(t);if(o&&(e=b(function(){j?w.emit("unhandledRejection",i,t):(n=s.onunhandledrejection)?n({promise:t,reason:i}):(r=s.console)&&r.error&&r.error("Unhandled promise rejection",i)}),t._h=j||N(t)?2:1),t._a=void 0,o&&e.e)throw e.v})},N=function(t){return 1!==t._h&&0===(t._a||t._c).length},F=function(t){v.call(s,function(){var e;j?w.emit("rejectionHandled",t):(e=s.onrejectionhandled)&&e({promise:t,reason:t._v})})},U=function(t){var e=this;e._d||(e._d=!0,e=e._w||e,e._v=t,e._s=2,e._a||(e._a=e._c.slice()),I(e,!0))},R=function(t){var e,n=this;if(!n._d){n._d=!0,n=n._w||n;try{if(n===t)throw k("Promise can't be resolved itself");(e=C(t))?y(function(){var r={_w:n,_d:!1};try{e.call(t,f(R,r,1),f(U,r,1))}catch(t){U.call(r,t)}}):(n._v=t,n._s=1,I(n,!1))}catch(t){U.call({_w:n,_d:!1},t)}}};L||(P=function(t){h(this,P,O,"_h"),d(t),r.call(this);try{t(f(R,this,1),f(U,this,1))}catch(t){U.call(this,t)}},r=function(t){this._c=[],this._a=void 0,this._s=0,this._d=!1,this._v=void 0,this._h=0,this._n=!1},r.prototype=n(108)(P.prototype,{then:function(t,e){var n=D(m(this,P));return n.ok="function"!=typeof t||t,n.fail="function"==typeof e&&e,n.domain=j?w.domain:void 0,this._c.push(n),this._a&&this._a.push(n),this._s&&I(this,!1),n.promise},catch:function(t){return this.then(void 0,t)}}),o=function(){var t=new r;this.promise=t,this.resolve=f(R,t,1),this.reject=f(U,t,1)},g.f=D=function(t){return t===P||t===a?new o(t):i(t)}),l(l.G+l.W+l.F*!L,{Promise:P}),n(59)(P,O),n(109)(O),a=n(10)[O],l(l.S+l.F*!L,O,{reject:function(t){var e=D(this),n=e.reject;return n(t),e.promise}}),l(l.S+l.F*(u||!L),O,{resolve:function(t){return x(u&&this===a?P:this,t)}}),l(l.S+l.F*!(L&&n(110)(function(t){P.all(t).catch(E)})),O,{all:function(t){var e=this,n=D(e),r=n.resolve,i=n.reject,o=b(function(){var n=[],o=0,a=1;_(t,!1,function(t){var u=o++,s=!1;n.push(void 0),a++,e.resolve(t).then(function(t){s||(s=!0,n[u]=t,--a||r(n))},i)}),--a||r(n)});return o.e&&i(o.v),n.promise},race:function(t){var e=this,n=D(e),r=n.reject,i=b(function(){_(t,!1,function(t){e.resolve(t).then(n.resolve,r)})});return i.e&&r(i.v),n.promise}})},function(t,e,n){var r=n(53),i=n(60)("toStringTag"),o="Arguments"==r(function(){return arguments}()),a=function(t,e){try{return t[e]}catch(t){}};t.exports=function(t){var e,n,u;return void 0===t?"Undefined":null===t?"Null":"string"==typeof(n=a(e=Object(t),i))?n:o?r(e):"Object"==(u=r(e))&&"function"==typeof e.callee?"Arguments":u}},function(t,e){t.exports=function(t,e,n,r){if(!(t instanceof e)||void 0!==r&&r in t)throw TypeError(n+": incorrect invocation!");return t}},function(t,e,n){var r=n(11),i=n(97),o=n(98),a=n(15),u=n(55),s=n(99),f={},c={},e=t.exports=function(t,e,n,l,p){var d,h,_,m,v=p?function(){return t}:s(t),y=r(n,l,e?2:1),g=0;if("function"!=typeof v)throw TypeError(t+" is not iterable!");if(o(v)){for(d=u(t.length);d>g;g++)if(m=e?y(a(h=t[g])[0],h[1]):y(t[g]),m===f||m===c)return m}else for(_=v.call(t);!(h=_.next()).done;)if(m=i(_,y,h.value,e),m===f||m===c)return m};e.BREAK=f,e.RETURN=c},function(t,e,n){var r=n(15);t.exports=function(t,e,n,i){try{return i?e(r(n)[0],n[1]):e(n)}catch(e){var o=t.return;throw void 0!==o&&r(o.call(t)),e}}},function(t,e,n){var r=n(45),i=n(60)("iterator"),o=Array.prototype;t.exports=function(t){return void 0!==t&&(r.Array===t||o[i]===t)}},function(t,e,n){var r=n(94),i=n(60)("iterator"),o=n(45);t.exports=n(10).getIteratorMethod=function(t){if(void 0!=t)return t[i]||t["@@iterator"]||o[r(t)]}},function(t,e,n){var r=n(15),i=n(12),o=n(60)("species");t.exports=function(t,e){var n,a=r(t).constructor;return void 0===a||void 0==(n=r(a)[o])?e:i(n)}},function(t,e,n){var r,i,o,a=n(11),u=n(102),s=n(58),f=n(20),c=n(9),l=c.process,p=c.setImmediate,d=c.clearImmediate,h=c.MessageChannel,_=c.Dispatch,m=0,v={},y="onreadystatechange",g=function(){var t=+this;if(v.hasOwnProperty(t)){var e=v[t];delete v[t],e()}},b=function(t){g.call(t.data)};p&&d||(p=function(t){for(var e=[],n=1;arguments.length>n;)e.push(arguments[n++]);return v[++m]=function(){u("function"==typeof t?t:Function(t),e)},r(m),m},d=function(t){delete v[t]},"process"==n(53)(l)?r=function(t){l.nextTick(a(g,t,1))}:_&&_.now?r=function(t){_.now(a(g,t,1))}:h?(i=new h,o=i.port2,i.port1.onmessage=b,r=a(o.postMessage,o,1)):c.addEventListener&&"function"==typeof postMessage&&!c.importScripts?(r=function(t){c.postMessage(t+"","*")},c.addEventListener("message",b,!1)):r=y in f("script")?function(t){s.appendChild(f("script"))[y]=function(){s.removeChild(this),g.call(t)}}:function(t){setTimeout(a(g,t,1),0)}),t.exports={set:p,clear:d}},function(t,e){t.exports=function(t,e,n){var r=void 0===n;switch(e.length){case 0:return r?t():t.call(n);case 1:return r?t(e[0]):t.call(n,e[0]);case 2:return r?t(e[0],e[1]):t.call(n,e[0],e[1]);case 3:return r?t(e[0],e[1],e[2]):t.call(n,e[0],e[1],e[2]);case 4:return r?t(e[0],e[1],e[2],e[3]):t.call(n,e[0],e[1],e[2],e[3])}return t.apply(n,e)}},function(t,e,n){var r=n(9),i=n(101).set,o=r.MutationObserver||r.WebKitMutationObserver,a=r.process,u=r.Promise,s="process"==n(53)(a);t.exports=function(){var t,e,n,f=function(){var r,i;for(s&&(r=a.domain)&&r.exit();t;){i=t.fn,t=t.next;try{i()}catch(r){throw t?n():e=void 0,r}}e=void 0,r&&r.enter()};if(s)n=function(){a.nextTick(f)};else if(!o||r.navigator&&r.navigator.standalone)if(u&&u.resolve){var c=u.resolve(void 0);n=function(){c.then(f)}}else n=function(){i.call(r,f)};else{var l=!0,p=document.createTextNode("");new o(f).observe(p,{characterData:!0}),n=function(){p.data=l=!l}}return function(r){var i={fn:r,next:void 0};e&&(e.next=i),t||(t=i,n()),e=i}}},function(t,e,n){"use strict";function r(t){var e,n;this.promise=new t(function(t,r){if(void 0!==e||void 0!==n)throw TypeError("Bad Promise constructor");e=t,n=r}),this.resolve=i(e),this.reject=i(n)}var i=n(12);t.exports.f=function(t){return new r(t)}},function(t,e){t.exports=function(t){try{return{e:!1,v:t()}}catch(t){return{e:!0,v:t}}}},function(t,e,n){var r=n(9),i=r.navigator;t.exports=i&&i.userAgent||""},function(t,e,n){var r=n(15),i=n(16),o=n(104);t.exports=function(t,e){if(r(t),i(e)&&e.constructor===t)return e;var n=o.f(t),a=n.resolve;return a(e),n.promise}},function(t,e,n){var r=n(13);t.exports=function(t,e,n){for(var i in e)n&&t[i]?t[i]=e[i]:r(t,i,e[i]);return t}},function(t,e,n){"use strict";var r=n(9),i=n(10),o=n(14),a=n(18),u=n(60)("species");t.exports=function(t){var e="function"==typeof i[t]?i[t]:r[t];a&&e&&!e[u]&&o.f(e,u,{configurable:!0,get:function(){return this}})}},function(t,e,n){var r=n(60)("iterator"),i=!1;try{var o=[7][r]();o.return=function(){i=!0},Array.from(o,function(){throw 2})}catch(t){}t.exports=function(t,e){if(!e&&!i)return!1;var n=!1;try{var o=[7],a=o[r]();a.next=function(){return{done:n=!0}},o[r]=function(){return a},t(o)}catch(t){}return n}},function(t,e,n){"use strict";var r=n(8),i=n(10),o=n(9),a=n(100),u=n(107);r(r.P+r.R,"Promise",{finally:function(t){var e=a(this,i.Promise||o.Promise),n="function"==typeof t;return this.then(n?function(n){return u(e,t()).then(function(){return n})}:t,n?function(n){return u(e,t()).then(function(){throw n})}:t)}})},function(t,e,n){"use strict";var r=n(8),i=n(104),o=n(105);r(r.S,"Promise",{try:function(t){var e=i.f(this),n=o(t);return(n.e?e.reject:e.resolve)(n.v),e.promise}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(25),u=r(a),s=n(3),f=r(s),c=n(4),l=r(c),p=n(36),d=r(p),h=n(114),_=r(h),m=n(81),v=r(m),y=n(90),g=r(y),b=function(t){
-function e(t){(0,f.default)(this,e);var n=(0,d.default)(this,(e.__proto__||(0,u.default)(e)).call(this,"arraybuffer"));return n._context=t,n}return(0,v.default)(e,t),(0,l.default)(e,[{key:"load",value:function(t){return(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"load",this).call(this,t)}},{key:"_loadOne",value:function(t){var n=this;return(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"_loadOne",this).call(this,t).then(function(t){return n._decode(t)})}},{key:"_decode",value:function(t){var e=this;return new o.default(function(n,r){e._context.decodeAudioData(t.slice(0),n,r)})}}]),e}(g.default);e.default=b},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}e.__esModule=!0;var i=n(25),o=r(i),a=n(115),u=r(a);e.default=function t(e,n,r){null===e&&(e=Function.prototype);var i=(0,u.default)(e,n);if(void 0===i){var a=(0,o.default)(e);return null===a?void 0:t(a,n,r)}if("value"in i)return i.value;var s=i.get;if(void 0!==s)return s.call(r)}},function(t,e,n){t.exports={default:n(116),__esModule:!0}},function(t,e,n){n(117);var r=n(10).Object;t.exports=function(t,e){return r.getOwnPropertyDescriptor(t,e)}},function(t,e,n){var r=n(51),i=n(77).f;n(35)("getOwnPropertyDescriptor",function(){return function(t,e){return i(r(t),e)}})},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0}),e.DashSourceNode=e.ManifestParser=e.ManifestLoader=void 0;var i=n(119),o=r(i),a=n(120),u=r(a),s=n(123),f=r(s);e.ManifestLoader=o.default,e.ManifestParser=u.default,e.DashSourceNode=f.default},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(25),u=r(a),s=n(3),f=r(s),c=n(4),l=r(c),p=n(36),d=r(p),h=n(114),_=r(h),m=n(81),v=r(m),y=n(90),g=r(y),b=function(t){function e(){(0,f.default)(this,e);var t=(0,d.default)(this,(e.__proto__||(0,u.default)(e)).call(this,"text"));return t._parser=new DOMParser,t}return(0,v.default)(e,t),(0,l.default)(e,[{key:"load",value:function(t){return(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"load",this).call(this,t)}},{key:"_loadOne",value:function(t){var n=this;return(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"_loadOne",this).call(this,t).then(function(t){return n._parse(t)})}},{key:"_parse",value:function(t){var e=this._parser.parseFromString(t,"text/xml");return o.default.resolve(e)}}]),e}(g.default);e.default=b},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(25),o=r(i),a=n(3),u=r(a),s=n(36),f=r(s),c=n(81),l=r(c),p=n(1),d=n(121),h=r(d),_=n(122),m=r(_),v=function(t){function e(){return(0,u.default)(this,e),(0,f.default)(this,(e.__proto__||(0,o.default)(e)).call(this,h.default,m.default))}return(0,l.default)(e,t),e}(p.DocumentParser);e.default=v},function(t,e){"use strict";Object.defineProperty(e,"__esModule",{value:!0});var n={attributes:[{name:"type",type:"string",default:"static"},{name:"minBufferTime",type:"period"},{name:"mediaPresentationDuration",type:"period"},{name:"maxSegmentDuration",type:"period"},{name:"availabilityStartTime",type:"date"}],nodes:[{name:"programInformation",node:"ProgramInformation",type:"ProgramInformation",mapping:"one"},{name:"baseURL",node:"BaseURL",type:"string",mapping:"many"},{name:"periods",node:"Period",type:"Period",mapping:"many"}]},r={attributes:[{name:"moreInformationURL",type:"string"},{name:"lang",type:"string"}],nodes:[{name:"title",node:"Title",type:"string",mapping:"one"},{name:"source",node:"Source",type:"string",mapping:"one"},{name:"copyright",node:"Copyright",type:"string",mapping:"one"}]},i={attributes:[{name:"id",type:"integer",default:0},{name:"duration",type:"period"},{name:"start",type:"period",default:0}],nodes:[{name:"baseUrl",node:"BaseUrl",type:"string",mapping:"one"},{name:"adaptationSets",node:"AdaptationSet",type:"AdaptationSet",mapping:"many"}]},o={attributes:[{name:"id",type:"string",default:""},{name:"mimeType",type:"string",default:""},{name:"value",type:"integer"}],nodes:[{name:"audioChannelConfiguration",node:"AudioChannelConfiguration",type:"AudioChannelConfiguration",mapping:"one"},{name:"segmentTemplate",node:"SegmentTemplate",type:"SegmentTemplate",mapping:"one"},{name:"representations",node:"Representation",type:"Representation",mapping:"many"},{name:"baseURL",node:"BaseURL",type:"string",mapping:"one"}]},a={attributes:[{name:"value",type:"integer",default:0}]},u={attributes:[{name:"duration",type:"integer",default:0},{name:"timescale",type:"integer",default:0},{name:"startNumber",type:"integer",default:1},{name:"presentationTimeOffset",type:"integer",default:0},{name:"media",type:"string",default:""},{name:"initialization",type:"string",default:null}]},s={attributes:[{name:"id",type:"string",default:""},{name:"bandwidth",type:"integer"}]};e.default={MPD:n,ProgramInformation:r,Period:i,AdaptationSet:o,AudioChannelConfiguration:a,SegmentTemplate:u,Representation:s}},function(t,e){"use strict";function n(t){return parseInt(t,10)}function r(t){return null===t||void 0===t?null:new Date(t)}function i(t){var e=/^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:.\d+)?)S)?/,n=null;if(e.test(t)){var r=e.exec(t);n=parseInt(r[1]||0,10)*o+parseInt(r[2]||0,10)*a+parseInt(r[3]||0,10)*u+parseInt(r[4]||0,10)*s+parseInt(r[5]||0,10)*f+parseFloat(r[6]||0)}else n=parseInt(t,10);return n}Object.defineProperty(e,"__esModule",{value:!0});var o=31536e3,a=2592e3,u=86400,s=3600,f=60;e.default={integer:n,date:r,period:i}},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(25),u=r(a),s=n(3),f=r(s),c=n(4),l=r(c),p=n(36),d=r(p),h=n(81),_=r(h),m=n(24),v=r(m),y=n(124),g=r(y),b=n(126),S=r(b),x=n(127),O=r(x),k=function(t){function e(t,n){(0,f.default)(this,e);var r=(0,d.default)(this,(e.__proto__||(0,u.default)(e)).call(this,t));return r._allStreams=[],r._audioStreams=[],r._totalChannels=0,r._presentationDuration=0,r._playbackInitial=0,r._playbackOffset=0,r._playbackDuration=0,r._playbackLoop=!1,r._contextSyncTime=0,r._initStreams(n),r._initAudioGraph(),r._state="ready",r}return(0,_.default)(e,t),(0,l.default)(e,[{key:"prime",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,e=arguments.length>1&&void 0!==arguments[1]&&arguments[1],n=this,r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,i=arguments.length>3&&void 0!==arguments[3]?arguments[3]:this._presentationDuration-r;return new o.default(function(a,u){if("ready"!==n.state&&"primed"!==n.state)return void u("State must be ready or primed before prime() is called.");if(0!==n._presentationDuration&&(t<0||t>=i))return void u("Invalid initial. Must be a number less than duration and greater than or equal to 0.");if(e!==!1&&e!==!0)return void u("Invalid loop. Must be a boolean.");if(0!==n._presentationDuration&&(r<0||r>=n._presentationDuration))return void u("Invalid offset. Must be a number less than presentationDuration and greater than or equal to 0.");if(0!==n._presentationDuration&&(i<=0||i>n._presentationDuration-r))return void u("Invalid duration. Must be a number less than presentationDuration minus offset and greater than 0.");n._playbackInitial=t,n._playbackOffset=r,n._playbackDuration=i,n._playbackLoop=e,n._state="priming";var s=n._allStreams.map(function(n){return n.prime(t,e,r,i)});o.default.all(s).then(function(){n._state="primed",a()})})}},{key:"start",value:function(){var t=this,e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.context.currentTime;if("primed"===this.state){this._contextSyncTime=e;var n=this._allStreams.map(function(e){return new o.default(function(n){return e.start(t._contextSyncTime,n)})});this._state="playing",o.default.all(n).then(function(){t._dispatchEndedEvent(),t._state="ready"})}}},{key:"stop",value:function(){"playing"===this.state&&(this._allStreams.forEach(function(t){return t.stop()}),this._state="ready")}},{key:"seek",value:function(t){var e=this,n=this.context.currentTime,r=n+t;this.stop(),this.prime(r).then(function(){e.start()})}},{key:"_initStreams",value:function(t){var e=this;this._presentationDuration=t.mediaPresentationDuration||0;var n=t.minBufferTime,r=t.baseURL?t.baseURL[0]:"";t.periods.forEach(function(t){t.adaptationSets.forEach(function(i){var o=i.segmentTemplate,a=i.representations?i.representations[0]:null,u=a?a.baseURL:"",s={periodId:t.id,adaptationSetId:i.id,representationId:a?a.id:null,type:i.mimeType,start:t.start+o.presentationTimeOffset/o.timescale,duration:t.duration,segmentStart:o.startNumber,segmentDuration:o.duration/o.timescale,templateUrl:(r||u||"")+(i.baseURL||"")+(o.media||""),initUrl:(r||u||"")+(i.baseURL||"")+(o.initialization||""),bufferTime:n};if(i.mimeType.indexOf("json")>-1){var f=new O.default(e.context,s);f.metadataCallback=e._dispatchMetadataEvent.bind(e),e._allStreams.push(f)}else if(i.mimeType.indexOf("audio")>-1){s.channelCount=0===i.value||i.value?i.value:i.audioChannelConfiguration.value;var c=o.initialization?new S.default(e.context,s):new g.default(e.context,s);e._audioStreams.push(c),e._allStreams.push(c),e._totalChannels+=c.channelCount}})})}},{key:"_initAudioGraph",value:function(){var t=this,e=0;this._audioStreams.forEach(function(n){for(var r=0;r<n.output.numberOfOutputs;r++){var i=t.context.createGain();n.output.connect(i,r),t._outputs[e]=i,e++}})}},{key:"_dispatchMetadataEvent",value:function(t){this.dispatchEvent({src:this,type:"metadata",n:t.n,metadata:t.metadata,when:t.when,offset:t.offset,duration:t.duration})}},{key:"_dispatchStateChangeEvent",value:function(t){this.dispatchEvent({src:this,type:"statechange",state:t})}},{key:"_dispatchEndedEvent",value:function(){this.dispatchEvent({src:this,type:"ended"})}},{key:"playbackTime",get:function(){return"playing"===this.state?(this.context.currentTime-this._contextSyncTime+this._playbackInitial)%this._playbackDuration+this._playbackOffset:0}},{key:"presentationDuration",get:function(){return this._presentationDuration}},{key:"state",get:function(){return this._playbackState}},{key:"_state",set:function(t){this._playbackState=t,this._dispatchStateChangeEvent(t)}}]),e}(v.default);e.default=k},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(25),o=r(i),a=n(3),u=r(a),s=n(4),f=r(s),c=n(36),l=r(c),p=n(114),d=r(p),h=n(81),_=r(h),m=n(1),v=n(125),y=r(v),g=function(t){function e(t,n){(0,u.default)(this,e);var r=(0,l.default)(this,(e.__proto__||(0,o.default)(e)).call(this,t,new m.AudioLoader(t),n));return r._primerOffset=0,r._isStreaming=!1,r._stream.channelCount=n.channelCount,r._output=r._context.createChannelSplitter(r.channelCount),r}return(0,_.default)(e,t),(0,f.default)(e,[{key:"_start",value:function(){var t=this;this._isStreaming=!0,this._buffer.segments.forEach(function(e){t._startSegment(e)}),(0,d.default)(e.prototype.__proto__||(0,o.default)(e.prototype),"_start",this).call(this)}},{key:"_stop",value:function(){this._isStreaming=!1,this._buffer.segments.forEach(function(t){t&&t.bufferSource&&t.bufferSource.stop()}),(0,d.default)(e.prototype.__proto__||(0,o.default)(e.prototype),"_stop",this).call(this)}},{key:"_startSegment",value:function(t){if(t&&t.bufferSource){var e=t.when+this._contextSyncTime,n=t.offset+this._primerOffset,r=t.duration,i=this._context.currentTime-e;i<t.duration?t.bufferSource.start(i>0?0:e,i>0?n+i:n,i>0?r-i:r):t.bufferSource.start(0,0,0)}}},{key:"_addDataToSegment",value:function(t,e){for(var n=null,r=!1,i=0;!r&&i<this._buffer.segments.length;)this._buffer.segments[i].n===e&&(n=this._buffer.segments[i],n.bufferSource=this._context.createBufferSource(),n.bufferSource.buffer=t,n.bufferSource.connect(this._output),this._isStreaming&&this._startSegment(n),r=!0),i++;return n}},{key:"output",get:function(){return this._output}},{key:"channelCount",get:function(){return this._stream.channelCount}}]),e}(y.default);e.default=g},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(3),u=r(a),s=n(4),f=r(s),c=function(){function t(e,n,r){(0,u.default)(this,t),this._context=e,this._contextSyncTime=0,this._loader=n,this._minBufferSize=3,this._stream={},this._stream.periodId=r.periodId,this._stream.adaptationSetId=r.adaptationSetId,this._stream.representationId=r.representationId,this._stream.start=r.start,this._stream.duration=r.duration,this._stream.segmentDuration=r.segmentDuration,this._stream.segmentStart=r.segmentStart,this._stream.segmentEnd=r.segmentStart-1+Math.ceil(r.duration/r.segmentDuration),this._stream.initUrl=r.initUrl||"",this._stream.initUrl=this._stream.initUrl.replace("$RepresentationID$",this._stream.representationId),this._stream.templateUrl=r.templateUrl,this._stream.templateUrl=this._stream.templateUrl.replace("$RepresentationID$",this._stream.representationId);var i=this._stream.templateUrl.match(/(\$[Nn]umber%*([0-9]*)d*\$)/);i&&(this._stream.templateUrl=this._stream.templateUrl.replace(i[1],"$Number"),this._stream.templateUrlLeadingZeros=i[2]?parseInt(i[2],10):0),this._buffer={},this._buffer.segments=[],this._buffer.frontIndex=0,this._buffer.size=Math.max(Math.ceil(r.bufferTime/r.segmentDuration),this._minBufferSize),this._play={},this._play.initial=0,this._play.offset=0,this._play.duration=0,this._play.loop=!1,this._play.endedCallback=null}return(0,f.default)(t,[{key:"prime",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,e=arguments.length>1&&void 0!==arguments[1]&&arguments[1],n=arguments.length>2&&void 0!==arguments[2]?arguments[2]:0,r=arguments.length>3&&void 0!==arguments[3]?arguments[3]:this._stream.duration-n;return this._primePlayRegion(t,e,n,r),this._primeBuffer()}},{key:"_primePlayRegion",value:function(t,e,n,r){this._play.initial=t,this._play.loop=e,this._play.offset=n,this._play.duration=r,this._buffer.segments=[],this._buffer.frontIndex=0;var i=this._play.offset-this._stream.start,o=i+this._play.initial,a=i+this._play.duration;this._play.startOverlap=(this._stream.segmentDuration-Math.abs(i)%this._stream.segmentDuration)%this._stream.segmentDuration,this._play.initialOverlap=Math.abs(o)%this._stream.segmentDuration,this._play.endOverlap=Math.abs(a)%this._stream.segmentDuration,this._play.startSegment=this._stream.segmentStart+Math.floor(i/this._stream.segmentDuration),this._play.initialSegment=this._stream.segmentStart+Math.floor(o/this._stream.segmentDuration),this._play.endSegment=this._stream.segmentStart-1+Math.ceil(a/this._stream.segmentDuration),this._play.segmentsPerLoop=1+this._play.endSegment-this._play.startSegment}},{key:"_primeBuffer",value:function(){for(var t=this,e=[],n=function(n){var r=t._getTemplateForNthSegment(n);t._buffer.segments.push(r),r.number>=t._stream.segmentStart&&(!t._stream.segmentEnd||r.number<=t._stream.segmentEnd)&&e.push(t._loader.load(r.url).then(function(e){t._addDataToSegment(e,r.n)}))},r=0;r<this._buffer.size;r++)n(r);return o.default.all(e)}},{key:"start",value:function(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:0,e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:function(){};this._contextSyncTime=t,this._play.endedCallback=e,this._start()}},{key:"stop",value:function(){this._stop()}},{key:"_manageBuffer",value:function(){var t=this,e=this._buffer.segments[this._buffer.frontIndex],n=e.when+e.duration,r=this._getCurrentSyncTime();if(r>=n)if(!this._play.loop&&this._play.duration&&e.number>=this._play.endSegment)this._end();else{var i=e.n+this._buffer.size,o=this._getTemplateForNthSegment(i);this._buffer.segments[this._buffer.frontIndex]=o,this._buffer.frontIndex++,this._buffer.frontIndex=this._buffer.frontIndex%this._buffer.size,o.number>=this._stream.segmentStart&&(!this._stream.segmentEnd||o.number<=this._stream.segmentEnd)&&this._loader.load(o.url).then(function(e){t._addDataToSegment(e,o.n)})}}},{key:"_getCurrentSyncTime",value:function(){return this._context.currentTime-this._contextSyncTime}},{key:"_getTemplateForNthSegment",value:function(t){var e=t+this._play.initialSegment-this._play.startSegment,n=this._play.loop&&this._play.segmentsPerLoop?Math.floor(e/this._play.segmentsPerLoop):0,r=this._play.loop&&this._play.segmentsPerLoop?e%this._play.segmentsPerLoop:e,i=this._play.startSegment+r,o=this._stream.templateUrl.replace("$Number",this._padNumberWithZeros(i,this._stream.templateUrlLeadingZeros)),a=-this._play.startOverlap-this._play.initial+n*this._play.duration+r*this._stream.segmentDuration,u=0,s=this._stream.segmentDuration;return 0===t?(a=0,s-=this._play.initialOverlap,u+=this._play.initialOverlap):i===this._play.startSegment&&(a+=this._play.startOverlap,s-=this._play.startOverlap,u+=this._play.startOverlap),i===this._play.endSegment&&(s-=this._play.endOverlap),{n:t,number:i,url:o,when:a,offset:u,duration:s}}},{key:"_padNumberWithZeros",value:function(t,e){for(var n=""+t;n.length<e;)n="0"+n;return n}},{key:"_addDataToSegment",value:function(){}},{key:"_start",value:function(){var t=this;this.manageBufferInterval=setInterval(function(){return t._manageBuffer()},this._stream.segmentDuration/4*1e3)}},{key:"_stop",value:function(){clearInterval(this.manageBufferInterval)}},{key:"_end",value:function(){this._stop(),this._play.endedCallback()}}]),t}();e.default=c},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(91),o=r(i),a=n(25),u=r(a),s=n(3),f=r(s),c=n(4),l=r(c),p=n(36),d=r(p),h=n(114),_=r(h),m=n(81),v=r(m),y=n(1),g=n(125),b=r(g),S=function(t){function e(t,n){(0,f.default)(this,e);var r=(0,d.default)(this,(e.__proto__||(0,u.default)(e)).call(this,t,new y.Loader("arraybuffer"),n));return r._isStreaming=!1,r._stream.channelCount=n.channelCount,r._output=r._context.createChannelSplitter(r.channelCount),r}return(0,v.default)(e,t),(0,l.default)(e,[{key:"_start",value:function(){var t=this;this._isStreaming=!0,this._buffer.segments.forEach(function(e){t._startSegment(e)}),(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"_start",this).call(this)}},{key:"_stop",value:function(){this._isStreaming=!1,this._buffer.segments.forEach(function(t){t&&t.bufferSource&&t.bufferSource.stop()}),(0,_.default)(e.prototype.__proto__||(0,u.default)(e.prototype),"_stop",this).call(this)}},{key:"_startSegment",value:function(t){if(t&&t.bufferSource){var e=t.when+this._contextSyncTime,n=t.offset+(t.number===this._stream.segmentStart?0:t.bufferSource.buffer.duration/2),r=t.duration,i=this._context.currentTime-e;if(i<t.duration){var o=i>0?0:e,a=i>0?n+i:n,u=i>0?r-i:r;t.bufferSource.start(o,a,u)}else t.bufferSource.start(0,0,0)}}},{key:"_mergeBuffers",value:function(){for(var t=arguments.length,e=Array(t),n=0;n<t;n++)e[n]=arguments[n];var r=e.reduce(function(t,e){return t+e.byteLength},0),i=new Uint8Array(r),o=0;return e.forEach(function(t){i.set(new Uint8Array(t),o),o+=t.byteLength}),i.buffer}},{key:"_mergeBuffersToSegment",value:function(t,e){var n=this;if((t&&t.data||0===e.n)&&e&&e.data&&!e.isDecoded){e.isDecoded=!0;var r=null;r=e.number===this._stream.segmentStart?this._mergeBuffers(this._buffer.init,e.data):0===e.n?this._mergeBuffers(this._buffer.init,this._buffer.decode,e.data):this._mergeBuffers(this._buffer.init,t.data,e.data),this._context.decodeAudioData(r,function(t){e.bufferSource=n._context.createBufferSource(),e.bufferSource.buffer=t,e.bufferSource.connect(n._output),n._isStreaming&&n._startSegment(e)},function(t){console.log("Could not decode audio data:",t)})}}},{key:"_addDataToSegment",value:function(t,e){var n=this._buffer.segments.find(function(t){return t.n===e});if(n){n.data=t;var r=this._buffer.segments.find(function(t){return t.n===e-1}),i=this._buffer.segments.find(function(t){return t.n===e+1});this._mergeBuffersToSegment(r,n),this._mergeBuffersToSegment(n,i)}return n}},{key:"_removeTimestamps",value:function(t){var e=new Uint8Array(t);return e[60]=66,e[61]=72,e[62]=75,e[63]=75,e}},{key:"_primeBuffer",value:function(){var t=this;return this._loader.load(this._stream.initUrl).then(function(e){t._buffer.init=e}).then(function(){var e=t._getTemplateForNthSegment(-1);return e.number>=t._stream.segmentStart?t._loader.load(e.url):null}).then(function(e){t._buffer.decode=e}).then(function(){for(var e=[],n=function(n){var r=t._getTemplateForNthSegment(n);t._buffer.segments.push(r),r.number>=t._stream.segmentStart&&(!t._stream.segmentEnd||r.number<=t._stream.segmentEnd)&&e.push(t._loader.load(r.url).then(function(e){t._addDataToSegment(e,r.n)}))},r=0;r<t._buffer.size;r++)n(r);return o.default.all(e)})}},{key:"output",get:function(){return this._output}},{key:"channelCount",get:function(){return this._stream.channelCount}}]),e}(b.default);e.default=S},function(t,e,n){"use strict";function r(t){return t&&t.__esModule?t:{default:t}}Object.defineProperty(e,"__esModule",{value:!0});var i=n(128),o=r(i),a=n(25),u=r(a),s=n(3),f=r(s),c=n(4),l=r(c),p=n(36),d=r(p),h=n(81),_=r(h),m=n(1),v=n(125),y=r(v),g=function(t){function e(t,n){(0,f.default)(this,e);var r=(0,d.default)(this,(e.__proto__||(0,u.default)(e)).call(this,t,new m.Loader("json"),n));return r._metadataCallback=function(){},r}return(0,_.default)(e,t),(0,l.default)(e,[{key:"_addDataToSegment",value:function(t,e){for(var n=this,r=null,i=!1,a=0;!i&&a<this._buffer.segments.length;)this._buffer.segments[a].n===e&&!function(){r=n._buffer.segments[a];var e=1e9*n._stream.segmentDuration*(r.number-n._stream.segmentStart),u=e+1e9*(r.offset+r.duration),s=-e+1e9*(r.when-r.offset);r.metadata=t.filter(function(t){return t.timens>=e&&t.timens<u}).map(function(t){var e=(0,o.default)({},t);return e.timens+=s,e}),n._metadataCallback(r),i=!0}(),a++;return r}},{key:"metadataCallback",get:function(){return this._metadataCallback},set:function(t){if(!(t&&t instanceof Function))throw new Error("Invalid parameter callback. Must be of type Function.");this._metadataCallback=t}}]),e}(y.default);e.default=g},function(t,e,n){t.exports={default:n(129),__esModule:!0}},function(t,e,n){n(130),t.exports=n(10).Object.assign},function(t,e,n){var r=n(8);r(r.S+r.F,"Object",{assign:n(131)})},function(t,e,n){"use strict";var r=n(18),i=n(49),o=n(72),a=n(73),u=n(28),s=n(52),f=Object.assign;t.exports=!f||n(19)(function(){var t={},e={},n=Symbol(),r="abcdefghijklmnopqrst";return t[n]=7,r.split("").forEach(function(t){e[t]=t}),7!=f({},t)[n]||Object.keys(f({},e)).join("")!=r})?function(t,e){for(var n=u(t),f=arguments.length,c=1,l=o.f,p=a.f;f>c;)for(var d,h=s(arguments[c++]),_=l?i(h).concat(l(h)):i(h),m=_.length,v=0;m>v;)d=_[v++],r&&!p.call(h,d)||(n[d]=h[d]);return n}:f}])});
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else if(typeof exports === 'object')
+		exports["bbcat"] = factory();
+	else
+		root["bbcat"] = factory();
+})(self, function() {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
+
+/***/ "./src/core/_index.js":
+/*!****************************!*\
+  !*** ./src/core/_index.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "EventTarget": () => (/* reexport safe */ _event_target__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "CompoundNode": () => (/* reexport safe */ _compound_node__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "DocumentParser": () => (/* reexport safe */ _parsers_document_parser__WEBPACK_IMPORTED_MODULE_2__["default"]),
+/* harmony export */   "Loader": () => (/* reexport safe */ _loaders_loader__WEBPACK_IMPORTED_MODULE_3__["default"]),
+/* harmony export */   "AudioLoader": () => (/* reexport safe */ _loaders_audio_loader__WEBPACK_IMPORTED_MODULE_4__["default"])
+/* harmony export */ });
+/* harmony import */ var _event_target__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-target */ "./src/core/event-target.js");
+/* harmony import */ var _compound_node__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./compound-node */ "./src/core/compound-node.js");
+/* harmony import */ var _parsers_document_parser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./parsers/document-parser */ "./src/core/parsers/document-parser.js");
+/* harmony import */ var _loaders_loader__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./loaders/loader */ "./src/core/loaders/loader.js");
+/* harmony import */ var _loaders_audio_loader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loaders/audio-loader */ "./src/core/loaders/audio-loader.js");
+
+
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/core/compound-node.js":
+/*!***********************************!*\
+  !*** ./src/core/compound-node.js ***!
+  \***********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ CompoundNode)
+/* harmony export */ });
+/* harmony import */ var _event_target_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./event-target.js */ "./src/core/event-target.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * A class representing a collection of AudioNodes. The collection is defined
+ * similarly to a single node; by a context, and number of channel inputs and
+ * outputs.
+ * @abstract
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioNode
+ * @see https://webaudio.github.io/web-audio-api/#the-audionode-interface
+ * @example
+ * export default class ToneSourceNode extends CompoundNode {
+ *   constructor(context, toneFrequencies) {
+ *     super(context);
+ *
+ *     // Create a gain node that will serve as output.
+ *     this._gainNode = context.createGain();
+ *     this.outputs.push(this._gainNode);
+ *
+ *     // For each tone, create an oscillator node set to that tone, connected to
+ *     // the output gain node.
+ *     this._oscillatorNodes = [];
+ *     toneFrequencies.forEach((toneFrequency) => {
+ *       const oscillatorNode = context.createOscillator();
+ *       oscillatorNode.type = 'sine';
+ *       oscillatorNode.frequency.value = toneFrequency;
+ *       oscillatorNode.connect(this._gainNode);
+ *     });
+ *   }
+ *
+ *   start(when) {
+ *     // Start all the oscillators at the given time, when.
+ *     this._oscillatorNodes.forEach(oscillator => oscillator.start(when));
+ *   }
+ *
+ *   stop(when) {
+ *     // Stop all the oscillators at the given time, when.
+ *     this._oscillatorNodes.forEach(oscillator => oscillator.stop(when));
+ *   }
+ * }
+ */
+
+var CompoundNode = /*#__PURE__*/function (_EventTarget) {
+  _inherits(CompoundNode, _EventTarget);
+
+  var _super = _createSuper(CompoundNode);
+
+  /**
+   * Constructs a new {@link CompoundNode}.
+   * @param  {!AudioContext} context
+   *         The {@link AudioContext} to associate with the
+   *         {@link CompoundNode}.
+   */
+  function CompoundNode(context) {
+    var _this;
+
+    _classCallCheck(this, CompoundNode);
+
+    _this = _super.call(this);
+    _this._context = context;
+    _this._inputs = [];
+    _this._outputs = [];
+    return _this;
+  }
+  /**
+   * Returns the associated {@link AudioContext}.
+   * @type   {AudioContext}
+   *         The associated {@link AudioContext}.
+   */
+
+
+  _createClass(CompoundNode, [{
+    key: "context",
+    get: function get() {
+      return this._context;
+    }
+    /**
+     * Returns the first input feeding the node.
+     * @type   {AudioNode}
+     *         The first input feeding the node.
+     */
+
+  }, {
+    key: "input",
+    get: function get() {
+      return this._inputs[0];
+    }
+    /**
+     * Returns the inputs feeding the node.
+     * @type   {Array<AudioNode>}
+     *         The inputs feeding the node.
+     */
+
+  }, {
+    key: "inputs",
+    get: function get() {
+      return this._inputs;
+    }
+    /**
+     * Returns the first output from the node.
+     * @type   {AudioNode}
+     *         The first output from the node.
+     */
+
+  }, {
+    key: "output",
+    get: function get() {
+      return this._outputs[0];
+    }
+    /**
+     * Returns the outputs from the node.
+     * @type   {Array<AudioNode>}
+     *         The outputs from the node.
+     */
+
+  }, {
+    key: "outputs",
+    get: function get() {
+      return this._outputs;
+    }
+    /**
+     * Connects one output of this node to one input of another node.
+     * @param  {!(AudioNode|CompoundNode)} destination
+     *         The destination {@link AudioNode} or {@link CompoundNode} to
+     *         connect to.
+     * @param  {?number} output=0
+     *         An index describing the output of the current {@link CompoundNode}
+     *         to be connected to the destination.
+     * @param  {?number} input=0
+     *         An index describing the input of the destination to be connected to
+     *         the current {@link CompoundNode}.
+     * @return {(AudioNode|CompoundNode)}
+     *         A reference to the destination.
+     */
+
+  }, {
+    key: "connect",
+    value: function connect(destination) {
+      var output = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var input = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+      if (destination instanceof CompoundNode) {
+        this._outputs[output].connect(destination._inputs[input]);
+      } else {
+        this._outputs[output].connect(destination, 0, input);
+      }
+
+      return destination;
+    }
+    /**
+     * Disonnects one output of this node from one input of another node.
+     * @param  {AudioNode|CompoundNode} destination
+     *         The destination {@link AudioNode} or {@link CompoundNode} to
+     *         disconnect from.
+     * @param  {?number} output=0
+     *         An index describing the output of the current {@link CompoundNode}
+     *         to be disconnected from the destination.
+     * @param  {?number} input=0
+     *         An index describing the input of the destination to be disconnected
+     *         from the current {@link CompoundNode}.
+     * @return {AudioNode|CompoundNode}
+     *         A reference to the destination.
+     */
+
+  }, {
+    key: "disconnect",
+    value: function disconnect(destination) {
+      var output = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+      var input = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+
+      if (destination instanceof CompoundNode) {
+        this._outputs[output].disconnect(destination._inputs[input]);
+      } else {
+        this._outputs[output].disconnect(destination, 0, input);
+      }
+    }
+  }]);
+
+  return CompoundNode;
+}(_event_target_js__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/core/event-target.js":
+/*!**********************************!*\
+  !*** ./src/core/event-target.js ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ EventTarget)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * An implementaton of the Event-Listener pattern that meets the
+ * EventTarget interface specified by Mozilla.
+ * @abstract
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/EventTarget
+ */
+var EventTarget = /*#__PURE__*/function () {
+  /**
+   * Constructs a new {@link EventTarget}.
+   */
+  function EventTarget() {
+    _classCallCheck(this, EventTarget);
+
+    this._listeners = {};
+  }
+  /**
+   * Registers an event listener of a specific event type.
+   * @param  {!string} type
+   *         A string representing the event type to listen for.
+   * @param  {!function(event: Object)} listener
+   *         The javascript function/callback that is called when an event of
+   *         the specified type occurs.
+   */
+
+
+  _createClass(EventTarget, [{
+    key: "addEventListener",
+    value: function addEventListener(type, listener) {
+      if (this._getListenerIdx(type, listener) === -1) {
+        if (!this._listeners[type]) {
+          this._listeners[type] = [];
+        }
+
+        this._listeners[type].push(listener);
+      }
+    }
+    /**
+     * Removes an event listener.
+     * @param  {!string} type
+     *         A string representing the event type to remove.
+     * @param  {!function(event: Object)} listener
+     *         The javascript function/callback to remove.
+     */
+
+  }, {
+    key: "removeEventListener",
+    value: function removeEventListener(type, listener) {
+      var idx = this._getListenerIdx(type, listener);
+
+      if (idx >= 0) {
+        this._listeners[type].splice(idx, 1);
+      }
+    }
+    /**
+     * Dispatches an event, invoking the affected listeners.
+     * @param  {!Object} event
+     *         The event object to be dispatched.
+     */
+
+  }, {
+    key: "dispatchEvent",
+    value: function dispatchEvent(event) {
+      var typeListeners = this._listeners[event.type];
+
+      if (typeListeners) {
+        for (var i = 0; i < typeListeners.length; i++) {
+          typeListeners[i].call(null, event);
+        }
+      }
+    }
+    /**
+     * @private
+     * Gets the index of the type/listener.
+     * @param  {!string} type
+     *         A string representing the event type.
+     * @param  {!function(event: Object)} listener
+     *         The javascript function/callback.
+     * @return {number} The index of the type/listener.
+     */
+
+  }, {
+    key: "_getListenerIdx",
+    value: function _getListenerIdx(type, listener) {
+      var typeListeners = this._listeners[type];
+
+      if (typeListeners) {
+        for (var i = 0; i < typeListeners.length; i++) {
+          if (typeListeners[i] === listener) {
+            return i;
+          }
+        }
+      }
+
+      return -1;
+    }
+  }]);
+
+  return EventTarget;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/core/loaders/audio-loader.js":
+/*!******************************************!*\
+  !*** ./src/core/loaders/audio-loader.js ***!
+  \******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AudioLoader)
+/* harmony export */ });
+/* harmony import */ var _loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./loader */ "./src/core/loaders/loader.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * A class that provides Promise-based, asynchronous audio loading/decoding.
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/decodeAudioData
+ * @example
+ * const context = new AudioContext();
+ * const audioLoader = new bbcat.core.AudioLoader(context);
+ *
+ * audioLoader.load([
+ *   'url/to/audio/1.m4a',
+ *   'url/to/audio/2.m4a'
+ * ]).then((decodedAudioArray) => {
+ *   // Use the decoded audio (decodedAudioArray[0], decodedAudioArray[1])
+ * }).catch((error) => {
+ *   console.log(error);
+ * });;
+ */
+
+var AudioLoader = /*#__PURE__*/function (_Loader) {
+  _inherits(AudioLoader, _Loader);
+
+  var _super = _createSuper(AudioLoader);
+
+  /**
+   * Constructs a new {@link AudioLoader}.
+   * @param  {!AudioContext} context
+   *         The {@link AudioContext} to associate with the
+   *         {@link CompoundNode}.
+   */
+  function AudioLoader(context) {
+    var _this;
+
+    _classCallCheck(this, AudioLoader);
+
+    _this = _super.call(this, 'arraybuffer');
+    _this._context = context;
+    return _this;
+  }
+  /**
+   * Loads and decodes one or more audio files asynchronously.
+   * @override
+   * @param  {!(string|string[])} urls
+   *         A single url or list of urls of audio files to load and decode.
+   * @return {Promise}
+   *         A Promise that resolves when all audio files have been loaded and
+   *         decoded.
+   */
+
+
+  _createClass(AudioLoader, [{
+    key: "load",
+    value: function load(urls) {
+      return _get(_getPrototypeOf(AudioLoader.prototype), "load", this).call(this, urls);
+    }
+    /**
+     * @private
+     * Loads and decodes one audio file asynchronously.
+     * @param  {!string} url
+     *         A single url of an audio file to load and decoded.
+     * @return {Promise}
+     *         A Promise that resolves when the file has been loaded and decoded.
+     */
+
+  }, {
+    key: "_loadOne",
+    value: function _loadOne(url) {
+      var _this2 = this;
+
+      return _get(_getPrototypeOf(AudioLoader.prototype), "_loadOne", this).call(this, url).then(function (data) {
+        return _this2._decode(data);
+      });
+    }
+    /**
+     * @private
+     * Decodes one audio file asynchronously.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/AudioContext/decodeAudioData
+     * @param  {!ArrayBuffer} data
+     *         An ArrayBuffer containing the audio data to be decoded.
+     * @return {Promise}
+     *         A Promise that resolves when the audio data has been decoded.
+     */
+
+  }, {
+    key: "_decode",
+    value: function _decode(data) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        // Data must be copied to avoid issue with firefox losing reference.
+        _this3._context.decodeAudioData(data.slice(0), resolve, reject);
+      });
+    }
+  }]);
+
+  return AudioLoader;
+}(_loader__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/core/loaders/loader.js":
+/*!************************************!*\
+  !*** ./src/core/loaders/loader.js ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Loader)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * A class that provides Promise-based, asynchronous file loading.
+ * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+ * @example
+ * const jsonLoader = new bbcat.core.Loader(json);
+ *
+ * jsonLoader.load([
+ *   'url/to/json/1.json',
+ *   'url/to/json/2.json'
+ * ]).then((jsonArray) {
+ *   // Use the json objects (jsonArray[0], jsonArray[1])
+ * }).catch(function(error) {
+ *   console.log(error);
+ * });;
+ */
+var Loader = /*#__PURE__*/function () {
+  /**
+   * Constructs a new {@link Loader}.
+   * @param  {!string} responseType
+   *         The response type the loader should handle. Valid values are
+   *         arraybuffer, blob, document, json or text.
+   */
+  function Loader(responseType) {
+    _classCallCheck(this, Loader);
+
+    this._responseType = responseType || 'arraybuffer';
+  }
+  /**
+   * Loads one or more files asynchronously.
+   * @param  {!(string|string[])} urls
+   *         A single url or list of urls of files to load.
+   * @return {Promise}
+   *         A Promise that resolves when all files have been loaded.
+   */
+
+
+  _createClass(Loader, [{
+    key: "load",
+    value: function load(urls) {
+      return urls instanceof Array ? this._loadAll(urls) : this._loadOne(urls);
+    }
+    /**
+     * @private
+     * Loads one file asynchronously. Promotes overloading in subclasses to add
+     * pre- and post-load processing.
+     * @param  {!string} url
+     *         A single url of file to load.
+     * @return {Promise}
+     *         A Promise that resolves when the file has been loaded.
+     */
+
+  }, {
+    key: "_loadOne",
+    value: function _loadOne(url) {
+      return this._request(url);
+    }
+    /**
+     * @private
+     * Loads multiple files asynchronously. Promotes overloading in subclasses to
+     * add pre- and post-load processing.
+     * @param  {!string[]} urls
+     *         A list of urls of files to load.
+     * @return {Promise}
+     *         A Promise that resolves when all files have been loaded.
+     */
+
+  }, {
+    key: "_loadAll",
+    value: function _loadAll(urls) {
+      var _this = this;
+
+      return Promise.all(urls.map(function (url) {
+        return _this._loadOne(url);
+      }));
+    }
+    /**
+     * @private
+     * Loads a single file at the specified URL using the XMLHttpRequest API.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+     * @param  {!string} url
+     *         A single url of file to load.
+     * @return {Promise}
+     *         A Promise that resolves when the file has been loaded.
+     */
+
+  }, {
+    key: "_request",
+    value: function _request(url) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = _this2._responseType;
+        request.addEventListener('load', function onLoadEvent() {
+          // Any correct response will enter this method including 403
+          // (Forbidden), 404 (Not Found) etc. The only responses that
+          // indicate true success are 200 (OK) and 304 (Not Modified).
+          if (this.status === 200 || this.status === 304) {
+            resolve(request.response);
+          } else {
+            reject(new Error(this.statusText));
+          }
+        });
+        request.addEventListener('error', function () {
+          // Transport error has occured.
+          reject(new Error('A transport error has occured.'));
+        });
+        request.send();
+      });
+    }
+  }]);
+
+  return Loader;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/core/parsers/document-parser.js":
+/*!*********************************************!*\
+  !*** ./src/core/parsers/document-parser.js ***!
+  \*********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DocumentParser)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * A class to parse documents, returning Javascript objects representing their
+ * contents. The structure and content of the returned objects is defined by a
+ * set of datamodels and parsers that must be provided.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+ * @example
+ * // When document has the contents:
+ * // <ParentTemplate id="0">
+ * //   <ChildTemplate text="HelloWorld!"></ChildTemplate>
+ * //   <ChildTemplate></ChildTemplate>
+ * // </ParentTemplate>
+ * //
+ * // The result will contain the object:
+ * // {
+ * //   id: 0,
+ * //   childTemplates: [{
+ * //     text: 'HelloWorld!',
+ * //   }, {
+ * //     text: 'Default string.',
+ * //   }],
+ * // }
+ *
+ * const models = {
+ *   ParentTemplate: {
+ *     attributes: [{
+ *     name: 'id',
+ *       type: 'integer',
+ *     }],
+ *     nodes: [{
+ *       name: 'childTemplates',
+ *       node: 'ChildTemplate',
+ *       type: 'ChildTemplate',
+ *       mapping: 'many',
+ *     }],
+ *   },
+ *   ChildTemplate: {
+ *     attributes: [{
+ *       name: 'text',
+ *       type: 'string',
+ *       default: 'Default string.',
+ *     }],
+ *   },
+ * };
+ *
+ * const parsers = {
+ *   integer: (value) => parseInt(value, 10),
+ * }
+ *
+ * const documentParser = new DocumentParser(models, parsers);
+ * const result = documentParser.parse(document);
+ */
+var DocumentParser = /*#__PURE__*/function () {
+  /**
+   * Constructs a new {@link DocumentParser}.
+   * @param  {!Object[]} models
+   *         A set of data models that represent nodes within the documents to
+   *         be parsed. See {@link DocumentParser} example for model structure.
+   * @param  {?Object[]} parsers
+   *         A set of parsers that convert strings to a desired type. See
+   *         {@link DocumentParser} example for parser structure.
+   */
+  function DocumentParser(models) {
+    var parsers = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+    _classCallCheck(this, DocumentParser);
+
+    this._models = models;
+    this._parsers = parsers;
+  }
+  /**
+   * Parses a document, returning an object representing the document contents.
+   * @param  {!Document} document
+   *         The document to parse.
+   * @return {Object}
+   *         The object representing the parsed document contents.
+   */
+
+
+  _createClass(DocumentParser, [{
+    key: "parse",
+    value: function parse(document) {
+      // TODO: Consider adding sanity checks on document etc?
+      // Grab the root element and corresponding model, and parse.
+      var rootElement = document.childNodes[0];
+      var rootModel = this._models[rootElement.nodeName];
+      return this._parse(rootElement, rootModel);
+    }
+    /**
+     * Parses the node, by iterating through the nodes DOM tree. The model
+     * specifies all attributes and child nodes that should be parsed and the
+     * parser that should be used.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} model
+     *         The model to parse the node against.
+     * @return {Object}
+     *         The object representing the parsed nodes contents.
+     */
+
+  }, {
+    key: "_parse",
+    value: function _parse(node, model) {
+      var attrModels = model.attributes || [];
+      var nodeModels = model.nodes || [];
+      var object = {};
+
+      for (var i = 0; i < attrModels.length; i++) {
+        var attrModel = attrModels[i];
+        object[attrModel.name] = this._parseAttribute(node, attrModel);
+      }
+
+      for (var _i = 0; _i < nodeModels.length; _i++) {
+        var nodeModel = nodeModels[_i];
+        object[nodeModel.name] = this._parseNode(node, nodeModel);
+      }
+
+      return object;
+    }
+    /**
+     * Parses a single attribute on a node. The attrModel specifies the attribute
+     * and how it should be parsed.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} attrModel
+     *         The model to parse the attribute against.
+     * @return {any}
+     *         The parsed attribute.
+     */
+
+  }, {
+    key: "_parseAttribute",
+    value: function _parseAttribute(node, attrModel) {
+      // Parses a single attribute on the node as specified by the attrModel. If a
+      // parser is found matching the specified type the value is parsed through
+      // it. Otherwise; the value is returned.
+      var value = node.getAttribute(attrModel.name) || attrModel["default"];
+      var parser = this._parsers[attrModel.type];
+      return parser ? parser.call(null, value) : value;
+    }
+    /**
+     * Parses all children of the node as specified by the nodeModel.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} nodeModel
+     *         The model to parse the node against.
+     * @return {any}
+     *         The parsed node.
+     */
+
+  }, {
+    key: "_parseNode",
+    value: function _parseNode(node, nodeModel) {
+      var name = nodeModel.node || nodeModel.name;
+
+      var nodes = this._getChildNodes(node, name);
+
+      if (nodes.length === 0) {
+        return null;
+      }
+
+      return nodeModel.mapping === 'many' ? this._parseNodeMany(nodes, nodeModel) : this._parseNodeOne(nodes[0], nodeModel);
+    }
+    /**
+     * Parses all children of the node as specified by the nodeModel.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} nodeModel
+     *         The model to parse the node against.
+     * @return {any[]}
+     *         The parsed node.
+     */
+
+  }, {
+    key: "_parseNodeMany",
+    value: function _parseNodeMany(nodes, nodeModel) {
+      var childNodes = [];
+
+      for (var i = 0; i < nodes.length; i++) {
+        childNodes.push(this._parseNodeOne(nodes[i], nodeModel));
+      }
+
+      return childNodes;
+    }
+    /**
+     * Parses a single child of the node as specified by the nodeModel.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} nodeModel
+     *         The model to parse the node against.
+     * @return {any}
+     *         The parsed node.
+     */
+
+  }, {
+    key: "_parseNodeOne",
+    value: function _parseNodeOne(node, nodeModel) {
+      var model = this._models[nodeModel.type];
+      return model ? this._parse(node, model) : this._flattenNodeToAttribute(node, nodeModel);
+    }
+    /**
+     * Parses the text content of a node, flattening it to an atrribute.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!Object} nodeModel
+     *         The model to parse the node against.
+     * @return {any}
+     *         The parsed attribute.
+     */
+
+  }, {
+    key: "_flattenNodeToAttribute",
+    value: function _flattenNodeToAttribute(node, nodeModel) {
+      var value = node.textContent || nodeModel["default"];
+      var parser = this._parsers[nodeModel.type];
+      return parser ? parser.call(null, value) : value;
+    }
+    /**
+     * Gets all child nodes with the name equal to the name provided.
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
+     * @private
+     * @param  {!Node} node
+     *         The node to parse.
+     * @param  {!string} name
+     *         The name of the child node(s).
+     * @return {Node[]}
+     *         Array of nodes with the name equal to the name provided.
+     */
+
+  }, {
+    key: "_getChildNodes",
+    value: function _getChildNodes(node, name) {
+      var nodes = [];
+
+      for (var i = 0; i < node.childNodes.length; i++) {
+        var childNode = node.childNodes[i];
+        var childName = childNode.nodeName;
+
+        if (name.toLowerCase() === childName.toLowerCase()) {
+          nodes.push(childNode);
+        }
+      }
+
+      return nodes;
+    }
+  }]);
+
+  return DocumentParser;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/dash/_index.js":
+/*!****************************!*\
+  !*** ./src/dash/_index.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ManifestLoader": () => (/* reexport safe */ _manifest_loader_manifest_loader__WEBPACK_IMPORTED_MODULE_0__["default"]),
+/* harmony export */   "ManifestParser": () => (/* reexport safe */ _manifest_parser_manifest_parser__WEBPACK_IMPORTED_MODULE_1__["default"]),
+/* harmony export */   "DashSourceNode": () => (/* reexport safe */ _dash_source_node_dash_source_node__WEBPACK_IMPORTED_MODULE_2__["default"])
+/* harmony export */ });
+/* harmony import */ var _manifest_loader_manifest_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./manifest-loader/manifest-loader */ "./src/dash/manifest-loader/manifest-loader.js");
+/* harmony import */ var _manifest_parser_manifest_parser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./manifest-parser/manifest-parser */ "./src/dash/manifest-parser/manifest-parser.js");
+/* harmony import */ var _dash_source_node_dash_source_node__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dash-source-node/dash-source-node */ "./src/dash/dash-source-node/dash-source-node.js");
+
+
+
+
+
+/***/ }),
+
+/***/ "./src/dash/dash-source-node/dash-source-node.js":
+/*!*******************************************************!*\
+  !*** ./src/dash/dash-source-node/dash-source-node.js ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ DashSourceNode)
+/* harmony export */ });
+/* harmony import */ var _core_compound_node__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/compound-node */ "./src/core/compound-node.js");
+/* harmony import */ var _streams_audio_segment_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./streams/audio-segment-stream */ "./src/dash/dash-source-node/streams/audio-segment-stream.js");
+/* harmony import */ var _streams_headerless_audio_segment_stream__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./streams/headerless-audio-segment-stream */ "./src/dash/dash-source-node/streams/headerless-audio-segment-stream.js");
+/* harmony import */ var _streams_metadata_segment_stream__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./streams/metadata-segment-stream */ "./src/dash/dash-source-node/streams/metadata-segment-stream.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+
+/**
+ * An AudioNode to perform DASH playback.
+ * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ * @extends {CompoundNode}
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('url/to/manifest.mpd')
+ *   .then((manifestBlob) => {
+ *     // Parse the manifest blob to a manifest object.
+ *     const manifest = manifestParser.parse(manifestBlob);
+ *
+ *     // Create the DashSourceNode and connect to context destintion.
+ *     const context = new AudioContext();
+ *     const dashSourceNode = new bbcat.dash.DashSourceNode(context, manifest);
+ *     dashSourceNode.outputs.forEach((output) => {
+ *       output.connect(context.destination);
+ *     });
+ *
+ *     // Prime and start playback.
+ *     dashSourceNode.prime().then(() => {
+ *       dashSourceNode.start();
+ *     });
+ *   })
+ *   .catch((error) => {
+ *     console.log(error);
+ *   });
+ */
+
+var DashSourceNode = /*#__PURE__*/function (_CompoundNode) {
+  _inherits(DashSourceNode, _CompoundNode);
+
+  var _super = _createSuper(DashSourceNode);
+
+  /**
+   * Constructs a new {@link DashSourceNode}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} manifest
+   *         A parsed manifest provided by {@link ManifestParser}.
+   */
+  function DashSourceNode(context, manifest) {
+    var _this;
+
+    _classCallCheck(this, DashSourceNode);
+
+    _this = _super.call(this, context); // Initialise a list of the audio streams in addition to a list of all
+    // streams, allowing easier iteration of the audio streams only.
+
+    _this._allStreams = [];
+    _this._audioStreams = [];
+    _this._totalChannels = 0; // Instantiate information describing the playback region.
+
+    _this._presentationDuration = 0;
+    _this._playbackInitial = 0;
+    _this._playbackOffset = 0;
+    _this._playbackDuration = 0;
+    _this._playbackLoop = false;
+    _this._contextSyncTime = 0;
+
+    _this._initStreams(manifest);
+
+    _this._initAudioGraph();
+
+    _this._state = 'ready';
+    return _this;
+  }
+  /**
+   * Buffers a DASH stream for the parameter-defined region.
+   * @param  {?number} [initial=0]
+   *         The time into the region playback should start from.
+   * @param  {?boolean} [loop=true]
+   *         True if playback of the region should loop.
+   * @param  {?number} [offset=0]
+   *         The time into the performance the region starts.
+   * @param  {?number} [duration=presentationDuration-offset]
+   *         The duration of the region to play.
+   * @return {Promise}
+   *         A Promise that resolves when the node is ready for playback.
+   */
+
+
+  _createClass(DashSourceNode, [{
+    key: "prime",
+    value: function prime() {
+      var _this2 = this;
+
+      var initial = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var loop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      var duration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this._presentationDuration - offset;
+      // Return a promise that resolves when all streams are primed. Promise is
+      // rejected if node cannot currently be primed.
+      return new Promise(function (resolve, reject) {
+        // Check node state and parse all input paramaters.
+        if (_this2.state !== 'ready' && _this2.state !== 'primed') {
+          reject('State must be ready or primed before prime() is called.');
+          return;
+        }
+
+        if (_this2._presentationDuration !== 0 && (initial < 0 || initial >= duration)) {
+          reject('Invalid initial. Must be a number less than ' + 'duration and greater than or equal to 0.');
+          return;
+        }
+
+        if (!(loop === false || loop === true)) {
+          reject('Invalid loop. Must be a boolean.');
+          return;
+        }
+
+        if (_this2._presentationDuration !== 0 && (offset < 0 || offset >= _this2._presentationDuration)) {
+          reject('Invalid offset. Must be a number less than ' + 'presentationDuration and greater than or equal to 0.');
+          return;
+        }
+
+        if (_this2._presentationDuration !== 0 && (duration <= 0 || duration > _this2._presentationDuration - offset)) {
+          reject('Invalid duration. Must be a number less than ' + 'presentationDuration minus offset and greater than 0.');
+          return;
+        } // Store information describing the playback region.
+
+
+        _this2._playbackInitial = initial;
+        _this2._playbackOffset = offset;
+        _this2._playbackDuration = duration;
+        _this2._playbackLoop = loop;
+        _this2._state = 'priming'; // Prime all streams with the same offset, duration and loop parameters.
+
+        var primeStreamsPromises = _this2._allStreams.map(function (stream) {
+          return stream.prime(initial, loop, offset, duration);
+        });
+
+        Promise.all(primeStreamsPromises).then(function () {
+          _this2._state = 'primed';
+          resolve();
+        });
+      });
+    }
+    /**
+     * Starts playback of the buffered region, synchronised with AudioContext.
+     * @param  {?number} [contextSyncTime=context.currentTime]
+     *         The context time to synchronise with.
+     */
+
+  }, {
+    key: "start",
+    value: function start() {
+      var _this3 = this;
+
+      var contextSyncTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.context.currentTime;
+
+      if (this.state !== 'primed') {
+        return;
+      } // Start all streams.
+
+
+      this._contextSyncTime = contextSyncTime;
+
+      var startStreamsPromises = this._allStreams.map(function (stream) {
+        return new Promise(function (ended) {
+          return stream.start(_this3._contextSyncTime, ended);
+        });
+      }); // Resolve when all streams have completed.
+
+
+      this._state = 'playing';
+      Promise.all(startStreamsPromises).then(function () {
+        // Streams playback has been reached.
+        _this3._dispatchEndedEvent();
+
+        _this3._state = 'ready';
+      });
+    }
+    /**
+     * Stops streaming and playback.
+     */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      if (this.state !== 'playing') {
+        return;
+      }
+
+      this._allStreams.forEach(function (stream) {
+        return stream.stop();
+      });
+
+      this._state = 'ready';
+    }
+    /**
+    * Seek playback by a provided offset value.
+    * @param  {?number} [seconds]
+    *         Time in seconds to seek by note this is relative to the current playback position and
+    *         can be +/ve or -/ve
+    */
+
+  }, {
+    key: "seek",
+    value: function seek(seekTime) {
+      var _this4 = this;
+
+      var seekStart = this.context.currentTime;
+      var seekEnd = seekStart + seekTime;
+      this.stop();
+      this.prime(seekEnd).then(function () {
+        _this4.start();
+      });
+    }
+    /**
+     * Get the current performance time in seconds.
+     * @type {number}
+     *       The current performance time in seconds.
+     */
+
+  }, {
+    key: "playbackTime",
+    get: function get() {
+      return this.state === 'playing' ? (this.context.currentTime - this._contextSyncTime + this._playbackInitial) % this._playbackDuration + this._playbackOffset : 0;
+    }
+    /**
+     * Get the total performance duration in seconds.
+     * @type {number}
+     *       The total performance duration time in seconds.
+     */
+
+  }, {
+    key: "presentationDuration",
+    get: function get() {
+      return this._presentationDuration;
+    }
+    /**
+     * Gets the current state.
+     * @type {string}
+     *       The current state.
+     */
+
+  }, {
+    key: "state",
+    get: function get() {
+      return this._playbackState;
+    }
+    /**
+     * Sets the current state and emits a statechange event.
+     * @type {string}
+     *       The state.
+     */
+
+  }, {
+    key: "_state",
+    set: function set(state) {
+      // Sets the state and emits an event describing the state change.
+      this._playbackState = state;
+
+      this._dispatchStateChangeEvent(state);
+    }
+    /**
+     * Digests the manifest into a set of streams.
+     * @param  {!Object} manifest
+     *         The DASH Manifest.
+     */
+
+  }, {
+    key: "_initStreams",
+    value: function _initStreams(manifest) {
+      var _this5 = this;
+
+      // Digests the manifest into a set of streams. Each stream manages a buffer
+      // for downloaded segments and synchronises scheduling (and playback in the
+      // case of audio) to the AudioContext.
+      this._presentationDuration = manifest.mediaPresentationDuration || 0;
+      var bufferTime = manifest.minBufferTime;
+      var baseURL = manifest.baseURL ? manifest.baseURL[0] : '';
+      manifest.periods.forEach(function (period) {
+        period.adaptationSets.forEach(function (adaptationSet) {
+          var template = adaptationSet.segmentTemplate;
+          var representation = adaptationSet.representations ? adaptationSet.representations[0] : null;
+          var representationURL = representation ? representation.baseURL : '';
+          var definition = {
+            periodId: period.id,
+            adaptationSetId: adaptationSet.id,
+            representationId: representation ? representation.id : null,
+            type: adaptationSet.mimeType,
+            start: period.start + template.presentationTimeOffset / template.timescale,
+            // duration: period.duration,
+            duration: period.duration,
+            segmentStart: template.startNumber,
+            segmentDuration: template.duration / template.timescale,
+            templateUrl: (baseURL || representationURL || '') + (adaptationSet.baseURL || '') + (template.media || ''),
+            initUrl: (baseURL || representationURL || '') + (adaptationSet.baseURL || '') + (template.initialization || ''),
+            bufferTime: bufferTime
+          };
+
+          if (adaptationSet.mimeType.indexOf('json') > -1) {
+            // If type is JSON then create a metadata stream.
+            var stream = new _streams_metadata_segment_stream__WEBPACK_IMPORTED_MODULE_3__["default"](_this5.context, definition);
+            stream.metadataCallback = _this5._dispatchMetadataEvent.bind(_this5);
+
+            _this5._allStreams.push(stream);
+          } else if (adaptationSet.mimeType.indexOf('audio') > -1) {
+            // Add channel count to the definition for audio streams.
+            definition.channelCount = adaptationSet.value === 0 || adaptationSet.value ? adaptationSet.value : adaptationSet.audioChannelConfiguration.value; // If type is audio then create an audio stream. If there is an
+            // initialization chunk then create a headerless stream.
+
+            var _stream = template.initialization ? new _streams_headerless_audio_segment_stream__WEBPACK_IMPORTED_MODULE_2__["default"](_this5.context, definition) : new _streams_audio_segment_stream__WEBPACK_IMPORTED_MODULE_1__["default"](_this5.context, definition);
+
+            _this5._audioStreams.push(_stream);
+
+            _this5._allStreams.push(_stream); // Tally up the total number of channels across all audio streams.
+
+
+            _this5._totalChannels += _stream.channelCount;
+          }
+        });
+      });
+    }
+    /**
+     * Initialises the required AudioNodes.
+     */
+
+  }, {
+    key: "_initAudioGraph",
+    value: function _initAudioGraph() {
+      var _this6 = this;
+
+      // The DashSourceNode is single-channel, muliple-output. Create and connect
+      // a gain node for each channel in each audio stream.
+      var input = 0;
+
+      this._audioStreams.forEach(function (stream) {
+        for (var output = 0; output < stream.output.numberOfOutputs; output++) {
+          var gain = _this6.context.createGain();
+
+          stream.output.connect(gain, output);
+          _this6._outputs[input] = gain;
+          input++;
+        }
+      });
+    }
+    /**
+     * Dispatches an event of type metadata.
+     * @emits {metadata}
+     * @param  {!Object} metadata
+     *         The segment containing metadata.
+     */
+
+  }, {
+    key: "_dispatchMetadataEvent",
+    value: function _dispatchMetadataEvent(segment) {
+      this.dispatchEvent({
+        src: this,
+        type: 'metadata',
+        n: segment.n,
+        metadata: segment.metadata,
+        when: segment.when,
+        offset: segment.offset,
+        duration: segment.duration
+      });
+    }
+    /**
+     * Dispatches an event of type statechange.
+     * @emits {statechange}
+     * @param  {!Object} state
+     *         The new state.
+     */
+
+  }, {
+    key: "_dispatchStateChangeEvent",
+    value: function _dispatchStateChangeEvent(state) {
+      this.dispatchEvent({
+        src: this,
+        type: 'statechange',
+        state: state
+      });
+    }
+    /**
+     * Dispatches an event of type ended.
+     * @emits {ended}
+     */
+
+  }, {
+    key: "_dispatchEndedEvent",
+    value: function _dispatchEndedEvent() {
+      this.dispatchEvent({
+        src: this,
+        type: 'ended'
+      });
+    }
+  }]);
+
+  return DashSourceNode;
+}(_core_compound_node__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/dash-source-node/streams/audio-segment-stream.js":
+/*!*******************************************************************!*\
+  !*** ./src/dash/dash-source-node/streams/audio-segment-stream.js ***!
+  \*******************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ AudioSegmentStream)
+/* harmony export */ });
+/* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/_index */ "./src/core/_index.js");
+/* harmony import */ var _segment_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./segment-stream */ "./src/dash/dash-source-node/streams/segment-stream.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/**
+ * A class to manage a single stream of audio segments, synchronised to an
+ * audio context.
+ * @ignore
+ */
+
+var AudioSegmentStream = /*#__PURE__*/function (_SegmentStream) {
+  _inherits(AudioSegmentStream, _SegmentStream);
+
+  var _super = _createSuper(AudioSegmentStream);
+
+  /**
+   * Constructs a new {@link AudioSegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
+  function AudioSegmentStream(context, definition) {
+    var _this;
+
+    _classCallCheck(this, AudioSegmentStream);
+
+    _this = _super.call(this, context, new _core_index__WEBPACK_IMPORTED_MODULE_0__.AudioLoader(context), definition); // The primer offset is required because AudioContext.decodeAudioData cannot
+    // currently decode audio segments without fully formed headers. This will
+    // not be required in a future Web Audio API update.
+    // this._primerOffset = 2048 / this._context.sampleRate;
+    // HACK - to be resolved defaulting sample rate to 48000 to calculate the
+    // primer offset, needs to be resolved.
+
+    _this._primerOffset = 0; // 2048 / 48000;
+
+    _this._isStreaming = false;
+    _this._stream.channelCount = definition.channelCount;
+    _this._output = _this._context.createChannelSplitter(_this.channelCount);
+    return _this;
+  }
+  /**
+   * Gets the ouput AudioNode.
+   * @return {AudioNode}
+   *         The ouput AudioNode.
+   */
+
+
+  _createClass(AudioSegmentStream, [{
+    key: "output",
+    get: function get() {
+      return this._output;
+    }
+    /**
+     * Returns the number of channels in the stream.
+     * @return {Number}
+     *         The number of channels in the stream.
+     */
+
+  }, {
+    key: "channelCount",
+    get: function get() {
+      return this._stream.channelCount;
+    }
+    /**
+     * Schedules all audio in the buffer for playback and starts streaming of the
+     * audio region defined by prime.
+     */
+
+  }, {
+    key: "_start",
+    value: function _start() {
+      var _this2 = this;
+
+      // Set as streaming and schedule all audio in the buffer.
+      this._isStreaming = true;
+
+      this._buffer.segments.forEach(function (segment) {
+        _this2._startSegment(segment);
+      });
+
+      _get(_getPrototypeOf(AudioSegmentStream.prototype), "_start", this).call(this);
+    }
+    /**
+     * Stops all audio in the buffer and starts streaming of the audio region
+     * defined by prime.
+     */
+
+  }, {
+    key: "_stop",
+    value: function _stop() {
+      // Set as no longer streaming then stop all audio in the buffer.
+      this._isStreaming = false;
+
+      this._buffer.segments.forEach(function (segment) {
+        if (segment && segment.bufferSource) {
+          segment.bufferSource.stop();
+        }
+      });
+
+      _get(_getPrototypeOf(AudioSegmentStream.prototype), "_stop", this).call(this);
+    }
+    /**
+     * Schedules a segment for playback.
+     * @param  {!Object} segment
+     *         The segment to schedule.
+     */
+
+  }, {
+    key: "_startSegment",
+    value: function _startSegment(segment) {
+      if (segment && segment.bufferSource) {
+        // Adjust the parameters when, offset and duration for the context time.
+        var when = segment.when + this._contextSyncTime;
+        var offset = segment.offset + this._primerOffset;
+        var duration = segment.duration; // Calculate any lateness in playback.
+
+        var playOffset = this._context.currentTime - when; // If the segment is entirely too late for playback, play for a duration
+        // of 0 as all segments in the buffer must be played in order to avoid
+        // calling stop on a segment that has not yet been played. Currently there
+        // is no way to detect if a segment has been played already. If the
+        // segment is only slightly late then play as much as possible. Otherwise;
+        // play the entire segment.
+
+        if (playOffset < segment.duration) {
+          segment.bufferSource.start(playOffset > 0 ? 0 : when, playOffset > 0 ? offset + playOffset : offset, playOffset > 0 ? duration - playOffset : duration);
+        } else {
+          segment.bufferSource.start(0, 0, 0);
+        }
+      }
+    }
+    /**
+     * Constructs a BufferSourceNode from the audio data and adds to a segment
+     * in the stream buffer. If the stream is currently streaming then the segment
+     * is scheduled for playback on the AudioContext.
+     * @param  {!Object} data
+     *         The data to add to the segment.
+     * @param  {!number} n
+     *         The number of the segment in the playback sequence.
+     * @return {Object}
+     *         The complete segment.
+     */
+
+  }, {
+    key: "_addDataToSegment",
+    value: function _addDataToSegment(data, n) {
+      var segment = null;
+      var isFound = false;
+      var i = 0;
+
+      while (!isFound && i < this._buffer.segments.length) {
+        if (this._buffer.segments[i].n === n) {
+          segment = this._buffer.segments[i]; // Use the raw audio data to instantiate a bufferSourceNode, and connect
+          // to the streams output.
+
+          segment.bufferSource = this._context.createBufferSource();
+          segment.bufferSource.buffer = data;
+          segment.bufferSource.connect(this._output); // If the stream is currently playing then schedule for playback.
+
+          if (this._isStreaming) {
+            this._startSegment(segment);
+          }
+
+          isFound = true;
+        }
+
+        i++;
+      }
+
+      return segment;
+    }
+  }]);
+
+  return AudioSegmentStream;
+}(_segment_stream__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/dash-source-node/streams/headerless-audio-segment-stream.js":
+/*!******************************************************************************!*\
+  !*** ./src/dash/dash-source-node/streams/headerless-audio-segment-stream.js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ HeaderlessAudioSegmentStream)
+/* harmony export */ });
+/* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/_index */ "./src/core/_index.js");
+/* harmony import */ var _segment_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./segment-stream */ "./src/dash/dash-source-node/streams/segment-stream.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/**
+ * A class to manage a single stream of headerless audio segments, synchronised
+ * to an audio context.
+ * @ignore
+ */
+
+var HeaderlessAudioSegmentStream = /*#__PURE__*/function (_SegmentStream) {
+  _inherits(HeaderlessAudioSegmentStream, _SegmentStream);
+
+  var _super = _createSuper(HeaderlessAudioSegmentStream);
+
+  /**
+   * Constructs a new {@link HeaderlessAudioSegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
+  function HeaderlessAudioSegmentStream(context, definition) {
+    var _this;
+
+    _classCallCheck(this, HeaderlessAudioSegmentStream);
+
+    _this = _super.call(this, context, new _core_index__WEBPACK_IMPORTED_MODULE_0__.Loader('arraybuffer'), definition);
+    _this._isStreaming = false;
+    _this._stream.channelCount = definition.channelCount;
+    _this._output = _this._context.createChannelSplitter(_this.channelCount);
+    return _this;
+  }
+  /**
+   * Gets the ouput AudioNode.
+   * @return {AudioNode}
+   *         The ouput AudioNode.
+   */
+
+
+  _createClass(HeaderlessAudioSegmentStream, [{
+    key: "output",
+    get: function get() {
+      return this._output;
+    }
+    /**
+     * Returns the number of channels in the stream.
+     * @return {Number}
+     *         The number of channels in the stream.
+     */
+
+  }, {
+    key: "channelCount",
+    get: function get() {
+      return this._stream.channelCount;
+    }
+    /**
+     * Schedules all audio in the buffer for playback and starts streaming of the
+     * audio region defined by prime.
+     */
+
+  }, {
+    key: "_start",
+    value: function _start() {
+      var _this2 = this;
+
+      // Set as streaming and schedule all audio in the buffer.
+      this._isStreaming = true;
+
+      this._buffer.segments.forEach(function (segment) {
+        _this2._startSegment(segment);
+      });
+
+      _get(_getPrototypeOf(HeaderlessAudioSegmentStream.prototype), "_start", this).call(this);
+    }
+    /**
+     * Stops all audio in the buffer and starts streaming of the audio region
+     * defined by prime.
+     */
+
+  }, {
+    key: "_stop",
+    value: function _stop() {
+      // Set as no longer streaming then stop all audio in the buffer.
+      this._isStreaming = false;
+
+      this._buffer.segments.forEach(function (segment) {
+        if (segment && segment.bufferSource) {
+          segment.bufferSource.stop();
+        }
+      });
+
+      _get(_getPrototypeOf(HeaderlessAudioSegmentStream.prototype), "_stop", this).call(this);
+    }
+    /**
+     * Schedules a single segment for playback.
+     * @param  {!Object} segment
+     *         The segment to schedule.
+     */
+
+  }, {
+    key: "_startSegment",
+    value: function _startSegment(segment) {
+      if (segment && segment.bufferSource) {
+        // Adjust the parameters when, offset and duration for the context time.
+        var when = segment.when + this._contextSyncTime;
+        var offset = segment.offset + (segment.number === this._stream.segmentStart ? 0 : segment.bufferSource.buffer.duration / 2);
+        var duration = segment.duration; // Calculate any lateness in playback.
+
+        var playOffset = this._context.currentTime - when; // If the segment is entirely too late for playback, play for a duration
+        // of 0 as all segments in the buffer must be played in order to avoid
+        // calling stop on a segment that has not yet been played. Currently there
+        // is no way to detect if a segment has been played already. If the
+        // segment is only slightly late then play as much as possible. Otherwise;
+        // play the entire segment.
+
+        if (playOffset < segment.duration) {
+          var osWhen = playOffset > 0 ? 0 : when;
+          var osOffset = playOffset > 0 ? offset + playOffset : offset;
+          var osDuration = playOffset > 0 ? duration - playOffset : duration;
+          segment.bufferSource.start(osWhen, osOffset, osDuration);
+        } else {
+          segment.bufferSource.start(0, 0, 0);
+        }
+      }
+    }
+    /*
+     * Merges all passed buffers into a single buffer.
+     */
+
+  }, {
+    key: "_mergeBuffers",
+    value: function _mergeBuffers() {
+      for (var _len = arguments.length, buffers = new Array(_len), _key = 0; _key < _len; _key++) {
+        buffers[_key] = arguments[_key];
+      }
+
+      var mergedLength = buffers.reduce(function (length, buffer) {
+        return length + buffer.byteLength;
+      }, 0);
+      var mergedArray = new Uint8Array(mergedLength);
+      var currentOffset = 0;
+      buffers.forEach(function (buffer) {
+        mergedArray.set(new Uint8Array(buffer), currentOffset);
+        currentOffset += buffer.byteLength;
+      });
+      return mergedArray.buffer;
+    }
+    /**
+     * Decodes the segment data and constructs a BufferSourceNode. If the stream
+     * is currently streaming then the segment is scheduled for playback on the
+     * AudioContext. Streaming audio requires the previous segment in order to
+     * decode the current.
+     * @param  {!Object} prevSegment
+     *         The segment that should be used to decode segment.
+     * @param  {!Object} segment
+     *         The segment that should be decoded using prevSegment segment.
+     */
+
+  }, {
+    key: "_mergeBuffersToSegment",
+    value: function _mergeBuffersToSegment(prevSegment, segment) {
+      var _this3 = this;
+
+      /* eslint-disable no-param-reassign */
+      if ((prevSegment && prevSegment.data || segment.n === 0) && segment && segment.data && !segment.isDecoded) {
+        segment.isDecoded = true;
+        var arrayBuffer = null;
+
+        if (segment.number === this._stream.segmentStart) {
+          arrayBuffer = this._mergeBuffers(this._buffer.init, segment.data);
+        } else if (segment.n === 0) {
+          arrayBuffer = this._mergeBuffers(this._buffer.init, this._buffer.decode, segment.data);
+        } else {
+          arrayBuffer = this._mergeBuffers(this._buffer.init, prevSegment.data, segment.data);
+        }
+
+        this._context.decodeAudioData(arrayBuffer, function (decodedAudio) {
+          segment.bufferSource = _this3._context.createBufferSource();
+          segment.bufferSource.buffer = decodedAudio;
+          segment.bufferSource.connect(_this3._output);
+
+          if (_this3._isStreaming) {
+            _this3._startSegment(segment);
+          }
+        }, function (error) {
+          // eslint-disable-next-line no-console
+          console.log('Could not decode audio data:', error);
+        });
+      }
+      /* eslint-enable no-param-reassign */
+
+    }
+    /**
+     * Constructs a BufferSourceNode from the audio data and adds to a segment
+     * in the stream buffer. If the stream is currently streaming then the segment
+     * is scheduled for playback on the AudioContext.
+     * @param  {!Object} data
+     *         The data to add to the segment.
+     * @param  {!number} n
+     *         The number of the segment in the playback sequence.
+     * @return {Object}
+     *         The complete segment.
+     */
+
+  }, {
+    key: "_addDataToSegment",
+    value: function _addDataToSegment(data, n) {
+      var segment = this._buffer.segments.find(function (s) {
+        return s.n === n;
+      });
+
+      if (segment) {
+        // segment.data = this._removeTimestamps(data);
+        segment.data = data;
+
+        var prevSegment = this._buffer.segments.find(function (s) {
+          return s.n === n - 1;
+        });
+
+        var nextSegment = this._buffer.segments.find(function (s) {
+          return s.n === n + 1;
+        });
+
+        this._mergeBuffersToSegment(prevSegment, segment);
+
+        this._mergeBuffersToSegment(segment, nextSegment);
+      }
+
+      return segment;
+    }
+    /**
+     * Overwrites the timestamp data in a raw aac dash segment. This prevents chrome crashine.
+     * @param  {!Object} data
+     *         The data to modify.
+     * @return {Object}
+     *         The modified data
+     */
+
+  }, {
+    key: "_removeTimestamps",
+    value: function _removeTimestamps(data) {
+      var moddata = new Uint8Array(data);
+      moddata[60] = 66;
+      moddata[61] = 72;
+      moddata[62] = 75;
+      moddata[63] = 75;
+      return moddata;
+    }
+    /**
+     * Primes the buffer with the initialisation segment, and fills the segment
+     * buffer with segment templates and downloads corresponding segments.
+     * @return {Promise}
+     *         A Promise that resolves when buffer is primed.
+     */
+
+  }, {
+    key: "_primeBuffer",
+    value: function _primeBuffer() {
+      var _this4 = this;
+
+      return this._loader.load(this._stream.initUrl).then(function (data) {
+        _this4._buffer.init = data;
+      }).then(function () {
+        var decodeSegment = _this4._getTemplateForNthSegment(-1);
+
+        return decodeSegment.number >= _this4._stream.segmentStart ? _this4._loader.load(decodeSegment.url) : null;
+      }).then(function (data) {
+        // this._buffer.decode = this._removeTimestamps(data);
+        _this4._buffer.decode = data;
+      }).then(function () {
+        var promises = [];
+
+        var _loop = function _loop(i) {
+          var segment = _this4._getTemplateForNthSegment(i);
+
+          _this4._buffer.segments.push(segment); // Only load segments that lay within the streams segment bounds.
+
+
+          if (segment.number >= _this4._stream.segmentStart && (!_this4._stream.segmentEnd || segment.number <= _this4._stream.segmentEnd)) {
+            promises.push(_this4._loader.load(segment.url).then(function (data) {
+              _this4._addDataToSegment(data, segment.n);
+            }));
+          }
+        };
+
+        for (var i = 0; i < _this4._buffer.size; i++) {
+          _loop(i);
+        }
+
+        return Promise.all(promises);
+      });
+    }
+  }]);
+
+  return HeaderlessAudioSegmentStream;
+}(_segment_stream__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/dash-source-node/streams/metadata-segment-stream.js":
+/*!**********************************************************************!*\
+  !*** ./src/dash/dash-source-node/streams/metadata-segment-stream.js ***!
+  \**********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ MetadataSegmentStream)
+/* harmony export */ });
+/* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../core/_index */ "./src/core/_index.js");
+/* harmony import */ var _segment_stream__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./segment-stream */ "./src/dash/dash-source-node/streams/segment-stream.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+/**
+ * A class to manage a single stream of metadata segments, synchronised to an
+ * audio context.
+ * @ignore
+ * @private
+ */
+
+var MetadataSegmentStream = /*#__PURE__*/function (_SegmentStream) {
+  _inherits(MetadataSegmentStream, _SegmentStream);
+
+  var _super = _createSuper(MetadataSegmentStream);
+
+  /**
+   * Constructs a new {@link MetadataSegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
+  function MetadataSegmentStream(context, definition) {
+    var _this;
+
+    _classCallCheck(this, MetadataSegmentStream);
+
+    _this = _super.call(this, context, new _core_index__WEBPACK_IMPORTED_MODULE_0__.Loader('json'), definition);
+
+    _this._metadataCallback = function () {};
+
+    return _this;
+  }
+  /**
+   * Gets the metadata callback function.
+   * @return {function(segment: !Object)}
+   *         The metadata callback function.
+   */
+
+
+  _createClass(MetadataSegmentStream, [{
+    key: "metadataCallback",
+    get: function get() {
+      return this._metadataCallback;
+    }
+    /**
+     * Sets the metadata callback function.
+     * @param  {function(segment: !Object)} callback
+     *         The metadata callback function.
+     */
+    ,
+    set: function set(callback) {
+      if (!callback || !(callback instanceof Function)) {
+        throw new Error('Invalid parameter callback. Must be of type Function.');
+      }
+
+      this._metadataCallback = callback;
+    }
+    /**
+     * Adds a data payload to a segment in the stream buffer and calls the
+     * metadata callback, passing the segment with metadata attached.
+     * @param  {!Object} data
+     *         The data to add to the segment.
+     * @param  {!number} n
+     *         The number of the segment in the playback sequence.
+     * @return {Object}
+     *         The complete segment.
+     */
+
+  }, {
+    key: "_addDataToSegment",
+    value: function _addDataToSegment(data, n) {
+      var _this2 = this;
+
+      var segment = null;
+      var isFound = false;
+      var i = 0;
+
+      while (!isFound && i < this._buffer.segments.length) {
+        if (this._buffer.segments[i].n === n) {
+          (function () {
+            segment = _this2._buffer.segments[i]; // The bounds in nanoseconds that metadata must fall within.
+
+            var metadataStart = 1e9 * _this2._stream.segmentDuration * (segment.number - _this2._stream.segmentStart);
+            var metadataEnd = metadataStart + 1e9 * (segment.offset + segment.duration); // Offset in nanoseconds to convert metadata to context time.
+
+            var metadataOffset = -metadataStart + 1e9 * (segment.when - segment.offset); // Filter metadata to be within bounds and apply context offset.
+
+            segment.metadata = data.filter(function (datum) {
+              return datum.timens >= metadataStart && datum.timens < metadataEnd;
+            }).map(function (datum) {
+              var newMetadata = Object.assign({}, datum);
+              newMetadata.timens += metadataOffset;
+              return newMetadata;
+            });
+
+            _this2._metadataCallback(segment);
+
+            isFound = true;
+          })();
+        }
+
+        i++;
+      }
+
+      return segment;
+    }
+  }]);
+
+  return MetadataSegmentStream;
+}(_segment_stream__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/dash-source-node/streams/segment-stream.js":
+/*!*************************************************************!*\
+  !*** ./src/dash/dash-source-node/streams/segment-stream.js ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ SegmentStream)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+/**
+ * A class to manage a single stream of segments, synchronised to an audio
+ * context.
+ * @ignore
+ * @private
+ * @abstract
+ */
+var SegmentStream = /*#__PURE__*/function () {
+  /**
+   * Constructs a new {@link SegmentStream}.
+   * @param  {!AudioContext} context
+   *         The AudioContext that streaming will be synchronised to.
+   * @param  {!Loader} loader
+   *         The loader that will be used to download segment data.
+   * @param  {!Object} definition
+   *         An object that defines the stream parameters.
+   */
+  function SegmentStream(context, loader, definition) {
+    _classCallCheck(this, SegmentStream);
+
+    this._context = context;
+    this._contextSyncTime = 0;
+    this._loader = loader;
+    this._minBufferSize = 3; // Clone required information form the provided definition.
+
+    this._stream = {};
+    this._stream.periodId = definition.periodId;
+    this._stream.adaptationSetId = definition.adaptationSetId;
+    this._stream.representationId = definition.representationId;
+    this._stream.start = definition.start;
+    this._stream.duration = definition.duration;
+    this._stream.segmentDuration = definition.segmentDuration;
+    this._stream.segmentStart = definition.segmentStart;
+    this._stream.segmentEnd = definition.segmentStart - 1 + Math.ceil(definition.duration / definition.segmentDuration);
+    this._stream.initUrl = definition.initUrl || '';
+    this._stream.initUrl = this._stream.initUrl.replace('$RepresentationID$', this._stream.representationId);
+    this._stream.templateUrl = definition.templateUrl;
+    this._stream.templateUrl = this._stream.templateUrl.replace('$RepresentationID$', this._stream.representationId);
+
+    var templateRegxRes = this._stream.templateUrl.match(/(\$[Nn]umber%*([0-9]*)d*\$)/);
+
+    if (templateRegxRes) {
+      this._stream.templateUrl = this._stream.templateUrl.replace(templateRegxRes[1], '$Number');
+      this._stream.templateUrlLeadingZeros = templateRegxRes[2] ? parseInt(templateRegxRes[2], 10) : 0;
+    } // Instantiate a circular buffer for segments .
+
+
+    this._buffer = {};
+    this._buffer.segments = [];
+    this._buffer.frontIndex = 0;
+    this._buffer.size = Math.max(Math.ceil(definition.bufferTime / definition.segmentDuration), this._minBufferSize); // Instantiate information describing the playback region.
+
+    this._play = {};
+    this._play.initial = 0;
+    this._play.offset = 0;
+    this._play.duration = 0;
+    this._play.loop = false;
+    this._play.endedCallback = null;
+  }
+  /**
+   * Primes the stream to play the region defined by the parameters.
+   * @param  {?number} [initial=0]
+   *         The time into the region playback should start from.
+   * @param  {?boolean} [loop=false]
+   *         True if playback of the region should loop.
+   * @param  {?number} [offset=0]
+   *         The time into the performance the region starts.
+   * @param  {?number} [duration=definition.duration-offset]
+   *         The duration of the region to play.
+   * @return {Promise}
+   *         A Promise that resolves when the stream is primed.
+   */
+
+
+  _createClass(SegmentStream, [{
+    key: "prime",
+    value: function prime() {
+      var initial = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var loop = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      var offset = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+      var duration = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : this._stream.duration - offset;
+
+      this._primePlayRegion(initial, loop, offset, duration);
+
+      return this._primeBuffer();
+    }
+    /**
+     * Primes playback paramters that define the play region. Caclulations
+     * that are buffered for use in scheduling later during priming/playback.
+     * @param  {?number} [initial=0]
+     *         The time into the region playback should start from.
+     * @param  {?boolean} [loop=false]
+     *         True if playback of the region should loop.
+     * @param  {?number} [offset=0]
+     *         The time into the performance the region starts.
+     * @param  {?number} [duration=definition.duration-offset]
+     *         The duration of the region to play.
+     */
+
+  }, {
+    key: "_primePlayRegion",
+    value: function _primePlayRegion(initial, loop, offset, duration) {
+      // Store information describing the playback region.
+      this._play.initial = initial;
+      this._play.loop = loop;
+      this._play.offset = offset;
+      this._play.duration = duration; // Clear the buffer to an initial empty state.
+
+      this._buffer.segments = [];
+      this._buffer.frontIndex = 0; // Precalculate useful segment numbers and overlap so that there is no need
+      // to repeat calculations in the worker threads that maintain the buffer.
+      // TODO: Should this._stream.start be added rather than subtracted?
+
+      var startOffset = this._play.offset - this._stream.start;
+      var initialOffset = startOffset + this._play.initial;
+      var endOffset = startOffset + this._play.duration;
+      this._play.startOverlap = (this._stream.segmentDuration - Math.abs(startOffset) % this._stream.segmentDuration) % this._stream.segmentDuration;
+      this._play.initialOverlap = Math.abs(initialOffset) % this._stream.segmentDuration;
+      this._play.endOverlap = Math.abs(endOffset) % this._stream.segmentDuration;
+      this._play.startSegment = this._stream.segmentStart + Math.floor(startOffset / this._stream.segmentDuration);
+      this._play.initialSegment = this._stream.segmentStart + Math.floor(initialOffset / this._stream.segmentDuration);
+      this._play.endSegment = this._stream.segmentStart - 1 + Math.ceil(endOffset / this._stream.segmentDuration);
+      this._play.segmentsPerLoop = 1 + this._play.endSegment - this._play.startSegment;
+    }
+    /**
+     * Primes the buffer with segment templates and downloads corresponding segments.
+     * @return {Promise}
+     *         A Promise that resolves when buffer is primed.
+     */
+
+  }, {
+    key: "_primeBuffer",
+    value: function _primeBuffer() {
+      var _this = this;
+
+      var promises = [];
+
+      var _loop = function _loop(i) {
+        var segment = _this._getTemplateForNthSegment(i);
+
+        _this._buffer.segments.push(segment); // Only load segments that lay within the streams segment bounds.
+
+
+        if (segment.number >= _this._stream.segmentStart && (!_this._stream.segmentEnd || segment.number <= _this._stream.segmentEnd)) {
+          promises.push(_this._loader.load(segment.url).then(function (data) {
+            _this._addDataToSegment(data, segment.n);
+          }));
+        }
+      };
+
+      for (var i = 0; i < this._buffer.size; i++) {
+        _loop(i);
+      }
+
+      return Promise.all(promises);
+    }
+    /**
+     * Starts streaming of the region defined by prime.
+     * @param  {?number} [contextSyncTime=0]
+     *         The context time to which the stream start should be synchronised.
+     * @param  {?function()} [endedCallback=null]
+     *         A function that is called when stream playback has naturally ended.
+     */
+
+  }, {
+    key: "start",
+    value: function start() {
+      var contextSyncTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+      var endedCallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      this._contextSyncTime = contextSyncTime;
+      this._play.endedCallback = endedCallback;
+
+      this._start();
+    }
+    /**
+     * Stops streaming of the region defined by prime.
+     */
+
+  }, {
+    key: "stop",
+    value: function stop() {
+      this._stop();
+    }
+    /**
+     * Checks if a new segment can be downloaded. If so; attempts to download it.
+     */
+
+  }, {
+    key: "_manageBuffer",
+    value: function _manageBuffer() {
+      var _this2 = this;
+
+      // Get the front segment and check to see if it has finished playing.
+      var currentSegment = this._buffer.segments[this._buffer.frontIndex];
+      var currentSegmentEnd = currentSegment.when + currentSegment.duration;
+
+      var currentTime = this._getCurrentSyncTime();
+
+      if (currentTime >= currentSegmentEnd) {
+        if (!this._play.loop && this._play.duration && currentSegment.number >= this._play.endSegment) {
+          // Playback has naturally ended.
+          this._end();
+        } else {
+          // Playback must continue. Build the next required segment, add to
+          // the buffer, and advance the buffer front.
+          var newSegmentNumber = currentSegment.n + this._buffer.size;
+
+          var newSegment = this._getTemplateForNthSegment(newSegmentNumber);
+
+          this._buffer.segments[this._buffer.frontIndex] = newSegment;
+          this._buffer.frontIndex++;
+          this._buffer.frontIndex = this._buffer.frontIndex % this._buffer.size;
+
+          if (newSegment.number >= this._stream.segmentStart && (!this._stream.segmentEnd || newSegment.number <= this._stream.segmentEnd)) {
+            this._loader.load(newSegment.url).then(function (data) {
+              _this2._addDataToSegment(data, newSegment.n);
+            });
+          }
+        }
+      }
+    }
+    /**
+     * Returns the number of seconds past since the sync point.
+     * @return {number}
+     *         The number of seconds past since the sync point.
+     */
+
+  }, {
+    key: "_getCurrentSyncTime",
+    value: function _getCurrentSyncTime() {
+      return this._context.currentTime - this._contextSyncTime;
+    }
+    /**
+     * Returns a template for a segment. The template constitutes the number in
+     * the playback sequence, the segment sequence number, tand he period covered
+     * by the segment relative to playback start (defined as segment start time,
+     * duration and offset.)
+     * @param  {!number} n
+     *         The nuber of the segment in the layback sequence requested.
+     * @return {Object}
+     *         The segment template.
+     */
+
+  }, {
+    key: "_getTemplateForNthSegment",
+    value: function _getTemplateForNthSegment(n) {
+      // Calculate the loop position and number of the nth segment.
+      var nOffset = n + this._play.initialSegment - this._play.startSegment;
+      var loopNumber = this._play.loop && this._play.segmentsPerLoop ? Math.floor(nOffset / this._play.segmentsPerLoop) : 0;
+      var loopPosition = this._play.loop && this._play.segmentsPerLoop ? nOffset % this._play.segmentsPerLoop : nOffset; // Calulate the stream segment number and url.
+
+      var number = this._play.startSegment + loopPosition;
+
+      var url = this._stream.templateUrl.replace('$Number', this._padNumberWithZeros(number, this._stream.templateUrlLeadingZeros)); // Construct the default parameters for when, offset and duration that
+      // describe the period covered by the segment (w.r.t. context time:)
+      // when - when the play should start.
+      // offset - where the playback should start.
+      // duration - the intended length of the portion to be played.
+
+
+      var when = -this._play.startOverlap - this._play.initial + loopNumber * this._play.duration + loopPosition * this._stream.segmentDuration;
+      var offset = 0;
+      var duration = this._stream.segmentDuration; // Trim the start of the first segment of the first loop if required.
+      // Otherwise; trim the start of the first loop segment if required.
+
+      if (n === 0) {
+        when = 0;
+        duration = duration - this._play.initialOverlap;
+        offset = offset + this._play.initialOverlap;
+      } else if (number === this._play.startSegment) {
+        when = when + this._play.startOverlap;
+        duration = duration - this._play.startOverlap;
+        offset = offset + this._play.startOverlap;
+      } // Trim the end of the last loop segment if required.
+
+
+      if (number === this._play.endSegment) {
+        duration = duration - this._play.endOverlap;
+      } // Return the template for the segment.
+
+
+      return {
+        n: n,
+        number: number,
+        url: url,
+        when: when,
+        offset: offset,
+        duration: duration
+      };
+    }
+    /**
+     * Returns a string representation of number padded with zeros.
+     * @param  {!number} number
+     *         The number to pad.
+     * @param  {!number} zeros
+     *         The number of '0' characters to pad the number.
+     * @return {string}
+     *         The string representation of the zero padded number.
+     */
+
+  }, {
+    key: "_padNumberWithZeros",
+    value: function _padNumberWithZeros(number, zeros) {
+      var str = "".concat(number);
+
+      while (str.length < zeros) {
+        str = "0".concat(str);
+      }
+
+      return str;
+    }
+    /**
+     * This must be overridden by subclasses. Should add a data payload to a
+     * segment in the buffer, performing any pre- or post-processing required.
+     * @abstract
+     * @example
+     * // _addDataToSegment(data, n) {
+     * //   let segment = null;
+     * //   let isFound = false;
+     * //   let i = 0;
+     * //
+     * //   while (!isFound && i < this._buffer.segments.length) {
+     * //     if (this._buffer.segments[i].n === n) {
+     * //       segment = this._buffer.segments[i];
+     * //       segment.data = data;
+     * //       isFound = true;
+     * //     }
+     * //     i++;
+     * //   }
+     * //
+     * //   return segment;
+     * // }
+     * @param  {!any} data
+     *         The data to add to the segment.
+     * @param  {!number} n
+     *         The number of the segment in the playback sequence.
+     * @return {Object}
+     *         The complete segment.
+     */
+
+  }, {
+    key: "_addDataToSegment",
+    value: function _addDataToSegment() {}
+    /**
+     * Starts streaming of the region defined by prime. This may be overridden by
+     * subclasses needing to act before streaming is started.
+     */
+
+  }, {
+    key: "_start",
+    value: function _start() {
+      var _this3 = this;
+
+      // Continually maintain the buffer. Checks if a new segment can be
+      // downloaded with a frequency relative to the streams segment duration.
+      this.manageBufferInterval = setInterval(function () {
+        return _this3._manageBuffer();
+      }, this._stream.segmentDuration / 4 * 1000);
+    }
+    /**
+     * Stops streaming of the region defined by prime. This may be overridden by
+     * subclasses needing to act before streaming is stopped.
+     */
+
+  }, {
+    key: "_stop",
+    value: function _stop() {
+      // Stop maintaining the buffer.
+      clearInterval(this.manageBufferInterval);
+    }
+    /**
+     * Ends streaming of the region defined by prime. This may be
+     * overridden by subclasses needing to act when streaming ends naturally.
+     */
+
+  }, {
+    key: "_end",
+    value: function _end() {
+      this._stop();
+
+      this._play.endedCallback();
+    }
+  }]);
+
+  return SegmentStream;
+}();
+
+
+
+/***/ }),
+
+/***/ "./src/dash/manifest-loader/manifest-loader.js":
+/*!*****************************************************!*\
+  !*** ./src/dash/manifest-loader/manifest-loader.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ManifestLoader)
+/* harmony export */ });
+/* harmony import */ var _core_loaders_loader__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/loaders/loader */ "./src/core/loaders/loader.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _get(target, property, receiver) { if (typeof Reflect !== "undefined" && Reflect.get) { _get = Reflect.get; } else { _get = function _get(target, property, receiver) { var base = _superPropBase(target, property); if (!base) return; var desc = Object.getOwnPropertyDescriptor(base, property); if (desc.get) { return desc.get.call(receiver); } return desc.value; }; } return _get(target, property, receiver || target); }
+
+function _superPropBase(object, property) { while (!Object.prototype.hasOwnProperty.call(object, property)) { object = _getPrototypeOf(object); if (object === null) break; } return object; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+/**
+ * A class that provides Promise-based, asynchronous DASH Manifest loading.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+ * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('http://example.org/manifest.mpd').then((doc) => {
+ *  const manifest = manifestParser.parse(doc);
+ *  // Use manifest.mediaPresentationDuration etc.
+ * });
+ */
+
+var ManifestLoader = /*#__PURE__*/function (_Loader) {
+  _inherits(ManifestLoader, _Loader);
+
+  var _super = _createSuper(ManifestLoader);
+
+  /**
+   * Constructs a new {@link ManifestLoader}.
+   */
+  function ManifestLoader() {
+    var _this;
+
+    _classCallCheck(this, ManifestLoader);
+
+    _this = _super.call(this, 'text');
+    _this._parser = new DOMParser();
+    return _this;
+  }
+  /**
+   * Loads one or more manifest files asynchronously and converts them to
+   * documents.
+   * @override
+   * @param  {!(string|string[])} urls
+   *         A single url or list of urls of manifest files to load and convert.
+   * @return {Promise}
+   *         A Promise that resolves when all manifest files have been loaded
+   *         and converted to documents.
+   */
+
+
+  _createClass(ManifestLoader, [{
+    key: "load",
+    value: function load(urls) {
+      return _get(_getPrototypeOf(ManifestLoader.prototype), "load", this).call(this, urls);
+    }
+    /**
+     * Loads and converts one manifest file asynchronously.
+     * @private
+     * @param  {!string} url
+     *         A single url of a manifest file to load and decoded.
+     * @return {Promise}
+     *         A Promise that resolves when the manifest has been loaded.
+     */
+
+  }, {
+    key: "_loadOne",
+    value: function _loadOne(url) {
+      var _this2 = this;
+
+      return _get(_getPrototypeOf(ManifestLoader.prototype), "_loadOne", this).call(this, url).then(function (string) {
+        return _this2._parse(string);
+      });
+    }
+    /**
+     * Converts one manifest blob to a document.
+     * @private
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+     * @param  {!string} string
+     *         A string blob containing the manifest to be converted.
+     * @return {Promise}
+     *         A Promise that resolves when the manifest blob has been converted.
+     */
+
+  }, {
+    key: "_parse",
+    value: function _parse(string) {
+      var xml = this._parser.parseFromString(string, 'text/xml');
+
+      return Promise.resolve(xml);
+    }
+  }]);
+
+  return ManifestLoader;
+}(_core_loaders_loader__WEBPACK_IMPORTED_MODULE_0__["default"]);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/manifest-parser/manifest-parser.js":
+/*!*****************************************************!*\
+  !*** ./src/dash/manifest-parser/manifest-parser.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ ManifestParser)
+/* harmony export */ });
+/* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../core/_index */ "./src/core/_index.js");
+/* harmony import */ var _mpd_models__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mpd-models */ "./src/dash/manifest-parser/mpd-models.js");
+/* harmony import */ var _mpd_parsers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mpd-parsers */ "./src/dash/manifest-parser/mpd-parsers.js");
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _createSuper(Derived) { var hasNativeReflectConstruct = _isNativeReflectConstruct(); return function _createSuperInternal() { var Super = _getPrototypeOf(Derived), result; if (hasNativeReflectConstruct) { var NewTarget = _getPrototypeOf(this).constructor; result = Reflect.construct(Super, arguments, NewTarget); } else { result = Super.apply(this, arguments); } return _possibleConstructorReturn(this, result); }; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } else if (call !== void 0) { throw new TypeError("Derived constructors may only return object or undefined"); } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Reflect.construct) return false; if (Reflect.construct.sham) return false; if (typeof Proxy === "function") return true; try { Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {})); return true; } catch (e) { return false; } }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+
+
+
+/**
+ * A class to parse DASH Manifest documents, returning a Javascript object
+ * representing their contents.
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/Document
+ * @see http://mpeg.chiariglione.org/standards/mpeg-dash
+ * @extends {DocumentParser}
+ * @example
+ * const manifestLoader = new bbcat.dash.ManifestLoader();
+ * const manifestParser = new bbcat.dash.ManifestParser();
+ *
+ * manifestLoader.load('http://example.org/manifest.mpd').then((doc) => {
+ *  const manifest = manifestParser.parse(doc);
+ *  // Use manifest.mediaPresentationDuration etc.
+ * });
+ */
+
+var ManifestParser = /*#__PURE__*/function (_DocumentParser) {
+  _inherits(ManifestParser, _DocumentParser);
+
+  var _super = _createSuper(ManifestParser);
+
+  /**
+   * Constructs a new {@link ManifestParser}.
+   */
+  function ManifestParser() {
+    _classCallCheck(this, ManifestParser);
+
+    return _super.call(this, _mpd_models__WEBPACK_IMPORTED_MODULE_1__["default"], _mpd_parsers__WEBPACK_IMPORTED_MODULE_2__["default"]);
+  }
+
+  return ManifestParser;
+}(_core_index__WEBPACK_IMPORTED_MODULE_0__.DocumentParser);
+
+
+
+/***/ }),
+
+/***/ "./src/dash/manifest-parser/mpd-models.js":
+/*!************************************************!*\
+  !*** ./src/dash/manifest-parser/mpd-models.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+// A set of datamodels that represent the constituent components of the
+// ISO/IEC 23009 -- Dynamic adaptive streaming over HTTP (DASH) specification.
+var MPD = {
+  attributes: [{
+    name: 'type',
+    type: 'string',
+    "default": 'static'
+  }, {
+    name: 'minBufferTime',
+    type: 'period'
+  }, {
+    name: 'mediaPresentationDuration',
+    type: 'period'
+  }, {
+    name: 'maxSegmentDuration',
+    type: 'period'
+  }, {
+    name: 'availabilityStartTime',
+    type: 'date'
+  }],
+  nodes: [{
+    name: 'programInformation',
+    node: 'ProgramInformation',
+    type: 'ProgramInformation',
+    mapping: 'one'
+  }, {
+    name: 'baseURL',
+    node: 'BaseURL',
+    type: 'string',
+    mapping: 'many'
+  }, {
+    name: 'periods',
+    node: 'Period',
+    type: 'Period',
+    mapping: 'many'
+  }]
+};
+var ProgramInformation = {
+  attributes: [{
+    name: 'moreInformationURL',
+    type: 'string'
+  }, {
+    name: 'lang',
+    type: 'string'
+  }],
+  nodes: [{
+    name: 'title',
+    node: 'Title',
+    type: 'string',
+    mapping: 'one'
+  }, {
+    name: 'source',
+    node: 'Source',
+    type: 'string',
+    mapping: 'one'
+  }, {
+    name: 'copyright',
+    node: 'Copyright',
+    type: 'string',
+    mapping: 'one'
+  }]
+};
+var Period = {
+  attributes: [{
+    name: 'id',
+    type: 'integer',
+    "default": 0
+  }, {
+    name: 'duration',
+    type: 'period'
+  }, {
+    name: 'start',
+    type: 'period',
+    "default": 0
+  }],
+  nodes: [{
+    name: 'baseUrl',
+    node: 'BaseUrl',
+    type: 'string',
+    mapping: 'one'
+  }, {
+    name: 'adaptationSets',
+    node: 'AdaptationSet',
+    type: 'AdaptationSet',
+    mapping: 'many'
+  }]
+}; // TODO: Remove value (represents number of audio channels) when
+// AudioChannelConfiguration id-value pair is used across all test assets.
+
+var AdaptationSet = {
+  attributes: [{
+    name: 'id',
+    type: 'string',
+    "default": ''
+  }, {
+    name: 'mimeType',
+    type: 'string',
+    "default": ''
+  }, {
+    name: 'value',
+    type: 'integer'
+  }],
+  nodes: [{
+    name: 'audioChannelConfiguration',
+    node: 'AudioChannelConfiguration',
+    type: 'AudioChannelConfiguration',
+    mapping: 'one'
+  }, {
+    name: 'segmentTemplate',
+    node: 'SegmentTemplate',
+    type: 'SegmentTemplate',
+    mapping: 'one'
+  }, {
+    name: 'representations',
+    node: 'Representation',
+    type: 'Representation',
+    mapping: 'many'
+  }, {
+    name: 'baseURL',
+    node: 'BaseURL',
+    type: 'string',
+    mapping: 'one'
+  }]
+};
+var AudioChannelConfiguration = {
+  attributes: [{
+    name: 'value',
+    type: 'integer',
+    "default": 0
+  }]
+};
+var SegmentTemplate = {
+  attributes: [{
+    name: 'duration',
+    type: 'integer',
+    "default": 0
+  }, {
+    name: 'timescale',
+    type: 'integer',
+    "default": 0
+  }, {
+    name: 'startNumber',
+    type: 'integer',
+    "default": 1
+  }, {
+    name: 'presentationTimeOffset',
+    type: 'integer',
+    "default": 0
+  }, {
+    name: 'media',
+    type: 'string',
+    "default": ''
+  }, {
+    name: 'initialization',
+    type: 'string',
+    "default": null
+  }]
+};
+var Representation = {
+  attributes: [{
+    name: 'id',
+    type: 'string',
+    "default": ''
+  }, {
+    name: 'bandwidth',
+    type: 'integer'
+  }]
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  MPD: MPD,
+  ProgramInformation: ProgramInformation,
+  Period: Period,
+  AdaptationSet: AdaptationSet,
+  AudioChannelConfiguration: AudioChannelConfiguration,
+  SegmentTemplate: SegmentTemplate,
+  Representation: Representation
+});
+
+/***/ }),
+
+/***/ "./src/dash/manifest-parser/mpd-parsers.js":
+/*!*************************************************!*\
+  !*** ./src/dash/manifest-parser/mpd-parsers.js ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
+var SECONDS_IN_MONTH = 30 * 24 * 60 * 60;
+var SECONDS_IN_DAY = 24 * 60 * 60;
+var SECONDS_IN_HOUR = 60 * 60;
+var SECONDS_IN_MINUTE = 60;
+
+function parseInteger(value) {
+  return parseInt(value, 10);
+}
+
+function parseDate(value) {
+  return value === null || value === undefined ? null : new Date(value);
+}
+
+function parsePeriod(value) {
+  // Period format: ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601#Durations)
+  // Regex to match and tokenize the period string. Human readable breakdown:
+  // ^P                         // Prefixed with the identifier P (period.)
+  //   (?: (\d+)Y)?             // Optional positive integer followed by Y.
+  //   (?: (\d+)M)?             // Optional positive integer followed by M.
+  //   (?: (\d+)D)?             // Optional positive integer followed by D.
+  // T                          // Seperated by identifier T (time part.)
+  //   (?: (\d+)H)?             // Optional positive integer followed by H.
+  //   (?: (\d+)M)?             // Optional positive integer followed by M.
+  //   (?: (\d+(?: .\d+)?)S)?   // Optional positive float followed by S.
+  var regex = /^P(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)D)?T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:.\d+)?)S)?/;
+  var seconds = null;
+
+  if (regex.test(value)) {
+    var match = regex.exec(value);
+    seconds = parseInt(match[1] || 0, 10) * SECONDS_IN_YEAR + parseInt(match[2] || 0, 10) * SECONDS_IN_MONTH + parseInt(match[3] || 0, 10) * SECONDS_IN_DAY + parseInt(match[4] || 0, 10) * SECONDS_IN_HOUR + parseInt(match[5] || 0, 10) * SECONDS_IN_MINUTE + parseFloat(match[6] || 0);
+  } else {
+    seconds = parseInt(value, 10);
+  }
+
+  return seconds;
+}
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  integer: parseInteger,
+  date: parseDate,
+  period: parsePeriod
+});
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+(() => {
+/*!**********************!*\
+  !*** ./src/bbcat.js ***!
+  \**********************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "core": () => (/* reexport module object */ _core_index__WEBPACK_IMPORTED_MODULE_0__),
+/* harmony export */   "dash": () => (/* reexport module object */ _dash_index__WEBPACK_IMPORTED_MODULE_1__),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _core_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./core/_index */ "./src/core/_index.js");
+/* harmony import */ var _dash_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dash/_index */ "./src/dash/_index.js");
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  core: _core_index__WEBPACK_IMPORTED_MODULE_0__,
+  dash: _dash_index__WEBPACK_IMPORTED_MODULE_1__
+});
+})();
+
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
+});
+//# sourceMappingURL=bbcat.js.map

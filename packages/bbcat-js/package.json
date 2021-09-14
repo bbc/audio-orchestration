@@ -10,8 +10,8 @@
   "scripts": {
     "build": "yarn run lint && yarn run test && yarn run doc && yarn run webpack",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
-    "webpack": "webpack --optimize-minimize ",
-    "debug": "webpack ",
+    "webpack": "webpack --mode=production",
+    "debug": "webpack --mode=development",
     "test": "karma start --singleRun",
     "watch:test": "karma start",
     "lint": "eslint src/ test/",
@@ -24,6 +24,5 @@
   "author": "BBC",
   "license": "Apache-2.0",
   "devDependencies": {
-  },
-  "dependencies": {}
+  }
 }

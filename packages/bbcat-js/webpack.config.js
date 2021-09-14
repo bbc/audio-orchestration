@@ -1,24 +1,24 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
+  mode: 'development',
   entry: path.join(__dirname, 'src', 'bbcat.js'),
+  devtool: 'source-map',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "bbcat.js",
-    libraryTarget: "umd",
-    library: "bbcat"
+    filename: 'bbcat.js',
+    library: {
+      name: 'bbcat',
+      type: 'umd',
+    },
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        cacheDirectory: true,
-        presets: ['es2015'],
-        plugins: [ 'transform-runtime' ]
-      }
-    }]
-  }
+    rules: [
+      {
+        test: [/\.m?js$/],
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
+    ],
+  },
 };

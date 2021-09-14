@@ -20,24 +20,18 @@ module.exports = function(config) {
       type: 'html',
       dir: 'test/_coverage/'
     },
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'webpack'],
     webpack: {
       module: {
-        loaders: [{
-          test: /\.js$/,
-          exclude: /node_modules/,
-          loader: 'babel',
-          query: {
-            cacheDirectory: false,
-            presets: ['es2015'],
-            plugins: [
-              'transform-runtime',
-              ['__coverage__', { only: 'src/' }]
-            ]
-          }
-        }]
+        rules: [
+          {
+            test: [/\.m?js$/],
+            exclude: /node_modules/,
+            loader: 'babel-loader',
+          },
+        ],
       },
-      devtool: '#inline-source-map',
+      devtool: 'inline-source-map',
       watch: true
     },
     webpackServer: {
