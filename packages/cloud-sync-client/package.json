@@ -6,10 +6,6 @@
   "directories": {
     "example": "examples"
   },
-  "scripts": {
-    "build": "webpack --mode=production",
-    "dev": "webpack --mode=development"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
@@ -27,5 +23,14 @@
     "url-parse": "^1.2.0",
     "weak-map": "^1.0.5",
     "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
+  "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development"
   }
 }

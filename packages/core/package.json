@@ -12,7 +12,6 @@
   "files": [
     "dist"
   ],
-  "devDependencies": {},
   "dependencies": {
     "@bbc/audio-orchestration-bbcat-js": "^0.0.1",
     "@bbc/audio-orchestration-cloud-sync-client": "^0.0.1",
@@ -20,6 +19,21 @@
     "dvbcss-protocols": "^0.0.4",
     "events": "^3.0.0",
     "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "ajv": "^6.10.2",
+    "babel-loader": "^8.2.2",
+    "esdoc": "^1.0.4",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jest": "^24.4.0",
+    "jest": "^27.1.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
   },
   "scripts": {
     "dev": "webpack --mode=development",

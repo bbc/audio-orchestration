@@ -6,7 +6,7 @@
     "jasmine"
   ],
   "extends": [
-    "airbnb/base",
     "plugin:jasmine/recommended"
+    "extends": "airbnb/base"
   ]
 }

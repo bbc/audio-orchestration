@@ -7,6 +7,36 @@
     "dist",
     "src"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbc/audio-orchestration.git"
+  },
+  "author": "BBC",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "esdoc": "^1.0.4",
+    "esdoc-es7-plugin": "0.0.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jasmine": "^4.1.2",
+    "jasmine": "^2.4.1",
+    "jasmine-ajax": "^3.2.0",
+    "karma": "^6.3.4",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-firefox-launcher": "^2.1.1",
+    "karma-jasmine": "^4.0.1",
+    "karma-webpack": "^5.0.0",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0",
+    "webpack-dev-server": "^4.2.1"
+  },
   "scripts": {
     "build": "yarn run lint && yarn run test && yarn run doc && yarn run webpack",
     "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
@@ -16,12 +46,5 @@
     "watch:test": "karma start",
     "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/bbc/audio-orchestration.git"
-  },
-  "author": "BBC",
-  "license": "Apache-2.0",
-  "devDependencies": {}
+  }
 }
