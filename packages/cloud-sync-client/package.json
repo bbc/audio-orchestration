@@ -21,12 +21,10 @@
     "events": "^1.1.1",
     "inherits": "^2.0.1",
     "mdn-polyfills": "^3.6.0",
-    "mqtt": "^2.18.8",
+    "mqtt": "^4.2.8",
     "url": "^0.11.0",
     "url-parse": "^1.2.0",
     "weak-map": "^1.0.5",
     "winston": "^2.4.0"
-  },
-  "devDependencies": {
   }
 }
