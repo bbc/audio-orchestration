@@ -86,10 +86,12 @@ module.exports = {
       minify: false,
       template: path.resolve(__dirname, 'src/index.html'),
     }),
-    new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, 'audio'), to: 'audio', toType: 'dir' },
-      { from: path.resolve(__dirname, 'images'), to: 'images', toType: 'dir' },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, 'audio'), to: 'audio', toType: 'dir' },
+        { from: path.resolve(__dirname, 'images'), to: 'images', toType: 'dir' },
+      ],
+    }),
     new MiniCssExtractPlugin({
       // Options similar to the same options in webpackOptions.output
       // both options are optional
