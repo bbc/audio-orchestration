@@ -4,8 +4,7 @@
   "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
   "main": "dist/bbcat.js",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -34,16 +33,13 @@
     "karma-jasmine": "^4.0.1",
     "karma-webpack": "^5.0.0",
     "webpack": "^5.51.1",
-    "webpack-cli": "^4.8.0",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-cli": "^4.8.0"
   },
   "scripts": {
-    "build": "yarn run lint && yarn run test && yarn run doc && yarn run webpack",
-    "start": "webpack-dev-server --inline --hot --devtool source-map --progress --colors --content-base dist --verbose",
-    "webpack": "webpack --mode=production",
-    "debug": "webpack --mode=development",
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "dev": "webpack --mode=development --watch",
     "test": "karma start --singleRun",
-    "watch:test": "karma start",
     "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
   }

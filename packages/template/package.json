@@ -2,7 +2,6 @@
   "name": "@bbc/audio-orchestration-template",
   "version": "0.0.1",
   "description": "A user interface template showing how to integrate the bbcat-orchestration toolkit for orchestrated personal audio devices with React components.",
-  "browser": "dist/bundle.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
@@ -66,9 +65,11 @@
     "eslint-plugin-react-hooks": "^4.2.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production webpack --mode production",
+    "build": "NODE_ENV=production webpack",
+    "build:dev": "NODE_ENV=development webpack",
     "dev": "NODE_ENV=development webpack-dev-server --hot --host 0.0.0.0",
+    "test": "echo no tests defined",
     "lint": "eslint src/ --ext .js,.jsx",
-    "test": "echo no tests defined"
+    "doc": "echo no doc task defined"
   }
 }

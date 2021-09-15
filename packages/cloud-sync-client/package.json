@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "description": "Library implementing client code for cloud synchronisation",
   "main": "dist/browser/CloudSyncKit.js",
-  "directories": {
-    "example": "examples"
-  },
+  "files": [
+    "dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
@@ -25,12 +25,15 @@
     "winston": "^2.4.0"
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
     "webpack": "^5.51.1",
     "webpack-cli": "^4.8.0"
   },
   "scripts": {
     "build": "webpack --mode=production",
-    "dev": "webpack --mode=development"
+    "build:dev": "webpack --mode=development",
+    "dev": "webpack --mode=development --watch",
+    "test": "echo no tests defined",
+    "lint": "echo no linting defined",
+    "doc": "echo no doc task defined"
   }
 }
