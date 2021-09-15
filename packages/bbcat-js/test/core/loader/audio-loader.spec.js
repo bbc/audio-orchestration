@@ -1,7 +1,7 @@
 import 'jasmine-ajax';
 
-import AudioLoader from './../../../src/core/loaders/audio-loader';
-import MockAudioContext from './../../mock-audio-context';
+import AudioLoader from '../../../src/core/loaders/audio-loader';
+import MockAudioContext from '../../mock-audio-context';
 import mockHttpResponses from './arraybuffer-http-responses';
 
 describe('AudioLoader', () => {
@@ -22,6 +22,7 @@ describe('AudioLoader', () => {
   it('should construct', () => {
     const context = MockAudioContext.createAudioContext();
     const audioLoader = new AudioLoader(context);
+
     expect(audioLoader).toBeDefined();
   });
 

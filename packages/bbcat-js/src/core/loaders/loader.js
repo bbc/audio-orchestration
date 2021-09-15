@@ -32,11 +32,10 @@ export default class Loader {
    *         A Promise that resolves when all files have been loaded.
    */
   load(urls) {
-    return urls instanceof Array ?
-      this._loadAll(urls) :
-      this._loadOne(urls);
+    return urls instanceof Array
+      ? this._loadAll(urls)
+      : this._loadOne(urls);
   }
-
 
   /**
    * @private
@@ -97,7 +96,7 @@ export default class Loader {
         });
 
         request.send();
-      }
+      },
     );
   }
 }

@@ -64,7 +64,6 @@ export default class DocumentParser {
     this._parsers = parsers;
   }
 
-
   /**
    * Parses a document, returning an object representing the document contents.
    * @param  {!Document} document
@@ -100,12 +99,12 @@ export default class DocumentParser {
     const nodeModels = model.nodes || [];
     const object = {};
 
-    for (let i = 0; i < attrModels.length; i++) {
+    for (let i = 0; i < attrModels.length; i += 1) {
       const attrModel = attrModels[i];
       object[attrModel.name] = this._parseAttribute(node, attrModel);
     }
 
-    for (let i = 0; i < nodeModels.length; i++) {
+    for (let i = 0; i < nodeModels.length; i += 1) {
       const nodeModel = nodeModels[i];
       object[nodeModel.name] = this._parseNode(node, nodeModel);
     }
@@ -154,9 +153,9 @@ export default class DocumentParser {
       return null;
     }
 
-    return nodeModel.mapping === 'many' ?
-      this._parseNodeMany(nodes, nodeModel) :
-      this._parseNodeOne(nodes[0], nodeModel);
+    return nodeModel.mapping === 'many'
+      ? this._parseNodeMany(nodes, nodeModel)
+      : this._parseNodeOne(nodes[0], nodeModel);
   }
 
   /**
@@ -173,7 +172,7 @@ export default class DocumentParser {
   _parseNodeMany(nodes, nodeModel) {
     const childNodes = [];
 
-    for (let i = 0; i < nodes.length; i++) {
+    for (let i = 0; i < nodes.length; i += 1) {
       childNodes.push(this._parseNodeOne(nodes[i], nodeModel));
     }
 
@@ -194,9 +193,9 @@ export default class DocumentParser {
   _parseNodeOne(node, nodeModel) {
     const model = this._models[nodeModel.type];
 
-    return model ?
-      this._parse(node, model) :
-      this._flattenNodeToAttribute(node, nodeModel);
+    return model
+      ? this._parse(node, model)
+      : this._flattenNodeToAttribute(node, nodeModel);
   }
 
   /**
@@ -228,10 +227,11 @@ export default class DocumentParser {
    * @return {Node[]}
    *         Array of nodes with the name equal to the name provided.
    */
+  // eslint-disable-next-line class-methods-use-this
   _getChildNodes(node, name) {
     const nodes = [];
 
-    for (let i = 0; i < node.childNodes.length; i++) {
+    for (let i = 0; i < node.childNodes.length; i += 1) {
       const childNode = node.childNodes[i];
       const childName = childNode.nodeName;
 

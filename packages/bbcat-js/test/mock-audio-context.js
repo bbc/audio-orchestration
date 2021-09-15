@@ -1,11 +1,12 @@
-
 // A class that mocks the Web Audio API AudioContext.
 
 export default class MockAudioContext {
   static createAudioContext(
-    numberOfChannels = 2, renderDuration = 10, sampleRate = 48000) {
+    numberOfChannels = 2, renderDuration = 10, sampleRate = 48000,
+  ) {
     const context = new window.OfflineAudioContext(
-      numberOfChannels, renderDuration * sampleRate, sampleRate);
+      numberOfChannels, renderDuration * sampleRate, sampleRate,
+    );
 
     // Add a setter alongside currentTime getter..
     context._currentTime = 0;

@@ -1,6 +1,6 @@
 import 'jasmine-ajax';
 
-import Loader from './../../../src/core/loaders/loader';
+import Loader from '../../../src/core/loaders/loader';
 import mockHttpResponses from './json-http-responses';
 
 describe('Loader', () => {
@@ -20,11 +20,13 @@ describe('Loader', () => {
 
   it('should construct without responseType', () => {
     const loader = new Loader();
+
     expect(loader).toBeDefined();
   });
 
   it('should construct with responseType', () => {
     const loader = new Loader('json');
+
     expect(loader).toBeDefined();
   });
 
@@ -47,7 +49,7 @@ describe('Loader', () => {
 
     loader.load(mockResponsesUrls)
       .then((files) => {
-        for (let i = 0; i < mockResponses.length; i++) {
+        for (let i = 0; i < mockResponses.length; i += 1) {
           expect(files[i]).toBe(mockResponses[i].response.response);
         }
         done();

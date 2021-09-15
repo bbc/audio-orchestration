@@ -65,7 +65,8 @@ const document1 = {
       <FlattenFloat>0.5</FlattenFloat>
       <FlattenText></FlattenText>
       <EmptyChildTemplate></EmptyChildTemplate>
-    </ParentTemplate>`, 'text/xml'),
+    </ParentTemplate>`, 'text/xml',
+  ),
   json: {
     id: 0,
     flattenFloat: 0.5,

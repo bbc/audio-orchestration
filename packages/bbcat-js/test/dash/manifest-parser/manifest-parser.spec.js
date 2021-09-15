@@ -1,5 +1,5 @@
-import ManifestParser from './../../../src/dash/manifest-parser/manifest-parser';
-import mockMpds from './../mpds';
+import ManifestParser from '../../../src/dash/manifest-parser/manifest-parser';
+import mockMpds from '../mpds';
 
 describe('ManifestParser', () => {
   it('should correctly parse MPD files', () => {
@@ -9,6 +9,7 @@ describe('ManifestParser', () => {
     mockMpds.forEach((mpd) => {
       const mpdXml = domParser.parseFromString(mpd.text, 'text/xml');
       const mpdJson = manifestParser.parse(mpdXml);
+
       expect(mpdJson).toEqual(mpd.json);
     });
   });

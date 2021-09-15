@@ -29,12 +29,12 @@ function parsePeriod(value) {
   if (regex.test(value)) {
     const match = regex.exec(value);
 
-    seconds = parseInt(match[1] || 0, 10) * SECONDS_IN_YEAR +
-      parseInt(match[2] || 0, 10) * SECONDS_IN_MONTH +
-      parseInt(match[3] || 0, 10) * SECONDS_IN_DAY +
-      parseInt(match[4] || 0, 10) * SECONDS_IN_HOUR +
-      parseInt(match[5] || 0, 10) * SECONDS_IN_MINUTE +
-      parseFloat(match[6] || 0);
+    seconds = parseInt(match[1] || 0, 10) * SECONDS_IN_YEAR
+      + parseInt(match[2] || 0, 10) * SECONDS_IN_MONTH
+      + parseInt(match[3] || 0, 10) * SECONDS_IN_DAY
+      + parseInt(match[4] || 0, 10) * SECONDS_IN_HOUR
+      + parseInt(match[5] || 0, 10) * SECONDS_IN_MINUTE
+      + parseFloat(match[6] || 0);
   } else {
     seconds = parseInt(value, 10);
   }

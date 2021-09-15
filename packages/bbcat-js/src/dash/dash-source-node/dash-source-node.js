@@ -86,10 +86,10 @@ export default class DashSourceNode extends CompoundNode {
         return;
       }
 
-      if (this._presentationDuration !== 0 &&
-        (initial < 0 || initial >= duration)) {
-        reject('Invalid initial. Must be a number less than ' +
-          'duration and greater than or equal to 0.');
+      if (this._presentationDuration !== 0
+        && (initial < 0 || initial >= duration)) {
+        reject('Invalid initial. Must be a number less than '
+          + 'duration and greater than or equal to 0.');
         return;
       }
 
@@ -98,17 +98,17 @@ export default class DashSourceNode extends CompoundNode {
         return;
       }
 
-      if (this._presentationDuration !== 0 &&
-        (offset < 0 || offset >= this._presentationDuration)) {
-        reject('Invalid offset. Must be a number less than ' +
-          'presentationDuration and greater than or equal to 0.');
+      if (this._presentationDuration !== 0
+        && (offset < 0 || offset >= this._presentationDuration)) {
+        reject('Invalid offset. Must be a number less than '
+          + 'presentationDuration and greater than or equal to 0.');
         return;
       }
 
-      if (this._presentationDuration !== 0 &&
-        (duration <= 0 || duration > this._presentationDuration - offset)) {
-        reject('Invalid duration. Must be a number less than ' +
-          'presentationDuration minus offset and greater than 0.');
+      if (this._presentationDuration !== 0
+        && (duration <= 0 || duration > this._presentationDuration - offset)) {
+        reject('Invalid duration. Must be a number less than '
+          + 'presentationDuration minus offset and greater than 0.');
         return;
       }
 
@@ -120,8 +120,7 @@ export default class DashSourceNode extends CompoundNode {
       this._state = 'priming';
 
       // Prime all streams with the same offset, duration and loop parameters.
-      const primeStreamsPromises = this._allStreams.map((stream) =>
-        stream.prime(initial, loop, offset, duration));
+      const primeStreamsPromises = this._allStreams.map((stream) => stream.prime(initial, loop, offset, duration));
 
       Promise.all(primeStreamsPromises).then(() => {
         this._state = 'primed';
@@ -142,8 +141,7 @@ export default class DashSourceNode extends CompoundNode {
 
     // Start all streams.
     this._contextSyncTime = contextSyncTime;
-    const startStreamsPromises = this._allStreams.map((stream) =>
-      new Promise((ended) => stream.start(this._contextSyncTime, ended)));
+    const startStreamsPromises = this._allStreams.map((stream) => new Promise((ended) => stream.start(this._contextSyncTime, ended)));
 
     // Resolve when all streams have completed.
     this._state = 'playing';
@@ -165,7 +163,8 @@ export default class DashSourceNode extends CompoundNode {
     this._allStreams.forEach((stream) => stream.stop());
     this._state = 'ready';
   }
-   /**
+
+  /**
    * Seek playback by a provided offset value.
    * @param  {?number} [seconds]
    *         Time in seconds to seek by note this is relative to the current playback position and
@@ -179,15 +178,16 @@ export default class DashSourceNode extends CompoundNode {
       this.start();
     });
   }
+
   /**
    * Get the current performance time in seconds.
    * @type {number}
    *       The current performance time in seconds.
    */
   get playbackTime() {
-    return this.state === 'playing' ? (this.context.currentTime -
-      this._contextSyncTime + this._playbackInitial) %
-      this._playbackDuration + this._playbackOffset : 0;
+    return this.state === 'playing' ? ((this.context.currentTime
+      - this._contextSyncTime + this._playbackInitial)
+      % this._playbackDuration) + this._playbackOffset : 0;
   }
 
   /**
@@ -235,8 +235,8 @@ export default class DashSourceNode extends CompoundNode {
     manifest.periods.forEach((period) => {
       period.adaptationSets.forEach((adaptationSet) => {
         const template = adaptationSet.segmentTemplate;
-        const representation = adaptationSet.representations ?
-          adaptationSet.representations[0] : null;
+        const representation = adaptationSet.representations
+          ? adaptationSet.representations[0] : null;
         const representationURL = representation ? representation.baseURL : '';
 
         const definition = {
@@ -249,10 +249,10 @@ export default class DashSourceNode extends CompoundNode {
           duration: period.duration,
           segmentStart: template.startNumber,
           segmentDuration: template.duration / template.timescale,
-          templateUrl: (baseURL || representationURL || '') +
-            (adaptationSet.baseURL || '') + (template.media || ''),
-          initUrl: (baseURL || representationURL || '') +
-            (adaptationSet.baseURL || '') + (template.initialization || ''),
+          templateUrl: (baseURL || representationURL || '')
+            + (adaptationSet.baseURL || '') + (template.media || ''),
+          initUrl: (baseURL || representationURL || '')
+            + (adaptationSet.baseURL || '') + (template.initialization || ''),
           bufferTime,
         };
 
@@ -263,14 +263,14 @@ export default class DashSourceNode extends CompoundNode {
           this._allStreams.push(stream);
         } else if (adaptationSet.mimeType.indexOf('audio') > -1) {
           // Add channel count to the definition for audio streams.
-          definition.channelCount = adaptationSet.value === 0 || adaptationSet.value ?
-            adaptationSet.value : adaptationSet.audioChannelConfiguration.value;
+          definition.channelCount = adaptationSet.value === 0 || adaptationSet.value
+            ? adaptationSet.value : adaptationSet.audioChannelConfiguration.value;
 
           // If type is audio then create an audio stream. If there is an
           // initialization chunk then create a headerless stream.
-          const stream = template.initialization ?
-            new HeaderlessAudioSegmentStream(this.context, definition) :
-            new AudioSegmentStream(this.context, definition);
+          const stream = template.initialization
+            ? new HeaderlessAudioSegmentStream(this.context, definition)
+            : new AudioSegmentStream(this.context, definition);
 
           this._audioStreams.push(stream);
           this._allStreams.push(stream);
@@ -290,11 +290,11 @@ export default class DashSourceNode extends CompoundNode {
     // a gain node for each channel in each audio stream.
     let input = 0;
     this._audioStreams.forEach((stream) => {
-      for (let output = 0; output < stream.output.numberOfOutputs; output++) {
+      for (let output = 0; output < stream.output.numberOfOutputs; output += 1) {
         const gain = this.context.createGain();
         stream.output.connect(gain, output);
         this._outputs[input] = gain;
-        input++;
+        input += 1;
       }
     });
   }

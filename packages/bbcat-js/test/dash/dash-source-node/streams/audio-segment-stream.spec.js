@@ -1,5 +1,5 @@
 import MockAudioSegmentStream from './mock-audio-segment-stream';
-import MockAudioContext from './../../../mock-audio-context';
+import MockAudioContext from '../../../mock-audio-context';
 
 import mockAudioRoutines from './audio-stream-routines';
 
@@ -27,8 +27,7 @@ describe('AudioSegmentStream', () => {
           status: 200,
           contentType: 'audio/mpeg',
           response: segment.payload,
-        })
-      );
+        }));
     };
 
     // Helper function to get a segment from an array by sequence number n.
@@ -42,7 +41,7 @@ describe('AudioSegmentStream', () => {
           segment = segments[i];
           isFound = true;
         }
-        i++;
+        i += 1;
       }
 
       return segment;
@@ -56,14 +55,15 @@ describe('AudioSegmentStream', () => {
 
   it('should construct', function it() {
     const context = MockAudioContext.createAudioContext();
-    const definition = this.baseMockRoutine.definition;
+    const { definition } = this.baseMockRoutine;
     const audioStream = new MockAudioSegmentStream(context, definition);
+
     expect(audioStream).toBeDefined();
   });
 
   it('should expose read only output node', function it() {
     const context = MockAudioContext.createAudioContext();
-    const definition = this.baseMockRoutine.definition;
+    const { definition } = this.baseMockRoutine;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
     expect(audioStream.output).toEqual(jasmine.any(ChannelSplitterNode));
@@ -72,7 +72,7 @@ describe('AudioSegmentStream', () => {
 
   it('should expose read only channel count', function it() {
     const context = MockAudioContext.createAudioContext();
-    const definition = this.baseMockRoutine.definition;
+    const { definition } = this.baseMockRoutine;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
     expect(audioStream.channelCount).toEqual(definition.channelCount);
@@ -81,11 +81,13 @@ describe('AudioSegmentStream', () => {
 
   it('should end naturally and call endedCallback', function it(done) {
     const context = MockAudioContext.createAudioContext();
-    const definition = this.baseMockRoutine.definition;
+    const { definition } = this.baseMockRoutine;
     const audioStream = new MockAudioSegmentStream(context, definition);
 
     const routine = this.baseMockRoutine;
-    const { initial, loop, offset, duration } = routine.primeParameters;
+    const {
+      initial, loop, offset, duration,
+    } = routine.primeParameters;
     this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
     // Prime and start the stream, mocking context and system time.
@@ -97,7 +99,7 @@ describe('AudioSegmentStream', () => {
 
       context.currentTime += definition.duration;
       jasmine.clock().tick(definition.duration * 1000);
-    });
+    }).catch(done.fail);
   });
 
   it('should prime and play the correct segments', function it(done) {
@@ -106,13 +108,15 @@ describe('AudioSegmentStream', () => {
       (routine) => new Promise((resolve) => {
         // Construct new objects for each test routine.
         const context = MockAudioContext.createAudioContext();
-        const definition = routine.definition;
+        const { definition } = routine;
         const audioStream = new MockAudioSegmentStream(context, definition);
 
         // Shorthand references for commonly required routine values.
-        const { initial, loop, offset, duration } = routine.primeParameters;
+        const {
+          initial, loop, offset, duration,
+        } = routine.primeParameters;
         const expectedSegments = routine.expected.segments;
-        const contextStartTime = routine.startParameters.contextStartTime;
+        const { contextStartTime } = routine.startParameters;
         this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
         // Construct a callback to test segments being buffered. All segments
@@ -126,26 +130,26 @@ describe('AudioSegmentStream', () => {
           // Get the current segment expected segment and the corresponding
           // loaded segment if it exists in the buffer.
           let mockSegment = expectedSegments[segmentCount];
-          let testSegment = mockSegment ?
-            this.getSegment(segmentsToTest, mockSegment.n) : null;
+          let testSegment = mockSegment
+            ? this.getSegment(segmentsToTest, mockSegment.n) : null;
 
           // Attempt to advance the expected segment checks as far as possible.
           while (mockSegment && testSegment) {
             // Check that segment playback-region metadata is as expected.
-            const isMockEqualToTest =
-              mockSegment.n === testSegment.n &&
-              mockSegment.number === testSegment.number &&
-              mockSegment.when === testSegment.when &&
-              mockSegment.offset === testSegment.offset &&
-              mockSegment.duration === testSegment.duration;
+            const isMockEqualToTest = mockSegment.n === testSegment.n
+              && mockSegment.number === testSegment.number
+              && mockSegment.when === testSegment.when
+              && mockSegment.offset === testSegment.offset
+              && mockSegment.duration === testSegment.duration;
+
             expect(isMockEqualToTest).toBeTruthy();
 
             // If segment was all correct, increment segment number.
-            segmentCount++;
+            segmentCount += 1;
             if (segmentCount < expectedSegments.length) {
               // Advance context and system time to trigger segment load.
-              const diffTime = contextStartTime - context.currentTime +
-                expectedSegments[segmentCount].when;
+              const diffTime = contextStartTime - context.currentTime
+                + expectedSegments[segmentCount].when;
               context.currentTime += diffTime;
               jasmine.clock().tick(1000 * (diffTime + 4));
             } else if (segmentCount >= expectedSegments.length) {
@@ -155,8 +159,8 @@ describe('AudioSegmentStream', () => {
             }
 
             mockSegment = expectedSegments[segmentCount];
-            testSegment = mockSegment ?
-              this.getSegment(segmentsToTest, mockSegment.n) : null;
+            testSegment = mockSegment
+              ? this.getSegment(segmentsToTest, mockSegment.n) : null;
           }
         };
 
@@ -164,12 +168,12 @@ describe('AudioSegmentStream', () => {
         audioStream.prime(initial, loop, offset, duration).then(() => {
           audioStream.start(contextStartTime);
           jasmine.clock().tick(1000 * (context.currentTime - contextStartTime));
-        });
-      })
+        }).catch(done.fail);
+      }),
     );
 
     // Run all test routines.
-    Promise.all(routinePromises).then(done);
+    Promise.all(routinePromises).then(done).catch(done.fail);
   });
 
   // TODO: Find out why this test always fails #3
@@ -182,11 +186,11 @@ describe('AudioSegmentStream', () => {
         routinePromises.push(new Promise((resolve) => {
           // Construct new objects for each test routine.
           const context = MockAudioContext.createAudioContext();
-          const definition = routine.definition;
+          const { definition } = routine;
           const audioStream = new MockAudioSegmentStream(context, definition);
 
           // Shorthand references for commonly required routine values.
-          const contextStartTime = routine.startParameters.contextStartTime;
+          const { contextStartTime } = routine.startParameters;
           this.registerSegmentUrls(routine.segmentsUrlPayloadMap);
 
           // Construct a callback to test segments being scheduled for playback.
@@ -203,9 +207,11 @@ describe('AudioSegmentStream', () => {
             } else if (delay > mockSegment.when) {
               // Too late to playback the entire segment.
               const segmentDelay = delay % definition.segmentDuration;
+
               expect(when).toBe(0);
-              expect(offset).toBe(mockSegment.offset + segmentDelay +
-                this.primerOffset);
+              expect(offset).toBe(mockSegment.offset + segmentDelay
+                + this.primerOffset);
+
               expect(duration).toBe(mockSegment.duration - segmentDelay);
             } else {
               // Time to playback the entire segment.
@@ -214,7 +220,7 @@ describe('AudioSegmentStream', () => {
               expect(duration).toBe(mockSegment.duration);
             }
 
-            segmentCount++;
+            segmentCount += 1;
             if (segmentCount >= routine.expected.numberOfPrimeSegments) {
               // Stop stream and complete test.
               audioStream.stop();
@@ -224,7 +230,9 @@ describe('AudioSegmentStream', () => {
 
           // Simulate playback with da delay.
           context.currentTime = contextStartTime + delay;
-          const { initial, loop, offset, duration } = routine.primeParameters;
+          const {
+            initial, loop, offset, duration,
+          } = routine.primeParameters;
           audioStream.prime(initial, loop, offset, duration).then(() => {
             audioStream.start(contextStartTime);
           });

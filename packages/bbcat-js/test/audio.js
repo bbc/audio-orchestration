@@ -1,4 +1,3 @@
-
 // Exports an array of mocked audio segments.
 
 const base64AudioSegments = [
@@ -10,16 +9,16 @@ const base64AudioSegments = [
 
 function _base64StringToArrayBuffer(base64String) {
   const binaryString = window.atob(base64String);
-  const length = binaryString.length;
+  const { length } = binaryString;
   const bytes = new Uint8Array(length);
-  for (let i = 0; i < length; i++) {
+  for (let i = 0; i < length; i += 1) {
     bytes[i] = binaryString.charCodeAt(i);
   }
   return bytes.buffer;
 }
 
 const arrayBufferAudioSegments = [];
-for (let i = 0; i < base64AudioSegments.length; i++) {
+for (let i = 0; i < base64AudioSegments.length; i += 1) {
   const arrayBuffer = _base64StringToArrayBuffer(base64AudioSegments[i]);
   arrayBufferAudioSegments.push(arrayBuffer);
 }

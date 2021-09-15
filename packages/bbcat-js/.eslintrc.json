@@ -1,12 +1,24 @@
 {
+  "extends": [
+    "plugin:jasmine/recommended",
+    "airbnb/base"
+  ],
+  "rules": {
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "linebreak-style": 0,
+    "import/prefer-default-export": 0,
+    "no-underscore-dangle": 0,
+    "prefer-destructuring": 1,
+    "prefer-promise-reject-errors": 1,
+    "max-len": 1,
+    "operator-assignment": 0
+  },
   "env": {
-    "jasmine": true
+    "jasmine": true,
+    "browser": true
   },
   "plugins": [
     "jasmine"
-  ],
-  "extends": [
-    "plugin:jasmine/recommended"
-    "extends": "airbnb/base"
   ]
 }

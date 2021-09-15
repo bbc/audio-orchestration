@@ -200,7 +200,8 @@ const metadataSegments = [
 
 const defaultDuration = 4;
 const createMetadata = (
-    number, duration = defaultDuration, offset = 0, cutoff = duration) => {
+  number, duration = defaultDuration, offset = 0, cutoff = duration,
+) => {
   // Calculate which metadata segment shoud be used and the ratio to
   // compress/expand metadata times.
   const segmentIndex = (number - 1) % metadataSegments.length;
@@ -209,15 +210,15 @@ const createMetadata = (
 
   // Caluclate where to filter out metadata based upon cutoff.
   const metadataStart = 1e9 * segmentIndex * defaultDuration;
-  const metadataEnd = 1e9 * cutoff / durationRatio + metadataStart;
+  const metadataEnd = (1e9 * cutoff) / durationRatio + metadataStart;
 
   // Filter the relevant metadata, and scale and offset the metadata times.
   return metadata
     .filter((datum) => datum.timens < metadataEnd)
     .map((datum) => {
-      const newDatum = Object.assign({}, datum);
-      newDatum.timens = (newDatum.timens - metadataStart) *
-        durationRatio + 1e9 * offset;
+      const newDatum = { ...datum };
+      newDatum.timens = (newDatum.timens - metadataStart)
+        * durationRatio + 1e9 * offset;
       return newDatum;
     });
 };

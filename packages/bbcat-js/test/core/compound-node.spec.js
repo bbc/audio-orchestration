@@ -1,4 +1,4 @@
-import CompoundNode from './../../src/core/compound-node';
+import CompoundNode from '../../src/core/compound-node';
 import MockCompoundNode from './mock-compound-node';
 
 describe('CompoundNode', () => {
@@ -45,6 +45,7 @@ describe('CompoundNode', () => {
     const gainNode = this.context.createGain();
 
     const connectedNode = mockCompoundNode.connect(gainNode);
+
     expect(connectedNode).toBe(gainNode);
   });
 

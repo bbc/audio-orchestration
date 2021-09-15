@@ -1,5 +1,5 @@
-import mockAudio from './../../audio';
-import createMetadata from './../../metadata-generator';
+import mockAudio from '../../audio';
+import createMetadata from '../../metadata-generator';
 
 const offsetManifest = {
   type: 'static',

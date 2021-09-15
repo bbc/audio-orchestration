@@ -53,7 +53,7 @@ export default class EventTarget {
     const typeListeners = this._listeners[event.type];
 
     if (typeListeners) {
-      for (let i = 0; i < typeListeners.length; i++) {
+      for (let i = 0; i < typeListeners.length; i += 1) {
         typeListeners[i].call(null, event);
       }
     }
@@ -72,7 +72,7 @@ export default class EventTarget {
     const typeListeners = this._listeners[type];
 
     if (typeListeners) {
-      for (let i = 0; i < typeListeners.length; i++) {
+      for (let i = 0; i < typeListeners.length; i += 1) {
         if (typeListeners[i] === listener) {
           return i;
         }

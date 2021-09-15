@@ -77,7 +77,6 @@ export default class AudioSegmentStream extends SegmentStream {
     super._stop();
   }
 
-
   /**
    * Schedules a segment for playback.
    * @param  {!Object} segment
@@ -88,7 +87,7 @@ export default class AudioSegmentStream extends SegmentStream {
       // Adjust the parameters when, offset and duration for the context time.
       const when = segment.when + this._contextSyncTime;
       const offset = segment.offset + this._primerOffset;
-      const duration = segment.duration;
+      const { duration } = segment;
 
       // Calculate any lateness in playback.
       const playOffset = this._context.currentTime - when;
@@ -103,7 +102,7 @@ export default class AudioSegmentStream extends SegmentStream {
         segment.bufferSource.start(
           playOffset > 0 ? 0 : when,
           playOffset > 0 ? offset + playOffset : offset,
-          playOffset > 0 ? duration - playOffset : duration
+          playOffset > 0 ? duration - playOffset : duration,
         );
       } else {
         segment.bufferSource.start(0, 0, 0);
@@ -144,7 +143,7 @@ export default class AudioSegmentStream extends SegmentStream {
 
         isFound = true;
       }
-      i++;
+      i += 1;
     }
 
     return segment;

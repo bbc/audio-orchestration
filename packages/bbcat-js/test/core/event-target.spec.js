@@ -1,4 +1,4 @@
-import EventTarget from './../../src/core/event-target';
+import EventTarget from '../../src/core/event-target';
 
 describe('EventTarget', () => {
   it('should add a listener', () => {
@@ -46,10 +46,12 @@ describe('EventTarget', () => {
 
     // Emit event still being listened for and ensure listener is called.
     eventTarget.dispatchEvent(testEvent2);
+
     expect(eventFunction).toHaveBeenCalledTimes(3);
 
     // Emit event not being listened for and ensure listener is not called.
     eventTarget.dispatchEvent(testEvent1);
+
     expect(eventFunction).toHaveBeenCalledTimes(3);
   });
 

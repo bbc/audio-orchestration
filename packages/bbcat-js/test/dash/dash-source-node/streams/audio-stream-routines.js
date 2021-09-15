@@ -1,4 +1,4 @@
-import mockAudio from './../../../audio';
+import mockAudio from '../../../audio';
 
 // Exports routines to test mockAudiotream.
 // routine.segmentsUrlPayloadMap

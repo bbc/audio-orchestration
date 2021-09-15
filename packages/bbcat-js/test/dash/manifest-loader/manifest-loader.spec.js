@@ -1,6 +1,6 @@
 import 'jasmine-ajax';
 import mockHttpResponses from './mpd-http-responses';
-import ManifestLoader from './../../../src/dash/manifest-loader/manifest-loader';
+import ManifestLoader from '../../../src/dash/manifest-loader/manifest-loader';
 
 describe('ManifestLoader', () => {
   beforeAll(() => {
@@ -43,7 +43,7 @@ describe('ManifestLoader', () => {
     manifestLoader.load(mockResponsesUrls)
       .then((files) => {
         // Check that each file returned is an XMLDocument.
-        for (let i = 0; i < mockResponses.length; i++) {
+        for (let i = 0; i < mockResponses.length; i += 1) {
           expect(files[i]).toBeDefined();
           expect(files[i].childNodes).toBeDefined();
         }

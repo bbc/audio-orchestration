@@ -1,4 +1,4 @@
-import createMetadata from './../../../metadata-generator';
+import createMetadata from '../../../metadata-generator';
 
 // Exports routines to test a MetadataSegmentStream.
 // routine.segmentsUrlPayloadMap

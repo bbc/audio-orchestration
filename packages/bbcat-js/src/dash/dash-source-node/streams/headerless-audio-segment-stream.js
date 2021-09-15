@@ -70,7 +70,6 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     super._stop();
   }
 
-
   /**
    * Schedules a single segment for playback.
    * @param  {!Object} segment
@@ -80,9 +79,9 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
     if (segment && segment.bufferSource) {
       // Adjust the parameters when, offset and duration for the context time.
       const when = segment.when + this._contextSyncTime;
-      const offset = segment.offset + (segment.number === this._stream.segmentStart ?
-        0 : segment.bufferSource.buffer.duration / 2);
-      const duration = segment.duration;
+      const offset = segment.offset + (segment.number === this._stream.segmentStart
+        ? 0 : segment.bufferSource.buffer.duration / 2);
+      const { duration } = segment;
 
       // Calculate any lateness in playback.
       const playOffset = this._context.currentTime - when;
@@ -108,9 +107,11 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
   /*
    * Merges all passed buffers into a single buffer.
    */
+  // eslint-disable-next-line class-methods-use-this
   _mergeBuffers(...buffers) {
     const mergedLength = buffers.reduce(
-      (length, buffer) => length + buffer.byteLength, 0);
+      (length, buffer) => length + buffer.byteLength, 0,
+    );
     const mergedArray = new Uint8Array(mergedLength);
 
     let currentOffset = 0;
@@ -200,6 +201,7 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
    * @return {Object}
    *         The modified data
    */
+  // eslint-disable-next-line class-methods-use-this
   _removeTimestamps(data) {
     const moddata = new Uint8Array(data);
     moddata[60] = 66;
@@ -223,8 +225,8 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
       })
       .then(() => {
         const decodeSegment = this._getTemplateForNthSegment(-1);
-        return decodeSegment.number >= this._stream.segmentStart ?
-          this._loader.load(decodeSegment.url) : null;
+        return decodeSegment.number >= this._stream.segmentStart
+          ? this._loader.load(decodeSegment.url) : null;
       })
       .then((data) => {
         // this._buffer.decode = this._removeTimestamps(data);
@@ -232,13 +234,13 @@ export default class HeaderlessAudioSegmentStream extends SegmentStream {
       })
       .then(() => {
         const promises = [];
-        for (let i = 0; i < this._buffer.size; i++) {
+        for (let i = 0; i < this._buffer.size; i += 1) {
           const segment = this._getTemplateForNthSegment(i);
           this._buffer.segments.push(segment);
 
           // Only load segments that lay within the streams segment bounds.
-          if (segment.number >= this._stream.segmentStart &&
-            (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
+          if (segment.number >= this._stream.segmentStart
+            && (!this._stream.segmentEnd || segment.number <= this._stream.segmentEnd)) {
             promises.push(this._loader.load(segment.url).then((data) => {
               this._addDataToSegment(data, segment.n);
             }));

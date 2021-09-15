@@ -42,7 +42,7 @@ export default class AudioLoader extends Loader {
     return super.load(urls);
   }
 
-   /**
+  /**
     * @private
     * Loads and decodes one audio file asynchronously.
     * @param  {!string} url

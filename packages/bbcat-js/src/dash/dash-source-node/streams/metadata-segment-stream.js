@@ -62,21 +62,20 @@ export default class MetadataSegmentStream extends SegmentStream {
         segment = this._buffer.segments[i];
 
         // The bounds in nanoseconds that metadata must fall within.
-        const metadataStart = 1e9 * this._stream.segmentDuration *
-          (segment.number - this._stream.segmentStart);
-        const metadataEnd = metadataStart + 1e9 *
-          (segment.offset + segment.duration);
+        const metadataStart = 1e9 * this._stream.segmentDuration
+          * (segment.number - this._stream.segmentStart);
+        const metadataEnd = metadataStart + 1e9
+          * (segment.offset + segment.duration);
 
         // Offset in nanoseconds to convert metadata to context time.
-        const metadataOffset = - metadataStart +
-          1e9 * (segment.when - segment.offset);
+        const metadataOffset = -metadataStart
+          + 1e9 * (segment.when - segment.offset);
 
         // Filter metadata to be within bounds and apply context offset.
         segment.metadata = data
-          .filter((datum) =>
-            datum.timens >= metadataStart && datum.timens < metadataEnd)
+          .filter((datum) => datum.timens >= metadataStart && datum.timens < metadataEnd)
           .map((datum) => {
-            const newMetadata = Object.assign({}, datum);
+            const newMetadata = { ...datum };
             newMetadata.timens += metadataOffset;
             return newMetadata;
           });
@@ -84,7 +83,7 @@ export default class MetadataSegmentStream extends SegmentStream {
         this._metadataCallback(segment);
         isFound = true;
       }
-      i++;
+      i += 1;
     }
 
     return segment;

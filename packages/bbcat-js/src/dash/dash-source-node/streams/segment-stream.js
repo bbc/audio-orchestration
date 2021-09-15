@@ -30,8 +30,8 @@ export default class SegmentStream {
     this._stream.duration = definition.duration;
     this._stream.segmentDuration = definition.segmentDuration;
     this._stream.segmentStart = definition.segmentStart;
-    this._stream.segmentEnd = definition.segmentStart - 1 +
-      Math.ceil(definition.duration / definition.segmentDuration);
+    this._stream.segmentEnd = definition.segmentStart - 1
+      + Math.ceil(definition.duration / definition.segmentDuration);
     this._stream.initUrl = definition.initUrl || '';
     this._stream.initUrl = this._stream.initUrl
       .replace('$RepresentationID$', this._stream.representationId);
@@ -43,16 +43,16 @@ export default class SegmentStream {
     if (templateRegxRes) {
       this._stream.templateUrl = this._stream.templateUrl
         .replace(templateRegxRes[1], '$Number');
-      this._stream.templateUrlLeadingZeros = templateRegxRes[2] ?
-        parseInt(templateRegxRes[2], 10) : 0;
+      this._stream.templateUrlLeadingZeros = templateRegxRes[2]
+        ? parseInt(templateRegxRes[2], 10) : 0;
     }
 
     // Instantiate a circular buffer for segments .
     this._buffer = {};
     this._buffer.segments = [];
     this._buffer.frontIndex = 0;
-    this._buffer.size = Math.max(Math.ceil(definition.bufferTime /
-      definition.segmentDuration), this._minBufferSize);
+    this._buffer.size = Math.max(Math.ceil(definition.bufferTime
+      / definition.segmentDuration), this._minBufferSize);
 
     // Instantiate information describing the playback region.
     this._play = {};
@@ -112,22 +112,22 @@ export default class SegmentStream {
     const initialOffset = startOffset + this._play.initial;
     const endOffset = startOffset + this._play.duration;
 
-    this._play.startOverlap = (this._stream.segmentDuration - Math.abs(startOffset) %
-      this._stream.segmentDuration) % this._stream.segmentDuration;
-    this._play.initialOverlap = Math.abs(initialOffset) %
-      this._stream.segmentDuration;
-    this._play.endOverlap = Math.abs(endOffset) %
-      this._stream.segmentDuration;
+    this._play.startOverlap = (this._stream.segmentDuration - (Math.abs(startOffset)
+      % this._stream.segmentDuration)) % this._stream.segmentDuration;
+    this._play.initialOverlap = Math.abs(initialOffset)
+      % this._stream.segmentDuration;
+    this._play.endOverlap = Math.abs(endOffset)
+      % this._stream.segmentDuration;
 
-    this._play.startSegment = this._stream.segmentStart +
-      Math.floor(startOffset / this._stream.segmentDuration);
-    this._play.initialSegment = this._stream.segmentStart +
-      Math.floor(initialOffset / this._stream.segmentDuration);
-    this._play.endSegment = this._stream.segmentStart - 1 +
-      Math.ceil(endOffset / this._stream.segmentDuration);
+    this._play.startSegment = this._stream.segmentStart
+      + Math.floor(startOffset / this._stream.segmentDuration);
+    this._play.initialSegment = this._stream.segmentStart
+      + Math.floor(initialOffset / this._stream.segmentDuration);
+    this._play.endSegment = this._stream.segmentStart - 1
+      + Math.ceil(endOffset / this._stream.segmentDuration);
 
-    this._play.segmentsPerLoop = 1 + this._play.endSegment -
-      this._play.startSegment;
+    this._play.segmentsPerLoop = 1 + this._play.endSegment
+      - this._play.startSegment;
   }
 
   /**
@@ -137,7 +137,7 @@ export default class SegmentStream {
    */
   _primeBuffer() {
     const promises = [];
-    for (let i = 0; i < this._buffer.size; i++) {
+    for (let i = 0; i < this._buffer.size; i += 1) {
       const segment = this._getTemplateForNthSegment(i);
       this._buffer.segments.push(segment);
 
@@ -195,7 +195,7 @@ export default class SegmentStream {
         const newSegment = this._getTemplateForNthSegment(newSegmentNumber);
 
         this._buffer.segments[this._buffer.frontIndex] = newSegment;
-        this._buffer.frontIndex++;
+        this._buffer.frontIndex += 1;
         this._buffer.frontIndex = this._buffer.frontIndex % this._buffer.size;
 
         if (newSegment.number >= this._stream.segmentStart
@@ -230,10 +230,10 @@ export default class SegmentStream {
   _getTemplateForNthSegment(n) {
     // Calculate the loop position and number of the nth segment.
     const nOffset = n + this._play.initialSegment - this._play.startSegment;
-    const loopNumber = this._play.loop && this._play.segmentsPerLoop ?
-      Math.floor(nOffset / this._play.segmentsPerLoop) : 0;
-    const loopPosition = this._play.loop && this._play.segmentsPerLoop ?
-      nOffset % this._play.segmentsPerLoop : nOffset;
+    const loopNumber = this._play.loop && this._play.segmentsPerLoop
+      ? Math.floor(nOffset / this._play.segmentsPerLoop) : 0;
+    const loopPosition = this._play.loop && this._play.segmentsPerLoop
+      ? nOffset % this._play.segmentsPerLoop : nOffset;
 
     // Calulate the stream segment number and url.
     const number = this._play.startSegment + loopPosition;
@@ -245,9 +245,9 @@ export default class SegmentStream {
     // when - when the play should start.
     // offset - where the playback should start.
     // duration - the intended length of the portion to be played.
-    let when = - this._play.startOverlap - this._play.initial +
-      loopNumber * this._play.duration +
-      loopPosition * this._stream.segmentDuration;
+    let when = -this._play.startOverlap - this._play.initial
+      + loopNumber * this._play.duration
+      + loopPosition * this._stream.segmentDuration;
     let offset = 0;
     let duration = this._stream.segmentDuration;
 
@@ -255,21 +255,23 @@ export default class SegmentStream {
     // Otherwise; trim the start of the first loop segment if required.
     if (n === 0) {
       when = 0;
-      duration = duration - this._play.initialOverlap;
-      offset = offset + this._play.initialOverlap;
+      duration -= this._play.initialOverlap;
+      offset += this._play.initialOverlap;
     } else if (number === this._play.startSegment) {
-      when = when + this._play.startOverlap;
-      duration = duration - this._play.startOverlap;
-      offset = offset + this._play.startOverlap;
+      when += this._play.startOverlap;
+      duration -= this._play.startOverlap;
+      offset += this._play.startOverlap;
     }
 
     // Trim the end of the last loop segment if required.
     if (number === this._play.endSegment) {
-      duration = duration - this._play.endOverlap;
+      duration -= this._play.endOverlap;
     }
 
     // Return the template for the segment.
-    return { n, number, url, when, offset, duration };
+    return {
+      n, number, url, when, offset, duration,
+    };
   }
 
   /**
@@ -281,6 +283,7 @@ export default class SegmentStream {
    * @return {string}
    *         The string representation of the zero padded number.
    */
+  // eslint-disable-next-line class-methods-use-this
   _padNumberWithZeros(number, zeros) {
     let str = `${number}`;
     while (str.length < zeros) {
@@ -317,6 +320,7 @@ export default class SegmentStream {
    * @return {Object}
    *         The complete segment.
    */
+  // eslint-disable-next-line class-methods-use-this
   _addDataToSegment() { }
 
   /**
@@ -328,7 +332,7 @@ export default class SegmentStream {
     // downloaded with a frequency relative to the streams segment duration.
     this.manageBufferInterval = setInterval(
       () => this._manageBuffer(),
-      this._stream.segmentDuration / 4 * 1000
+      (this._stream.segmentDuration / 4) * 1000,
     );
   }
 
