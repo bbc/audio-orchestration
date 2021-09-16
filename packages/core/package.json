@@ -36,7 +36,8 @@
     "webpack-cli": "^4.8.0"
   },
   "scripts": {
-    "dev": "webpack --mode=development",
+    "dev": "webpack --mode=development --watch",
+    "build:dev": "webpack --mode=development",
     "build": "webpack --mode=production",
     "doc": "esdoc",
     "test": "jest",

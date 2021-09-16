@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -23,4 +24,12 @@ module.exports = {
       '$common': path.resolve(__dirname, 'src/common'),
     },
   },
+  node: {
+    global: true,
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      Buffer: require.resolve('buffer'),
+    }),
+  ],
 };

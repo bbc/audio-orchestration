@@ -1,7 +1,7 @@
 var inherits, MessagingAdapter, WeakMap, mqtt, MqttMessagingAdapter, PRIVATE, ChannelMap, MessageFactory;
 
 ChannelMap = require("./ChannelMap");
-mqtt = require("mqtt");
+mqtt = require("mqtt/dist/mqtt.min.js");
 WeakMap = require("weak-map");
 MessagingAdapter = require("./MessagingAdapter");
 inherits = require("inherits");

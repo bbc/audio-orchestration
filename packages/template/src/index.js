@@ -19,8 +19,8 @@ import 'whatwg-fetch';
 import 'pepjs';
 
 // Import React and ReactDOM, to render React components to the page.
-import React from 'react';
 import { hot } from 'react-hot-loader';
+import React from 'react';
 import { render } from 'react-dom';
 import {
   connect,

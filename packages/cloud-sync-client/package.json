@@ -13,6 +13,7 @@
   "author": "BBC",
   "license": "Apache-2.0",
   "dependencies": {
+    "buffer": "^6.0.3",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.4",
     "events": "^3.0.0",
