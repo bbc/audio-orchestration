@@ -1,4 +1,4 @@
-import bbcat from '@bbc/audio-orchestration-bbcat-js/src/bbcat.js';
+import bbcat from '@bbc/audio-orchestration-bbcat-js';
 import Player from './player';
 
 class BufferPlayer extends Player {

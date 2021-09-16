@@ -13,6 +13,7 @@
   "bugs": {
     "url": "https://github.com/bbc/audio-orchestration/issues"
   },
+  "devDependencies": {},
   "homepage": "https://github.com/bbc/audio-orchestration#readme",
   "workspaces": [
     "packages/cloud-sync-client",

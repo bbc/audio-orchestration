@@ -3,7 +3,9 @@
   "source": "./src",
   "destination": "./doc",
   "plugins": [{
-    "name": "esdoc-es7-plugin"
-  }],
-  "title": "BBC Audio Toolkit"
+    "name": "esdoc-standard-plugin",
+    "brand": {
+      "title": "BBC Audio Toolkit"
+    }
+  }]
 }
