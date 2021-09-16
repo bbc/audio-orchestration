@@ -7,8 +7,8 @@
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
   },
-  "author": "BBC",
-  "license": "Apache-2.0",
+  "author": "BBC R&D",
+  "license": "GPL-3.0-only",
   "files": [
     "dist"
   ],

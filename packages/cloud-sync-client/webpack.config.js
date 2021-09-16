@@ -7,6 +7,7 @@ module.exports = {
   // path.resolve(__dirname, 'src/client/CloudSynchroniser.js'),
   devtool: 'source-map',
   output: {
+    clean: true,
     path: path.resolve(__dirname, 'dist/browser'),
     filename: 'CloudSyncKit.js',
     library: {

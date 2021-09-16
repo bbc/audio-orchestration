@@ -1,4 +1,6 @@
 const path = require('path');
+const fs = require('fs');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -12,6 +14,7 @@ module.exports = {
     path.resolve(__dirname, 'src/index.js'),
   ],
   output: {
+    clean: true,
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
@@ -98,5 +101,8 @@ module.exports = {
       filename: 'bundle.css',
     }),
     new CleanWebpackPlugin(),
+    new webpack.BannerPlugin({
+      banner: fs.readFileSync(path.resolve(__dirname, 'LICENSE'), 'utf-8'),
+    }),
   ],
 };

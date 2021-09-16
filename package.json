@@ -1,6 +1,5 @@
 {
   "name": "@bbc/audio-orchestration",
-  "description": "This repository will hold the open source audio orchestration library and template application used by Audio Orchestrator.",
   "scripts": {
     "check-versions": "node scripts/check-versions.js"
   },
@@ -8,8 +7,8 @@
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
   },
-  "author": "BBC",
-  "license": "Apache-2.0",
+  "author": "BBC R&D",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/bbc/audio-orchestration/issues"
   },
@@ -20,5 +19,6 @@
     "packages/bbcat-js",
     "packages/core",
     "packages/template"
-  ]
+  ],
+  "private": true
 }

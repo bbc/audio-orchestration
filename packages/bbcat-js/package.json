@@ -1,7 +1,7 @@
 {
   "name": "@bbc/audio-orchestration-bbcat-js",
   "version": "0.0.1",
-  "description": "Lite version of the BBC Audio Toolkit for use in audio orchestration projects",
+  "description": "BBC audio toolkit core and dash player components for audio orchestration framework",
   "main": "dist/bbcat.js",
   "files": [
     "dist"
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"
   },
-  "author": "BBC",
-  "license": "Apache-2.0",
+  "author": "BBC R&D",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/preset-env": "^7.15.0",
