@@ -13,17 +13,17 @@ var inherits = require('inherits');
 var SyncProtocols = require("dvbcss-protocols");
 var createWCSyncClient = SyncProtocols.WallClock.createBinaryWebSocketClient;
 var clocks = require("dvbcss-clocks");
-var WeakMap = require('weak-map');
+var WeakMap = require("weak-map");
+var parseUrl = require("url-parse");
 var PRIVATE = new WeakMap();
 
 
 /**
  * @constructor
- * @param wcServerAddr WallClock sync service (websocket) endpoint
- * @param wcServerPort WallClock sync service's port number
+ * @param wcServerUrl WallClock sync service (websocket) endpoint specification as a URL string
  * @param a CorrelatedClock object representing the wallclock to be synced
  */
-var WallClockSynchroniser = function(wcServerAddr, wcServerPort, wallclock){
+var WallClockSynchroniser = function(wcServerUrl, wallclock){
 
   EventEmitter.call(this);
 
@@ -32,12 +32,11 @@ var WallClockSynchroniser = function(wcServerAddr, wcServerPort, wallclock){
 
   const self = this;
 
-  Object.defineProperty(self, "wcServerAddr",  { value: wcServerAddr});
-  Object.defineProperty(self, "wcServerPort",  { value: wcServerPort });
-  Object.defineProperty(self, 'wallclock',     { value: wallclock });
+  const url = parseUrl(wcServerUrl);
 
-  priv.wsserver_url  = self.wcServerAddr + (typeof(wcServerPort) !== "undefined" ? (":" + wcServerPort) : "");
+  Object.defineProperty(self, 'wallclock', { value: wallclock });
 
+  priv.wsserver_url  = url.origin + url.pathname;
 };
 
 inherits(WallClockSynchroniser, EventEmitter);
@@ -58,7 +57,8 @@ WallClockSynchroniser.prototype.start = function(){
   {
     var priv = PRIVATE.get(this);
 
-    var protocolOptions = { dest: { address:this.wcServerAddr, port:this.wcServerPort} };
+    // no need to pass a dest object, because we pass a socket, and dest is not used by the adapter in dvbcss-protocols.
+    var protocolOptions = {};
 
     priv.wcSyncClient = createWCSyncClient(priv.ws, this.wallclock, protocolOptions);
 

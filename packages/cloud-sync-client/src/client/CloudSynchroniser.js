@@ -47,8 +47,6 @@ var // Prototype inheritance
     // SyncTLElection enum
     SYNC_TL_ELECTION = require("$common/state/SyncTLElection"),
 
-    // URL parser
-    parseUrl = require("url-parse"),
     CloudSynchroniser;
 
 var ENABLE_LOGGING = false;
@@ -351,7 +349,6 @@ function onSyncServiceConnectionFailure(e) {
 }
 
 function joinSession() {
-
     var priv, self;
 
     self = this;
@@ -369,7 +366,6 @@ function joinSession() {
 }
 
 function handleJoinResponse(res) {
-
     var priv = PRIVATE.get(this);
     log("Handling JoinRESP", res);
 
@@ -401,7 +397,7 @@ function handleJoinResponse(res) {
             }
         }
 
-        priv.wcUrl = parseUrl(res.wallclockUrl);
+        priv.wcUrl = res.wallclockUrl;
         resolve();
 
     });
@@ -416,11 +412,7 @@ function performWallclockSync() {
     priv.wallclock.on("available", this.emit.bind(this, "WallClockAvailable"));
     priv.wallclock.on("unavailable", this.emit.bind(this, "WallClockUnAvailable"));
 
-    priv.wallclockSynchroniser = new WallclockSynchroniser(
-        priv.wcUrl.protocol + "//" + priv.wcUrl.hostname + priv.wcUrl.pathname,
-        priv.wcUrl.port,
-        priv.wallclock
-    );
+    priv.wallclockSynchroniser = new WallclockSynchroniser(priv.wcUrl, priv.wallclock);
 
     priv.wallclockSynchroniser.start();
 }
@@ -1051,7 +1043,6 @@ function handlePingRequest(request) {
 }
 
 function sendRequest(type, channel, onresponse, options) {
-
     var args, priv, i, request, opt;
 
     priv = PRIVATE.get(this);
