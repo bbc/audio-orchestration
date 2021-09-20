@@ -87,7 +87,7 @@ ul.thumbnail-choices {
       @include gel-typography('great-primer');
       font-weight: bold;
       margin: 0;
-      margin-bottom: $gel-spacing-unit / 2;
+      margin-bottom: $gel-spacing-unit * 0.5;
     }
 
     h3 {

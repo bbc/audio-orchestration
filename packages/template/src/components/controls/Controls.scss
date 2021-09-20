@@ -24,7 +24,7 @@
 
   label {
     display: block;
-    padding: $gel-spacing-unit/2 0;
+    padding: ($gel-spacing-unit * 0.5) 0;
 
     &:first-child, &:last-child {
       margin: 0;

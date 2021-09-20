@@ -20,7 +20,7 @@
     }
 
     &.error {
-      border: $gel-spacing-unit/2 solid $theme-color-red;
+      border: ($gel-spacing-unit * 0.5) solid $theme-color-red;
       padding: $gel-spacing-unit;
     }
   }
