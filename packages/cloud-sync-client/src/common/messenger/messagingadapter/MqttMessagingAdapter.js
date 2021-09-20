@@ -62,7 +62,6 @@ MqttMessagingAdapter = function (host, port, user, options) {
         priv.client = mqtt.connect( url,  { keepalive: 60, clientId: user, will: lastWill });
     }
 
-   
     priv.client.on("connect", this.emit.bind(this, "connectionestablished"));
     priv.client.on("error", this.emit.bind(this, "connectionfailure"));
     priv.client.on("close", this.emit.bind(this, "connectionlost"));
@@ -82,7 +81,6 @@ MqttMessagingAdapter.prototype.getClientId = function () {
 };
 
 MqttMessagingAdapter.prototype.send = function (message, channel, options) {
-
     var opt;
     if (typeof options!== "undefined")
      {
