@@ -12,7 +12,18 @@
   "bugs": {
     "url": "https://github.com/bbc/audio-orchestration/issues"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.15.0",
+    "@babel/preset-env": "^7.15.0",
+    "babel-loader": "^8.2.2",
+    "esdoc": "^1.1.0",
+    "esdoc-standard-plugin": "^1.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "webpack": "^5.51.1",
+    "webpack-cli": "^4.8.0"
+  },
   "homepage": "https://github.com/bbc/audio-orchestration#readme",
   "workspaces": [
     "packages/cloud-sync-client",
