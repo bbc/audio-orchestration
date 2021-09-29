@@ -27,7 +27,8 @@
     "build": "webpack --mode=production",
     "build:dev": "webpack --mode=development",
     "dev": "webpack --mode=development --watch",
-    "test": "karma start --singleRun",
+    "test": "echo 'Not running browser tests in CI mode. Please use test:browser instead to run the tests locally.'",
+    "test:browser": "karma start --singleRun",
     "lint": "eslint src/ test/",
     "doc": "esdoc -c esdoc.json"
   }
