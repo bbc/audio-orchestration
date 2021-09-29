@@ -12,7 +12,7 @@ jobs:
           node-version: '15.x'
           cache: 'npm'
           cache-dependency-path: '**/package-lock.json'
-      - run: npm check-versions
+      - run: npm run check-versions
       - run: npm ci
       - run: npm -ws run build
       - run: npm -ws run lint
