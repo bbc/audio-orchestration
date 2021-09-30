@@ -17,7 +17,18 @@ This repository will hold the open source audio orchestration library and templa
 
 # Usage
 
-The most common way to use this code is to fork this repository and follow the _Development_ instructions below to create a custom template distribution. This can then be used with _Audio Orchestrator_ to add encoded media and metadata files.
+The most common way to use this code is to **fork this repository** and follow the _Development_ instructions below to create a custom template distribution. This can then be used with _Audio Orchestrator_ to add encoded media and metadata files.
+
+Advanced usage:
+
+If needed, you can also install our pre-built packages by specifying the GitHub Package Registry for the `@bbc` scope in an `.npmrc` file for your project.
+
+```sh
+echo "@bbc:registry=https://npm.pkg.github.com" >> .npmrc
+npm add @bbc/audio-orchestration-core
+```
+
+**NB until this repository is made public, you will need to [login to npm](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) with a GitHub token with access to the BBC organisation to make this work.**
 
 # Development
 
