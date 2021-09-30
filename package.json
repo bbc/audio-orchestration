@@ -3,7 +3,7 @@
   "scripts": {
     "bump": "node scripts/bump.js && npm install",
     "check-versions": "node scripts/check-versions.js",
-    "publish-all": "(cd packages/bbcat-js && npm publish) && (cd packges/cloud-sync-client && npm publish) && (cd packages/core && npm publish) && (cd packages/template && npm publish)"
+    "publish-all": "(cd packages/bbcat-js && npm publish) && (cd packages/cloud-sync-client && npm publish) && (cd packages/core && npm publish) && (cd packages/template && npm publish)"
   },
   "repository": {
     "type": "git",
