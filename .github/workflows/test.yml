@@ -1,5 +1,8 @@
 name: Build, lint, and test
-on: [push, pull_request]
+on:
+  pull_request:
+    branches:
+      - main
 jobs:
   Test:
     runs-on: ubuntu-latest
