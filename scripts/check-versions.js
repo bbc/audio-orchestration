@@ -13,6 +13,7 @@ const {
 } = topLevelPackage;
 
 const workspacePackages = workspaces.map(w => require(path.join(root, w, 'package.json')));
+const workspacePackageNames = workspacePackages.map(({ name }) => name);
 
 const packages = [
   topLevelPackage,
@@ -46,6 +47,14 @@ packages.forEach(({
       allDependencies.set(depName, []);
     }
     allDependencies.get(depName).push({ name, version });
+
+    // Also check that local dependencies are correctly versioned
+    if (workspacePackageNames.includes(depName)) {
+      if (version !== `^${firstWorkspaceVersion}`) {
+        console.log(`Local package ${depName} required as ${version} by ${name}, should be ^${firstWorkspaceVersion}.`);
+        dependencyVersionErrors += 1;
+      }
+    }
   });
 });
 

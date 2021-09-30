@@ -24,8 +24,7 @@
     "url-parse": "^1.2.0",
     "weak-map": "^1.0.5"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "scripts": {
     "build": "webpack --mode=production",
     "build:dev": "webpack --mode=development",
