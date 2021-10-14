@@ -7,6 +7,7 @@ The original authors of this project are:
 ## [British Broadcasting Corporation](http://www.bbc.co.uk/rd) 
 
 * Rajiv Ramdhany <rajiv.ramdhany@bbc.co.uk>
+* Kristian Hentschel <kristian.hentschel@bbc.co.uk>
 
 
 ## [Institut für Rundfunktechnik (IRT)](http://www.irt.de/)
