@@ -6,11 +6,11 @@ plays a looping sequence with defined out-points, and transitions into a regular
 ## Usage
 
 ```
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
-After running the development server (`yarn dev`), browse to [localhost:8080](http://localhost:8080).
+After running the development server (`npm run dev`), browse to [localhost:8080](http://localhost:8080).
 
 Press _Play_ to start playing the loop sequence. You may adjust the objects rendered in each of
 the sequences.

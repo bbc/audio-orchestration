@@ -11,6 +11,7 @@ function initRenderer(sequenceData, rendererClock) {
   const sequence = new Sequence(sequenceData);
   const renderer = new SynchronisedSequenceRenderer(
     audioContext,
+    null,
     rendererClock,
     sequence,
     isStereo,
@@ -38,9 +39,9 @@ function initControls(renderer, el) {
 
   const btn = document.createElement('button');
   btn.innerText = 'Allocate Objects';
-  btn.addEventListener('click', () => renderer.setActiveObjectIds(inputs
+  btn.addEventListener('click', () => renderer.setActiveObjects(inputs
     .filter(d => d.checked)
-    .map(d => d.value)));
+    .map(d => ({ objectId: d.value }))));
   el.appendChild(btn);
 }
 
@@ -54,7 +55,7 @@ function init() {
     })
     .then(data => initRenderer(data, clock))
     .then((renderer) => {
-      renderer.setActiveObjectIds(renderer.sequence.objectIds);
+      renderer.setActiveObjects(renderer.sequence.objectIds.map(objectId => ({ objectId })));
       initControls(renderer, document.getElementById('object-ids-main'));
       return renderer;
     });
@@ -69,7 +70,7 @@ function init() {
     .then(data => initRenderer(data, clock))
     .then((renderer) => {
       renderer.start(0);
-      renderer.setActiveObjectIds(renderer.sequence.objectIds);
+      renderer.setActiveObjects(renderer.sequence.objectIds.map(objectId => ({ objectId })));
       initControls(renderer, document.getElementById('object-ids-loop'));
       return renderer;
     });
@@ -78,7 +79,7 @@ function init() {
     .then(([mainRenderer, loopRenderer]) => {
       document.getElementById('btn-transition').addEventListener('click', (e) => {
         e.target.disabled = true;
-        loopRenderer.setActiveObjectIds(['music']);
+        loopRenderer.setActiveObjects([{ objectId: 'music' }]);
         const syncTime = loopRenderer.stopAtOutPoint(2);
         mainRenderer.start(syncTime);
       });

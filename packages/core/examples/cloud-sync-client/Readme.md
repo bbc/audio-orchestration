@@ -5,11 +5,11 @@ This example shows the usage of the `sync` client using the `cloud-sync-adapter`
 ## Usage
 
 ```
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
-After running the development server (`yarn dev`), browse to [localhost:8080](http://localhost:8080).
+After running the development server (`npm run dev`), browse to [localhost:8080](http://localhost:8080).
 
 Enter a common session id and a unique device id in two browser tabs. First press _connect as main_
 in one, then _connect as aux_ in the other tab.
@@ -17,7 +17,7 @@ in one, then _connect as aux_ in the other tab.
 You may also change the cloud-sync server by entering hostname and port in these formats:
 
  * hostname only: will be interpreted as a secure websockets connection on the default HTTPS port;
-   despite the name the field may include a pathname (but not a protocol prefix) e.g. `cloud-sync.domain/cloud-sync`.
+   despite the name the field may include a pathname (but not a protocol prefix) e.g. `cloud-sync.example.com/cloud-sync`.
  * hostname and port: will be interpreted as a regular websockets connection on the specified port
    (usually only needed when running a cloud-sync server locally).
 
@@ -31,4 +31,4 @@ leaving should be logged in the _presence events_ section.
 
 ## Screenshot
 
-![Screenshot of Players example](screenshot.png)
+![Screenshot of Cloud Sync Client example](screenshot.png)

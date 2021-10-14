@@ -9,17 +9,21 @@ const isStereo = true;
 
 function initRenderer(sequenceData) {
   const sequence = new Sequence(sequenceData);
-  const renderer = new SynchronisedSequenceRenderer(audioContext, clock, sequence, isStereo);
+  const renderer = new SynchronisedSequenceRenderer(audioContext, null, clock, sequence, isStereo);
   renderer.start(0);
   renderer.output.connect(audioContext.destination);
 
   return renderer;
 }
 
-function getSelectedObjectIds() {
+function getSelectedObjects() {
   const objectIds = [];
-  document.querySelectorAll('input[type=checkbox]:checked').forEach(input =>
-    objectIds.push(input.value));
+  document.querySelectorAll('input[type=checkbox]:checked').forEach(input => {
+    objectIds.push({
+      objectGain: 1.0,
+      objectId: input.value,
+    });
+  });
   return objectIds;
 }
 
@@ -45,7 +49,7 @@ function initControls(renderer) {
     'btn-pause': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now()], 0),
     'btn-reset': () => clock.setCorrelationAndSpeed([sysClock.now(), 0], 1),
     'btn-skip': () => clock.setCorrelationAndSpeed([sysClock.now(), clock.now() + 10], 1),
-    'btn-allocate': () => renderer.setActiveObjectIds(getSelectedObjectIds()),
+    'btn-allocate': () => renderer.setActiveObjects(getSelectedObjects()),
   };
   Object.entries(clickHandlers).forEach(([id, cb]) => {
     document.getElementById(id).addEventListener('click', cb);

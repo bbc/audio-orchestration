@@ -1,14 +1,14 @@
 {
   "name": "sequence-renderer-loop",
   "version": "0.0.1",
-  "description": "An example demonstrating the sequence renderer",
+  "description": "An example demonstrating the sequence renderer with a looping sequence",
   "main": "index.js",
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0",
+    "@babel/core": "^7.6.2",
+    "@babel/preset-env": "^7.6.2",
+    "babel-loader": "^8.0.6",
     "copy-webpack-plugin": "^4.5.1",
     "html-webpack-plugin": "^3.2.0",
     "webpack": "^4.12.0",
