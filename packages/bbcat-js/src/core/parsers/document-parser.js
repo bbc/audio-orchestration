@@ -159,11 +159,11 @@ export default class DocumentParser {
   }
 
   /**
-   * Parses all children of the node as specified by the nodeModel.
+   * Parses all children of the nodes as specified by the nodeModel.
    * @see https://developer.mozilla.org/en-US/docs/Web/API/Node
    * @private
-   * @param  {!Node} node
-   *         The node to parse.
+   * @param  {!Node[]} nodes
+   *         The array of nodes to parse.
    * @param  {!Object} nodeModel
    *         The model to parse the node against.
    * @return {any[]}

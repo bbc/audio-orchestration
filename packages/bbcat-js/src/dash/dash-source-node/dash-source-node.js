@@ -166,7 +166,7 @@ export default class DashSourceNode extends CompoundNode {
 
   /**
    * Seek playback by a provided offset value.
-   * @param  {?number} [seconds]
+   * @param  {?number} [seekTime]
    *         Time in seconds to seek by note this is relative to the current playback position and
    *         can be +/ve or -/ve
    */
@@ -302,7 +302,7 @@ export default class DashSourceNode extends CompoundNode {
   /**
    * Dispatches an event of type metadata.
    * @emits {metadata}
-   * @param  {!Object} metadata
+   * @param  {!Object} segment
    *         The segment containing metadata.
    */
   _dispatchMetadataEvent(segment) {
