@@ -1,7 +1,7 @@
 {
   "name": "@bbc/audio-orchestration-bbcat-js",
   "version": "0.0.1-2",
-  "description": "BBC audio toolkit core and dash player components for audio orchestration framework",
+  "description": "WebAudio DASH player components for audio orchestration framework",
   "main": "dist/bbcat.js",
   "files": [
     "dist"

@@ -1,5 +1,5 @@
 .DS_Store
 node_modules/
 test/_coverage/
-/doc
+doc
 dist
