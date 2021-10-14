@@ -1,4 +1,4 @@
-# bbcat-orchestration
+# audio-orchestration-core
 
 This repository contains Javascript components for building synchronised object based audio
 experiences.
@@ -25,44 +25,40 @@ experiences.
 
 ## Usage
 
-The recommended way to use the library is to include it as part of a webpack build. You can take advantage of tree-shaking (de-duplicating common dependencies) by importing individual ES6 modules directly from `src/`:  For example, use `import OrchestrationClient from 'bbcat-orchestration/src/orchestration'`. For convenience, the top-level classes are also available as `import { OrchestrationClient } from 'bbcat-orchestration'`.
+The available exports are listed in [index.js](src/index.js). If the library is installed using `npm`, it can be imported like this:
 
-Alternatively, a webpack bundle including all dependencies can be created by running `yarn build`. This creates a single large file using a Universal Module Definition (UMD) in `dist/` that works when included as a `<script>` tag, exposing the global `bbcatOrchestration` object. Its properties are defined in `src/index.js`.
+```js
+import { OrchestrationClient } from '@bbc/audio-orchestration-core';
+```
+
+It is also possible to import the bundled library (`dist/bbcat-orchestration.js`) using a `<script>` tag. In this case, the exports are available on the global `bbcatOrchestration` object.
+
+```html
+<script src="bbcat-orchestration.js"></script>
+<script>
+  const { OrchestrationClient } = bbcatOrchestration;
+</script>
+```
 
 ## Examples
 
 A number of stand-alone examples are provided to illustrate the usage of certain individual components:
 
  * [players](examples/players/) DASH and buffer source audio players
- * [cloud-sync-client](examples/cloud-sync-client/) synchronisation to 2-IMMERSE cloud-sync service
- * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised timeline using cloud-sync
- * [sequence-renderer-loop](examples/sequence-renderer-loop/) rendering a looping timeline
+ * [cloud-sync-client](examples/cloud-sync-client/) connection to the cloud-sync service
+ * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised sequence using cloud-sync
+ * [sequence-renderer-loop](examples/sequence-renderer-loop/) rendering a looping sequence
  * [mdo-allocation](examples/mdo-allocation/) demonstrating allocation rules
- * [not maintained] [dvbcss-services](examples/dvbcss-services/) synchronisation to dvbcss services, incomplete implementation
 
-A complete integration can also be found in the
-[bbcat-orchestration-template](https://github.com/bbc/bbcat-orchestration-template)
-repository, which implements a React.js user interface template recommended for starting new projects.
+## Development
 
-## Setup
+`npm run dev` creates a development build, `npm run build` creates a production build of the complete library in `dist/`.
 
-[Node.js](https://nodejs.org/en/) 8+ a is recommended.
+`npm run lint` checks for coding style violations.
 
-Install all dependencies for development of the main library:
+`npm run test` runs tests for the allocation algorithm implementation.
 
-NB: some dependencies are installed from the R&D Artifactory registry. See our [ways of working page](https://confluence.dev.bbc.co.uk/display/audioteam/bbcat-orchestration+libraries+and+tools) to set this up.
-
-```
-yarn install
-```
-
-### available scripts
-
-`yarn dev` creates a development build, `yarn build` creates a production build of the complete library in `dist/`.
-
-`yarn lint` runs `eslint` to check for coding style violations.
-
-`yarn doc` generates the documentation in the `docs/` folder.
+`npm run doc` generates class documentation in `docs/index.html`.
 
 ### Linking local versions of dependencies
 
