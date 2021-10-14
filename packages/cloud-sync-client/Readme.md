@@ -33,14 +33,6 @@ npm run build
 
 The resulting JS client library is placed in `dist/browser/CloudSyncKit.js`.
 
-## Unit tests
-
-Unit tests are written using the jasmine unit test framework.
-
-```
-npm run test
-```
-
 ## Licence and Authors
 
 All code and documentation is licensed by the original author and contributors under the Apache License v2.0:
