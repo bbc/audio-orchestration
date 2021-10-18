@@ -1,19 +1,29 @@
 # Audio Orchestration
 
-This repository will hold the open source audio orchestration library and template application used by _Audio Orchestrator_.
+<img alt="BBC R&D: Audio Orchestration" src="doc/data-card.png" width="400" height="100" />
+
+**Create immersive and interactive audio experiences for connected and synchronised devices.**
+
+This repository holds the open source audio orchestration library and template application used by _Audio Orchestrator_.
+
+The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
 
 ## Components
 
-* [`@bbc/audio-orchestration-template`](packages/template): graphical user interface - start here to develop custom functionality.
-* [`@bbc/audio-orchestration-core`](packages/core): core library managing connected devices, the allocation algorithm, and synchronised playback.
-* [`@bbc/audio-orchestration-bbcat-js`](packages/bbcat-js): helper library for WebAudio playback.
-* [`@bbc/audio-orchestration-cloud-sync-client`](packages/cloud-sync-client): client library connecting to the synchronisation service.
+<img alt="Components and dependencies" src="doc/repo-structure.png" width="368" height="158" />
 
-## See also
+We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming), and **cloud-sync-client** (connection to the synchronisation server).
 
-* [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator), our production tool built on top of this template and library, is available free of charge from [BBC MakerBox](https://www.bbc.co.uk/makerbox/). 
-* The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
-* You may wish to run your own synchronisation server, based on the [cloud-sync](https://github.com/bbc/cloud-sync) framework.
+The [**cloud-sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub.
+
+Our [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) production tool for authoring metadata and packaging media for use with the template and core library is available through BBC MakerBox.
+
+More detailed information about each of the packages is available in the respective Readme files.
+
+* [`@bbc/audio-orchestration-template`](packages/template)
+* [`@bbc/audio-orchestration-core`](packages/core)
+* [`@bbc/audio-orchestration-bbcat-js`](packages/bbcat-js)
+* [`@bbc/audio-orchestration-cloud-sync-client`](packages/cloud-sync-client)
 
 # Usage
 
@@ -34,7 +44,7 @@ npm add @bbc/audio-orchestration-core
 
 You need Node.js (14, but earlier versions will likely still work) and npm (need version 7 or higher for the workspace support).
 
-First install the dependencies, then build all of them once (the `-ws` flag tells npm to run the command for each package).
+First install the dependencies, then build all of them once (the `-ws` flag tells npm to run the `build` command for each package).
 
 ```sh
 npm install
