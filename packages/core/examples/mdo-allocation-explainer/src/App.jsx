@@ -1,6 +1,6 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import DefaultAllocationAlgorithm from '@bbc/bbcat-orchestration/src/allocation-algorithm/DefaultAllocationAlgorithm';
+import { DefaultAllocationAlgorithm } from '@bbc/audio-orchestration-core';
 import MetadataEntry from './MetadataEntry';
 import AllocationReplay from './AllocationReplay';
 
@@ -16,9 +16,8 @@ const mockObjects = [
     objectGain: 1.0,
     objectImage: null,
     objectBehaviours: [
-      { behaviourType: 'mainOrAuxDevice' },
       { behaviourType: 'exclusive' },
-      { behaviourType: 'cannotMove' },
+      { behaviourType: 'allowedEverywhere' },
     ],
   },
   {
@@ -57,16 +56,13 @@ const mockObjects = [
         behaviourParameters: {
           conditions: [
             {
-              property: 'deviceTags.location',
+              property: 'deviceControls.location',
               operator: 'anyOf',
               value: ['nearFront', 'farFront'],
             },
           ],
         },
       },
-      // { behaviourType: 'prohibitedIf' },
-      { behaviourType: 'moveToPreferredOnly' },
-      { behaviourType: 'mainDeviceOnly' },
     ],
   },
 ];
@@ -80,10 +76,10 @@ const mockDevices = [
     deviceCategory: 'desktop',
     deviceGain: 1.0,
     deviceLatency: null,
-    deviceTags: [
+    deviceControls: [
       {
-        tagId: 'foo',
-        tagValues: ['Bar'],
+        controlId: 'location',
+        controlValues: ['nearFront'],
       },
     ],
   },
@@ -95,10 +91,10 @@ const mockDevices = [
     deviceCategory: 'mobile',
     deviceGain: 1.0,
     deviceLatency: 19,
-    deviceTags: [
+    deviceControls: [
       {
-        tagId: 'foo',
-        tagValues: ['Bar'],
+        controlId: 'location',
+        controlValues: ['farRear'],
       },
     ],
   },
@@ -108,10 +104,10 @@ const mockDevices = [
     deviceJoiningNumber: 3,
     deviceCurrentNumber: 2,
     deviceCategory: 'mobile',
-    deviceTags: [
+    deviceControls: [
       {
-        tagId: 'location',
-        tagValues: ['nearFront'],
+        controlId: 'location',
+        controlValues: ['farFront'],
       },
     ],
   },

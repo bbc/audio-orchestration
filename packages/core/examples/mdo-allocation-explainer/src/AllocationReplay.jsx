@@ -51,7 +51,7 @@ class AllocationReplay extends React.Component {
       return (
         <div className="allocation-replay">
           <h1>Nothing to display.</h1>
-          <p>Something might have gone wrong, please reload the page and try again.</p>
+          <p>Click 're-run allocation' above or edit the device or object metadata to get started.</p>
         </div>
       );
     }

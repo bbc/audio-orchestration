@@ -104,7 +104,6 @@ A number of stand-alone examples are provided to illustrate the usage of certain
  * [cloud-sync-client](examples/cloud-sync-client/) connection to the cloud-sync service
  * [sequence-renderer](examples/sequence-renderer/) rendering a synchronised sequence using cloud-sync
  * [sequence-renderer-loop](examples/sequence-renderer-loop/) rendering a looping sequence
- * [mdo-allocation](examples/mdo-allocation/) demonstrating allocation rules
  * [mdo-allocation-explainer](examples/mdo-allocation-explainer/) interface for pasting a metadata file and stepping through the allocation algorithm steps
  * [sequence-visualiser](examples/sequence-visualiser/) shows the timings of audio objects included in a metadata file
  * [latency-calibration](examples/latency-calibration/) shows how compensating for the output latency of a device can improve synchronisation

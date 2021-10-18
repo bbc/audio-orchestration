@@ -6,11 +6,11 @@ algorithm takes to create the allocations for a given list of objects and device
 ## Usage
 
 ```
-yarn install
-yarn dev
+npm install
+npm run dev
 ```
 
-After running the development server (`yarn dev`), browse to [localhost:8080](http://localhost:8080).
+After running the development server (`npm run dev`), browse to [localhost:8080](http://localhost:8080).
 
 Click _Re-run allocation_ to use data from the text boxes for object and device metadata (shown
 with the _edit metadata_ button) to run an allocation. Then use the slider to go through the steps
@@ -21,7 +21,7 @@ the algorithm takes.
 The `AllocationAlgorithm` receives:
 
   * the `objects` metadata exactly as it was defined during production;
-  * the `devices` metadata representing the current status of all devices, including selected tags;
+  * the `devices` metadata representing the current status of all devices, including the current control values for each;
   * the `session` metadata for global state not relating to a specific device; and
   * the `previousAllocations` mapping of devices to objects, from the previous run of the algorithm.
 
@@ -45,7 +45,7 @@ const objects = [
         behaviourOptions: {           // options are defined by the behaviour implementation, they can contain any JSON object
           conditions: [
             {
-              property: 'deviceTags.location',
+              property: 'deviceControls.location',
               invertCondition: true,
               operator: 'anyOf',
               value: ['nearFront', 'farFront'],
@@ -78,18 +78,14 @@ const devices = [
     deviceCurrentNumber: 2,       // current position in joining order; different if a device left
     deviceLatency: 19,            // emission latency in milliseconds, if known for the device
     deviceGain: 1.0,              // calibration gain multiplier applied to every object on this device
-    deviceTags: [                 // an entry for every tag group
+    deviceControls: [             // an optional entry for every control
       {
-        tagId: 'locationZone',    // unique identifier for the tag
-        tagValues: ['nearFront'], // list of values selected on this device; may be empty or contain a default value
+        controlId: 'locationZone',    // unique identifier for the control
+        controlValues: ['nearFront'], // list of values selected on this device; may be empty or contain a default value
       },
       {
-        tagId: 'locationMap',
-        tagValues: [0.5, 0.7],    // the list of value might contain numbers; multiple numbers might be used to represent coordinates
-      },
-      {
-        tagId: 'channelSelection',
-        tagValues: ['commentator', 'home-crowd', 'away-crowd'],
+        controlId: 'channelSelection',
+        controlValues: ['commentator', 'home-crowd', 'away-crowd'],
       },
     ],
   },

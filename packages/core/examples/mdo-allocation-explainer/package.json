@@ -3,12 +3,13 @@
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
-  "dependencies": {},
-  "devDependencies": {
-    "@bbc/bbcat-orchestration": "link:../..",
+  "dependencies": {
+    "@bbc/audio-orchestration-core": "file:../..",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-hot-loader": "^4.12.15",
+    "react-hot-loader": "^4.12.15"
+  },
+  "devDependencies": {
     "@babel/core": "^7.6.4",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
