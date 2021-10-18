@@ -29,7 +29,7 @@
             transitionOnMinNumberOfAuxDevices: 3,
             next: [
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Hidden default choice',
                 // The 'hidden' flag hides the button associated with this choice. It might be used
                 // as a hidden default choice, or as a debug tool (e.g. by having short cuts only
@@ -37,19 +37,19 @@
                 hidden: true,
               },
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Go left',
               },
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Go right',
               },
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Look around you some more',
               },
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Main content',
                 // The 'thumbnail' flag shows this choice in a separate block, pulling an image and
                 // URL from the entry for the sequence referred to by the contentId.
@@ -64,7 +64,7 @@
             skippable: false,
             next: [
               {
-                contentId: CONTENT_ID_MAIN,
+                contentId: 'main',
                 label: 'Listen Again',
               },
             ],
@@ -151,6 +151,7 @@
         ],
 
         DEBUG_UI: true,
+        CALIBRATION_SEQUENCE_URL: 'audio/calibration/sequence.json',
 
         TEXT_TITLE: 'Title',
         TEXT_SUBTITLE: 'Subtitle',
