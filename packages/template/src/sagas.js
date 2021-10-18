@@ -17,7 +17,6 @@ import { createSession, validateSession } from './session';
 
 export const PAGE_START = 'start';
 export const PAGE_LOADING = 'loading';
-export const PAGE_LOADING_TUTORIAL = 'loading-tutorial';
 export const PAGE_INSTRUCTIONS = 'instructions';
 export const PAGE_ERROR = 'error';
 export const PAGE_PLAYING = 'main-playing';
@@ -99,11 +98,7 @@ function* connectForm(canCancel = true) {
 function* mainFlow() {
   yield put({ type: 'SET_ROLE', role: ROLE_MAIN });
 
-  if (config.ENABLE_TUTORIAL) {
-    yield put({ type: 'SET_PAGE', page: PAGE_LOADING_TUTORIAL });
-  } else {
-    yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
-  }
+  yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
   yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });
@@ -152,11 +147,7 @@ function* auxiliaryFlow({ sessionCode, sessionId }) {
   yield put({ type: 'SET_SESSION_CODE', sessionCode, sessionId });
   yield put({ type: 'SET_ROLE', role: ROLE_AUXILIARY });
 
-  if (config.ENABLE_TUTORIAL) {
-    yield put({ type: 'SET_PAGE', page: PAGE_LOADING_TUTORIAL });
-  } else {
-    yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
-  }
+  yield put({ type: 'SET_PAGE', page: PAGE_LOADING });
 
   yield takeEvery('SET_ERROR', function* openErrorPage() {
     yield put({ type: 'SET_PAGE', page: PAGE_ERROR });

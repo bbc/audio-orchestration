@@ -119,9 +119,6 @@ const config = {
   // objects, controls, and control values for all devices.
   DEVICE_DEBUG_UI: false,
 
-  // TODO the tutorial component should be removed as it was never implemented fully.
-  ENABLE_TUTORIAL: false,
-
   // TODO the sync clock content ID, tick rate, timeline type can be hard coded (probably in the
   // library) as they never need to be changed.
   SYNC_CLOCK_CONTENT_ID: 'github.com/bbc/bbcat-orchestration-template/syncClock',

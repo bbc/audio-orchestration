@@ -11,7 +11,6 @@ import {
   PAGE_CONNECT_FORM,
   PAGE_CONNECT_DIRECT,
   PAGE_INSTRUCTIONS,
-  PAGE_LOADING_TUTORIAL,
   PAGE_CALIBRATION,
   ROLE_MAIN,
 } from 'sagas';
@@ -22,7 +21,6 @@ import config from 'config';
 // Import the page components: only one of these is used at a time.
 import StartPage from 'pages/start-page/StartPage';
 import LoadingPage from 'pages/loading-page/LoadingPage';
-import LoadingTutorialPage from 'pages/loading-tutorial-page/LoadingTutorialPage';
 import InstructionsPage from 'pages/instructions-page/InstructionsPage';
 import ErrorPage from 'pages/error-page/ErrorPage';
 import PlayingPage from 'pages/playing-page/PlayingPage';
@@ -60,9 +58,6 @@ const App = ({
       break;
     case PAGE_LOADING:
       CurrentPage = LoadingPage;
-      break;
-    case PAGE_LOADING_TUTORIAL:
-      CurrentPage = LoadingTutorialPage;
       break;
     case PAGE_INSTRUCTIONS:
       CurrentPage = InstructionsPage;

@@ -16,9 +16,6 @@ particular experience.
 
 ## Development
 
-**To create an experience based on this template, see the [tutorial](tutorial/) instead.** In short,
-use `git init` and `git pull` instead of `git clone` to create a fork of this repository.
-
 ### Setup
 
 [Node.js](https://nodejs.org/en/) 8+ a is recommended.
