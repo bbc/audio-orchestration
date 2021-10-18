@@ -1,37 +1,17 @@
-# Orchestration Template
+# Audio orchestration template
 
-This project is an example you can modify to suit your application. Fork this repository, and build
-your own orchestrated audio experiences using [React](https://reactjs.org/) and our
-[bbcat-orchestration](https://github.com/bbc/bbcat-orchestration) tools.
+This template project is an example of using the [audio orchestration core library](../core) you can modify to suit your application.
 
-## Browser compatibility
-
-Browsers on iOS < 11 may not be supported.
-
-## Usage
-
-This explains how audio assets should be packaged, and how a local copy of the template can be customised
-to include the packaged audio, and how the presentational components may be adapted to better suit a
-particular experience.
+Our production tool [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) uses this template. It produces the audio and metadata files that are needed. You can also set it up to use a custom local template build for Audio Orchestrator's preview function in the advanced export settings.
 
 ## Development
 
-### Setup
-
-[Node.js](https://nodejs.org/en/) 8+ a is recommended.
-
-Install the dependencies using `yarn`.
-
-NB: some dependencies are installed from the R&D Artifactory registry. See our [ways of working page](https://confluence.dev.bbc.co.uk/display/audioteam/bbcat-orchestration+libraries+and+tools) to set this up.
-
-```sh
-yarn install
-```
+Make sure you have installed the dependencies by running `npm install` in the repository root (not the template folder).
 
 Start a development server:
 
 ```sh
-yarn dev
+npm run dev
 ```
 
 ### Template Structure
@@ -42,12 +22,12 @@ on the template.
 
 ### Main libraries used
 
-You should familiarise yourself with these libraries before attempting to follow the more detailed notes in the sections below.
+The following libraries are used in the template, and their documentation may be useful when looking to make changes.
 
-* [React.js 16](https://reactjs.org/)
+* [React.js](https://reactjs.org/)
 * [Redux](https://redux.js.org/) (and [react-redux](https://redux.js.org/basics/usagewithreact))
 * [Redux-saga](https://redux-saga.js.org/)
-* [bbcat-orchestration](https://github.com/bbc/bbcat-orchestration), only the `OrchestrationClient` interface is directly used in the template.
+* [@bbc/audio-orchestration-core](../core)
 
 ### Template code: redux actions, reducers, sagas, and the orchestration client
 
@@ -91,6 +71,8 @@ Implements a client for the [session-id-service](https://github.com/bbc/bbcat-or
 
 This is the HTML skeleton used for the page. It is transformed by a webpack plugin to import the final JS and CSS bundles.
 
+It also holds the experience configuration object; usually this is produced by Audio Orchestrator.
+
 #### `src/index.js`
 
 This file is the overall entry point. It imports many things that have to be imported exactly once (JavaScript polyfills, component style). It also sets up the React application (including the state, reducers, and sagas) and renders the top-level `<App />` component.
@@ -105,6 +87,6 @@ Each _page_ renders the presentational components (some of which may be connecte
 
 #### `src/components`
 
-Each _component_ contains at least one `.jsx` file defining the React component, and usually it also has a `.scss` file defining the styling. Some components have multiple `.jsx` files for sub-components or to provide a version of the component that is connected to the state.
+Each _component_ contains at least one `.jsx` file defining the React component, and usually it also has a `.scss` file defining the styling. Some components have multiple `.jsx` files for sub-components or to provide a version of the component that is connected to the state. Note that all `.scss` files must be separately imported in `src/index.js`.
 
 For the style sheets (`.scss` files), we scope all class names to always begin with the name of the component folder. Where shorter class names are desired, these must be combined with a scoped name to ensure styles don't affect other components.
