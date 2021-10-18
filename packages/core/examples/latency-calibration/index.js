@@ -1,13 +1,14 @@
-import Sync from 'bbcat-orchestration/src/sync';
-import CloudSyncAdapter from 'bbcat-orchestration/src/sync/cloud-sync-adapter';
-import AudioContextClock from 'bbcat-orchestration/src/sync-players/audio-context-clock';
 import {
-  SynchronisedSequenceRenderer,
-  Sequence,
-} from 'bbcat-orchestration/src/sequence-renderer';
-// import OffsetClock from 'dvbcss-clocks/src/OffsetClock';
+  Sync,
+  SyncPlayers,
+  SequenceRenderer,
+} from '@bbc/audio-orchestration-core';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import sequenceData from './sequence.json';
+
+const { CloudSyncAdapter, Synchroniser } = Sync;
+const { AudioContextClock } = SyncPlayers;
+const { Sequence, SynchronisedSequenceRenderer } = SequenceRenderer;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -29,7 +30,7 @@ function initOrchestration() {
     sysClock: new AudioContextClock({}, audioContext),
   });
 
-  const sync = new Sync(adapter);
+  const sync = new Synchroniser(adapter);
 
   return sync.connect(
     CLOUD_SYNC_ENDPOINT,

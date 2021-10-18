@@ -1,3 +1,9 @@
-import Sync from './sync';
+import Synchroniser from './synchroniser';
+import SyncAdapter from './sync-adapter';
+import CloudSyncAdapter from './cloud-sync-adapter';
 
-export default Sync;
+export {
+  Synchroniser,
+  SyncAdapter,
+  CloudSyncAdapter,
+};

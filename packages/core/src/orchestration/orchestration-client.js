@@ -7,7 +7,7 @@ import SynchronisedSequenceRenderer from '../sequence-renderer/sequence-renderer
 import MdoAllocator from '../mdo-allocation/mdo-allocator';
 import MdoReceiver from '../mdo-allocation/mdo-receiver';
 import CloudSyncAdapter from '../sync/cloud-sync-adapter';
-import Sync from '../sync/sync';
+import Synchroniser from '../sync/synchroniser';
 import ImageContext from '../image-context/image-context';
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
@@ -305,7 +305,7 @@ class OrchestrationClient extends EventEmitter {
   _createSynchronisedClocks() {
     this.emit('loading', 'creating clocks');
     this._sysClock = new AudioContextClock({}, this._audioContext);
-    this._sync = new Sync(new CloudSyncAdapter({ sysClock: this._sysClock }));
+    this._sync = new Synchroniser(new CloudSyncAdapter({ sysClock: this._sysClock }));
     const { wallClock } = this._sync;
     this._primaryClock = new CorrelatedClock(wallClock, {
       correlation: {

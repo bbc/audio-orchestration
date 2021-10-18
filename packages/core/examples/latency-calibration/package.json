@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "bbcat-orchestration": "git+ssh://git@github.com:bbc/bbcat-orchestration.git",
+    "@bbc/audio-orchestration": "file:../..",
     "dvbcss-clocks": "^0.0.4"
   },
   "devDependencies": {

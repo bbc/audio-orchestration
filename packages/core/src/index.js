@@ -1,4 +1,4 @@
-import Sync from './sync';
+import * as Sync from './sync';
 import * as SyncPlayers from './sync-players';
 import * as SequenceRenderer from './sequence-renderer';
 import * as MdoAllocation from './mdo-allocation';
