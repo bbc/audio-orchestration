@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 import Ajv from 'ajv';
 import objectSchema from '../../../schemas/object.json';
 import objectsSchema from '../../../schemas/objects.json';

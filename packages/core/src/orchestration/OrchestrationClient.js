@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 import EventEmitter from 'events';
 import { v4 as uuidv4 } from 'uuid';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';

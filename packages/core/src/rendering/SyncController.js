@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * The SyncController ties a {@link Player} to a clock. It will play, pause, and seek
  * the media to keep it in sync with the given {@link CorrelatedClock}.
  */

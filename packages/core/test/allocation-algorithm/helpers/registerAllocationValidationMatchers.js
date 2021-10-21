@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 const registerAllocationValidationMatchers = () => {
   // Check if object is in at least one device
   expect.extend({
