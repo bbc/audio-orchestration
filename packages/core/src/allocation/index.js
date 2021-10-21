@@ -1,2 +1,7 @@
-export { default as AllocationAlgorithm } from './AllocationAlgorithm';
-export { default as DefaultAllocationAlgorithm } from './DefaultAllocationAlgorithm';
+import AllocationAlgorithm from './AllocationAlgorithm';
+import DefaultAllocationAlgorithm from './DefaultAllocationAlgorithm';
+
+export {
+  AllocationAlgorithm,
+  DefaultAllocationAlgorithm,
+};
