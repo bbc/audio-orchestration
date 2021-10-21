@@ -417,12 +417,12 @@ class OrchestrationClient extends EventEmitter {
           // create a renderer but don't start it yet.
           const renderer = new SequenceRenderer(
             this._audioContext,
-            this._imageContext,
             this._syncClock,
             sequence,
             {
               isSafari: this._isSafari,
               objectFadeOutDuration: this._objectFadeOutDuration,
+              imageContext: this._imageContext,
             },
           );
 

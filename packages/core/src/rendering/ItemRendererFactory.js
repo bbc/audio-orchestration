@@ -10,10 +10,10 @@ import {
 import ItemRenderer from './ItemRenderer';
 
 class ItemRendererFactory {
-  constructor(audioContext, imageContext, options = {}) {
+  constructor(audioContext, options = {}) {
     this._audioContext = audioContext;
-    this._imageContext = imageContext;
     this._options = options;
+    this._imageContext = options.imageContext;
     this._isSafari = options.isSafari || false;
   }
 
@@ -42,6 +42,9 @@ class ItemRendererFactory {
         break;
       case 'image':
         channelMapping = 'none'; // to avoid setting up audio connections from the image player
+        if (!this._imageContext) {
+          throw new Error('Cannot create an image player without an ImageContext');
+        }
         player = new ImagePlayer(
           this._audioContext,
           this._imageContext,

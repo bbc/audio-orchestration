@@ -16,16 +16,16 @@ import ItemRendererFactory from './ItemRendererFactory';
 class SequenceRenderer extends EventEmitter {
   /**
    * @param {AudioContext} audioContext
-   * @param {ImageContext} imageContext
    * @param {CorrelatedClock} syncClock
    * @param {Sequence} sequence
    * @param Object [options]
    * @param bool [options.isSafari]
    * @param number [options.objectFadeOutDuration]
    */
-  constructor(audioContext, imageContext, syncClock, sequence, {
+  constructor(audioContext, syncClock, sequence, {
     isSafari = false,
     objectFadeOutDuration = 0,
+    imageContext,
   } = {}) {
     super();
 
@@ -124,8 +124,8 @@ class SequenceRenderer extends EventEmitter {
      */
     this._itemRendererFactory = new ItemRendererFactory(
       this._audioContext,
-      this._imageContext,
       {
+        imageContext: this._imageContext,
         isSafari,
         fadeOutDuration: this._objectFadeOutDuration,
       },
