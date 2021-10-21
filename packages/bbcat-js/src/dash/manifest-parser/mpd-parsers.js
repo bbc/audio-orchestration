@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 const SECONDS_IN_YEAR = 365 * 24 * 60 * 60;
 const SECONDS_IN_MONTH = 30 * 24 * 60 * 60;
 const SECONDS_IN_DAY = 24 * 60 * 60;

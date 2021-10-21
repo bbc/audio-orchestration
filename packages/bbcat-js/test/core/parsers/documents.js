@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 // Exports a document and corresponding models, parsers and javascript object.
 // document.models
 //   - A set of models correspnding to the document contents.

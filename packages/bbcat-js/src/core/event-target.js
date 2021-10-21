@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * An implementaton of the Event-Listener pattern that meets the
  * EventTarget interface specified by Mozilla.
  * @abstract

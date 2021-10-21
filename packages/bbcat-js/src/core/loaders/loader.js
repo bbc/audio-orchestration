@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * A class that provides Promise-based, asynchronous file loading.
  * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
  * @example

@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 // Exports a function to generate metadata segments.
 
 const metadataSegments = [

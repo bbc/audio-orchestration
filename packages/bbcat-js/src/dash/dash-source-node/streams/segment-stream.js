@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * A class to manage a single stream of segments, synchronised to an audio
  * context.
  * @ignore

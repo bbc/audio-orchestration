@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * A class to parse documents, returning Javascript objects representing their
  * contents. The structure and content of the returned objects is defined by a
  * set of datamodels and parsers that must be provided.

@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 import CompoundNode from '../../core/compound-node';
 import AudioSegmentStream from './streams/audio-segment-stream';
 import HeaderlessAudioSegmentStream from './streams/headerless-audio-segment-stream';
