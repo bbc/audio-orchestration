@@ -1,15 +1,15 @@
 import EventEmitter from 'events';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import Sequence from './sequence';
-import ItemRendererFactory from './item-renderer-factory';
+import Sequence from './Sequence';
+import ItemRendererFactory from './ItemRendererFactory';
 
 /**
  * @class
  * @desc
- * The SynchronisedSequenceRenderer is responsible for orchestrating all audio sources related to a
+ * The SequenceRenderer is responsible for orchestrating all audio sources related to a
  * {@link Sequence} on the device it is running on.
  */
-class SynchronisedSequenceRenderer extends EventEmitter {
+class SequenceRenderer extends EventEmitter {
   /**
    * @param {AudioContext} audioContext
    * @param {ImageContext} imageContext
@@ -475,4 +475,4 @@ class SynchronisedSequenceRenderer extends EventEmitter {
   }
 }
 
-export default SynchronisedSequenceRenderer;
+export default SequenceRenderer;

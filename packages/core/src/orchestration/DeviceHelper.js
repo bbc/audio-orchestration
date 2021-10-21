@@ -25,15 +25,15 @@ export const TOPICS = {
 export const DEFAULT_CONTENT_ID = 'default';
 
 /**
- * The MdoHelper is a base class defining the common interface for the {@link MdoAllocator}
- * and the {@link MdoReceiver}.
+ * The DeviceHelper is a base class defining the common interface for the {@link MainDeviceHelper}
+ * and the {@link AuxDeviceHelper}.
  *
  * This class is not designed to be instantiated directly.
  *
  * @emits 'change' when the allocations have changed for a content id, regardless of whether the
  * active objects for this device have changed.
  */
-class MdoHelper extends EventEmitter {
+class DeviceHelper extends EventEmitter {
   constructor(deviceId) {
     super();
     this._deviceId = deviceId;
@@ -263,4 +263,4 @@ class MdoHelper extends EventEmitter {
   }
 }
 
-export default MdoHelper;
+export default DeviceHelper;

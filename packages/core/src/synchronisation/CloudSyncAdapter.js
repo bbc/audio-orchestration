@@ -2,7 +2,7 @@ import cloudSyncKit from '@bbc/audio-orchestration-cloud-sync-client';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
 
-import SyncAdapter from './sync-adapter';
+import SyncAdapter from './SyncAdapter';
 
 /**
  * The CloudSyncAdapter wraps the cloud-sync synchronisation clients in an API

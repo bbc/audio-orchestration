@@ -1,4 +1,4 @@
-import AllocationAlgorithm from '../../src/allocation-algorithm/AllocationAlgorithm';
+import AllocationAlgorithm from '../../src/allocation/AllocationAlgorithm';
 
 describe('AllocationAlgorithm', () => {
   it('exists', () => {

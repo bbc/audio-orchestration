@@ -1,3 +1,11 @@
-import OrchestrationClient from './orchestration-client';
+import DeviceHelper from './DeviceHelper';
+import MainDeviceHelper from './MainDeviceHelper';
+import AuxDeviceHelper from './AuxDeviceHelper';
+import OrchestrationClient from './OrchestrationClient';
 
-export default OrchestrationClient;
+export {
+  DeviceHelper,
+  MainDeviceHelper,
+  AuxDeviceHelper,
+  OrchestrationClient,
+};

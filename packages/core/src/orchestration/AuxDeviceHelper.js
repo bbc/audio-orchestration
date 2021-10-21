@@ -1,10 +1,10 @@
-import MdoHelper, { TOPICS, DEVICE_TYPE } from './mdo-helper';
+import DeviceHelper, { TOPICS, DEVICE_TYPE } from './DeviceHelper';
 
 /**
  * Maintains the local state necessary for an auxiliary device. Sends updates on this device's
  * controls, quality, etc; but mainly receives allocations from the main device.
  */
-class MdoReceiver extends MdoHelper {
+class AuxDeviceHelper extends DeviceHelper {
   /**
    * Called when an allocations message is received, updates the locally held allocations.
    */
@@ -43,4 +43,4 @@ class MdoReceiver extends MdoHelper {
   }
 }
 
-export default MdoReceiver;
+export default AuxDeviceHelper;
