@@ -4,7 +4,18 @@ This package provides the core components for building orchestrated audio experi
 
 ## Components
 
-<img alt="core library components (as listed below)" src="core-components.png" />
+<img alt="core library components (as listed below)" src="./images/core-components.png" />
+
+* [orchestration](./src/orchestration):
+  The `OrchestrationClient` connects up all other required components for a standard setup with one main and many aux devices, and multiple sequences and controls.
+* [allocation](./src/allocation):
+  The `AllocationAlgorithm` interprets device metadata and object behaviours to generate the allocations used by the renderer on each device.
+* [rendering](./src/rendering):
+  The `SequenceRenderer` interprets the `Sequence` metadata, creates audio player instances, and connects them to the `SyncController`.
+* [playback](./src/playback):
+  The `BufferPlayer`, `DashPlayer`, and `ImagePlayer` implement a common interface for playback of different types of media items.
+* [synchronisation](./src/synchronisation):
+  The `Synchroniser` uses a `SyncAdapter` to connect to a synchronisation service. It provides methods for getting a synchronised wall clock, sharing timeline objects, and passing messages to other devices.
 
 ## Overview
 
@@ -16,32 +27,13 @@ An orchestrated audio experience consists of one or more **sequences**, each des
 
 The [template application](../template) has some examples of the required metadata and shows how this library can be used to build a complete experience. While it is possible to write sequence metadata by hand, we generally recommend using [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) to author behaviours and package the audio files in the expected format.
 
-The following diagram shows the internal components of the core library.
-
-![Orchestration Architecture](images/orchestration-architecture.png)
-
-* [sync-players](src/sync-players/):
-  Audio players with synchronisation based on `bbcat-js` DASH and buffer sources, and a
-  sync-controller to lock them to a timeline clock.
-* [sync](src/sync/):
-  Wrapper for communicating with different synchronisation and message exchange services. Currently
-  implements an adapter for the `cloud-sync` service.
-* [mdo-allocator and mdo-receiver](src/mdo-allocation/):
-  A rule set for allocating individual objects to synchronised devices, based on knowledge about
-  available objects and devices. The allocator runs on the main device, the receiver on auxiliary
-  devices.
-* [sequence-renderer](src/sequence-renderer/):
-  A renderer for managing playback of multiple audio sources scheduled on a synchronised timeline.
-* [orchestration-client](src/orchestration/):
-  A single class managing all the above components to expose a single interface. Mainly manages the
-  multi-step setup process, provides user input methods, and exposes state-change events.
-
 ## Usage
 
 The available exports are listed in [index.js](src/index.js). If the library is installed using `npm`, it can be imported like this:
 
 ```js
-import { OrchestrationClient } from '@bbc/audio-orchestration-core';
+import { orchestration } from '@bbc/audio-orchestration-core';
+const client = new orchestration.OrchestrationClient(...);
 ```
 
 It is also possible to import the bundled library (`dist/bbcat-orchestration.js`) using a `<script>` tag. In this case, the exports are available on the global `bbcatOrchestration` object.
@@ -49,7 +41,8 @@ It is also possible to import the bundled library (`dist/bbcat-orchestration.js`
 ```html
 <script src="bbcat-orchestration.js"></script>
 <script>
-  const { OrchestrationClient } = bbcatOrchestration;
+  const { orchestration } = bbcatOrchestration;
+  const client = new orchestration.OrchestrationClient(...);
 </script>
 ```
 

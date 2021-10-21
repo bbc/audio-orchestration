@@ -2,8 +2,8 @@ import {
   BufferPlayer,
   DashPlayer,
   ImagePlayer,
-} from '../sync-players';
-import ItemRenderer from './item-renderer';
+} from '../playback';
+import ItemRenderer from './ItemRenderer';
 
 class ItemRendererFactory {
   constructor(audioContext, imageContext, options = {}) {

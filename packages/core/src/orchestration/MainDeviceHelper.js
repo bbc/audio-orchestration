@@ -1,7 +1,7 @@
-import MdoHelper, {
+import DeviceHelper, {
   DEFAULT_CONTENT_ID, DEVICE_STATUS, DEVICE_TYPE, TOPICS,
-} from './mdo-helper';
-import { DefaultAllocationAlgorithm } from '../allocation-algorithm';
+} from './DeviceHelper';
+import { DefaultAllocationAlgorithm } from '../allocation';
 
 const LOG_ALLOCATION_REASON = false;
 
@@ -10,7 +10,7 @@ const LOG_ALLOCATION_REASON = false;
  * device, and will publish allocations for all devices whenever a change to any other device is
  * detected.
  */
-class MdoAllocator extends MdoHelper {
+class MainDeviceHelper extends DeviceHelper {
   constructor(deviceId, options = {}) {
     super(deviceId);
     this._deviceMetadata.deviceIsMain = true;
@@ -223,7 +223,7 @@ class MdoAllocator extends MdoHelper {
   _handleRemoteAllocationsAndDevices(allocations) {
     // eslint-disable-next-line no-console
     console.warn(
-      'MdoAllocator should never receive a remote allocations object. Are there multiple Allocators in the session?',
+      'MainDeviceHelper should never receive a remote allocations object. Are there multiple main devices in the session?',
       allocations,
     );
   }
@@ -309,4 +309,4 @@ class MdoAllocator extends MdoHelper {
   }
 }
 
-export default MdoAllocator;
+export default MainDeviceHelper;

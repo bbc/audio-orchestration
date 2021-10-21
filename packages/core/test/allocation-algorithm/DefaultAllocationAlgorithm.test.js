@@ -1,4 +1,4 @@
-import DefaultAllocationAlgorithm from '../../src/allocation-algorithm/DefaultAllocationAlgorithm';
+import DefaultAllocationAlgorithm from '../../src/allocation/DefaultAllocationAlgorithm';
 import registerSchemaValidationMatcher from './helpers/registerSchemaValidationMatcher';
 import registerAllocationValidationMatchers from './helpers/registerAllocationValidationMatchers';
 import generateDevices from './helpers/generateDevices';

@@ -1,19 +1,13 @@
-import * as Sync from './sync';
-import * as SyncPlayers from './sync-players';
-import * as SequenceRenderer from './sequence-renderer';
-import * as MdoAllocation from './mdo-allocation';
-import {
-  AllocationAlgorithm,
-  DefaultAllocationAlgorithm,
-} from './allocation-algorithm';
-import OrchestrationClient from './orchestration';
+import * as orchestration from './orchestration';
+import * as allocation from './allocation';
+import * as rendering from './rendering';
+import * as playback from './playback';
+import * as synchronisation from './synchronisation';
 
 export {
-  Sync,
-  SyncPlayers,
-  SequenceRenderer,
-  MdoAllocation,
-  OrchestrationClient,
-  AllocationAlgorithm,
-  DefaultAllocationAlgorithm,
+  orchestration,
+  allocation,
+  rendering,
+  playback,
+  synchronisation,
 };

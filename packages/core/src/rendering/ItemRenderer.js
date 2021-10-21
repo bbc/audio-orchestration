@@ -1,7 +1,5 @@
-import OutputRouter from './output-router';
-import {
-  SyncController,
-} from '../sync-players';
+import OutputRouter from './OutputRouter';
+import SyncController from './SyncController';
 
 /**
  * @private

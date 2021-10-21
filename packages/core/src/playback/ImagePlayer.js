@@ -1,4 +1,4 @@
-import Player from './player';
+import Player from './Player';
 
 class ImagePlayer extends Player {
   constructor(audioContext, imageContext, source, duration) {

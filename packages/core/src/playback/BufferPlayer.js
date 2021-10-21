@@ -1,5 +1,5 @@
 import bbcat from '@bbc/audio-orchestration-bbcat-js';
-import Player from './player';
+import Player from './Player';
 
 class BufferPlayer extends Player {
   constructor(audioContext, mediaUrl) {

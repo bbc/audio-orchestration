@@ -1,4 +1,4 @@
-import { OrchestrationClient } from '@bbc/audio-orchestration-core';
+import { orchestration } from '@bbc/audio-orchestration-core';
 import {
   takeEvery,
   call,
@@ -14,6 +14,8 @@ import {
   requestPause,
   requestSendMessage,
 } from './actions/orchestration';
+
+const { OrchestrationClient } = orchestration;
 
 let dispatch = () => {};
 let ensureAudioContext = null;

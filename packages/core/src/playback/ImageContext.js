@@ -1,4 +1,4 @@
-import ImageSourceNode from './image-source-node';
+import ImageSourceNode from './ImageSourceNode';
 
 class ImageContext {
   constructor(updateCallback, audioContext) {

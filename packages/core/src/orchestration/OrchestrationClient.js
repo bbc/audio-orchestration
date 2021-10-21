@@ -1,14 +1,21 @@
 import EventEmitter from 'events';
 import { v4 as uuidv4 } from 'uuid';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import AudioContextClock from '../sync-players/audio-context-clock';
-import Sequence from '../sequence-renderer/sequence';
-import SynchronisedSequenceRenderer from '../sequence-renderer/sequence-renderer';
-import MdoAllocator from '../mdo-allocation/mdo-allocator';
-import MdoReceiver from '../mdo-allocation/mdo-receiver';
-import CloudSyncAdapter from '../sync/cloud-sync-adapter';
-import Synchroniser from '../sync/synchroniser';
-import ImageContext from '../image-context/image-context';
+import {
+  ImageContext,
+} from '../playback';
+import {
+  Sequence,
+  SequenceRenderer,
+} from '../rendering';
+import MainDeviceHelper from './MainDeviceHelper';
+import AuxDeviceHelper from './AuxDeviceHelper';
+
+import {
+  AudioContextClock,
+  Synchroniser,
+  CloudSyncAdapter,
+} from '../synchronisation';
 
 const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
 const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
@@ -404,7 +411,7 @@ class OrchestrationClient extends EventEmitter {
           sequenceWrapper.sequence = sequence;
 
           // create a renderer but don't start it yet.
-          const renderer = new SynchronisedSequenceRenderer(
+          const renderer = new SequenceRenderer(
             this._audioContext,
             this._imageContext,
             this._syncClock,
@@ -447,14 +454,14 @@ class OrchestrationClient extends EventEmitter {
     return new Promise((resolve, reject) => {
       // Create mdoHelper
       if (this._isMain) {
-        this._mdoHelper = new MdoAllocator(
+        this._mdoHelper = new MainDeviceHelper(
           this._deviceId,
           {
             allocationAlgorithm: this._allocationAlgorithm,
           },
         );
       } else {
-        this._mdoHelper = new MdoReceiver(this._deviceId);
+        this._mdoHelper = new AuxDeviceHelper(this._deviceId);
       }
 
       this._mdoHelper.on('change', ({ contentId }) => {
