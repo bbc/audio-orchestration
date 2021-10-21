@@ -1,12 +1,18 @@
 {
-  "extends": "eslint-config-airbnb",
+  "extends": [
+    "eslint-config-airbnb",
+    "../../.eslintrc.notice.json"
+  ],
   "env": {
     "browser": true
   },
   "rules": {
     "react/jsx-props-no-spreading": "warn",
     "jsx-a11y/label-has-associated-control": "warn",
-    "jsx-a11y/control-has-associated-label": "warn"
+    "jsx-a11y/control-has-associated-label": "warn",
+    "no-use-before-define": ["error", {
+      "functions": false
+    }]
   },
   "settings": {
     "import/resolver": "webpack"

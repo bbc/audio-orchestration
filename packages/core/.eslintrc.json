@@ -1,7 +1,8 @@
 {
   "extends": [
     "eslint-config-airbnb-base",
-    "plugin:jest/recommended"
+    "plugin:jest/recommended",
+    "../../.eslintrc.notice.json"
   ],
   "rules": {
     "import/extensions": 0,
