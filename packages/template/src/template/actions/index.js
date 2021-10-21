@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 // This file exports actions that are to be called directly by the user interface and that affect
 // the exposed state. See actions/orchestration.js for actions managing non-exposed state and
 // interfacing with the sync services, object allocation, and media players.

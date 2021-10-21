@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * This file is the entry point to the application. It should not be modified.
  *
  * It links together the stateful components in the template/ directory with the project-specific

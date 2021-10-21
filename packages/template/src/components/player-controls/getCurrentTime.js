@@ -1,4 +1,8 @@
 /**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+/**
  * Calculates the current time on a clock based on its correlation to Date.now(). Applies
  * min/max to never return a time less than 0 or greater than the media duration.
  *

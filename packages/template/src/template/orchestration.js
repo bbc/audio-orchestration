@@ -1,3 +1,7 @@
+/**
+ * Copyright (C) 2021, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { orchestration } from '@bbc/audio-orchestration-core';
