@@ -1,6 +1,6 @@
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { OrchestrationClient } from '@bbc/audio-orchestration-core';
+import { orchestration } from '@bbc/audio-orchestration-core';
 
 import config from 'config';
 import {
@@ -26,6 +26,8 @@ import {
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';
+
+const { OrchestrationClient } = orchestration;
 
 let dispatch = null;
 
