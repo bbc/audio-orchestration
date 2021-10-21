@@ -1,14 +1,12 @@
 import {
-  Sync,
-  SyncPlayers,
-  SequenceRenderer,
+  rendering,
+  synchronisation,
 } from '@bbc/audio-orchestration-core';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import sequenceData from './sequence.json';
 
-const { CloudSyncAdapter, Synchroniser } = Sync;
-const { AudioContextClock } = SyncPlayers;
-const { Sequence, SynchronisedSequenceRenderer } = SequenceRenderer;
+const { CloudSyncAdapter, Synchroniser, AudioContextClock } = synchronisation;
+const { Sequence, SequenceRenderer } = rendering;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
@@ -42,8 +40,8 @@ function initOrchestration() {
     const offsetClock = new CorrelatedClock(wallClock, { correlation: [0, 0] });
 
     if (USE_SEQUENCE) {
-      const renderer = new SynchronisedSequenceRenderer(audioContext, offsetClock, sequence, false);
-      renderer.setActiveObjectIds(['clicks']);
+      const renderer = new SequenceRenderer(audioContext, offsetClock, sequence, false);
+      renderer.setActiveObjects([{ objectId: 'clicks' }]);
       renderer.output.connect(audioContext.destination);
 
       renderer.start(0, 0);

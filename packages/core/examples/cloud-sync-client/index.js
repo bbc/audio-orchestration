@@ -1,7 +1,9 @@
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import { BufferPlayer, AudioContextClock, SyncController } from '../../src/sync-players';
-import Sync from '../../src/sync/sync';
-import CloudSyncAdapter from '../../src/sync/cloud-sync-adapter';
+import { playback, synchronisation, rendering } from '@bbc/audio-orchestration-core';
+
+const { BufferPlayer } = playback;
+const { SyncController } = rendering;
+const { AudioContextClock, Synchroniser, CloudSyncAdapter } = synchronisation;
 
 const url = 'audio/vostok-intro.m4a';
 const timelineType = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
@@ -11,7 +13,7 @@ const audioContext = new AudioContext();
 const player = new BufferPlayer(audioContext, url);
 
 const sysClock = new AudioContextClock({}, audioContext);
-const sync = new Sync(new CloudSyncAdapter({ sysClock }));
+const sync = new Synchroniser(new CloudSyncAdapter({ sysClock }));
 const { wallClock } = sync;
 
 // the primary clock can be updated to send updates, but will also be updated by the sync service.

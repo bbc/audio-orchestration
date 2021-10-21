@@ -1,8 +1,10 @@
 import { hot } from 'react-hot-loader/root';
 import React from 'react';
-import { DefaultAllocationAlgorithm } from '@bbc/audio-orchestration-core';
+import { allocation } from '@bbc/audio-orchestration-core';
 import MetadataEntry from './MetadataEntry';
 import AllocationReplay from './AllocationReplay';
+
+const { DefaultAllocationAlgorithm } = allocation;
 
 const allocationAlgorithm = new DefaultAllocationAlgorithm({ saveSteps: true });
 

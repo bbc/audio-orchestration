@@ -1,15 +1,16 @@
 import Clocks from 'dvbcss-clocks';
-import { AudioContextClock } from '../../src/sync-players';
-import { Sequence, SynchronisedSequenceRenderer } from '../../src/sequence-renderer';
+import { rendering, synchronisation } from '@bbc/audio-orchestration-core';
+
+const { Sequence, SequenceRenderer } = rendering;
+const { AudioContextClock } = synchronisation;
 
 const audioContext = new AudioContext();
 const sysClock = new AudioContextClock({}, audioContext);
 const clock = new Clocks.CorrelatedClock(sysClock, { correlation: [0, 0], speed: 0, tickRate: 1 });
-const isStereo = true;
 
 function initRenderer(sequenceData) {
   const sequence = new Sequence(sequenceData);
-  const renderer = new SynchronisedSequenceRenderer(audioContext, null, clock, sequence, isStereo);
+  const renderer = new SequenceRenderer(audioContext, clock, sequence);
   renderer.start(0);
   renderer.output.connect(audioContext.destination);
 

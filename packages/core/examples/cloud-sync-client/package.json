@@ -5,6 +5,9 @@
   "main": "index.js",
   "license": "UNLICENSED",
   "private": true,
+  "dependencies": {
+    "@bbc/audio-orchestration-core": "file:../.."
+  },
   "devDependencies": {
     "@babel/core": "^7.6.2",
     "@babel/preset-env": "^7.6.2",
