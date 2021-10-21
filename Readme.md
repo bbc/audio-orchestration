@@ -2,9 +2,9 @@
 
 <img alt="BBC R&D: Audio Orchestration" src="doc/data-card.png" width="400" height="100" />
 
-**Create immersive and interactive audio experiences for connected and synchronised devices.**
+**Create immersive and interactive audio experiences for multiple synchronised devices.**
 
-This repository holds the open source audio orchestration library and template application used by _Audio Orchestrator_.
+This repository holds the open source audio orchestration template application and libraries used by _Audio Orchestrator_.
 
 The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
 

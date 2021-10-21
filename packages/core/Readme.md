@@ -2,6 +2,10 @@
 
 This package provides the core components for building orchestrated audio experiences. This core library is used in the [template application](../template) included with our production tool, [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator).
 
+## Components
+
+<img alt="core library components (as listed below)" src="core-components.png" />
+
 ## Overview
 
 An orchestrated audio experience consists of one or more **sequences**, each described by a metadata file listing the available **audio objects**. Each **audio object** can have any number of **behaviours** which are interpreted by an **allocation algorithm** to determine the rendering, given information about connected devices. There is a single **main device** and any number of **aux devices** per **session**, synchronising to a **cloud-sync server** and using this to communicate with each other.
