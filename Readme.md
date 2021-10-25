@@ -14,7 +14,7 @@ The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration
 
 We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming), and **cloud-sync-client** (connection to the synchronisation server).
 
-The [**cloud-sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub.
+The [**cloud-sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub. The template and examples in this repository refer to a an instance of this software hosted on a BBC server that may be suitable for experimentation, however no guarantees are given as to its availability.
 
 Our [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) production tool for authoring metadata and packaging media for use with the template and core library is available through BBC MakerBox.
 
@@ -63,3 +63,9 @@ npm run dev
 The majority of our components (`template`, `core`, and `bbcat-js`) are licensed under the GPLv3 license. The `cloud-sync-client` is licensed under an Apache 2.0 license. See the LICENSE file in each package directory for the specific licensing terms and copyright information.
 
 If you are modifying the software to create your experience you may have to make your source code modifications available under the terms of the GPL license.
+
+You may [contact BBC R&D](https://www.bbc.co.uk/rd/contacts) to discuss alternative licensing options; however the BBC is under no obligation to offer alternative terms.
+
+# Contributing
+
+Please contact the authors by [raising a GitHub issue](https://github.com/bbc/audio-orchestration/issues/new) or pull request if you would like to contribute to this repository. A contributor licence agreement may be applicable.
