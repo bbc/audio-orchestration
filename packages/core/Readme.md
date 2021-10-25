@@ -105,3 +105,9 @@ A number of stand-alone examples are provided to illustrate the usage of certain
  * [sequence-visualiser](examples/sequence-visualiser/) shows the timings of audio objects included in a metadata file
  * [latency-calibration](examples/latency-calibration/) shows how compensating for the output latency of a device can improve synchronisation
 
+## Licence and contributions
+
+> @bbc/audio-orchestration-core
+> Copyright (C) 2021 BBC R&D
+
+See the [LICENSE](./LICENSE) file for terms applicable to this package, and the top-level [Readme](../../Readme.md) file for further information.

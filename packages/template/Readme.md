@@ -90,3 +90,10 @@ Each _page_ renders the presentational components (some of which may be connecte
 Each _component_ contains at least one `.jsx` file defining the React component, and usually it also has a `.scss` file defining the styling. Some components have multiple `.jsx` files for sub-components or to provide a version of the component that is connected to the state. Note that all `.scss` files must be separately imported in `src/index.js`.
 
 For the style sheets (`.scss` files), we scope all class names to always begin with the name of the component folder. Where shorter class names are desired, these must be combined with a scoped name to ensure styles don't affect other components.
+
+## Licence and contributions
+
+> @bbc/audio-orchestration-template
+> Copyright (C) 2021 BBC R&D
+
+See the [LICENSE](./LICENSE) file for terms applicable to this package, and the top-level [Readme](../../Readme.md) file for further information.
