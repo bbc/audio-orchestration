@@ -106,7 +106,7 @@ export const startCalibrationClient = (sessionId) => {
   dispatch(setLocalCalibrationState(LOCAL_CALIBRATION_STATES.LOADING));
 
   calibrationOrchestrationClient = new OrchestrationClient({
-    cloudSyncEndpoint: config.CLOUDSYNC_ENDPOINT,
+    syncEndpoint: config.CLOUDSYNC_ENDPOINT,
     sequenceTransitionDelay: config.CALIBRATION_SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.CALIBRATION_LOADING_TIMEOUT,
     contentId: config.SYNC_CLOCK_CONTENT_ID,

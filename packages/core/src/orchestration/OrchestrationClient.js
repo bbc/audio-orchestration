@@ -21,8 +21,7 @@ import {
   CloudSyncAdapter,
 } from '../synchronisation';
 
-const CLOUDSYNC_ENDPOINT = 'mqttbroker.edge.platform.2immerse.eu';
-const CONTENT_ID = 'github.com/bbc/bbcat-orchestration-template/syncClock';
+const CONTENT_ID = '@bbc/audio-orchestration-template';
 
 const LOADING_TIMEOUT = 5000;
 const SEQUENCE_TRANSITION_DELAY = 1.0;
@@ -84,7 +83,8 @@ class OrchestrationClient extends EventEmitter {
     this._contentIds = [];
     this._currentContentId = null;
     this._contentId = options.contentId || CONTENT_ID;
-    this._syncEndpoint = options.cloudSyncEndpoint || CLOUDSYNC_ENDPOINT;
+    this._syncEndpoint = options.syncEndpoint;
+    this._syncAdapterClass = options.syncAdapterClass || CloudSyncAdapter;
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
@@ -316,7 +316,7 @@ class OrchestrationClient extends EventEmitter {
   _createSynchronisedClocks() {
     this.emit('loading', 'creating clocks');
     this._sysClock = new AudioContextClock({}, this._audioContext);
-    this._sync = new Synchroniser(new CloudSyncAdapter({ sysClock: this._sysClock }));
+    this._sync = new Synchroniser(new this._syncAdapterClass({ sysClock: this._sysClock }));
     const { wallClock } = this._sync;
     this._primaryClock = new CorrelatedClock(wallClock, {
       correlation: {
