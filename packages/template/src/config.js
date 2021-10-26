@@ -35,7 +35,7 @@ const DEFAULT_JOIN_URL = [
 const config = {
   // The cloud sync service endpoint, is specified as { hostname } for a standard wss:// connection
   // on the default port. Can set a { port } number to use a plain ws:// connection on that port.
-  CLOUDSYNC_ENDPOINT: {},
+  CLOUDSYNC_ENDPOINT: null,
 
   // The join URL is used to generate the QR code and should correspond to where the template is
   // hosted. The "#!/join" suffix immediately opens the connect-form page.

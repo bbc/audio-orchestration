@@ -4,7 +4,7 @@ This template project is an example of using the [audio orchestration core libra
 
 Our production tool [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) uses this template. It produces the audio and metadata files that are needed. You can also set it up to use a custom local template build for Audio Orchestrator's preview function in the advanced export settings.
 
-## Development
+## Usage
 
 Make sure you have installed the dependencies by running `npm install` in the repository root (not the template folder).
 
@@ -13,6 +13,8 @@ Start a development server:
 ```sh
 npm run dev
 ```
+
+If you are not using the template with _Audio Orchestrator_, set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `CLOUDSYNC_ENDPOINT` option in `src/index.html`.  Reload the page in your browser to apply any changes to the configuration object in `index.html`.
 
 ### Template Structure
 
