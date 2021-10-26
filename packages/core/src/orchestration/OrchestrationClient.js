@@ -95,6 +95,7 @@ class OrchestrationClient extends EventEmitter {
     this._gain = 1.0;
     this._playbackOffset = 0;
     this._objectFadeOutDuration = options.objectFadeOutDuration || 0;
+    this._syncControllerOptions = options.syncControllerOptions;
     this._imageContext = null;
   }
 
@@ -423,6 +424,7 @@ class OrchestrationClient extends EventEmitter {
               isSafari: this._isSafari,
               objectFadeOutDuration: this._objectFadeOutDuration,
               imageContext: this._imageContext,
+              syncControllerOptions: this._syncControllerOptions,
             },
           );
 

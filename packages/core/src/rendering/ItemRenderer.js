@@ -19,6 +19,7 @@ class ItemRenderer {
       channelMapping = 'mono',
       panning = 0.0, // specified as [-1, 1]
       gain = 0.0, // specified as decibels in metadata
+      syncControllerOptions,
     } = {}, // from options and item.source
   ) {
     this._audioContext = audioContext;
@@ -32,7 +33,7 @@ class ItemRenderer {
     this._objectGain = 1.0; // additional gain set at runtime by the allocation algorithm.
     this._fadingOut = false;
 
-    this._syncController = new SyncController(this._clock, this._player);
+    this._syncController = new SyncController(this._clock, this._player, syncControllerOptions);
 
     // For compatibility with old metadata format, map to new panning parameter
     if (this._panning === undefined) {

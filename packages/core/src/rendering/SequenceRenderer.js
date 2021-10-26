@@ -21,11 +21,13 @@ class SequenceRenderer extends EventEmitter {
    * @param Object [options]
    * @param bool [options.isSafari]
    * @param number [options.objectFadeOutDuration]
+   * @param Object [options.syncControllerOptions]
    */
   constructor(audioContext, syncClock, sequence, {
     isSafari = false,
     objectFadeOutDuration = 0,
     imageContext,
+    syncControllerOptions,
   } = {}) {
     super();
 
@@ -40,6 +42,14 @@ class SequenceRenderer extends EventEmitter {
      * @private
      */
     this._imageContext = imageContext;
+
+    /**
+     * An object of optional settings passed through to the SyncControllers created by the renderer.
+     *
+     * @type {Object}
+     * @private
+     */
+    this._syncControllerOptions = syncControllerOptions;
 
     /**
      * @type {CorrelatedClock}
@@ -128,6 +138,7 @@ class SequenceRenderer extends EventEmitter {
         imageContext: this._imageContext,
         isSafari,
         fadeOutDuration: this._objectFadeOutDuration,
+        syncControllerOptions: this._syncControllerOptions,
       },
     );
 

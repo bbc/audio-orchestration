@@ -8,20 +8,20 @@
  */
 
 /**
- * the tolerated offset between ideal and actual media clock.
+ * The tolerated offset in seconds between ideal and actual media clock.
  * @type {number}
  */
 const DEFAULT_S_L_AUDIO = 0.06; // 60ms, was 30ms
 
 /**
- * The expected time to fill and decode a buffer after seeking.
+ * The expected time in seconds to fill and decode a buffer after seeking.
  * @type {number}
  */
 const DEFAULT_T_BUFDELAY_AUDIO = 1.0;
 
 /**
- * The interval period for checking the player progress, in addition to checks on clock change
- * events.
+ * The interval period in seconds for checking the player progress, in addition to checks on clock
+ * change events.
  * @type {number}
  */
 const DEFAULT_RESYNC_PERIOD = 4.0;
@@ -30,13 +30,9 @@ class SyncController {
   /**
    * @param {CorrelatedClock} idealTimelineClock
    * @param {Player} mediaPlayer
-   * @param {number} offset - the device's presentation delay
+   * @param {Object} options
    */
-  constructor(idealTimelineClock, mediaPlayer, {
-    toleratedOffset = DEFAULT_S_L_AUDIO,
-    bufferingDelay = mediaPlayer.defaultBufferingDelay,
-    resyncIntervalPeriod = DEFAULT_RESYNC_PERIOD,
-  } = {}) {
+  constructor(idealTimelineClock, mediaPlayer, options = {}) {
     /**
      * @type {CorrelatedClock}
      * @private
@@ -53,16 +49,22 @@ class SyncController {
      * @type {number}
      * @private
      */
-    this.toleratedOffset = toleratedOffset;
+    this.toleratedOffset = options.toleratedOffset !== undefined
+      ? options.toleratedOffset : DEFAULT_S_L_AUDIO;
 
     /**
      * @type {number}
      * @private
      */
-    this.bufferingDelay = bufferingDelay;
-    if (this.bufferingDelay === undefined) {
-      this.bufferingDelay = DEFAULT_T_BUFDELAY_AUDIO;
-    }
+    this.bufferingDelay = options.bufferingDelay !== undefined
+      ? options.bufferingDelay : (mediaPlayer.defaultBufferingDelay || DEFAULT_T_BUFDELAY_AUDIO);
+
+    /**
+     * @type {number}
+     * @private
+     */
+    this.resyncIntervalPeriod = options.resyncIntervalPeriod !== undefined
+      ? options.resyncIntervalPeriod : DEFAULT_RESYNC_PERIOD;
 
     /**
      * @type {boolean}
@@ -70,16 +72,11 @@ class SyncController {
      */
     this.stopped = false;
 
-    /**
-     * @type {number}
-     * @private
-     */
-    this.resyncIntervalPeriod = resyncIntervalPeriod;
-
-    // bind notify to this, because it is used as an event handler. now this in it always refers
-    // to this instance.
+    // bind class method used as event handlers, to ensure `this` refers to the class instance,
+    // not the event.
     this.notify = this.notify.bind(this);
     this.idealTimelineClock.on('change', this.notify);
+
     this.resyncInterval = setInterval(this.notify, this.resyncIntervalPeriod * 1000);
     this.notify();
   }
