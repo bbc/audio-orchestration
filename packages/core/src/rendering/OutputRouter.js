@@ -62,7 +62,7 @@ class OutputRouter {
       panner.pan.value = this._panning;
       this.input.connect(panner);
     } else {
-      // TODO this manual implementation of panning algorithm only works for mono sources!
+      // This is a manual implementation of the panning algorithm for mono sources.
       // Spec: https://webaudio.github.io/web-audio-api/#stereopanner-algorithm
 
       // Steps 1-3: clamp to [-1, 1] and then normalise to [0, 1]

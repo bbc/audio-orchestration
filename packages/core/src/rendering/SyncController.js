@@ -124,7 +124,7 @@ class SyncController {
       this.strategyPaused();
     } else if (v === actualSpeed && Math.abs(s) < this.toleratedOffset) {
       // within tolerance and same speed, do nothing
-      // TODO: was AMP check to see if speed needed to be adjusted, if offset was small.
+      // In AMP we'd check to see if speed needed to be adjusted here, if the offset was small.
     } else {
       // needs to seek
       // console.warn(`seeking, by ${s}, speed: ${actualSpeed} (clock: ${v})`);
@@ -159,10 +159,10 @@ class SyncController {
     // where media should be right now:
     let seekPosition = this.idealTimelineClock.now() / tr;
 
-    // TODO: use buffered Interval if available in player, without a delay
+    // TODO: use buffered interval if available in player, to seek without a buffering delay
 
     // seek to a later position, and schedule it later, as it takes time to prime the player
-    // TODO: should not need this at all, because we can specify a sync time in the past.
+    // TODO: could try setting a sync time in the past so may not need to use bufferingDelay at all.
     if (this.bufferingDelay > 0) {
       const delay = this.bufferingDelay * v;
       seekPosition += delay;

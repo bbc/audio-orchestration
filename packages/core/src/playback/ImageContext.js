@@ -63,8 +63,8 @@ class ImageContext {
     }
   }
 
-  connect(node) {
-    // TODO ImageSourceNode passes a destination argument, this is currently ignored.
+  // eslint-disable-next-line no-unused-vars
+  connect(node, destination) {
     this._nodes.add(node);
     this._scheduleNextTick();
   }

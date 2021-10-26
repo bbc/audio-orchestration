@@ -220,7 +220,6 @@ class AllocationAlgorithm {
       });
 
       // Remove prohibited devices from other lists before change management
-      // TODO: Check whether or not they need removing from previous devices
       previousDevices = setDifference(previousDevices, prohibitedDevices);
       preferredDevices = setDifference(preferredDevices, prohibitedDevices);
       allowedDevices = setDifference(allowedDevices, prohibitedDevices);

@@ -108,7 +108,6 @@ class Sequence {
   }
 
   get objects() {
-    // TODO deep copy?
     return this._sequence.objects.slice();
   }
 
@@ -154,8 +153,8 @@ class Sequence {
   /**
    * Finds the primary object from objects present in the list of given objects.
    *
-   * TODO: The primary object is currently defined as the first (highest priority) active object
-   * that has an image property set.
+   * The primary object is currently defined as the first (highest priority) active object
+   * that has the objectImage property set.
    *
    * @param {Array<string>} objectIds - ids of objects to be considered in the search
    *

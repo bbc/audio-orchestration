@@ -253,7 +253,7 @@ class SequenceRenderer extends EventEmitter {
           renderer.output.gain.setValueAtTime(0, syncTime);
         }
       } catch (e) {
-        // TODO nothing to do here (reached when trying to stop a non-running renderer)
+        // nothing to do here (reached when trying to stop a non-running renderer)
       }
       setTimeout(
         () => {

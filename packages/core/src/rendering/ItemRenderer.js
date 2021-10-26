@@ -73,8 +73,6 @@ class ItemRenderer {
     this._gainNode.gain.value = this._gain * this._objectGain;
   }
 
-  // TODO implement start as separate from constructor
-  // .then(() => this._syncController.start())
   start() {
     this._player.prepare()
       .then(() => {
@@ -91,6 +89,7 @@ class ItemRenderer {
           this._gainNode.connect(this._outputRouter.input);
         }
       });
+    // The syncController automatically starts when constructed so does not need to be started here.
   }
 
   stop() {
