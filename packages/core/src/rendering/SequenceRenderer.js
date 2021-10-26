@@ -26,6 +26,8 @@ class SequenceRenderer extends EventEmitter {
   constructor(audioContext, syncClock, sequence, {
     isSafari = false,
     objectFadeOutDuration = 0,
+    lookaheadDuration = 2.0,
+    sequenceFadeOutDuration = 0.2,
     imageContext,
     syncControllerOptions,
   } = {}) {
@@ -96,13 +98,13 @@ class SequenceRenderer extends EventEmitter {
      *
      * @private
      */
-    this._lookaheadDuration = 2.0;
+    this._lookaheadDuration = lookaheadDuration;
 
     /**
      * @type {number}
      * duration of the fade to apply when a sequence renderer is stopped.
      */
-    this.sequenceFadeOutDuration = 0.2;
+    this._sequenceFadeOutDuration = sequenceFadeOutDuration;
 
     /**
      * @type {number}
@@ -144,7 +146,9 @@ class SequenceRenderer extends EventEmitter {
 
     // listen for changes to the primary clock object
     this._clock.on('change', this.notify.bind(this));
-    setInterval(this.notify.bind(this), 1000 * (this._lookaheadDuration / 2));
+
+    // clamp lookahead duration to minimum 300ms here in case someone sets it to 0 by mistake
+    setInterval(this.notify.bind(this), Math.max(300, 1000 * (this._lookaheadDuration / 2)));
   }
 
   /**
@@ -244,7 +248,7 @@ class SequenceRenderer extends EventEmitter {
     this._activeItemRenderers.forEach(({ renderer }) => {
       try {
         if (fade) {
-          renderer.output.gain.setTargetAtTime(0, syncTime, this.sequenceFadeOutDuration / 3);
+          renderer.output.gain.setTargetAtTime(0, syncTime, this._sequenceFadeOutDuration / 3);
         } else {
           renderer.output.gain.setValueAtTime(0, syncTime);
         }
@@ -257,7 +261,7 @@ class SequenceRenderer extends EventEmitter {
           /* eslint-disable-next-line */
           // console.debug(`renderer.stop at ${this._audioContext.currentTime} (output cut at ${syncTime}).`);
         },
-        1000 * ((syncTime - this._audioContext.currentTime) + this.sequenceFadeOutDuration),
+        1000 * ((syncTime - this._audioContext.currentTime) + this._sequenceFadeOutDuration),
       );
     });
     this._activeItemRenderers = [];

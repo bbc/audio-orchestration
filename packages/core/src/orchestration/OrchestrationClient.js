@@ -87,6 +87,8 @@ class OrchestrationClient extends EventEmitter {
     this._syncAdapterClass = options.syncAdapterClass || CloudSyncAdapter;
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
     this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
+    this._lookaheadDuration = options.lookaheadDuration;
+    this._sequenceFadeOutDuration = options.sequenceFadeOutDuration;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
     this._isSafari = options.isSafari || false;
     this._controls = options.controls || [];
@@ -423,6 +425,8 @@ class OrchestrationClient extends EventEmitter {
             {
               isSafari: this._isSafari,
               objectFadeOutDuration: this._objectFadeOutDuration,
+              sequenceFadeOutDuration: this._sequenceFadeOutDuration,
+              lookaheadDuration: this._lookaheadDuration,
               imageContext: this._imageContext,
               syncControllerOptions: this._syncControllerOptions,
             },
