@@ -4,27 +4,41 @@
  */
 import config from 'config';
 
+/**
+ * Takes an array of integers 0-9, and returns a new array including the original digits with the
+ * additional check digits added to the end.
+ *
+ * @param {Array<Number>} originalDigits
+ * @param {Number} numCheckDigits
+ * @param {Number} offset
+ */
+const addCheckDigits = (originalDigits, numCheckDigits, offset) => {
+  // This algorithm creates a simple checksum of all previous digits (including any check digits),
+  // adds the constant offset, and calculates the remainder from dividing by 10 so that the result
+  // is a single digit integer between 0 and 9.
+  const digits = [...originalDigits];
+  for (let i = 0; i < numCheckDigits; i += 1) {
+    let sum = offset;
+    digits.forEach((d) => {
+      sum += d;
+    });
+    digits.push(Math.floor(sum % 10));
+  }
+
+  return digits;
+};
+
 const generateSessionId = (userSessionCode) => {
   let sessionCode = userSessionCode;
   if (userSessionCode === undefined) {
     const numCheckDigits = config.SESSION_CODE_CHECK_DIGITS;
     const numDigits = config.SESSION_CODE_LENGTH - numCheckDigits;
+    const offset = config.LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
 
     const digits = [...Array(numDigits).keys()]
       .map(() => Math.floor(Math.random() * 10));
 
-    // TODO - copied from generate-session-code in session-id-service
-    // should be shared module and directly imported
-    for (let i = 0; i < numCheckDigits; i += 1) {
-      let sum = config.LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
-      // offset is 0 in server-generated check sums
-      digits.forEach((d) => {
-        sum += d;
-      });
-      digits.push(Math.floor(sum % 10));
-    }
-
-    sessionCode = digits.join('');
+    sessionCode = addCheckDigits(digits, numCheckDigits, offset).join('');
   }
 
   return {
@@ -45,6 +59,7 @@ const isValidLocalSessionCode = (sessionCode) => {
 
   const numCheckDigits = config.SESSION_CODE_CHECK_DIGITS;
   const numDigits = config.SESSION_CODE_LENGTH - numCheckDigits;
+  const offset = config.LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
 
   // parse digits to numbers
   let digits;
@@ -54,21 +69,12 @@ const isValidLocalSessionCode = (sessionCode) => {
     return false;
   }
 
-  // take only the non-check part of the code
+  // take only the non-check part of the code and regenerate the check digits
   const testDigits = digits.slice(0, numDigits);
-
-  // generate the full code including check digits
-  // TODO: copied code again, should be a function
-  for (let i = 0; i < numCheckDigits; i += 1) {
-    let sum = config.LOCAL_SESSION_CODE_CHECK_DIGIT_OFFSET;
-    testDigits.forEach((d) => {
-      sum += d;
-    });
-    testDigits.push(Math.floor(sum % 10));
-  }
+  const checkedSessionCode = addCheckDigits(testDigits, numCheckDigits, offset).join('');
 
   // check they are the same
-  return testDigits.join('') === sessionCode;
+  return checkedSessionCode === sessionCode;
 };
 
 /**
