@@ -78,68 +78,21 @@ const isValidLocalSessionCode = (sessionCode) => {
 };
 
 /**
- * Request a new session code.
- *
- * Depending on the configuration, generates a random code and session-id locally, or requests it
- * from the session-id-service.
+ * Request a new session code. This simply generates a random code, but could be extended to
+ * contact a server for a unique code.
  *
  * @returns {Promise<Object>}
  */
-export const createSession = () => {
-  if (!config.VALIDATE_SESSION_IDS) {
-    return Promise.resolve(generateSessionId());
-  }
-
-  return window.fetch(`${config.SESSION_ID_URL}/session`, { method: 'POST' })
-    .then((response) => {
-      if (!response.ok) {
-        if (config.USE_FALLBACK_SESSION_CODES) {
-          return generateSessionId();
-        }
-        throw new Error('Failed to create a session on the server and local fallback disabled.');
-      }
-
-      return response.json();
-    })
-    .then(({ sessionCode, sessionId }) => ({
-      sessionCode,
-      sessionId,
-    }));
-};
+export const createSession = () => Promise.resolve(generateSessionId());
 
 /**
  * Validate a session code and get the corresponding id.
  *
- * Depending on configuration, may either accept all session codes and locally generate an ID, or
- * use the session-id-service to validate the session code and return the session id.
- *
  * @returns {Promise<Object>} - { valid, sessionCode, sessionId }
  */
 export const validateSession = (sessionCode) => {
-  if (!config.VALIDATE_SESSION_IDS) {
-    if (!isValidLocalSessionCode(sessionCode)) {
-      return Promise.resolve({ valid: false });
-    }
-    return Promise.resolve({ valid: true, ...generateSessionId(sessionCode) });
+  if (!isValidLocalSessionCode(sessionCode)) {
+    return Promise.resolve({ valid: false });
   }
-
-  return window.fetch(`${config.SESSION_ID_URL}/session/${sessionCode}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Could not validate the session.');
-      }
-
-      return response.json();
-    })
-    .then((result) => {
-      if (result.sessionCode !== sessionCode) {
-        throw new Error('Could not validate the session code, invalid session code returned.');
-      }
-
-      return {
-        sessionCode,
-        sessionId: result.sessionId,
-        valid: !!result.valid,
-      };
-    });
+  return Promise.resolve({ valid: true, ...generateSessionId(sessionCode) });
 };

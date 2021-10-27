@@ -99,11 +99,6 @@ const config = {
   // default, so there are actually only 100,000 possible codes for six total digits, not 1,000,000.
   SESSION_CODE_LENGTH: 6,
 
-  // Don't check against a session-id service and generate session codes locally.
-  // TODO: maybe remove this, as we don't currently provide a session-id service.
-  VALIDATE_SESSION_IDS: false,
-  SESSION_ID_URL: '',
-
   // If session id service returns an error or is not used, generate codes locally according to this
   // pattern and verify that they match the check digit pattern. The check digit is used to encode
   // whether a session code comes from a remote service or was generated locally, and to provide
