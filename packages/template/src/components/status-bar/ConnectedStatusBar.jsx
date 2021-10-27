@@ -3,7 +3,6 @@
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
 import { connect } from 'react-redux';
-import { ROLE_MAIN } from 'sagas';
 import {
   openInstructions,
   closeInstructions,
@@ -15,7 +14,7 @@ const mapStateToProps = ({
   sessionCode,
   connected,
   connectedDevices,
-  role,
+  isMain,
 }, {
   // ownProps
   instructions,
@@ -25,7 +24,7 @@ const mapStateToProps = ({
   sessionCode,
   connected,
   numDevices: connectedDevices.length,
-  isMain: role === ROLE_MAIN,
+  isMain,
   instructions,
   instructionsOpen,
   className,

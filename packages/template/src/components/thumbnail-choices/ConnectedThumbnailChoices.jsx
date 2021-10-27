@@ -3,19 +3,18 @@
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
 import { connect } from 'react-redux';
-import { ROLE_MAIN } from 'sagas'; // TODO set isMain in state to avoid these imports
 import { requestTransitionToSequence } from 'actions';
 import config from 'config';
 import ThumbnailChoices from './ThumbnailChoices';
 
 const mapStateToProps = ({
   sequenceChoices = [],
-  role,
   sequenceEnded,
   sequenceSkippable,
   sequenceHold,
+  isMain,
 }) => {
-  const displayChoices = (role === ROLE_MAIN)
+  const displayChoices = isMain
     && ((sequenceEnded && sequenceHold) || sequenceSkippable);
 
   // Only show choices in this block that have the thumbnail flag set, and get their metadata

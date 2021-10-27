@@ -2,8 +2,11 @@
  * Copyright (C) 2021, BBC R&D
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
+import { ROLE_MAIN } from 'sagas';
+
 const initialState = {
   role: null,
+  isMain: false,
   page: null,
   connectFormCanCancel: false,
   sessionCodeIsValidating: false,
@@ -54,7 +57,11 @@ const exposed = (state = initialState, action) => {
     case 'SET_PAGE':
       return { ...state, page: action.page };
     case 'SET_ROLE':
-      return { ...state, role: action.role };
+      return {
+        ...state,
+        role: action.role,
+        isMain: action.role === ROLE_MAIN,
+      };
     case 'SET_CONNECT_FORM_CAN_CANCEL':
       return { ...state, connectFormCanCancel: action.canCancel };
     case 'SESSION_CODE_VALID':

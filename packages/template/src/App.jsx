@@ -16,7 +16,6 @@ import {
   PAGE_CONNECT_DIRECT,
   PAGE_INSTRUCTIONS,
   PAGE_CALIBRATION,
-  ROLE_MAIN,
 } from 'sagas';
 
 // Import configuration object derived from index.html settings
@@ -52,7 +51,7 @@ const enableTasterBadge = false;
 const App = ({
   page,
 }) => {
-  const role = useSelector((state) => state.role);
+  const isMain = useSelector((state) => state.isMain);
 
   let CurrentPage;
 
@@ -86,7 +85,7 @@ const App = ({
   }
 
   let tasterBadge = null;
-  if (enableTasterBadge && role === ROLE_MAIN && config.PILOT_ID) {
+  if (enableTasterBadge && isMain && config.PILOT_ID) {
     tasterBadge = (
       <TasterBadge
         visible={page === PAGE_PLAYING}

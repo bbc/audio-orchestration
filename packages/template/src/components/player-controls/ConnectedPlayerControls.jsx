@@ -10,7 +10,6 @@ import {
   requestTransitionToSequence,
   requestToggleCalibrationMode,
 } from 'actions';
-import { ROLE_MAIN } from 'sagas';
 import PlayerControls from './PlayerControls';
 
 // Set to true to show a replay button at the end of the sequence. This will be shown in place of
@@ -24,12 +23,12 @@ const mapStateToProps = ({
   canPause,
   canSeek,
   currentContentId,
-  role,
+  isMain,
 }) => ({
   canPause,
   canSeek,
   replayContentId: enableReplayButton ? currentContentId : undefined,
-  isMain: role === ROLE_MAIN,
+  isMain,
 });
 
 const mapDispatchToProps = (dispatch) => ({

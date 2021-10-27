@@ -15,19 +15,16 @@ import ConnectedDeviceList from 'components/device-list/ConnectedDeviceList';
 import Share from 'components/share/Share';
 import config from 'config';
 import { closeInstructions, requestToggleCalibrationMode } from 'actions';
-import { ROLE_MAIN } from 'sagas';
 
 const InstructionsPage = ({
   connected,
   onClose,
   sessionCode,
-  role,
+  isMain,
   enterCalibrationMode,
   connectedDevices,
 }) => {
   const joinSessionUrl = connected ? `${config.JOIN_URL}/${sessionCode}` : config.JOIN_URL;
-
-  const isMain = role === ROLE_MAIN;
 
   return (
     <div className={classnames('page', 'page-instructions', 'page-with-status-bar')}>
@@ -75,7 +72,7 @@ InstructionsPage.propTypes = {
   connected: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   sessionCode: PropTypes.string,
-  role: PropTypes.string.isRequired,
+  isMain: PropTypes.bool.isRequired,
   enterCalibrationMode: PropTypes.func.isRequired,
   connectedDevices: PropTypes.arrayOf(PropTypes.shape({
     /* The deviceId is a unique-in-the-session identifier for the device. */
@@ -93,12 +90,12 @@ InstructionsPage.defaultProps = {
 const mapStateToProps = ({
   connected,
   sessionCode,
-  role,
+  isMain,
   connectedDevices,
 }) => ({
   connected,
   sessionCode,
-  role,
+  isMain,
   connectedDevices,
 });
 

@@ -29,12 +29,11 @@ import {
 import {
   requestToggleCalibrationMode,
 } from 'actions';
-import { ROLE_MAIN } from 'sagas';
 
 const PlayingPage = () => {
   const activeControlIds = useSelector((state) => state.activeControlIds);
   const currentContentId = useSelector((state) => state.currentContentId);
-  const role = useSelector((state) => state.role);
+  const isMain = useSelector((state) => state.isMain);
   const image = useSelector((state) => state.image);
   const isNearEnd = useSelector(selectIsNearEnd);
   const enableCalibration = useSelector(selectEnableCalibration);
@@ -52,7 +51,6 @@ const PlayingPage = () => {
     instructions,
   } = config.SEQUENCE_URLS.find(({ contentId }) => contentId === currentContentId) || {};
 
-  const isMain = role === ROLE_MAIN;
   const showRating = isMain && config.PROMPT_SEQUENCES.includes(currentContentId);
   const showInstructions = isMain && instructions && !showRating;
   const showTitle = !showRating;

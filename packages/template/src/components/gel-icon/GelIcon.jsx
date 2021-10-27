@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 
 // All icons from https://github.com/bbc/gel-iconography/tree/master/dist/
+// TODO remove GelIcon component from open source repository.
 const icons = {
   add: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M29.6 13.4H18.7v-11h-5.4v11H2.4v5.3h10.9v11h5.4v-11h10.9v-5.3z" /></svg>,
   audio: <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M26.9 16c0-3.9-1.5-7.4-3.9-10.1l-1.8 1.8c2 2.2 3.2 5.1 3.2 8.3s-1.2 6.1-3.2 8.3l1.8 1.8c2.4-2.7 3.9-6.2 3.9-10.1zm2.6 0c0 4.6-1.8 8.8-4.7 11.9l1.8 1.8C29.9 26.1 32 21.3 32 16S29.9 5.9 26.5 2.3l-1.8 1.8c3 3.1 4.8 7.3 4.8 11.9zm-23 3.9V12H1.2c-.7 0-1.2.5-1.2 1.2v5.4c0 .7.5 1.2 1.2 1.2h5.3zM.3 15.1l2.4 1.4 11.9-7v13L3.5 16.1l-2.4 1.4L17 26.7V5.3L.3 15.1z" /></svg>,
