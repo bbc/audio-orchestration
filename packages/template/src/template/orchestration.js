@@ -199,14 +199,22 @@ export const initialiseOrchestration = (dispatchFunction) => {
   globalOrchestrationClient.on('connected', () => dispatch(setConnected()));
 
   globalOrchestrationClient.on('disconnected', () => {
+    console.log('disconnected');
     dispatch(setDisconnected());
+  });
+
+  globalOrchestrationClient.on('available', () => {
+    console.log('orchestration client available event');
+    // dispatch(setConnected());
   });
 
   globalOrchestrationClient.on('unavailable', () => {
-    dispatch(setDisconnected());
+    console.log('orchestration client unavailable event');
+    // dispatch(setDisconnected());
   });
 
   globalOrchestrationClient.on('error', (e) => {
+    console.log('error');
     dispatch(setErrorMessage(e.message));
   });
 

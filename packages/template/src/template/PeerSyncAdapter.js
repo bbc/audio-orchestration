@@ -23,6 +23,7 @@ class PeerSyncAdapter extends SyncAdapter {
     }
     this._connected = false;
     this._connectPromise = null;
+    this._isMain = false;
 
     this._peer = null;
     this._connections = [];
@@ -44,35 +45,21 @@ class PeerSyncAdapter extends SyncAdapter {
     this._wallClock.id = 'adapter-wallClock';
   }
 
-  /**
-   * Connects to the synchronisation service.
-   *
-   * @returns {Promise<PeerSyncAdapter>} a promise resolving when successfully connected.
-   */
-  connect(syncUrl /* TODO not used with default peer js server */, {
-    sessionId,
-    deviceId,
-  }) {
-    // The main device's deviceId is the same as the sessionId and used to address messages.
-    // TODO: cloud-sync client does not need to know whether it is the main device, it just connects to the session.
-    // Perhaps we should try using the given sessionId and if it's taken, instead connect to that peer.
-    this._sessionId = sessionId;
-    this._isMain = (sessionId === deviceId);
-
-    console.log(this._isMain, sessionId, deviceId);
-
-    if (this._connectPromise !== null) {
-      return this._connectPromise;
-    }
-
-    this._connectPromise = new Promise((resolve, reject) => {
-      this._peer = new Peer(deviceId, { debug: 2 });
+  _startSession() {
+    // attempt to claim the session id as peer ID.
+    // - Attempt to become the main device by using the session id as peer ID.
+    // - Other devices connect to this session using a random device ID.
+    return new Promise((resolve, reject) => {
+      this._peer = new Peer(this._sessionId, {
+        debug: 2,
+      });
 
       this._peer.on('open', () => {
         // if this is the main device, connecting to the peer server is all we need.
-        if (this._isMain) {
-          this.emit('connected');
-        }
+        this._isMain = true;
+        this.connected = true;
+        this.emit('connected');
+        console.log(`main device connection open as ${this._sessionId}`);
         resolve();
       });
 
@@ -80,51 +67,105 @@ class PeerSyncAdapter extends SyncAdapter {
         // TODO disconnecting from the peer server may not be fatal - it's the connection to the
         // main device that's more critical. May be able to recover by calling peer.reconnect()
         // before passing this on as a failure on the main device.
+
+        // Only propagate this if this is the main device, ie we have connected successfully once.
+        if (this._isMain) {
+          this.connected = false;
+          this.emit('disconnected');
+        }
+        reject();
+      });
+    }).then(() => {
+      // Now accept connections from aux devices.
+      this._peer.on('connection', (conn) => {
+        conn.on('open', () => {
+          // received a call from an aux to the main device.
+          this._registerConnection(conn);
+        });
+      });
+    });
+  }
+
+  _joinSession() {
+    return new Promise((resolve, reject) => {
+      this._peer = new Peer({
+        debug: 2,
+      });
+
+      this._peer.on('error', () => {
+        this.connected = false;
         this.emit('disconnected');
         reject();
       });
 
-      this._peer.on('connection', (conn) => {
-        if (this._isMain) {
-          console.debug(`got connection from ${conn.peer}`);
-          conn.on('open', () => {
-            // have to wait until connection is open before we can send messages etc.
-            this._registerConnection(conn);
-          });
-        } else {
-          // All other devices connect to the main device, so reject any connection attempts made
-          // to an aux device.
-          console.warning(`rejected connection attempt from ${conn.peer}`);
-          conn.close();
-        }
-      });
-    }).then(() => new Promise((resolve, reject) => {
-      // wait until connected to the main device on aux devices
-      if (!this._isMain) {
+      this._peer.on('open', () => {
+        // wait until connected to the main device on aux devices
         console.log(`connecting to ${this._sessionId}`);
-        const conn = this._peer.connect(this._sessionId);
+        const conn = this._peer.connect(this._sessionId, {
+          metadata: {
+            deviceId: this._deviceId,
+          },
+        });
+
         conn.on('open', () => {
+          // the main device has picked up.
           this._registerConnection(conn);
+
+          // after registerConnection has been called, this adapter is ready to receive calls from
+          // outside so emit the connected event and resolve the promise.
           this.connected = true;
           this.emit('connected');
+          console.log('aux device connection open');
           resolve();
         });
 
         conn.on('error', () => {
+          console.log(`failed to connect to peer ${this._sessionId}`);
+          this.connected = false;
+          this.emit('disconnected');
           reject();
         });
-      } else {
-        resolve();
-      }
-    })).then(() => this);
+      });
+    });
+  }
+
+  /**
+   * Connects to the synchronisation service.
+   *
+   * @returns {Promise<PeerSyncAdapter>} a promise resolving when successfully connected.
+   */
+  connect(syncEndpoint /* TODO not used with default peer js server */, {
+    sessionId,
+    deviceId,
+  }) {
+    // PeerJS identifiers can be alphanumeric with underscores and hyphens but must start and end
+    // with a letter or number. Replacing all other characters here because the ID's generated in
+    // the template also include colons.
+    this._sessionId = sessionId.replace(/[^a-zA-Z0-9\-_]/g, '');
+
+    // Also save the original device id which should be used when communicating presence events and
+    // broadcast messages to the template.
+    this._deviceId = deviceId;
+
+    if (this._connectPromise === null) {
+      this._connectPromise = this._startSession()
+        .catch(() => {
+          console.log('failed to start session, attempting to join instead, perhaps it already exists.');
+          return this._joinSession();
+        })
+        .then(() => this);
+    }
+
     return this._connectPromise;
   }
 
   _registerConnection(conn) {
-    const { peer } = conn;
+    const { peer, metadata = {} } = conn;
     this._connections.push(conn);
 
     let wcProtocolHandler;
+
+    const { deviceId } = metadata;
 
     if (this._isMain) {
       wcProtocolHandler = new WallClockServerProtocol(
@@ -154,18 +195,12 @@ class PeerSyncAdapter extends SyncAdapter {
 
       wcProtocolHandler.stop();
 
-      if (peer === this._sessionId) {
-        this.connected = false;
-        this.emit('disconnected');
-        // TODO try to reconnect to main device?
-      }
-
       // remove from list of active connections
-      this._connections = this._connections.filter(c => c.peer !== peer);
+      this._connections = this._connections.filter((c) => c.peer !== peer);
       conn.close();
 
       this.emit('presence', {
-        deviceId: peer,
+        deviceId,
         status: 'offline',
       });
     };
@@ -175,13 +210,11 @@ class PeerSyncAdapter extends SyncAdapter {
       handleClose();
     });
 
+    // TODO docs say Firefox does not support 'close' event
     conn.on('close', (e) => {
       console.log(`connection close ${peer}`, e);
       handleClose();
     });
-
-    // handleClose
-    // TODO docs say Firefox does not support 'close' event
 
     conn.on('data', ({ type, content }) => {
       switch (type) {
@@ -199,12 +232,14 @@ class PeerSyncAdapter extends SyncAdapter {
               subscribe,
             } = content;
 
+            console.debug(`got timeline message, update: ${update}, subscribe: ${subscribe}`);
+
             if (this._isMain && subscribe) {
               const { timelineId } = subscribe;
 
               if (this._clocks.has(timelineId)) {
                 const { subscriptions } = this._clocks.get(timelineId);
-                if (!subscriptions.find(c => c === conn)) {
+                if (!subscriptions.includes(conn)) {
                   subscriptions.push(conn);
                 }
                 // send update message
@@ -247,9 +282,12 @@ class PeerSyncAdapter extends SyncAdapter {
           break;
         case 'broadcast':
           {
-            const { topic, message } = content;
+            const { deviceId: broadcastDeviceId, topic, message } = content;
+            console.log(`got broadcast message ${topic}`);
+            // TODO originating deviceID can be spoofed because it's taken from the message content,
+            // but there is no direct link between deviceId and conn.peer anymore.
             this.emit('broadcast', {
-              deviceId: peer,
+              deviceId: broadcastDeviceId,
               topic,
               content: message,
             });
@@ -264,9 +302,9 @@ class PeerSyncAdapter extends SyncAdapter {
           break;
         case 'presence':
           {
-            const { deviceId, status } = content;
+            const { deviceId: precenceDeviceId, status } = content;
             this.emit('presence', {
-              deviceId,
+              deviceId: precenceDeviceId,
               status,
             });
           }
@@ -276,8 +314,10 @@ class PeerSyncAdapter extends SyncAdapter {
       }
     });
 
+    console.log('register connection', conn, deviceId);
+
     const presenceEvent = {
-      deviceId: peer,
+      deviceId,
       status: 'online',
     };
 
@@ -287,12 +327,6 @@ class PeerSyncAdapter extends SyncAdapter {
     // forward the event to all connected client if this is the main device
     if (this._isMain) {
       this._sendToAll('presence', presenceEvent);
-    }
-
-    // TODO technically reconnecting to the main device would mean we could continue?
-    if (peer === this._sessionId) {
-      this.connected = true;
-      this.emit('connected');
     }
   }
 
@@ -429,7 +463,7 @@ class PeerSyncAdapter extends SyncAdapter {
   }
 
   _sendToAll(type, content) {
-    console.log(`Sending ${type} message to all ${this._connections.length} connections`);
+    console.log(`Sending ${type} ${content.topic} message to all ${this._connections.length} connections`);
     this._connections.forEach((conn) => {
       try {
         conn.send({ type, content });
@@ -446,7 +480,7 @@ class PeerSyncAdapter extends SyncAdapter {
    * @param {object} message
    */
   sendMessage(topic, message) {
-    this._sendToAll('broadcast', { topic, message });
+    this._sendToAll('broadcast', { deviceId: this._deviceId, topic, message });
     return Promise.resolve();
   }
 
