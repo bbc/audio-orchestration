@@ -112,4 +112,11 @@ module.exports = {
       banner: fs.readFileSync(path.resolve(__dirname, 'LICENSE'), 'utf-8'),
     }),
   ],
+  devServer: {
+    client: {
+      overlay: {
+        warnings: false,
+      },
+    },
+  },
 };
