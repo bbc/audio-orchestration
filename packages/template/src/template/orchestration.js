@@ -5,6 +5,7 @@
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { orchestration } from '@bbc/audio-orchestration-core';
+import PeerSyncAdapter from './PeerSyncAdapter';
 
 import config from 'config';
 import {
@@ -88,6 +89,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
     isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
     objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
+    syncAdapterClass: PeerSyncAdapter,
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
