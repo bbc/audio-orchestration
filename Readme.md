@@ -4,19 +4,15 @@
 
 **Create immersive and interactive audio experiences for multiple synchronised devices.**
 
-This repository holds the open source audio orchestration template application and libraries used by _Audio Orchestrator_.
-
-The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
+Audio device orchestration is the concept of using multiple connected devices to play back an audio experience. This repository holds an open source template application and libraries that handle the key components of an orchestrated audio system (pairing, synchronisation, and audio playback).
 
 ## Components
 
 <img alt="Components and dependencies" src="doc/repo-structure.png" width="368" height="158" />
 
-We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming), and **cloud-sync-client** (connection to the synchronisation server).
+We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming) and **cloud-sync-client** (connection to the synchronisation server).
 
-The [**cloud-sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub. The template and examples in this repository refer to a an instance of this software hosted on a BBC server that may be suitable for experimentation, however no guarantees are given as to its availability.
-
-Our [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) production tool for authoring metadata and packaging media for use with the template and core library is available through BBC MakerBox.
+The [**Cloud-Sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub. To use the template and examples in this repository, you will need to set up a Cloud-Sync server.
 
 More detailed information about each of the packages is available in the respective Readme files.
 
@@ -24,6 +20,12 @@ More detailed information about each of the packages is available in the respect
 * [`@bbc/audio-orchestration-core`](packages/core)
 * [`@bbc/audio-orchestration-bbcat-js`](packages/bbcat-js)
 * [`@bbc/audio-orchestration-cloud-sync-client`](packages/cloud-sync-client)
+
+## The _Audio Orchestrator_ production tool
+
+Our _Audio Orchestrator_ production tool for authoring metadata and packaging media for use with the template and core library is [freely available on request from BBC MakerBox](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator).
+
+The [Audio Orchestrator documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
 
 # Usage
 
@@ -42,7 +44,7 @@ npm add @bbc/audio-orchestration-core
 
 # Development
 
-You need Node.js (14, but earlier versions will likely still work) and npm (need version 7 or higher for the workspace support).
+You need Node.js (version 14, but earlier versions may still work) and npm (version 7 or higher is needed for the workspace support).
 
 First install the dependencies, then build all of them once (the `-ws` flag tells npm to run the `build` command for each package).
 
@@ -51,7 +53,7 @@ npm install
 npm run build -ws
 ```
 
-Then you can, for example, start a development server for the template, which will use the other packages you've just built:
+Then you can, for example, start a development server for the template, which will use the other packages you've just built.
 
 ```sh
 cd packages/template
@@ -64,7 +66,7 @@ The majority of our components (`template`, `core`, and `bbcat-js`) are licensed
 
 If you are modifying the software to create your experience you may have to make your source code modifications available under the terms of the GPL license.
 
-You may [contact BBC R&D](https://www.bbc.co.uk/rd/contacts) to discuss alternative licensing options; however the BBC is under no obligation to offer alternative terms.
+You may [contact BBC R&D](https://www.bbc.co.uk/rd/contacts) to discuss alternative licensing options. (Please note, the BBC is under no obligation to offer alternative terms.)
 
 # Contributing
 
