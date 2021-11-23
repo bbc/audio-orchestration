@@ -44,9 +44,9 @@ npm add @bbc/audio-orchestration-core
 
 # Development
 
-You need Node.js (version 14, but earlier versions may still work) and npm (version 7 or higher is needed for the workspace support).
+You need Node.js (version 14, but earlier versions may still work) and `npm` (version 7 or higher is needed for the workspace support).
 
-First install the dependencies, then build all of them once (the `-ws` flag tells npm to run the `build` command for each package).
+First install the dependencies, then build all of them once (the `-ws` flag tells `npm` to run the `build` command for each package).
 
 ```sh
 npm install
