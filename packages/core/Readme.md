@@ -95,7 +95,7 @@ Of course, you can also provide a completely different allocation algorithm, as 
 
 ## Examples
 
-A number of stand-alone examples are provided to illustrate the usage of certain individual components:
+A number of stand-alone examples are provided to illustrate the usage of certain individual components.
 
  * [players](examples/players/): DASH and buffer source audio players
  * [cloud-sync-client](examples/cloud-sync-client/): connection to the Cloud-Sync service
