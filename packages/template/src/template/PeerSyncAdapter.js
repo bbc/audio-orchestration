@@ -25,6 +25,7 @@ class PeerSyncAdapter extends SyncAdapter {
     this._connectPromise = null;
     this._isMain = false;
 
+    this._syncEndpoint = {};
     this._peer = null;
     this._connections = [];
     this._clocks = new Map();
@@ -51,6 +52,7 @@ class PeerSyncAdapter extends SyncAdapter {
     // - Other devices connect to this session using a random device ID.
     return new Promise((resolve, reject) => {
       this._peer = new Peer(this._sessionId, {
+        ...this._syncEndpoint,
         debug: 2,
       });
 
@@ -134,10 +136,12 @@ class PeerSyncAdapter extends SyncAdapter {
    *
    * @returns {Promise<PeerSyncAdapter>} a promise resolving when successfully connected.
    */
-  connect(syncEndpoint /* TODO not used with default peer js server */, {
+  connect(syncEndpoint = {}, {
     sessionId,
     deviceId,
+    startSession,
   }) {
+    this._syncEndpoint = syncEndpoint;
     // PeerJS identifiers can be alphanumeric with underscores and hyphens but must start and end
     // with a letter or number. Replacing all other characters here because the ID's generated in
     // the template also include colons.
@@ -148,12 +152,11 @@ class PeerSyncAdapter extends SyncAdapter {
     this._deviceId = deviceId;
 
     if (this._connectPromise === null) {
-      this._connectPromise = this._startSession()
-        .catch(() => {
-          console.log('failed to start session, attempting to join instead, perhaps it already exists.');
-          return this._joinSession();
-        })
-        .then(() => this);
+      if (startSession) {
+        this._connectPromise = this._startSession().then(() => this);
+      } else {
+        this._connectPromise = this._joinSession().then(() => this);
+      }
     }
 
     return this._connectPromise;
@@ -203,6 +206,12 @@ class PeerSyncAdapter extends SyncAdapter {
         deviceId,
         status: 'offline',
       });
+
+      // if it was the main device, and this is an aux device, emit the disconnected event.
+      if (peer === this._sessionId) {
+        console.log('main device connection lost');
+        this.emit('disconnected');
+      }
     };
 
     conn.on('error', (e) => {
