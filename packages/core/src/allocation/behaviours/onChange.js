@@ -2,9 +2,9 @@
  * Copyright (C) 2021, BBC R&D
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
-/* The onChange behaviour sets some flags that are then handled by
-applyOnChangeBehaviour during the allocation algorithm
-No changes are made to the lists
+/**
+ * The onChange behaviour sets some flags that are then handled by applyOnChangeBehaviour during the
+ * allocation algorithm. No changes are made to the lists.
 */
 const onChange = ({ behaviourParameters }) => {
   const flagsToAdd = ['onChange-applied'];

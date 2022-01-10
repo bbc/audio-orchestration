@@ -2,6 +2,11 @@
  * Copyright (C) 2021, BBC R&D
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
+/**
+ * @class
+ * Provides an API similar to an AudioBufferSourceNode, so it can be used to calculate when the
+ * image should be visible.
+ */
 class ImageSourceNode {
   constructor(imageContext, image, duration, priority) {
     this.imageContext = imageContext;
