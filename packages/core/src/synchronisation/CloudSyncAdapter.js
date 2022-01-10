@@ -9,26 +9,9 @@ import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
 import SyncAdapter from './SyncAdapter';
 
 /**
- * The CloudSyncAdapter wraps the cloud-sync synchronisation clients in an API
- * compatible with the {@link DvbcssSyncAdapter} so they can be swapped out.
+ * @class CloudSyncAdapter
  *
- * @example
- * import clocks from 'dvbcss-clocks';
- *
- * const sync = new CloudSyncAdapter({ sysClock: new clocks.DateNowClock() });
- * const timelineClock = new clocks.CorrelatedClock(sync.wallClock);
- *
- * sync.connect(syncUrl, { deviceId: 'd1', sessionId: 's1' }).then(() => {
- *   console.log('connected');
- * });
- *
- * sync.synchronise(timelineClock, timelineType, contentId).catch((error) => {
- *   console.error('could not synchronise', error);
- * };
- *
- * // Now, the timelineClock is synchronised with the server's timeline and
- * // changes to the correlation on the server will update this instance.
- *
+ * The CloudSyncAdapter wraps the cloud-sync-client to provide the common SyncAdapter API.
  */
 
 class CloudSyncAdapter extends SyncAdapter {

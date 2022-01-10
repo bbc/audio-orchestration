@@ -7,6 +7,8 @@ import applyOnChangeBehaviour from './applyOnChangeBehaviour';
 import { setDifference, setUnion } from './setOperations';
 
 /**
+ * @class AllocationAlgorithm
+ *
  * Represents the generic allocation algorithm. To be useful, it must be extended by registering
  * the behaviours referred to in the object metadata. See {@link DefaultAllocationAlgorithm} for
  * the implementation of the default behaviours.
@@ -14,14 +16,6 @@ import { setDifference, setUnion } from './setOperations';
  * The algorithm itself is stateless; but the previous results can be passed into the
  * {@link allocate} method. Therefore the same instance can be used to allocate objects for
  * different sets of objects independently.
- *
- * @example
- * const a = new AllocationAlgorithm();
- * a.registerBehaviour('allowEverything', ({ devices }) => ({
- *   allowed: devices.map(d => d.deviceId),
- * });
- * const results = a.allocate({ objects, devices, session, previousResults });
- * console.log(results.allocations);
  */
 class AllocationAlgorithm {
   /**

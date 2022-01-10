@@ -3,19 +3,11 @@
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
 /**
- * @class
- * @desc OutputRouter provides an interface for a player to the audio output through some routing.
+ * @class OutputRouter
  *
- * Its input is connected to a stereoPanner node.
- *
- * For stereo devices, this is connected directly the output.
- *
- * For mono devices, the panner output is converted to mono and connected to the output.
- *
- * @example
- * routeAudio = new OutputRouter(audioContext, true, panning);
- * dashSourceNode.outputs[0].connect(routeAudio.input);
- * routeAudio.output.connect(audioContext.destination);
+ * The OutputRouter sets up the panning or direct to output routing: it can deal with mono sources
+ * (with panning) and stereo sources (passed through without any panning), and provides a stereo
+ * output.
  */
 class OutputRouter {
   /**

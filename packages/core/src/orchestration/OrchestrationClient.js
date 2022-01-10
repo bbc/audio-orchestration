@@ -40,27 +40,6 @@ const TIMELINE_TYPE_TICK_RATE = 1000;
  * sequences. Only one sequence may be active at a time, and the main device may trigger a
  * transition to another sequence at any time.
  *
- * @example
- * import { OrchestrationClient } from '@bbc/audio-orchestration-core/src/orchestration';
- *
- * const orchestration = new OrchestrationClient({});
- *
- * orchestration.registerSequence(contentId, sequenceUrl);
- * orchestration.registerSequence(otherContentId, otherSequenceUrl);
- * orchestration.setInitialSequence(contentId);
- *
- * orchestration.on('error', (e) => { console.log(e.message); });
- * orchestration.on('loaded', () => { console.log('loaded sequences'); });
- * orchestration.on('connected', () => { console.log('connected'); });
- * orchestration.on('disconnected', () => { console.log('disconnected'); });
- * orchestration.on('status', (e) => { console.log('playback status changed.', e); });
- * orchestration.on('ready', () => { console.log('ready to interact'); });
- *
- * orchestration.start(true, sessionId).then(() => {
- *   nextBtn.on('click', () => orchestration.transitionToSequence(otherContentId));
- *   skipBtn.on('click', () => orchestration.seek(30));
- * });
- *
  */
 class OrchestrationClient extends EventEmitter {
   /**
