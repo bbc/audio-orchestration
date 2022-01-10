@@ -329,7 +329,7 @@ class OrchestrationClient extends EventEmitter {
       this.mute(true);
     });
     return new Promise((resolve, reject) => {
-      this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId)
+      this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId, this._isMain)
         .then(resolve)
         .catch(reject);
       setTimeout(() => {
