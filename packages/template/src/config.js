@@ -128,9 +128,6 @@ const config = {
   // longer, however this feature does not work for all devices and web browsers.
   ENABLE_WAKE_LOCK: true,
 
-  // BBC Taster pilot ID - only used in BBC productions
-  // PILOT_ID: null,
-
   // Optional prompt to display in some sequences
   PROMPT_SEQUENCES: [],
   // PROMPT_TITLE: '',

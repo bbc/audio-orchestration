@@ -70,7 +70,6 @@ import 'components/qr-code/QRCode.scss';
 import 'components/device-list/DeviceList.scss';
 import 'components/calibration-controls/CalibrationControls.scss';
 import 'components/device-info/DeviceInfo.scss';
-import 'components/taster-badge/TasterBadge.scss';
 import 'components/rating-prompt/RatingPrompt.scss';
 import 'components/lighting-effect/LightingEffect.scss';
 import 'components/thumbnail-choices/ThumbnailChoices.scss';
