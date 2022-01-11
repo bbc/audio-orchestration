@@ -81,7 +81,6 @@ import 'components/gel-icon/GelIcon.scss';
 // import 'components/gel-icon/GelIcon.scss';
 // import 'components/guidance/Guidance.scss';
 // import 'components/landing-icons/LandingIcons.scss';
-// import 'components/cookie-notice/CookieNotice.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
