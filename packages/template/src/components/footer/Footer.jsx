@@ -14,7 +14,7 @@ const Footer = () => (
       <a href="https://www.bbc.co.uk/makerbox/tools/audio-orchestrator" target="_blank" rel="noopener noreferrer">Created with Audio Orchestrator</a>
     </p>
     <p className="small">
-      &copy; BBC R&amp;D 2020
+      &copy; BBC R&amp;D 2022
     </p>
   </div>
 );

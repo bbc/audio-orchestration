@@ -134,6 +134,9 @@ const config = {
   // PROMPT_BODY: '',
   // PROMPT_BUTTON_LINK: '',
   // PROMPT_BUTTON_TEXT: '',
+
+  // Whether to show the BBC Copyright and "made with Audio Orchestrator" footer
+  SHOW_BBC_FOOTER: false,
 };
 
 export const updateConfig = (newConfig = {}) => {
