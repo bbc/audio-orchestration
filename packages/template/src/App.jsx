@@ -3,7 +3,6 @@
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
 import React from 'react';
-import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 // Import names used for identifying the current page
@@ -18,9 +17,6 @@ import {
   PAGE_CALIBRATION,
 } from 'sagas';
 
-// Import configuration object derived from index.html settings
-import config from 'config';
-
 // Import the page components: only one of these is used at a time.
 import StartPage from 'pages/start-page/StartPage';
 import LoadingPage from 'pages/loading-page/LoadingPage';
@@ -30,12 +26,6 @@ import PlayingPage from 'pages/playing-page/PlayingPage';
 import ConnectFormPage from 'pages/connect-form-page/ConnectFormPage';
 import ConnectDirectPage from 'pages/connect-direct-page/ConnectDirectPage';
 import CalibrationPage from 'pages/calibration-page/CalibrationPage';
-
-// Import the TasterBadge shown on the main device, if enabled in the settings
-import TasterBadge from 'components/taster-badge/TasterBadge';
-
-// set this to true, set PILOT_ID, and add script tag to index.html to use this
-const enableTasterBadge = false;
 
 /**
  * The App is the top level presentational component.
@@ -51,8 +41,6 @@ const enableTasterBadge = false;
 const App = ({
   page,
 }) => {
-  const isMain = useSelector((state) => state.isMain);
-
   let CurrentPage;
 
   switch (page) {
@@ -84,20 +72,9 @@ const App = ({
       CurrentPage = ErrorPage;
   }
 
-  let tasterBadge = null;
-  if (enableTasterBadge && isMain && config.PILOT_ID) {
-    tasterBadge = (
-      <TasterBadge
-        visible={page === PAGE_PLAYING}
-        pilotId={config.PILOT_ID}
-      />
-    );
-  }
-
   return (
     <div className="app">
       <CurrentPage />
-      {tasterBadge}
     </div>
   );
 };
