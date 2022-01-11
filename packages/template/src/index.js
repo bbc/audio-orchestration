@@ -75,12 +75,6 @@ import 'components/lighting-effect/LightingEffect.scss';
 import 'components/thumbnail-choices/ThumbnailChoices.scss';
 import 'components/onboarding-instructions/OnboardingInstructions.scss';
 import 'components/overlay-prompt/OverlayPrompt.scss';
-import 'components/gel-icon/GelIcon.scss';
-
-// Import additional styles for components not included in the default build, if needed:
-// import 'components/gel-icon/GelIcon.scss';
-// import 'components/guidance/Guidance.scss';
-// import 'components/landing-icons/LandingIcons.scss';
 
 // Create a Redux store. This library is used to manage state by the template. You may wish
 // to extend this by adding your own reducers, but that should not be neccessary for basic use.
