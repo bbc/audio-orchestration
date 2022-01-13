@@ -1,10 +1,10 @@
 # Audio orchestration template
 
-This project is a user interface template built with the [@bbc/audio-orchestration-core library](../core) library. It is used as a starting point for developing additional features.
+This project is a user interface template built with the [@bbc/audio-orchestration-core library](../core) library. It is a starting point for developing additional features.
 
-[Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) also uses this template by default for its preview and export function, and can be configured to use a custom build of the template.
+This template is also used by [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) to preview and export a prototype application. The [documentation](https://bbc.github.io/bbcat-orchestration-docs/custom-template) explains how to use a custom build of this template.
 
-As discussed in the top level Readme file, Audio Orchestrator is used to combine this code with the audio and metadata files for a specific experience.
+Audio Orchestrator is used to combine this template with encoded audio and metadata files.
 
 ## Usage
 
@@ -18,11 +18,15 @@ npm run dev
 
 The build will be hosted at http://localhost:8080 and automatically refresh on most changes to the source code.
 
-If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `CLOUDSYNC_ENDPOINT` option in `src/index.html`.  Reload the page in your browser to apply any changes to the configuration object in `index.html`.
+If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `SYNC_ENDPOINT` option in `src/index.html`. Reload the page in your browser to apply any changes to the configuration.
+
+## Adding media and metadata
+
+Audio _sequences_ are added by copying their metadata and audio files to the `audio/` directory (which is copied to `dist/audio` as part of the build process) and registering them in the configuration object in `src/index.html`. Both of those steps are usually done using _Audio Orchestrator_, but the example files included with this repository indicate the expected layout and syntax.
 
 ## Development
 
-This section is an introduction to the key components of the template application, intended for developers looking to customise it or add features beyond those that can be configured in Audio Orchestrator.
+This section introduces the key components of the template application, intended for developers looking to customise it or add features beyond those that can be configured in Audio Orchestrator.
 
 ### Recommended reading
 

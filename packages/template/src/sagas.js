@@ -282,8 +282,8 @@ function* rootSaga({
   sessionCode = null,
   deviceId,
 } = {}) {
-  if (!config.CLOUDSYNC_ENDPOINT) {
-    yield put({ type: 'SET_ERROR', errorMessage: 'To use this template you must first configure a synchronisation server by setting the CLOUDSYNC_CLIENT option in index.html.' });
+  if (!config.SYNC_ENDPOINT) {
+    yield put({ type: 'SET_ERROR', errorMessage: 'To use this template you must first configure a synchronisation server by setting the SYNC_ENDPOINT option in index.html.' });
     return;
   }
 

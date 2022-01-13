@@ -81,7 +81,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
 
   globalOrchestrationClient = new OrchestrationClient({
     initialContentId: config.INITIAL_CONTENT_ID,
-    syncEndpoint: config.CLOUDSYNC_ENDPOINT,
+    syncEndpoint: config.SYNC_ENDPOINT,
     sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.LOADING_TIMEOUT,
     contentId: config.SYNC_CLOCK_CONTENT_ID,
