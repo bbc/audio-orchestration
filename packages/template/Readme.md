@@ -6,6 +6,8 @@ This template is also used by [Audio Orchestrator](https://www.bbc.co.uk/makerbo
 
 Audio Orchestrator is used to combine this template with encoded audio and metadata files.
 
+![screenshots of the template application, showing the start, playing (with and without joining instructions), instructions, and connect-direct pages](resources/template-screenshots.png)
+
 ## Usage
 
 Make sure you have installed and built the dependencies by running `npm install` and `npm run build -ws` in the repository root (_not_ this `template` folder).
