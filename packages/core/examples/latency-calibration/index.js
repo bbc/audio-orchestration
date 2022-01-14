@@ -10,7 +10,9 @@ const { Sequence, SequenceRenderer } = rendering;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-const CLOUD_SYNC_ENDPOINT = { hostname: 'cloudsync.virt.ch.bbc.co.uk' };
+// TODO: add the address of your cloud-sync server here, e.g.:
+// const CLOUD_SYNC_ENDPOINT = { hostname: 'localhost', port: 9001 };
+const CLOUD_SYNC_ENDPOINT = { hostname: 'cloudsync.example.com' };
 
 const USE_TONE = true;
 const USE_NOISE = false;
