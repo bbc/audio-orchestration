@@ -25,28 +25,26 @@ More detailed information about each of the packages is available in the respect
 
 Our _Audio Orchestrator_ production tool for authoring metadata and packaging media for use with the template and core library is [freely available on request from BBC MakerBox](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator).
 
-The [_Audio Orchestrator_ documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/).
+The [_Audio Orchestrator_ documentation](https://bbc.github.io/bbcat-orchestration-docs/) includes a [list of experiences made with these tools](https://bbc.github.io/bbcat-orchestration-docs/productions/) and [instructions for using a custom template](https://bbc.github.io/bbcat-orchestration-docs/custom-template) built using this repository.
 
 # Usage
 
-The most common way to use this code is to **fork this repository** and follow the _Development_ instructions below to create a custom template distribution. This can then be used with _Audio Orchestrator_ to add encoded media and metadata files.
+Ensure you have [Node.js](https://nodejs.org/en/) installed, including `npm` version 7 or higher (earlier versions of `npm` do not have the workspaces functionality used in this repository).
 
-Advanced usage:
-
-If needed, you can also install our pre-built packages by specifying the GitHub Package Registry for the `@bbc` scope in an `.npmrc` file for your project.
-
-```sh
-echo "@bbc:registry=https://npm.pkg.github.com" >> .npmrc
-npm add @bbc/audio-orchestration-core
+```
+node -v # e.g. v16.13.0
+node -v # e.g. 8.1.0
 ```
 
-**NB until this repository is made public, you will need to [login to npm](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-with-a-personal-access-token) with a GitHub token with access to the BBC organisation to make this work.**
+Start your project by downloading a copy of this repository, either by using the `Download as ZIP` button on GitHub, or by using `degit`.
 
-# Development
+```
+mkdir my-project
+cd my-project
+npx degit bbc/audio-orchestration
+```
 
-You need Node.js (version 14, but earlier versions may still work) and `npm` (version 7 or higher is needed for the workspace support).
-
-First install the dependencies, then build all of them once (the `-ws` flag tells `npm` to run the `build` command for each package).
+Install the dependencies, then build all the packages once (the `-ws` flag tells `npm` to run the `build` command for each package).
 
 ```sh
 npm install
@@ -58,6 +56,17 @@ Then you can, for example, start a development server for the template, which wi
 ```sh
 cd packages/template
 npm run dev
+```
+
+Note that you will have to set up a cloud-sync server and add its address to the template's `index.html` configuration before you can connect devices. See the [template documentation](./packages/template/Readme.md) for more information.
+
+# Advanced usage
+
+If needed, you can also install our pre-built packages by specifying the GitHub Package Registry for the `@bbc` scope in an `.npmrc` file for your project.
+
+```sh
+echo "@bbc:registry=https://npm.pkg.github.com" >> .npmrc
+npm add @bbc/audio-orchestration-core
 ```
 
 # License
