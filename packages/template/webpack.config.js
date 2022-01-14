@@ -88,7 +88,6 @@ module.exports = {
       sagas: path.resolve(__dirname, 'src/sagas.js'),
       selectors: path.resolve(__dirname, 'src/selectors.js'),
       theme: path.resolve(__dirname, 'src/theme.scss'),
-      'reith-fonts': path.resolve(__dirname, 'src/reith-fonts.scss'),
     },
   },
   plugins: [

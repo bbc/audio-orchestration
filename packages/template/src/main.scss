@@ -10,10 +10,6 @@ $gel-grid-enable--box-sizing: true;
 // Import theme for uniform default colours
 @import '~theme';
 
-// uncomment to use BBC Reith font
-// also add b-reith-sans-loaded class to body in index.html to ensure correct letter spacing is used
-// @import '~reith-fonts';
-
 // Set global styles for body and html elements (reset)
 body, html {
   margin: 0;
@@ -23,12 +19,6 @@ body, html {
 
   color: $theme-color-white;
   background-color: $theme-color-black;
-}
-
-body.b-reith-sans-loaded {
-  &, input, button {
-    font-family: ReithSans, Helvetica, Arial, sans-serif;
-  }
 }
 
 #app, .app {
