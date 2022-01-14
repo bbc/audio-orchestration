@@ -1,28 +1,36 @@
 # Audio orchestration template
 
-This template project is an example of using the [audio orchestration core library](../core) you can modify to suit your application.
+This project is a user interface template built with the [@bbc/audio-orchestration-core library](../core) library. It is a starting point for developing additional features.
 
-Our production tool [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) uses this template. It produces the audio and metadata files that are needed. You can also set it up to use a custom local template build for Audio Orchestrator's preview function in the advanced export settings.
+This template is also used by [Audio Orchestrator](https://www.bbc.co.uk/makerbox/tools/audio-orchestrator) to preview and export a prototype application. The [documentation](https://bbc.github.io/bbcat-orchestration-docs/custom-template) explains how to use a custom build of this template.
+
+Audio Orchestrator is used to combine this template with encoded audio and metadata files.
+
+![screenshots of the template application, showing the start, playing (with and without joining instructions), instructions, and connect-direct pages](resources/template-screenshots.png)
 
 ## Usage
 
-Make sure you have installed the dependencies by running `npm install` in the repository root (not the template folder).
+Make sure you have installed and built the dependencies by running `npm install` and `npm run build -ws` in the repository root (_not_ this `template` folder).
 
-Start a development server:
+Run the development server:
 
 ```sh
 npm run dev
 ```
 
-If you are not using the template with _Audio Orchestrator_, set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `CLOUDSYNC_ENDPOINT` option in `src/index.html`.  Reload the page in your browser to apply any changes to the configuration object in `index.html`.
+The build will be hosted at http://localhost:8080 and automatically refresh on most changes to the source code.
 
-### Template Structure
+If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `SYNC_ENDPOINT` option in `src/index.html`. Reload the page in your browser to apply any changes to the configuration.
 
-This guide is for developers looking to change the template itself, or to understand it a bit better.
-It may be useful to read this before trying to make further-reaching changes for an experience building
-on the template.
+## Adding media and metadata
 
-### Main libraries used
+Audio _sequences_ are added by copying their metadata and audio files to the `audio/` directory (which is copied to `dist/audio` as part of the build process) and registering them in the configuration object in `src/index.html`. Both of those steps are usually done using _Audio Orchestrator_, but the example files included with this repository indicate the expected layout and syntax.
+
+## Development
+
+This section introduces the key components of the template application, intended for developers looking to customise it or add features beyond those that can be configured in Audio Orchestrator.
+
+### Recommended reading
 
 The following libraries are used in the template, and their documentation may be useful when looking to make changes.
 
@@ -31,67 +39,19 @@ The following libraries are used in the template, and their documentation may be
 * [Redux-saga](https://redux-saga.js.org/)
 * [@bbc/audio-orchestration-core](../core)
 
-### Template code: redux actions, reducers, sagas, and the orchestration client
+### Important places
 
-Redux actions are dispatched to the store to effect changes in the state. The sagas (see below) also listen for and dispatch certain actions, and a saga is used to manage the orchestration client---the object that interacts with the synchronisation service and manages audio rendering.
+When you build (`npm run build`) the template, a `dist/` folder including all assets needed to publish the experience, including JavaScript and CSS bundles and a copy of all audio files and images, is created.
 
-#### `src/template/index.js`
+The template is a React application instantiated in the `<script>` tag in `index.html`, which calls the `initOrchestrationTemplate` function defined in [index.js](./src/index.js) with the target DOM element and the experience configuration object.  Available configuration keys are defined in [config.js](./src/config.js).
 
-Contains the `mapStateToProps` and `mapDispatchToProps` methods used in the `connect` call in the entry point file. These export the entire state as props, and create all action dispatchers intendend to be called by user interface components.
+The React app's root component is in [App.jsx](./src/App.jsx), this imports all the available _pages_. Each page is a React component (in [pages/](./src/pages)).
 
-#### `src/template/actions`
+Application state is managed using _Redux_ and _Redux-Saga_. The _sagas_ ([sagas.js](./src/sagas.js)) define the flow through different application states (such as navigating between pages, waiting for a connection, validating user input). The _reducer_ ([template/reducer.js](./src/template/reducer.js)) receives _actions_ dispatched by React components or the sagas to update the application state.
 
-Describes action objects that can be dispatched to the redux store: `index.js` contains generic actions required for the user interface (to move between the pages, for example), and `orchestration.js` contains actions dispatched that may be by the orchestration client, and those that may also modify its state.
+The orchestration client instance is created in [template/orchestration.js](./src/template/orchestration.js), where we also register event handlers that can update the application state by dispatching actions. Note that there is a similar file, ([template/calibrationOrchestration.js](./src/template/calibrationOrchestration.js), which manages a second orchestration session for use with calibration mode.
 
-#### `src/template/reducers`
-
-Implements a single redux reducer, accepting actions and creating new versions of the global state for any of the state-affecting actions defined above.
-
-#### `src/sagas.js`
-
-Implements the root saga, which starts three sagas:
-
-* `watcherSaga` (background): listens for asynchronous events, currently only used for when a session code needs to be validated.
-* `orchestrationWatcherSaga` (background): listens for orchestration-related events, described below
-* Depending on parameters passed in the URL, one of the `directJoinFlow`, `joinFlow`, or `startFlow`, which show a join page, a connect page, or the generic start page (allowing to create a session) respectively. Eventually, these defer to either the `auxiliaryFlow` for an auxiliary device, or the `mainFlow` for a main device.
-
-#### `src/template/orchestration.js`
-
-Implements the `orchestrationSaga` and keeps a reference to the global `OrchestrationClient` object. Registers event handlers and thus connects the orchestration client to redux dispatch calls in the `initialiseOrchestration()` method.
-
-The orchestration saga listens for redux actions being dispatched that may affect the orchestration client. For example, the user may click the pause button, leading to a `REQUEST_PAUSE` action being dispatched. The saga forwards this request as a call to `orchestrationClient.pause()`.
-
-When the timeline speed eventually changes to zero as a result of the pause call, a `status` event is generated. This is turned into a `SET_PLAYBACK_STATUS` action dispatched to the redux store, so that the user interface can reflect the change.
-
-#### `src/session.js`
-
-Implements a client for the [session-id-service](https://github.com/bbc/bbcat-orchestration-session-id).
-
-### React components, style sheets, and props
-
-#### `src/index.html`
-
-This is the HTML skeleton used for the page. It is transformed by a webpack plugin to import the final JS and CSS bundles.
-
-It also holds the experience configuration object; usually this is produced by Audio Orchestrator.
-
-#### `src/index.js`
-
-This file is the overall entry point. It imports many things that have to be imported exactly once (JavaScript polyfills, component style). It also sets up the React application (including the state, reducers, and sagas) and renders the top-level `<App />` component.
-
-#### `src/App.jsx`
-
-The `App` component renders the currently active _page_ as set in the state.
-
-#### `src/pages`
-
-Each _page_ renders the presentational components (some of which may be connected to access properties of the state without those being passed as props) for the page contents.
-
-#### `src/components`
-
-Each _component_ contains at least one `.jsx` file defining the React component, and usually it also has a `.scss` file defining the styling. Some components have multiple `.jsx` files for sub-components or to provide a version of the component that is connected to the state. Note that all `.scss` files must be separately imported in `src/index.js`.
-
-For the style sheets (`.scss` files), we scope all class names to always begin with the name of the component folder. Where shorter class names are desired, these must be combined with a scoped name to ensure styles don't affect other components.
+All user interface components are defined with (at least) a `.jsx` (React component) file and an `.scss` (style) file in [components/](./src/components). For the most recently written components we prefer using React Redux hooks (`useSelector`) in the component itself to access the state; however some components still use `mapStateToProps` functions defined in a `Connected<Component>.jsx` instead. When adding a new component, take care to also import the `.scss` file in `index.js`.
 
 ## Licence and contributions
 

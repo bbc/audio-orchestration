@@ -35,7 +35,8 @@ const DEFAULT_JOIN_URL = [
 const config = {
   // The cloud sync service endpoint, is specified as { hostname } for a standard wss:// connection
   // on the default port. Can set a { port } number to use a plain ws:// connection on that port.
-  CLOUDSYNC_ENDPOINT: null,
+  // Other synchronisation adapters may use different endpoint formats.
+  SYNC_ENDPOINT: null,
 
   // The join URL is used to generate the QR code and should correspond to where the template is
   // hosted. The "#!/join" suffix immediately opens the connect-form page.
@@ -43,7 +44,7 @@ const config = {
   JOIN_URL: DEFAULT_JOIN_URL,
 
   // This prefix for the random numerical session code is used to generate the full session ID.
-  LOCAL_SESSION_ID_PREFIX: 'bbcat-orchestration-template',
+  LOCAL_SESSION_ID_PREFIX: 'audio-orchestration-template',
 
   // This is the contentId of the first sequence (defined below) to play when the session begins.
   INITIAL_CONTENT_ID: '',
