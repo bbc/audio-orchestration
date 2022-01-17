@@ -11,8 +11,6 @@ import {
 } from 'selectors';
 import formatTime from './formatTime';
 
-// TODO uses pointer events; may need to include a polyfill for older browsers (esp iOS < 13).
-
 const PlayerProgressBar = ({
   canSeek,
   onSeek,

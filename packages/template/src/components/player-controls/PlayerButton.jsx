@@ -27,7 +27,6 @@ const PlayerButton = ({
     disabled={disabled}
   >
     <Icon name={type} size="small" className="player-controls-button-icon" />
-    <Icon name={type} size="small" className="player-controls-button-icon-hover" />
   </Button>
 );
 

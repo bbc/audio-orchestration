@@ -30,7 +30,7 @@
     padding: $gel-spacing-unit;
     text-align: center;
     flex-grow: 1;
-    border-right: 1px solid $theme-color-black; // TODO has to be on tallest element in flex box...
+    border-right: 1px solid $theme-color-black; // this has to be on tallest element in flex box
 
     h2 {
       @include gel-typography('brevier-bold');

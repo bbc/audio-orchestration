@@ -30,7 +30,6 @@ const mapStateToProps = ({
   className,
 });
 
-// TODO dispatch action to open instructions
 const mapDispatchToProps = (dispatch) => ({
   onOpenInstructions: () => dispatch(openInstructions()),
   onCloseInstructions: () => dispatch(closeInstructions()),

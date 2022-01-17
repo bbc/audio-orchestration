@@ -37,8 +37,6 @@ const StatusBar = ({
     };
   }, [numDevices]);
 
-  // TODO review copy for different statuses
-  // TODO show 'tick' icon after loading only once (when connected changes?)
   let statusText = 'Waiting to connect...';
 
   if (instructionsOpen) {

@@ -26,9 +26,9 @@ const PlayerTitle = ({
 
 PlayerTitle.propTypes = {
   /* The title for the content */
-  title: PropTypes.string, // TODO may be better as 'content'
+  title: PropTypes.string,
   /* An optional subtitle or metadata, such as an episode number */
-  subtitle: PropTypes.string, // TODO rename; as it's presented as metadata
+  subtitle: PropTypes.string,
   /* Additional classes to apply to the container div */
   className: PropTypes.string,
   /* Additional elements to render in the container after the title */

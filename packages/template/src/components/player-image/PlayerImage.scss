@@ -1,17 +1,9 @@
 @import '~gel-sass-tools/sass-tools';
 @import '~theme';
 
-.player-image {
-  position: relative;
-  // TODO do not add negative margin on screens larger than page min width
-  margin-left: -$gel-spacing-unit; // undo padding on .page-contents
-  margin-right: -$gel-spacing-unit;
-  text-align: center;
-}
-
 .player-image-image {
   width: 100%;
-  height: auto; // TODO relies on square ratio set by width and height attributes.
+  height: auto; // relies on square ratio set by width and height attributes.
   vertical-align: top;
 }
 
@@ -24,7 +16,6 @@
 
 .player-image {
   position: relative;
-  // TODO do not add negative margin on screens larger than page min width
   margin-left: -$gel-spacing-unit; // undo padding on .page-contents
   margin-right: -$gel-spacing-unit;
   text-align: center;
@@ -61,7 +52,6 @@
     height: 100px;
     width: 100%;
     // replaces fade in PlayerTitle
-    // TODO may only want the fade when showing the title though
     background: linear-gradient(0deg, rgba($theme-color-black, 1) 0, rgba($theme-color-black, 0) 100%);
     z-index: 4; // above lighting effect, and vignette
     opacity: 0;

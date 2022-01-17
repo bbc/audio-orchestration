@@ -18,7 +18,6 @@ import {
   joinSession,
 } from 'actions';
 
-// TODO putting this here to ensure it is in click event, should probably be in sagas.js instead.
 import { acquireWakeLock } from 'sagas';
 import { ensureAudioContext } from '../../template/orchestration';
 
@@ -67,9 +66,6 @@ StartPage.propTypes = {
   onClickJoin: PropTypes.func.isRequired,
 };
 
-// TODO may not need any state on start page.
-const mapStateToProps = () => ({});
-
 const mapDispatchToProps = (dispatch) => ({
   onClickStart: () => {
     acquireWakeLock();
@@ -83,4 +79,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StartPage);
+export default connect(null, mapDispatchToProps)(StartPage);

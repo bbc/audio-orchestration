@@ -14,7 +14,7 @@
   color: $theme-color-white;
   background-color: $theme-color-grey;
   box-sizing: border-box;
-  height: 48px; // TODO hard-coded height
+  height: 48px; // hard-coded height to match expected text content
 }
 
 .status-bar.connected {
@@ -71,8 +71,8 @@
   animation: status-bar-loaded-icon-fading 1s ease-out;
 }
 
-// TODO remove if we make the whole status-bar-content clickable; this hack prevents the code
-// being selected and copied because the transparent button is extended over it.
+// This extends the button to make the entire status bar area clickable to open or close the
+// instructions.
 .status-bar-button-instructions {
   &::after {
     content: ' ';

@@ -8,6 +8,8 @@ import classnames from 'classnames';
 import Icon from 'components/icon/Icon';
 import formatTime from 'components/player-controls/formatTime';
 
+const showDurationBar = false;
+
 const ThumbnailChoices = ({
   choices,
   onSelectChoice,
@@ -43,9 +45,11 @@ const ThumbnailChoices = ({
               {duration !== undefined && (
                 <div className="duration">
                   <span className="duration-text">{formatTime(duration)}</span>
-                  <div className="duration-bar">
-                    <div className="duration-bar-filled accent-colour-background" style={{ width: `${(duration / maxDuration) * 100}%` }} />
-                  </div>
+                  {showDurationBar && (
+                    <div className="duration-bar">
+                      <div className="duration-bar-filled accent-colour-background" style={{ width: `${(duration / maxDuration) * 100}%` }} />
+                    </div>
+                  )}
                 </div>
               )}
             </div>

@@ -89,23 +89,10 @@
 
 .player-controls-button {
   color: $theme-color-white;
-
-  &>.player-controls-button-icon-hover {
-    display: none;
-  }
-}
-
-.player-controls-button-icon-hover {
-  color: $theme-color-light-grey; // TODO may be simpler to change color on hover, if it's not an overridable color
 }
 
 .player-controls-button:hover {
-  &>.player-controls-button-icon-hover {
-    display: inline;
-  }
-  &>.player-controls-button-icon {
-    display: none;
-  }
+  color: $theme-color-light-grey;
 }
 
 .player-controls-progress-text {
