@@ -21,7 +21,7 @@ import {
   CloudSyncAdapter,
 } from '../synchronisation';
 
-const CONTENT_ID = '@bbc/audio-orchestration-template';
+const CONTENT_ID = '@bbc/audio-orchestration-core';
 
 const LOADING_TIMEOUT = 5000;
 const SEQUENCE_TRANSITION_DELAY = 1.0;

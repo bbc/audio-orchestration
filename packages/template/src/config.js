@@ -119,12 +119,6 @@ const config = {
   // objects, controls, and control values for all devices.
   DEVICE_DEBUG_UI: false,
 
-  // TODO the sync clock content ID, tick rate, timeline type can be hard coded (probably in the
-  // library) as they never need to be changed.
-  SYNC_CLOCK_CONTENT_ID: 'github.com/bbc/bbcat-orchestration-template/syncClock',
-  TIMELINE_TYPE: 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000',
-  TIMELINE_TYPE_TICK_RATE: 1000,
-
   // If this is set, nosleep.js will be used to attempt to keep mobile device screens awake for
   // longer, however this feature does not work for all devices and web browsers.
   ENABLE_WAKE_LOCK: true,

@@ -84,7 +84,6 @@ export const initialiseOrchestration = (dispatchFunction) => {
     syncEndpoint: config.SYNC_ENDPOINT,
     sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.LOADING_TIMEOUT,
-    contentId: config.SYNC_CLOCK_CONTENT_ID,
     controls: config.CONTROLS,
     isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
@@ -215,8 +214,8 @@ export const initialiseOrchestration = (dispatchFunction) => {
     if (ended && globalOrchestrationClient.isMain && transitionOnEnded !== null) {
       const nextContentId = transitionOnEnded;
       transitionOnEnded = null;
-      // TODO: the orchestration client/renderer pause after emitting the ended event, so can't
-      // request a transition immediately. This is a hack that works most of the time.
+      // The orchestration client/renderer pause after emitting the ended event, so can't
+      // request a transition immediately.
       setTimeout(() => {
         globalOrchestrationClient.transitionToSequence(nextContentId);
       }, 300);

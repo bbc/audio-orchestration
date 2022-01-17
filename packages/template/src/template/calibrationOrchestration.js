@@ -185,7 +185,6 @@ function* toggleCalibrationMode({ calibrationMode }) {
   if (isMain) yield call(calibrationMode ? enterCalibrationMode : exitCalibrationMode);
   else {
     if (calibrationMode) {
-      // TODO - hack to dismiss this specific prompt when we enter calibration mode from an aux
       yield put({ type: 'ADD_DISMISSED_PROMPT', promptId: 'calibration' });
     }
     yield put(requestSendMessage({
