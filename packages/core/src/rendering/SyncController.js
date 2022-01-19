@@ -57,7 +57,11 @@ class SyncController {
      * @private
      */
     this.bufferingDelay = options.bufferingDelay !== undefined
-      ? options.bufferingDelay : (mediaPlayer.defaultBufferingDelay || DEFAULT_T_BUFDELAY_AUDIO);
+      ? options.bufferingDelay : mediaPlayer.defaultBufferingDelay;
+
+    if (this.bufferingDelay === undefined) {
+      this.bufferingDelay = DEFAULT_T_BUFDELAY_AUDIO;
+    }
 
     /**
      * @type {number}
