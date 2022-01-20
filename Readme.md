@@ -1,14 +1,12 @@
 # Audio Orchestration
 
-<img alt="BBC R&D: Audio Orchestration" src="doc/data-card.png" width="400" height="100" />
-
 **Create immersive and interactive audio experiences for multiple synchronised devices.**
 
 Audio device orchestration is the concept of using multiple connected devices to play back an audio experience. This repository holds an open source template application and libraries that handle the key components of an orchestrated audio system (pairing, synchronisation, and audio playback).
 
 ## Components
 
-<img alt="Components and dependencies" src="doc/repo-structure.png" width="368" height="158" />
+<img alt="Components of this project: the template, core, bbcat-js, cloud-sync-client code in this repository, the cloud-sync server they use to communicate, and the media and metadata produced with the Audio Orchestrator tool." src="doc/repo-structure.png" width="380" height="158" />
 
 We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming) and **cloud-sync-client** (connection to the synchronisation server).
 
