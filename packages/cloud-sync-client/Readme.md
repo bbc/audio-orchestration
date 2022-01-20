@@ -36,7 +36,7 @@ The resulting JS client library is placed in `dist/browser/CloudSyncKit.js`.
 ## Licence and Authors
 
 > @bbc/audio-orchestration-cloud-sync-client
-> Copyright (C) 2021 BBC R&D
+> Copyright (C) 2022 BBC R&D
 
 See the [LICENSE](./LICENSE) file for terms applicable to this package, and the top-level [Readme](../../Readme.md) file for further information.
 

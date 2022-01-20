@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2021, BBC R&D
+ * Copyright (C) 2022, BBC R&D
  * This source code is licensed under the GPL license found in the LICENSE file in this repository.
  */
 // This file exports actions that are to be called directly by the user interface and that affect

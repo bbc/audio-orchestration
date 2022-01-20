@@ -56,6 +56,6 @@ All user interface components are defined with (at least) a `.jsx` (React compon
 ## Licence and contributions
 
 > @bbc/audio-orchestration-template
-> Copyright (C) 2021 BBC R&D
+> Copyright (C) 2022 BBC R&D
 
 See the [LICENSE](./LICENSE) file for terms applicable to this package, and the top-level [Readme](../../Readme.md) file for further information.

@@ -5,7 +5,7 @@
       2,
       {
         "mustMatch": "Copyright \\(C\\) [0-9]{0,4}, BBC",
-        "template": "/**\n * Copyright (C) 2021, BBC R&D\n * This source code is licensed under the GPL license found in the LICENSE file in this repository.\n */\n",
+        "template": "/**\n * Copyright (C) 2022, BBC R&D\n * This source code is licensed under the GPL license found in the LICENSE file in this repository.\n */\n",
         "onNonMatchingHeader": "prepend"
       }
     ]
