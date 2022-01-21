@@ -65,7 +65,10 @@ class OrchestrationClient extends EventEmitter {
     this._syncEndpoint = options.syncEndpoint;
     this._syncAdapterClass = options.syncAdapterClass || CloudSyncAdapter;
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
-    this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
+    this._sequenceTransitionDelay = options.sequenceTransitionDelay;
+    if (this._sequenceTransitionDelay === undefined) {
+      this._sequenceTransitionDelay = SEQUENCE_TRANSITION_DELAY;
+    }
     this._lookaheadDuration = options.lookaheadDuration;
     this._sequenceFadeOutDuration = options.sequenceFadeOutDuration;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();

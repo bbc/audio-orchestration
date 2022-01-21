@@ -5,7 +5,6 @@
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { orchestration } from '@bbc/audio-orchestration-core';
-import PeerSyncAdapter from './PeerSyncAdapter';
 
 import config from 'config';
 import {
@@ -27,7 +26,7 @@ import {
   receivedCalibrationMessage,
   setImage,
 } from 'actions/orchestration';
-
+import PeerSyncAdapter from './PeerSyncAdapter';
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';
@@ -86,7 +85,6 @@ export const initialiseOrchestration = (dispatchFunction) => {
     sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.LOADING_TIMEOUT,
     controls: config.CONTROLS,
-    isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
     objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
     syncAdapterClass: PeerSyncAdapter,
@@ -199,22 +197,10 @@ export const initialiseOrchestration = (dispatchFunction) => {
   globalOrchestrationClient.on('connected', () => dispatch(setConnected()));
 
   globalOrchestrationClient.on('disconnected', () => {
-    console.log('disconnected');
     dispatch(setDisconnected());
   });
 
-  globalOrchestrationClient.on('available', () => {
-    console.log('orchestration client available event');
-    // dispatch(setConnected());
-  });
-
-  globalOrchestrationClient.on('unavailable', () => {
-    console.log('orchestration client unavailable event');
-    // dispatch(setDisconnected());
-  });
-
   globalOrchestrationClient.on('error', (e) => {
-    console.log('error');
     dispatch(setErrorMessage(e.message));
   });
 

@@ -17,7 +17,8 @@ import {
   requestPlay,
   requestPause,
   requestSendMessage,
-} from './actions/orchestration';
+} from 'actions/orchestration';
+import PeerSyncAdapter from './PeerSyncAdapter';
 
 const { OrchestrationClient } = orchestration;
 
@@ -109,9 +110,8 @@ export const startCalibrationClient = (sessionId) => {
     syncEndpoint: config.SYNC_ENDPOINT,
     sequenceTransitionDelay: config.CALIBRATION_SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.CALIBRATION_LOADING_TIMEOUT,
-    contentId: config.SYNC_CLOCK_CONTENT_ID,
-    isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
+    syncAdapterClass: PeerSyncAdapter,
   });
 
   calibrationOrchestrationClient.on('loaded', handleLoaded);
