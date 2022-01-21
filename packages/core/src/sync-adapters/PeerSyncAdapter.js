@@ -58,7 +58,7 @@ class PeerSyncAdapter extends SyncAdapter {
         this._isMain = true;
         this.connected = true;
         this.emit('connected');
-        console.log(`main device connection open as ${this._sessionId}`);
+        // console.log(`main device connection open as ${this._sessionId}`);
         resolve();
       });
 
@@ -99,7 +99,7 @@ class PeerSyncAdapter extends SyncAdapter {
 
       this._peer.on('open', () => {
         // wait until connected to the main device on aux devices
-        console.log(`connecting to ${this._sessionId}`);
+        // console.log(`connecting to ${this._sessionId}`);
         const conn = this._peer.connect(this._sessionId, {
           metadata: {
             deviceId: this._deviceId,
@@ -114,12 +114,12 @@ class PeerSyncAdapter extends SyncAdapter {
           // outside so emit the connected event and resolve the promise.
           this.connected = true;
           this.emit('connected');
-          console.log('aux device connection open');
+          // console.log('aux device connection open');
           resolve();
         });
 
         conn.on('error', () => {
-          console.log(`failed to connect to peer ${this._sessionId}`);
+          // console.log(`failed to connect to peer ${this._sessionId}`);
           this.connected = false;
           this.emit('disconnected');
           reject();
@@ -186,7 +186,7 @@ class PeerSyncAdapter extends SyncAdapter {
     });
 
     const handleClose = () => {
-      console.log(`connection was closed to ${peer}`);
+      // console.log(`connection was closed to ${peer}`);
 
       wcProtocolHandler.stop();
 
@@ -201,19 +201,19 @@ class PeerSyncAdapter extends SyncAdapter {
 
       // if it was the main device, and this is an aux device, emit the disconnected event.
       if (peer === this._sessionId) {
-        console.log('main device connection lost');
+        // console.log('main device connection lost');
         this.emit('disconnected');
       }
     };
 
-    conn.on('error', (e) => {
-      console.log(`connection error ${peer}`, e);
+    conn.on('error', () => {
+      // console.log(`connection error ${peer}`, e);
       handleClose();
     });
 
     // TODO docs say Firefox does not support 'close' event
-    conn.on('close', (e) => {
-      console.log(`connection close ${peer}`, e);
+    conn.on('close', () => {
+      // console.log(`connection close ${peer}`, e);
       handleClose();
     });
 
@@ -233,7 +233,7 @@ class PeerSyncAdapter extends SyncAdapter {
               subscribe,
             } = content;
 
-            console.debug(`got timeline message, update: ${update}, subscribe: ${subscribe}`);
+            // console.debug(`got timeline message, update: ${update}, subscribe: ${subscribe}`);
 
             if (this._isMain && subscribe) {
               const { timelineId } = subscribe;
@@ -264,7 +264,7 @@ class PeerSyncAdapter extends SyncAdapter {
               } else {
                 // TODO what do do if the clock does not yet exist on main?
                 // should still register the subscription.
-                console.log('requested timelineId has not yet been registered');
+                // console.log('requested timelineId has not yet been registered');
               }
             } else if (!this._isMain && update) {
               const {
@@ -284,7 +284,7 @@ class PeerSyncAdapter extends SyncAdapter {
         case 'broadcast':
           {
             const { deviceId: broadcastDeviceId, topic, message } = content;
-            console.log(`got broadcast message ${topic}`);
+            // console.log(`got broadcast message ${topic}`);
             // TODO originating deviceID can be spoofed because it's taken from the message content,
             // but there is no direct link between deviceId and conn.peer anymore.
             this.emit('broadcast', {
@@ -311,11 +311,11 @@ class PeerSyncAdapter extends SyncAdapter {
           }
           break;
         default:
-          console.debug(`received unexpected message type on data connection: ${type} from ${peer}.`);
+          // console.debug(`received unexpected message on data connection: ${type} from ${peer}.`);
       }
     });
 
-    console.log('register connection', conn, deviceId);
+    // console.log('register connection', conn, deviceId);
 
     const presenceEvent = {
       deviceId,
@@ -341,7 +341,7 @@ class PeerSyncAdapter extends SyncAdapter {
     }
 
     const timelineId = `${timelineType}-${contentId}`;
-    console.log(`provideTimelineClock ${timelineId}`);
+    // console.log(`provideTimelineClock ${timelineId}`);
 
     if (this._clocks.has(timelineId)) {
       throw new Error(`Clock for timeline ${timelineId} is already registered.`);
@@ -375,7 +375,7 @@ class PeerSyncAdapter extends SyncAdapter {
             },
           });
         } catch (e) {
-          console.log(`failed to send timeline update to ${conn.peer}`);
+          // console.log(`failed to send timeline update to ${conn.peer}`);
         }
       });
     });
@@ -383,7 +383,8 @@ class PeerSyncAdapter extends SyncAdapter {
     return this._connectPromise.then(() => timelineClock);
   }
 
-  requestTimelineClock(timelineType, contentId, timeout = 0) {
+  // TODO support timeout parameter
+  requestTimelineClock(timelineType, contentId/* , timeout = 0 */) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
     }
@@ -428,12 +429,12 @@ class PeerSyncAdapter extends SyncAdapter {
   }
 
   _sendToAll(type, content) {
-    console.log(`Sending ${type} ${content.topic} message to all ${this._connections.length} connections`);
+    // console.log(`Sending ${type} ${content.topic} message to ${this._connections.length} peers`);
     this._connections.forEach((conn) => {
       try {
         conn.send({ type, content });
       } catch (e) {
-        console.warn(`PeerSyncAdapter: failed to send ${type} message to ${conn.peer}.`, e);
+        // console.warn(`PeerSyncAdapter: failed to send ${type} message to ${conn.peer}.`, e);
       }
     });
   }
