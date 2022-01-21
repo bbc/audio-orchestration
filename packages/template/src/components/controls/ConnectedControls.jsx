@@ -18,7 +18,7 @@ const mapStateToProps = ({
     .filter(({ controlId }) => activeControlIds.includes(controlId))
     .map((control) => ({
       ...control,
-      currentValues: controlValues[control.controlId],
+      currentValues: controlValues[control.controlId] || [],
     })),
 });
 

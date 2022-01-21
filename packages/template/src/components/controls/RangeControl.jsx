@@ -17,7 +17,7 @@ const RadioControl = ({
     step,
   } = parameters;
 
-  const currentValue = currentValues[0];
+  const currentValue = currentValues[0] || 0;
 
   const handleChange = (value) => {
     // TODO rate-limit it here, e.g. only submit after 300ms without input?
