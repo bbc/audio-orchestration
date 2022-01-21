@@ -31,7 +31,7 @@ Ensure you have [Node.js](https://nodejs.org/en/) installed, including `npm` ver
 
 ```
 node -v # e.g. v16.13.0
-node -v # e.g. 8.1.0
+npm -v # e.g. 8.1.0
 ```
 
 Start your project by downloading a copy of this repository, either by using the `Download as ZIP` button on GitHub, or by using `degit`.

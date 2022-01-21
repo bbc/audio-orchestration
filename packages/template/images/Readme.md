@@ -1,4 +1,4 @@
-The default image (orchestrator-default-image.jpg) is based on a [photo](https://unsplash.com/photos/JAHdPHMoaEA) by Spencer Imbrock on Unsplash.
+The default images (orchestrator-default-image.jpg and sequence-example-image.jpg) are based on a [photo](https://unsplash.com/photos/JAHdPHMoaEA) by Spencer Imbrock on Unsplash.
 
 ```
 All photos published on Unsplash can be used for free. You can use them for commercial and noncommercial purposes. You do not need to ask permission from or provide credit to the photographer or Unsplash, although it is appreciated when possible.
