@@ -48,6 +48,7 @@ import { orchestration } from '@bbc/audio-orchestration-core/light';
 import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
 
 const client = new orchestration.OrchestrationClient({
+  syncAdapterClass: PeerSyncAdapter,
   // peer.js defaults to a public server address, so all endpoint settings are optional
   syncEndpoint: {
     // host: 'example.com',
@@ -67,14 +68,10 @@ const client = new orchestration.OrchestrationClient({
 You might instead like to implement your own sync adapter, by extending the `SyncAdapter` base class. See the [SyncAdapter source code](./src/synchronisation/SyncAdapter.js) for a description of the interface.
 
 ```js
-import { orchestration, synchronisation } from '@bbc/audio-orchestration-core/full';
+import { orchestration, synchronisation } from '@bbc/audio-orchestration-core/light';
 
 class MySyncAdapter extends synchronisation.SyncAdapter {
-  constructor () {}
-  connect (syncEndpoint, { sessionId, deviceId, startSession }) {}
-  get wallClock() {}
-  requestTimelineClock(timelineType, contentId, timeout) {}
-  provideTimelineClock(timelineClock, timelineType, contentId) {}
+  // ...
 }
 
 const client = new orchestration.OrchestrationClient({
@@ -95,7 +92,9 @@ It is also possible to use the library without a JavaScript bundler, by referenc
 
 ## Development
 
-`npm run dev` creates a development build; `npm run build` creates a production build of the complete library in `dist/`.
+`npm run dev` creates a development build and re-runs on changes to the source.
+
+`npm run build` creates a production build of the complete library in `dist/`.
 
 `npm run lint` checks for coding style violations.
 

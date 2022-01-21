@@ -18,7 +18,6 @@ import {
   requestPause,
   requestSendMessage,
 } from 'actions/orchestration';
-import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
 
 const { OrchestrationClient } = orchestration;
 
@@ -27,6 +26,7 @@ let ensureAudioContext = null;
 let isSafari = false;
 let isMain = false;
 let deviceId = null;
+let syncAdapterClass;
 
 let calibrationOrchestrationClient = null;
 
@@ -64,6 +64,7 @@ export const initialiseCalibrationOrchestration = (options) => {
   isSafari = options.isSafari;
   isMain = options.isMain;
   deviceId = options.deviceId;
+  syncAdapterClass = options.syncAdapterClass;
 };
 
 const updateGlobalCalibrationState = (calibrationState) => {
@@ -111,7 +112,7 @@ export const startCalibrationClient = (sessionId) => {
     sequenceTransitionDelay: config.CALIBRATION_SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.CALIBRATION_LOADING_TIMEOUT,
     isSafari,
-    syncAdapterClass: PeerSyncAdapter,
+    syncAdapterClass,
   });
 
   calibrationOrchestrationClient.on('loaded', handleLoaded);
