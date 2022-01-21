@@ -5,7 +5,9 @@
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { orchestration } from '@bbc/audio-orchestration-core/light';
-import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
+
+// import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
+import { CloudSyncAdapter } from '@bbc/audio-orchestration-core/cloud-sync-adapter';
 
 import config from 'config';
 import {
@@ -30,6 +32,9 @@ import {
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';
+
+// const syncAdapterClass = PeerSyncAdapter;
+const syncAdapterClass = CloudSyncAdapter;
 
 const { OrchestrationClient } = orchestration;
 
@@ -87,7 +92,7 @@ export const initialiseOrchestration = (dispatchFunction) => {
     controls: config.CONTROLS,
     isSafari,
     objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
-    syncAdapterClass: PeerSyncAdapter,
+    syncAdapterClass,
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
@@ -289,6 +294,7 @@ export const connectOrchestration = (isMain, sessionId) => globalOrchestrationCl
       isSafari,
       isMain: globalOrchestrationClient.isMain,
       deviceId: globalOrchestrationClient.deviceId,
+      syncAdapterClass,
     });
   })
   .catch((e) => {
