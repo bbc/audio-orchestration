@@ -4,13 +4,14 @@
  */
 /* eslint-disable no-underscore-dangle */
 import Peer from 'peerjs';
+
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
-import SyncProtocols from 'dvbcss-protocols';
-import WallClockServerProtocol from 'dvbcss-protocols/src/WallClock/WallClockServerProtocol';
-import { synchronisation } from '@bbc/audio-orchestration-core';
 
-const { SyncAdapter } = synchronisation;
+import WallClockServerProtocol from 'dvbcss-protocols/src/WallClock/WallClockServerProtocol';
+import SyncProtocols from 'dvbcss-protocols';
+
+import SyncAdapter from '../synchronisation/SyncAdapter';
 
 const { WallClockClientProtocol, BinarySerialiser } = SyncProtocols.WallClock;
 
@@ -36,10 +37,6 @@ class PeerSyncAdapter extends SyncAdapter {
       followup: true,
     };
 
-    /**
-     * Create a wall clock (units milliseconds)
-     * @type {CorrelatedClock}
-     */
     this._wallClock = new CorrelatedClock(this._sysClock, {
       tickRate: 1000,
     });
@@ -131,11 +128,6 @@ class PeerSyncAdapter extends SyncAdapter {
     });
   }
 
-  /**
-   * Connects to the synchronisation service.
-   *
-   * @returns {Promise<PeerSyncAdapter>} a promise resolving when successfully connected.
-   */
   connect(syncEndpoint = {}, {
     sessionId,
     deviceId,
@@ -339,31 +331,10 @@ class PeerSyncAdapter extends SyncAdapter {
     }
   }
 
-  /**
-   * Provides the underlying synchronised wall clock object.
-   *
-   * @returns {CorrelatedClock} wallClock
-   * @public
-   */
   get wallClock() {
     return this._wallClock;
   }
 
-  /**
-   * Registers a correlated clock to provide timeline updates to the
-   * service, and receive updates from it.
-   *
-   * * Use this method for a main device client controlling the experience.
-   * * Use {@link synchroniseToTimeline} for an auxiliary device client to wait until
-   * another device provides a timeline to synchronise to.
-   *
-   * @param {CorrelatedClock} timelineClock
-   * @param {string} timelineType
-   * @param {string} contentId
-   *
-   * @returns {Promise<CorrelatedClock>}
-   * @public
-   */
   provideTimelineClock(timelineClock, timelineType, contentId) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: provideTimelineClock: Not connected. Call connect() first.');
@@ -412,21 +383,6 @@ class PeerSyncAdapter extends SyncAdapter {
     return this._connectPromise.then(() => timelineClock);
   }
 
-  /**
-   * Waits for a timeline of given type and contentId and provides a
-   * CorrelatedClock for it when it becomes available.
-   *
-   * * Use this method for an auxiliary device client to be controlled by a remote timeline.
-   * * Use {@link synchronise} for a main device client also providing updates to the server.
-   *
-   * @param {string} timelineType
-   * @param {string} contentId
-   * @param {number} timeout in seconds, the promise will be rejected after thisunless the clock is
-   * available. Leave at 0 to not use a timeout.
-   *
-   * @return {Promise<CorrelatedClock>} resolving when the clock is available.
-   * @public
-   */
   requestTimelineClock(timelineType, contentId, timeout = 0) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
@@ -482,20 +438,11 @@ class PeerSyncAdapter extends SyncAdapter {
     });
   }
 
-  /**
-   * Send a message to this topic to all devices in the same session.
-   *
-   * @param {string} topic
-   * @param {object} message
-   */
   sendMessage(topic, message) {
     this._sendToAll('broadcast', { deviceId: this._deviceId, topic, message });
     return Promise.resolve();
   }
 
-  /**
-   * Unregisters the client from Synchronisation Service
-   */
   destroy() {
     this._connections.forEach((conn) => {
       conn.close();

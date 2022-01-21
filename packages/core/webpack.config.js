@@ -1,17 +1,27 @@
+/**
+ * Copyright (C) 2022, BBC R&D
+ * This source code is licensed under the GPL license found in the LICENSE file in this repository.
+ */
+
 const path = require('path');
 const webpack = require('webpack');
 const fs = require('fs');
 
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: {
+    full: path.resolve(__dirname, 'src/index.full.js'),
+    light: path.resolve(__dirname, 'src/index.light.js'),
+    'cloud-sync-adapter': path.resolve(__dirname, 'src/index.cloud-sync-adapter.js'),
+    'peer-sync-adapter': path.resolve(__dirname, 'src/index.peer-sync-adapter.js'),
+  },
   devtool: 'source-map',
   output: {
     clean: true,
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bbcat-orchestration.js',
+    filename: '[name].js',
     library: {
-      name: 'bbcatOrchestration',
+      name: ['audioOrchestration', '[name]'],
       type: 'umd',
     },
   },

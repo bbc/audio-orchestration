@@ -6,7 +6,7 @@ import cloudSyncKit from '@bbc/audio-orchestration-cloud-sync-client';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import DateNowClock from 'dvbcss-clocks/src/DateNowClock';
 
-import SyncAdapter from './SyncAdapter';
+import SyncAdapter from '../synchronisation/SyncAdapter';
 
 /**
  * @class CloudSyncAdapter

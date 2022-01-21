@@ -2,7 +2,11 @@
   "name": "@bbc/audio-orchestration-core",
   "version": "0.0.2",
   "description": "Components for synchronised object based audio experiences.",
-  "main": "dist/bbcat-orchestration.js",
+  "main": "dist/light.js",
+  "exports": {
+    ".": "./dist/light.js",
+    "./*": "./dist/*.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bbc/audio-orchestration.git"

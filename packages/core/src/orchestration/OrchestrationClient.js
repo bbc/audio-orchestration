@@ -18,7 +18,6 @@ import AuxDeviceHelper from './AuxDeviceHelper';
 import {
   AudioContextClock,
   Synchroniser,
-  CloudSyncAdapter,
 } from '../synchronisation';
 
 const CONTENT_ID = '@bbc/audio-orchestration-core';
@@ -28,6 +27,14 @@ const SEQUENCE_TRANSITION_DELAY = 1.0;
 
 const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
 const TIMELINE_TYPE_TICK_RATE = 1000;
+
+// The defaultSyncAdapter class is set in the entrypoint, so that it can differ between the full and
+// the light builds of the library.
+let defaultSyncAdapterClass;
+
+export const setDefaultSyncAdapterClass = (syncAdapterClass) => {
+  defaultSyncAdapterClass = syncAdapterClass;
+};
 
 /**
  * @class OrchestrationClient
@@ -63,7 +70,12 @@ class OrchestrationClient extends EventEmitter {
     this._currentContentId = null;
     this._contentId = options.contentId || CONTENT_ID;
     this._syncEndpoint = options.syncEndpoint;
-    this._syncAdapterClass = options.syncAdapterClass || CloudSyncAdapter;
+    this._syncAdapterClass = options.syncAdapterClass || defaultSyncAdapterClass;
+
+    if (!this._syncAdapterClass) {
+      throw new Error('No syncAdapterClass specified.');
+    }
+
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
     this._sequenceTransitionDelay = options.sequenceTransitionDelay;
     if (this._sequenceTransitionDelay === undefined) {

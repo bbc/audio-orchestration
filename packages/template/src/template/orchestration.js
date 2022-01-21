@@ -4,7 +4,8 @@
  */
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { orchestration } from '@bbc/audio-orchestration-core';
+import { orchestration } from '@bbc/audio-orchestration-core/light';
+import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
 
 import config from 'config';
 import {
@@ -26,7 +27,6 @@ import {
   receivedCalibrationMessage,
   setImage,
 } from 'actions/orchestration';
-import PeerSyncAdapter from './PeerSyncAdapter';
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';

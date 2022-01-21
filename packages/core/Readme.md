@@ -29,20 +29,67 @@ The [template application](../template) has some examples of the required metada
 
 ## Usage
 
-The available exports are listed in [index.js](src/index.js). If the library is installed using `npm`, it can be imported like this.
+The distribution for this package includes files to support different use cases: a `full` and a `light` build of the core library, as well as two standalone adapters for using the `light` build with different synchronisation servers. It is also possible to write your own adapter to support other backends.
+
+The `full` build includes everything in the `light` build, and the `cloud-sync-adapter` - so you'll need nothing else if you want to use Cloud-Sync.
 
 ```js
-import { orchestration } from '@bbc/audio-orchestration-core';
-const client = new orchestration.OrchestrationClient(...);
+import { orchestration } from '@bbc/audio-orchestration-core/full';
+const client = new orchestration.OrchestrationClient({
+  // example endpoint for a local Cloud-Sync service
+  syncEndpoint: { hostname: 'localhost', port: '9001' },
+});
 ```
 
-It is also possible to import the bundled library (`dist/bbcat-orchestration.js`) using a `<script>` tag. In this case, the exports are available on the global `bbcatOrchestration` object.
+The `light` build  does not include any synchronisation adapter. You can import and use an alternative sync adapter provided as part of the distribution, such as the `PeerSyncAdapter`.
+
+```js
+import { orchestration } from '@bbc/audio-orchestration-core/light';
+import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
+
+const client = new orchestration.OrchestrationClient({
+  // peer.js defaults to a public server address, so all endpoint settings are optional
+  syncEndpoint: {
+    // host: 'example.com',
+    // port: 9000,
+    // path: '/',
+    // key: 'orchestration',
+    // config: {
+    //   iceServers: [
+    //     { url: `stun:stun.example.com:3478` },
+    //     { url: `turn:turn.example.com:3478`, username: 'orchestration', credential: 'orchestration' },
+    //   ],
+    // }
+  },
+});
+```
+
+You might instead like to implement your own sync adapter, by extending the `SyncAdapter` base class. See the [SyncAdapter source code](./src/synchronisation/SyncAdapter.js) for a description of the interface.
+
+```js
+import { orchestration, synchronisation } from '@bbc/audio-orchestration-core/full';
+
+class MySyncAdapter extends synchronisation.SyncAdapter {
+  constructor () {}
+  connect (syncEndpoint, { sessionId, deviceId, startSession }) {}
+  get wallClock() {}
+  requestTimelineClock(timelineType, contentId, timeout) {}
+  provideTimelineClock(timelineClock, timelineType, contentId) {}
+}
+
+const client = new orchestration.OrchestrationClient({
+  syncAdapterClass: MySyncAdapter,
+  syncEndpoint: {},
+});
+```
+
+It is also possible to use the library without a JavaScript bundler, by referencing e.g. `dist/audio-orchestration.full.js` using a `<script>` tag. In this case, the exports will be available on the global `audioOrchestration.full` object (and `audioOrchestration.light`, `audioOrchestration['peer-sync-adapter']` respectively).
 
 ```html
-<script src="bbcat-orchestration.js"></script>
+<script src="dist/full.js"></script>
 <script>
-  const { orchestration } = bbcatOrchestration;
-  const client = new orchestration.OrchestrationClient(...);
+  const { orchestration } = audioOrchestration.full;
+  const client = new orchestration.OrchestrationClient(/* ... */);
 </script>
 ```
 
