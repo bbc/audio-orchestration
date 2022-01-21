@@ -18,7 +18,7 @@ import {
   requestPause,
   requestSendMessage,
 } from 'actions/orchestration';
-import PeerSyncAdapter from './PeerSyncAdapter';
+import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
 
 const { OrchestrationClient } = orchestration;
 

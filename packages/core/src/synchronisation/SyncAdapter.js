@@ -29,9 +29,7 @@ class SyncAdapter extends EventEmitter {
    * @param {CorrelatedClock} options.sysClock
    *
    */
-  constructor({ sysClock = null }) {
-    super();
-  }
+  constructor({ sysClock = null } = {}) { super(); }
 
   /**
    * Provides the underlying synchronised wall clock object.
