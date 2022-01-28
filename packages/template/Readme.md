@@ -20,7 +20,7 @@ npm run dev
 
 The build will be hosted at http://localhost:8080 and automatically refresh on most changes to the source code.
 
-If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/bbc/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `SYNC_ENDPOINT` option in `src/index.html`. Reload the page in your browser to apply any changes to the configuration.
+If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/2-IMMERSE/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `SYNC_ENDPOINT` option in `src/index.html`. Reload the page in your browser to apply any changes to the configuration.
 
 ## Adding media and metadata
 

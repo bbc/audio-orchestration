@@ -10,7 +10,7 @@ Audio device orchestration is the concept of using multiple connected devices to
 
 We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming) and **cloud-sync-client** (connection to the synchronisation server).
 
-The [**Cloud-Sync** server](https://github.com/bbc/cloud-sync) source code is published separately on GitHub. To use the template and examples in this repository, you will need to set up a Cloud-Sync server.
+The [**Cloud-Sync** server](https://github.com/2-IMMERSE/cloud-sync) source code is published separately on GitHub. To use the template and examples in this repository, you will need to set up a Cloud-Sync server.
 
 More detailed information about each of the packages is available in the respective Readme files.
 

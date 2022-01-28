@@ -1,6 +1,6 @@
 # cloud-sync-client
 
-This is a fork of [2-IMMERSE/cloud-sync](https://github.com/2-IMMERSE/cloud-sync) to provide a self-contained and slightly modernised build of the client only. A more recently updated version of the server software is available in [bbc/cloud-sync](https://github.com/bbc/cloud-sync).
+This is a fork of [2-IMMERSE/cloud-sync](https://github.com/2-IMMERSE/cloud-sync) to provide a self-contained and slightly modernised build of the client only. The original repository still contains the server software.
 
 ## Changes
 
