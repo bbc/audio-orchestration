@@ -1,0 +1,30 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.button {
+  @include gel-typography('pica-bold');
+  color: $theme-color-white;
+  background-color: $theme-color-blue;
+  padding: 2*$gel-spacing-unit;
+  border: 0px solid;
+  border-radius: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.button.disabled {
+  background-color: $theme-color-grey;
+  color: $theme-color-light-grey;
+  cursor: default;
+}
+
+.button.fluid {
+  width: 100%;
+}
+
+.button.icon:not(.accent-colour-background) {
+  background-color: transparent;
+  padding: $gel-spacing-unit;
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bbc.github.io/bbcat-orchestration/schemas/objects.json",
+  "title": "Objects",
+  "description": "A list of object metadata objects",
+  "type": "array",
+  "items": {
+    "$ref": "object.json"
+  }
+}
+

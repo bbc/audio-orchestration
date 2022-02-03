@@ -1,0 +1,63 @@
+@import '~sass-mq/mq';
+@import '~gel-sass-tools/sass-tools';
+@import '~gel-typography/typography';
+@import '~theme';
+
+.overlay-prompt {
+  position: absolute;
+  z-index:10;
+  left: 50%;
+  bottom: $gel-spacing-unit;
+  display: flex;
+  align-items: center;
+  width: 300px;
+  overflow: hidden;
+  transform: translate(-50%,-75%);
+
+  border-radius: $gel-spacing-unit;
+  background-color: $theme-color-grey;
+
+  .overlay-prompt-icon {
+    fill: $theme-color-white;
+    &:hover {
+      svg path {
+        fill: $theme-color-light-grey;
+      }
+    }
+  }
+
+  .overlay-prompt-content {
+    padding: $gel-spacing-unit;
+    text-align: center;
+    flex-grow: 1;
+    border-right: 1px solid $theme-color-black; // this has to be on tallest element in flex box
+
+    h2 {
+      @include gel-typography('brevier-bold');
+      margin: 0;
+    }
+
+    p {
+      @include gel-typography('brevier');
+      margin: 0;
+    }
+
+    button {
+      @include gel-typography('brevier');
+      color: $theme-color-white;
+      text-decoration: underline;
+      border: none;
+      background: none;
+      padding: 0;
+      cursor: pointer;
+
+      &:hover {
+        color: $theme-color-light-grey;
+      }
+    }
+  }
+
+  .overlay-prompt-close {
+    padding: $gel-spacing-unit * 0.5;
+  }
+}

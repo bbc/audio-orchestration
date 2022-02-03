@@ -1,0 +1,22 @@
+{
+  "duration": 29.04,
+  "loop": false,
+  "outPoints": [],
+  "objects": [
+    {
+      "objectId": "vostok-intro",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 29.04,
+          "source": {
+            "channelMapping": "stereo",
+            "type": "buffer",
+            "url": "/audio/vostok-intro.m4a"
+          }
+        }
+      ]
+    }
+  ]
+}

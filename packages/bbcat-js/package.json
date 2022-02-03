@@ -1,0 +1,35 @@
+{
+  "name": "@bbc/audio-orchestration-bbcat-js",
+  "version": "0.0.2",
+  "description": "WebAudio DASH player components for audio orchestration framework",
+  "main": "dist/bbcat.js",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bbc/audio-orchestration.git"
+  },
+  "author": "BBC R&D",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "eslint-plugin-jasmine": "^4.1.2",
+    "jasmine": "^3.9.0",
+    "jasmine-ajax": "^4.0.0",
+    "karma": "^6.3.4",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage": "^2.0.3",
+    "karma-firefox-launcher": "^2.1.1",
+    "karma-jasmine": "^4.0.1",
+    "karma-webpack": "^5.0.0"
+  },
+  "scripts": {
+    "build": "webpack --mode=production",
+    "build:dev": "webpack --mode=development",
+    "dev": "webpack --mode=development --watch",
+    "test": "echo 'Not running browser tests in CI mode. Please use test:browser instead to run the tests locally.'",
+    "test:browser": "karma start --singleRun",
+    "lint": "eslint src/ test/",
+    "doc": "esdoc -c esdoc.json"
+  }
+}

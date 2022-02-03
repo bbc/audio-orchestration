@@ -1,0 +1,39 @@
+
+{
+  "duration": 32.0,
+  "loop": true,
+  "outPoints": [
+    4.0,
+    8.0,
+    12.0,
+    16.0,
+    20.0,
+    24.0,
+    28.0,
+    32.0
+  ],
+  "objects": [
+    {
+      "objectId": "1-ClicksAndTone",
+      "objectBehaviours": [
+        {
+          "behaviourType": "allowedEverywhere"
+        },
+        {
+          "behaviourType": "spread"
+        }
+      ],
+      "items": [
+        {
+          "start": 0,
+          "duration": 32.0,
+          "source": {
+            "panning": 0,
+            "type": "buffer",
+            "url": "audio/clicks-and-tone/clicks-and-tone.m4a"
+          }
+        }
+      ]
+    }
+  ]
+}

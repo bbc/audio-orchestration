@@ -1,0 +1,4 @@
+# /node_modules and /bower_components ignored by default
+
+# Ignore all files except src and test directory.
+test/_coverage

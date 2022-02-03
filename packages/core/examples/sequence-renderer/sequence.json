@@ -1,0 +1,271 @@
+{
+  "duration": 60.0,
+  "loop": true,
+  "outPoints": [
+    2.0,
+    4.0,
+    6.0,
+    8.0,
+    10.0,
+    12.0,
+    14.0,
+    16.0
+  ],
+  "objects": [
+    {
+      "objectId": "3_Clicks",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 1,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 2,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 3,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "right",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "16_Clicks",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 1,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 2,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 3,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 4,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 5,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 6,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 7,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 8,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 9,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 10,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 11,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 12,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-b.m4a"
+          }
+        },
+        {
+          "start": 13,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 14,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        },
+        {
+          "start": 15,
+          "duration": 0.1,
+          "source": {
+            "channelMapping": "left",
+            "type": "buffer",
+            "url": "/audio/click-a.m4a"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "Bed",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "channelMapping": "stereo",
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "stereo"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "narrator",
+      "orchestration": {
+        "objectNumber": 1,
+        "label": "Narrator",
+        "group": 0,
+        "mdoThreshold": 0,
+        "mdoOnly": 0,
+        "mdoMethod": 3,
+        "speakerNumber": null,
+        "diffuseness": 0,
+        "mdoSpread": 0,
+        "mdoDynamic": 0,
+        "mdoGainDB": 0,
+        "muteIfObject": 0,
+        "exclusivity": 0,
+        "nearFront": 1,
+        "nearSide": 1,
+        "nearRear": 1,
+        "farFront": 1,
+        "farSide": 1,
+        "farRear": 1,
+        "above": 1,
+        "onDropin": 1,
+        "onDropout": 1,
+        "minQuality": 1
+      },
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "channelMapping": "mono",
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "mono_0"
+          }
+        }
+      ]
+    },
+    {
+      "objectId": "ambience",
+      "orchestration": {},
+      "items": [
+        {
+          "start": 0,
+          "duration": 60.0,
+          "source": {
+            "channelMapping": "mono",
+            "type": "dash",
+            "url": "/audio/forest-3-short.mpd",
+            "adaptationSetId": "mono_1"
+          }
+        }
+      ]
+    }
+  ]
+}

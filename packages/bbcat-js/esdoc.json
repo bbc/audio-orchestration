@@ -1,0 +1,11 @@
+{
+  "package": "none",
+  "source": "./src",
+  "destination": "./doc",
+  "plugins": [{
+    "name": "esdoc-standard-plugin",
+    "brand": {
+      "title": "BBC Audio Toolkit"
+    }
+  }]
+}

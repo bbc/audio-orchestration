@@ -1,0 +1,270 @@
+@startuml
+participant App
+participant CloudSyncKit
+participant CloudSynchroniser
+participant Sync_Service
+
+App-->CloudSyncKit: getCloudSynchroniser(...)
+
+CloudSyncKit-->CloudSynchroniser: new CloudSynchroniser(...)
+
+CloudSynchroniser-->Sync_Service: "connect"
+Sync_Service-->CloudSynchroniser: "ack"
+note left
+    The client library (i.e. the
+    "CloudSynchroniser" component)
+    sets up the communication channel
+    with the sync service via its
+    MQTT service. Also it registers
+    for the following MQTT topics:
+
+    * Response topic: 'Sessions/<sessionId>/<deviceId>/REQ'
+    * Session state topic: 'Sessions/<sessionId>/REQ'
+
+end note
+
+CloudSynchroniser-->Sync_Service: send(JoinREQ)
+note left
+    // Example:
+    // (Send to onboarding topic: 'Sessions/REQ')
+
+    JoinREQ = {
+        contextId: "dfvh9hd8f7hv9df7",
+        deviceId: "43b9c4d2-50ca-4777-a7bf-2c549b34dda2",
+        id: "MTUyMDM0MzQ1NjkzOS0x",
+        requestChannel: "Sessions/897dfv98d7fhv9/" +
+            "43b9c4d2-50ca-4777-a7bf-2c549b34dda2/RESP",
+        responseChannel: "Sessions/897dfv98d7fhv9/" +
+            "43b9c4d2-50ca-4777-a7bf-2c549b34dda2/RESP",
+        sessionId: "897dfv98d7fhv9",
+        type: "JoinREQ",
+        version: "0.0.1"
+    }
+end note
+
+CloudSyncKit-->App: REF(CloudSynchroniser)
+
+note right
+    Having reveived a reference
+    to an instance of CloudSynchroniser,
+    the App starts listening for events
+    on the CloudSynchroniser object.
+end note
+
+App-->CloudSynchroniser: listen("DeviceRegistrationSuccess")
+App-->CloudSynchroniser: listen("DeviceRegistrationError")
+App-->CloudSynchroniser: listen("WallClockAvailable")
+App-->CloudSynchroniser: listen("WallClockUnAvailable")
+App-->CloudSynchroniser: listen("SyncServiceUnAvailable")
+App-->CloudSynchroniser: listen("TimelineAvailable")
+
+Sync_Service-->CloudSynchroniser: send(JoinRESP)
+note left
+    // Example:
+    // (Send to response topic)
+
+    JoinRESP = {
+        id: "MTUyMDM0MzQ1NjkzOS0x",
+        responseCode: 0,
+        sessionId: "897dfv98d7fhv9",
+        sessionSyncControllerUrl: "ws://sessionsynccontroller.example.com",
+        type: "JoinRESP",
+        version: "0.0.1",
+        wallclockUrl: "ws://192.168.60.120:6676"
+    }
+end note
+
+CloudSynchroniser-->App: Event("DeviceRegistrationSuccess")
+
+CloudSynchroniser-->Sync_Service: "perform wallclock sync"
+Sync_Service-->CloudSynchroniser: "wallclock"
+
+note left #aqua
+    In fact, wall-clock synchronisation is performed continuously with
+    the wall-clock service (see src/client/WallClockSynchroniser.js).
+    Changes of wall clock are propargated through the local wall clock
+    copy to all its child clocks.
+end note
+
+CloudSynchroniser-->App: Event("WallClockAvailable")
+
+App-->CloudSynchroniser: addTimelineClock(...)
+
+CloudSynchroniser-->Sync_Service: send(TimelineRegistrationREQ)
+note left
+    // Example:
+    // Send to request topic: 'Sessions/<sessionId>/REQ'
+
+    TimelineRegistrationREQ = {
+        channel: null,
+        contentId: "video.mp4",
+        contextId: "dfvh9hd8f7hv9df7",
+        correlation: Correlation {},
+        deviceId: "43b9c4d2-50ca-4777-a7bf-2c549b34dda2",
+        frequency: 1000,
+        id: "MTUyMDM0MzQ1NjkzOS0y",
+        responseChannel: "Sessions/897dfv98d7fhv9/43b9c4d2-50ca-4777-" +
+            "a7bf-2c549b34dda2/RESP",
+        sessionId: "897dfv98d7fhv9",
+        timelineId: "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777-a7bf-" +
+            "2c549b34dda2:dmlkZW8ubXA0",
+        timelineType: "tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:" +
+            "simple-elapsed-time:1000",
+        type: "TimelineRegistrationREQ",
+        useForSessionSync: true,
+        version: "0.0.1",
+        writable: true
+    }
+end note
+
+Sync_Service-->CloudSynchroniser: send(TimelineRegistrationRESP)
+note left
+    // Example:
+    // (Send to reponse topic)
+
+    TimelineRegistrationRESP = {
+        id: "MTUyMDM0MzQ1NjkzOS0y",
+        responseCode: 0,
+        sessionId: "897dfv98d7fhv9",
+        timelineUpdateChannel: "Sessions/897dfv98d7fhv9/timelines/" +
+            "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777-a7bf-2c549b34dda2:" +
+            "dmlkZW8ubXA0/state",
+        type: "TimelineRegistrationRESP",
+        version: "0.0.1"
+    }
+end note
+
+App-->CloudSynchroniser: getAvailableTimelines()
+
+note right
+    App asks the sync service, if there are other
+    timelines available in the session and context
+end note
+
+CloudSynchroniser-->Sync_Service: send(TimelineREQ)
+
+note left
+    // Example:
+    // Send to request topic: 'Sessions/<sessionId>/REQ'
+
+    TimelineREQ = {
+        contentId: null,
+        contextId: "dfvh9hd8f7hv9df7",
+        deviceId: "43b9c4d2-50ca-4777-a7bf-2c549b34dda2",
+        id: "MTUyMDM0MzQ1NjkzOS0z",
+        providerContextId: null,
+        providerId: null,
+        responseChannel: "Sessions/897dfv98d7fhv9/" +
+            "43b9c4d2-50ca-4777-a7bf-2c549b34dda2/RESP",
+        sessionId: "897dfv98d7fhv9",
+        timelineType: null,
+        type: "TimelineREQ",
+        version: "0.0.1"
+    }
+end note
+
+Sync_Service-->CloudSynchroniser: send(TimelineRESP)
+
+note left
+    // Example
+    // (Send to response topic)
+
+    TimelineRESP = {
+        id: "MTUyMDM0MzQ1NjkzOS0z",
+        responseCode: 0,
+        sessionId: "897dfv98d7fhv9",
+        timelineInfo: [
+            {
+                contentId: "video.mp4",
+                providerChannel: "Sessions/897dfv98d7fhv9/timelines/" +
+                    "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777-a7bf-" +
+                    "2c549b34dda2:dmlkZW8ubXA0/state",
+                providerId: "43b9c4d2-50ca-4777-a7bf-2c549b34dda2"
+                providerType: "Device",
+                timelineId: "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777-" +
+                    "a7bf-2c549b34dda2:dmlkZW8ubXA0",
+                timelineType: "tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:" +
+                    "simple-elapsed-time:1000",
+                useForSessionSync: true,
+                writable: true
+            }
+        ],
+        type: "TimelineRESP",
+        version: "0.0.1"
+    }
+end note
+
+note over CloudSyncKit, CloudSynchroniser #aqua
+    The response only contains the timeline that has been rigistered by this client.
+    If other timelines would be available, the app could decide to subscribe to
+    updates of these timeline by calling "enableTimelineSync(...)" on the CloudSynchroniser
+    object. If the App would want to tie a clock a particular remote timeline it could
+    subsequently call "syncClockToThisTimeline()" on the CloudSynchroniser object. The
+    respective calls are further explained in sequence diagram "./client_subscription.seqdiag"
+
+    If other clients are interested in the registered timeline (i.e. subscribe to this timeline),
+    the sync service sends a TimelineUpdateREQ. The CloudSynchroniser ackowledges the request by
+    sending a TimelineUpdateRESP. After that the CloudSynchroniser sends TimelineUpdate messages
+    to the sync service whenever a change of respective timeline is observed.
+end note
+
+Sync_Service-->CloudSynchroniser: send(TimelineUpdateREQ)
+note left
+    // Example:
+    // (Send to request topic: 'Sessions/<sessionId>/REQ')
+
+    TimelineUpdateREQ = {
+        contentId: "video.mp4",
+        contextId: "dfvh9hd8f7hv9df7",
+        deviceId: "897dfv98d7fhv9",
+        id: "MTUyMDM0MzM2NDU2Ni01",
+        responseChannel: "Sessions/897dfv98d7fhv9/RESP",
+        sessionId: "897dfv98d7fhv9",
+        timelineId: "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777" +
+            "-a7bf-2c549b34dda2:dmlkZW8ubXA0",
+        timelineType: "tag:rd.bbc.co.uk,2015-12-08:dvb:css:" +
+            "timeline:simple-elapsed-time:1000",
+        type: "TimelineUpdateREQ",
+        version: "0.0.1"
+    }
+end note
+
+CloudSynchroniser-->Sync_Service: send(TimelineUpdateRESP)
+note left
+    // Example
+    // (Send to response topic)
+
+    TimelineUpdateRESP = {
+        id: "MTUyMDM0MzM2NDU2Ni01",
+        responseCode: 0,
+        sessionId: "897dfv98d7fhv9",
+        type: "TimelineUpdateRESP",
+        version: "0.0.1"
+    }
+end note
+
+CloudSynchroniser-->Sync_Service: send(TimelineUpdate)
+note left
+    // Exmaple
+    // (Send to responseChannel specified in 'TimelineUpdateREQ')
+
+    TimelineUpdate = {
+        contentId: "video.mp4",
+        deviceId: "43b9c4d2-50ca-4777-a7bf-2c549b34dda2",
+        id: null,
+        presentationTimestamp: PresentationTimestamp {
+            earliest: { contentTime: 6669, speed: 1, wallclockTime: 1520343470698.5 },
+            actual: { contentTime: 6669, wallclockTime: 1520343470698.5, speed: 1 },
+            latest: { contentTime: 6669, wallclockTime: 1520343470698.5, speed: 1 }
+        },
+        sessionId: "897dfv98d7fhv9",
+        timelineId: "urn:dfvh9hd8f7hv9df7:43b9c4d2-50ca-4777-" +
+            a7bf-2c549b34dda2:dmlkZW8ubXA0",
+        timelineType: "tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:" +
+            "simple-elapsed-time:1000",
+        type: "TimelineUpdate",
+        version:"0.0.1"
+    }
+end note
+
+@enduml

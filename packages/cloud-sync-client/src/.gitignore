@@ -1,0 +1,28 @@
+
+# Mac OS X
+.DS_STORE
+.DS_Store
+
+# build/packaging/dependencies
+build/
+sbuild/
+dist/
+node_modules/
+doc/
+docs/
+.grunt/
+*~
+**/*~
+package-lock.json
+
+
+# TypeScript compiler
+.tscache
+tscommand*.txt
+
+
+.eslintrc.json
+.vscode/
+
+
+target/
