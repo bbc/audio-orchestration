@@ -248,26 +248,8 @@ class PeerSyncAdapter extends SyncAdapter {
                 const { subscriptions } = this._clocks.get(timelineId);
                 subscriptions.add(conn);
 
-                // send update message
-                // TODO make this a function as it's done in two places now
-                const { clock } = this._clocks.get(timelineId);
-                const { parentTime, childTime } = clock.getCorrelation();
-                const speed = clock.getSpeed();
-
-                conn.send({
-                  type: 'timeline',
-                  content: {
-                    update: {
-                      timelineId,
-                      parentTime,
-                      childTime,
-                      speed,
-                    },
-                  },
-                });
-              } else {
-                // should still register the subscription.
-                console.warn(`requested timeline ${timelineId} has not been registered.`);
+                // send timeline update message
+                conn.send(this._getTimelineUpdateMessage(timelineId));
               }
             } else if (!this._isMain && update) {
               const {
@@ -336,6 +318,24 @@ class PeerSyncAdapter extends SyncAdapter {
     return this._wallClock;
   }
 
+  _getTimelineUpdateMessage(timelineId) {
+    const { clock } = this._clocks.get(timelineId);
+    const { parentTime, childTime } = clock.getCorrelation();
+    const speed = clock.getSpeed();
+
+    return {
+      type: 'timeline',
+      content: {
+        update: {
+          timelineId,
+          parentTime,
+          childTime,
+          speed,
+        },
+      },
+    };
+  }
+
   provideTimelineClock(timelineClock, timelineType, contentId) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: provideTimelineClock: Not connected. Call connect() first.');
@@ -359,22 +359,11 @@ class PeerSyncAdapter extends SyncAdapter {
     });
 
     timelineClock.on('change', () => {
-      const { parentTime, childTime } = timelineClock.getCorrelation();
-      const speed = timelineClock.getSpeed();
+      const update = this._getTimelineUpdateMessage(timelineId);
 
       [...subscriptions.values()].forEach((conn) => {
         try {
-          conn.send({
-            type: 'timeline',
-            content: {
-              update: {
-                timelineId,
-                parentTime,
-                childTime,
-                speed,
-              },
-            },
-          });
+          conn.send(update);
         } catch (e) {
           // console.log(`failed to send timeline update to ${conn.peer}`);
         }
