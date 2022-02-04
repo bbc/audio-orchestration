@@ -6,9 +6,6 @@ import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
 import { orchestration } from '@bbc/audio-orchestration-core/light';
 
-// import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
-import { CloudSyncAdapter } from '@bbc/audio-orchestration-core/cloud-sync-adapter';
-
 import config from 'config';
 import {
   addLoadingMessage,
@@ -32,9 +29,6 @@ import {
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';
-
-// const syncAdapterClass = PeerSyncAdapter;
-const syncAdapterClass = CloudSyncAdapter;
 
 const { OrchestrationClient } = orchestration;
 
@@ -92,7 +86,6 @@ export const initialiseOrchestration = (dispatchFunction) => {
     controls: config.CONTROLS,
     isSafari,
     objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
-    syncAdapterClass,
   });
 
   config.SEQUENCE_URLS.forEach(({ contentId, url }) => {
@@ -275,32 +268,55 @@ export const initialiseOrchestration = (dispatchFunction) => {
   return globalOrchestrationClient.deviceId;
 };
 
-export const connectOrchestration = (isMain, sessionId) => globalOrchestrationClient.start(
-  isMain,
-  sessionId,
-  globalAudioContext,
-)
-  .then(() => {
-    if (!isMain) {
-      globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
-      globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
-    }
+export const connectOrchestration = (isMain, sessionId) => {
+  // On connecting, first decide which SyncAdapter to dynamically import, and set this on the
+  // OrchestrationClient instance.
+  let syncAdapterClass;
+  let syncAdapterImport;
+  switch (config.SYNC_ENDPOINT?.type) {
+    case 'peerjs':
+      syncAdapterImport = import('@bbc/audio-orchestration-core/peer-sync-adapter')
+        .then(({ PeerSyncAdapter }) => {
+          syncAdapterClass = PeerSyncAdapter;
+        });
+      break;
+    case 'cloud-sync':
+    default:
+      syncAdapterImport = import('@bbc/audio-orchestration-core/cloud-sync-adapter')
+        .then(({ CloudSyncAdapter }) => {
+          syncAdapterClass = CloudSyncAdapter;
+        });
+  }
+
+  return syncAdapterImport.then(() => {
+    globalOrchestrationClient.setSyncAdapterClass(syncAdapterClass);
   })
-  .then(() => ({ success: true }))
-  .then(() => {
-    initialiseCalibrationOrchestration({
-      dispatch,
-      ensureAudioContext,
-      isSafari,
-      isMain: globalOrchestrationClient.isMain,
-      deviceId: globalOrchestrationClient.deviceId,
-      syncAdapterClass,
+    .then(() => globalOrchestrationClient.start(
+      isMain,
+      sessionId,
+      globalAudioContext,
+    ))
+    .then(() => {
+      if (!isMain) {
+        globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
+        globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
+      }
+    })
+    .then(() => {
+      initialiseCalibrationOrchestration({
+        dispatch,
+        ensureAudioContext,
+        isSafari,
+        isMain: globalOrchestrationClient.isMain,
+        deviceId: globalOrchestrationClient.deviceId,
+        syncAdapterClass,
+      });
+    })
+    .catch((e) => {
+      console.error('connectOrchestration error:', e);
+      throw e || new Error('Unknown error in connectOrchestration');
     });
-  })
-  .catch((e) => {
-    console.error('connectOrchestration error:', e);
-    throw e || new Error('Unknown error in connectOrchestration');
-  });
+};
 
 function* transitionToSequence({ contentId }) {
   if (globalOrchestrationClient.isMain) {

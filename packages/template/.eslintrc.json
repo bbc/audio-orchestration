@@ -16,5 +16,8 @@
   },
   "settings": {
     "import/resolver": "webpack"
+  },
+  "parserOptions": {
+    "ecmaVersion": 11
   }
 }

@@ -72,10 +72,6 @@ class OrchestrationClient extends EventEmitter {
     this._syncEndpoint = options.syncEndpoint;
     this._syncAdapterClass = options.syncAdapterClass || defaultSyncAdapterClass;
 
-    if (!this._syncAdapterClass) {
-      throw new Error('No syncAdapterClass specified.');
-    }
-
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
     this._sequenceTransitionDelay = options.sequenceTransitionDelay;
     if (this._sequenceTransitionDelay === undefined) {
@@ -517,6 +513,13 @@ class OrchestrationClient extends EventEmitter {
     this.emit('image', image);
   }
 
+  setSyncAdapterClass(syncAdapterClass) {
+    if (this._initialised) {
+      throw new Error('Must set syncAdapterClass before calling start().');
+    }
+    this._syncAdapterClass = syncAdapterClass;
+  }
+
   /**
    * Initialises the class and connects to all the required services.
    *
@@ -529,6 +532,10 @@ class OrchestrationClient extends EventEmitter {
    * @returns {Promise}
    */
   start(isMain, sessionId, audioContext = null) {
+    if (!this._syncAdapterClass) {
+      throw new Error('No syncAdapterClass set.');
+    }
+
     return new Promise((resolve) => {
       if (this._initialised) {
         throw new Error('Orchestration client is already initialised.');
