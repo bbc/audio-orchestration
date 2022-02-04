@@ -204,6 +204,13 @@ class PeerSyncAdapter extends SyncAdapter {
         // console.log('main device connection lost');
         this.emit('disconnected');
       }
+
+      // if this is the main device, unregister any timeline subscriptions associated with the peer.
+      if (this._isMain) {
+        [...this._clocks.values()].forEach(({ subscriptions }) => {
+          subscriptions.delete(conn);
+        });
+      }
     };
 
     conn.on('error', () => {
@@ -211,7 +218,6 @@ class PeerSyncAdapter extends SyncAdapter {
       handleClose();
     });
 
-    // TODO docs say Firefox does not support 'close' event
     conn.on('close', () => {
       // console.log(`connection close ${peer}`, e);
       handleClose();
@@ -240,9 +246,8 @@ class PeerSyncAdapter extends SyncAdapter {
 
               if (this._clocks.has(timelineId)) {
                 const { subscriptions } = this._clocks.get(timelineId);
-                if (!subscriptions.includes(conn)) {
-                  subscriptions.push(conn);
-                }
+                subscriptions.add(conn);
+
                 // send update message
                 // TODO make this a function as it's done in two places now
                 const { clock } = this._clocks.get(timelineId);
@@ -260,11 +265,9 @@ class PeerSyncAdapter extends SyncAdapter {
                     },
                   },
                 });
-                // TODO remove subscription when device disconnects
               } else {
-                // TODO what do do if the clock does not yet exist on main?
                 // should still register the subscription.
-                // console.log('requested timelineId has not yet been registered');
+                console.warn(`requested timeline ${timelineId} has not been registered.`);
               }
             } else if (!this._isMain && update) {
               const {
@@ -274,10 +277,11 @@ class PeerSyncAdapter extends SyncAdapter {
                 speed,
               } = update;
 
-              // TODO assuming that we only get updates for clocks we have requested
-              const { clock } = this._clocks.get(timelineId);
-              clock.setCorrelationAndSpeed({ parentTime, childTime }, speed);
-              clock.setAvailabilityFlag(true);
+              if (this._clocks.has(timelineId)) {
+                const { clock } = this._clocks.get(timelineId);
+                clock.setCorrelationAndSpeed({ parentTime, childTime }, speed);
+                clock.setAvailabilityFlag(true);
+              }
             }
           }
           break;
@@ -285,8 +289,6 @@ class PeerSyncAdapter extends SyncAdapter {
           {
             const { deviceId: broadcastDeviceId, topic, message } = content;
             // console.log(`got broadcast message ${topic}`);
-            // TODO originating deviceID can be spoofed because it's taken from the message content,
-            // but there is no direct link between deviceId and conn.peer anymore.
             this.emit('broadcast', {
               deviceId: broadcastDeviceId,
               topic,
@@ -295,7 +297,6 @@ class PeerSyncAdapter extends SyncAdapter {
 
             if (this._isMain) {
               // STAR topology forwarding of broadcast messages to all connected peers
-              // TODO may not be necessary if all messages from aux are only intended for main.
               // TODO this also forwards it back to the sender.
               this._sendToAll(type, content);
             }
@@ -347,7 +348,7 @@ class PeerSyncAdapter extends SyncAdapter {
       throw new Error(`Clock for timeline ${timelineId} is already registered.`);
     }
 
-    const subscriptions = [];
+    const subscriptions = new Set();
 
     this._clocks.set(timelineId, {
       timelineId,
@@ -361,7 +362,7 @@ class PeerSyncAdapter extends SyncAdapter {
       const { parentTime, childTime } = timelineClock.getCorrelation();
       const speed = timelineClock.getSpeed();
 
-      subscriptions.forEach((conn) => {
+      [...subscriptions.values()].forEach((conn) => {
         try {
           conn.send({
             type: 'timeline',
@@ -384,7 +385,7 @@ class PeerSyncAdapter extends SyncAdapter {
   }
 
   // TODO support timeout parameter
-  requestTimelineClock(timelineType, contentId/* , timeout = 0 */) {
+  requestTimelineClock(timelineType, contentId, timeout = 0) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
     }
@@ -405,7 +406,6 @@ class PeerSyncAdapter extends SyncAdapter {
       timelineClock.id = `timelineClock_${contentId}`;
       timelineClock.setSpeed(0);
 
-      // TODO Should be sendToMain?
       this._sendToAll('timeline', {
         subscribe: {
           timelineId,
@@ -423,8 +423,16 @@ class PeerSyncAdapter extends SyncAdapter {
       });
     }
 
-    return this._connectPromise.then(() => timelineClock).catch((e) => {
-      throw new Error(`PeerSyncAdapter: requestTimelineClock: ${e.message}`);
+    return new Promise((resolve, reject) => {
+      if (timeout > 0) {
+        setTimeout(() => reject(new Error('PeerSyncAdapter: requestTimelineClock: timeout')), timeout);
+      }
+
+      this._connectPromise.then(() => timelineClock)
+        .then(resolve)
+        .catch((e) => {
+          reject(new Error(`PeerSyncAdapter: requestTimelineClock: ${e.message}`));
+        });
     });
   }
 
