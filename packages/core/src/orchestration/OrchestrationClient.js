@@ -513,6 +513,12 @@ class OrchestrationClient extends EventEmitter {
     this.emit('image', image);
   }
 
+  /**
+   * Overrides the sync adapter class to be used by this instance. Must be called before connecting
+   * to a sync service (i.e., before calling start()).
+   *
+   * @param {SyncAdapter} syncAdapterClass
+   */
   setSyncAdapterClass(syncAdapterClass) {
     if (this._initialised) {
       throw new Error('Must set syncAdapterClass before calling start().');

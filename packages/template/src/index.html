@@ -20,10 +20,9 @@
         // The second example is for a local server that uses plain websockets on a specific port:
         // SYNC_ENDPOINT: { type: 'cloud-sync', hostname: '127.0.0.1', port: 9001 },
         // The default in the template repository uses the experimental peerjs sync adapter, which
-        // defaults to a public server and accepts options as in https://peerjs.com/docs.html.
+        // defaults to a public server but also accepts options as in https://peerjs.com/docs.html.
         SYNC_ENDPOINT: {
           type: 'peerjs',
-          options: {}
         },
 
         // This object describes the structure of the experience by listing all available content

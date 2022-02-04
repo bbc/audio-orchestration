@@ -31,7 +31,7 @@ The [template application](../template) has some examples of the required metada
 
 The distribution for this package includes files to support different use cases: a `full` and a `light` build of the core library, as well as two standalone adapters for using the `light` build with different synchronisation servers. It is also possible to write your own adapter to support other backends.
 
-The `full` build includes everything in the `light` build, and the `cloud-sync-adapter` - so you'll need nothing else if you want to use Cloud-Sync.
+The `full` build includes everything in the `light` build, as well as the `CloudSyncAdapter` - so you'll need nothing else if you want to use Cloud-Sync.
 
 ```js
 import { orchestration } from '@bbc/audio-orchestration-core/full';
@@ -45,7 +45,7 @@ The `light` build  does not include any synchronisation adapter. You can import 
 
 ```js
 import { orchestration } from '@bbc/audio-orchestration-core/light';
-import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peer-sync-adapter';
+import { PeerSyncAdapter } from '@bbc/audio-orchestration-core/peerSyncAdapter';
 
 const client = new orchestration.OrchestrationClient({
   syncAdapterClass: PeerSyncAdapter,
@@ -80,7 +80,7 @@ const client = new orchestration.OrchestrationClient({
 });
 ```
 
-It is also possible to use the library without a JavaScript bundler, by referencing e.g. `dist/audio-orchestration.full.js` using a `<script>` tag. In this case, the exports will be available on the global `audioOrchestration.full` object (and `audioOrchestration.light`, `audioOrchestration['peer-sync-adapter']` respectively).
+It is also possible to use the library without a JavaScript bundler, by referencing e.g. `dist/audio-orchestration.full.js` using a `<script>` tag. In this case, the exports will be available on the global `audioOrchestration.full` object (and `audioOrchestration.light`, `audioOrchestration.peerSyncAdapter` respectively).
 
 ```html
 <script src="dist/full.js"></script>

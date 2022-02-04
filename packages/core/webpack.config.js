@@ -12,8 +12,8 @@ module.exports = {
   entry: {
     full: path.resolve(__dirname, 'src/index.full.js'),
     light: path.resolve(__dirname, 'src/index.light.js'),
-    'cloud-sync-adapter': path.resolve(__dirname, 'src/index.cloud-sync-adapter.js'),
-    'peer-sync-adapter': path.resolve(__dirname, 'src/index.peer-sync-adapter.js'),
+    cloudSyncAdapter: path.resolve(__dirname, 'src/index.cloud-sync-adapter.js'),
+    peerSyncAdapter: path.resolve(__dirname, 'src/index.peer-sync-adapter.js'),
   },
   devtool: 'source-map',
   output: {

@@ -275,14 +275,14 @@ export const connectOrchestration = (isMain, sessionId) => {
   let syncAdapterImport;
   switch (config.SYNC_ENDPOINT?.type) {
     case 'peerjs':
-      syncAdapterImport = import('@bbc/audio-orchestration-core/peer-sync-adapter')
+      syncAdapterImport = import('@bbc/audio-orchestration-core/peerSyncAdapter')
         .then(({ PeerSyncAdapter }) => {
           syncAdapterClass = PeerSyncAdapter;
         });
       break;
     case 'cloud-sync':
     default:
-      syncAdapterImport = import('@bbc/audio-orchestration-core/cloud-sync-adapter')
+      syncAdapterImport = import('@bbc/audio-orchestration-core/cloudSyncAdapter')
         .then(({ CloudSyncAdapter }) => {
           syncAdapterClass = CloudSyncAdapter;
         });
