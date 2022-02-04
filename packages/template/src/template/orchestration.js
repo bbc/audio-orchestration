@@ -4,7 +4,7 @@
  */
 import bowser from 'bowser';
 import { takeEvery, call, put } from 'redux-saga/effects';
-import { orchestration } from '@bbc/audio-orchestration-core/light';
+import { orchestration } from '@bbc/audio-orchestration-core';
 
 import config from 'config';
 import {
