@@ -4,6 +4,10 @@
 
 Audio device orchestration is the concept of using multiple connected devices to play back an audio experience. This repository holds an open source template application and libraries that handle the key components of an orchestrated audio system (pairing, synchronisation, and audio playback).
 
+## Status
+
+**This repository is currently a pre-release; an updated version of Audio Orchestrator that can be used with a custom template will be released soon and this notice removed. Keep an eye on the R&D Blog and the MakerBox community.**
+
 ## Components
 
 <img alt="Components of this project: the template, core, bbcat-js, cloud-sync-client code in this repository, the cloud-sync server they use to communicate, and the media and metadata produced with the Audio Orchestrator tool." src="doc/repo-structure.png" width="380" height="158" />
