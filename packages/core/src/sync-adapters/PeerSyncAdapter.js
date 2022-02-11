@@ -373,7 +373,6 @@ class PeerSyncAdapter extends SyncAdapter {
     return this._connectPromise.then(() => timelineClock);
   }
 
-  // TODO support timeout parameter
   requestTimelineClock(timelineType, contentId, timeout = 0) {
     if (this._connectPromise === null) {
       throw new Error('PeerSyncAdapter: requestTimelineClock: Not connected. Call connect() first.');
