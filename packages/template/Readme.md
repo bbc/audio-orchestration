@@ -18,9 +18,14 @@ Run the development server:
 npm run dev
 ```
 
-The build will be hosted at http://localhost:8080 and automatically refresh on most changes to the source code.
+The page will be available at http://localhost:8080 and automatically refresh on most changes to the source code. Note that you will need to restart the development server if you have changed and rebuilt e.g. the core library.
 
-If you are not using the template with _Audio Orchestrator_, you may have to set up your synchronisation server. Instructions on how to do this are given in the [Cloud Sync repository](https://github.com/2-IMMERSE/cloud-sync). Configure the template with the server address by uncommenting and editing one of the examples for the `SYNC_ENDPOINT` option in `src/index.html`. Reload the page in your browser to apply any changes to the configuration.
+### Synchronisation servers
+
+The template can be configured to use different synchronisation solutions. Edit the configuration in [index.html](src/index.html) to choose and customise one of the options (and reload the page to apply the changes).
+
+* PeerJS: by default, a public [PeerJS](https://github.com/peers/peerjs) server is used. The integration is more experimental than the Cloud-Sync option, but does not require running your own server. The peerJS synchronisation adapter processes requests from all connected devices in the session within the browser on the main device.
+* Cloud-Sync: this is the traditional option and still the default option in _Audio Orchestrator_. You will need to install the server software from the [Cloud Sync repository](https://github.com/2-IMMERSE/cloud-sync) and configure the server address in `index.html`.
 
 ## Adding media and metadata
 
