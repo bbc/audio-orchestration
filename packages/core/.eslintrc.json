@@ -15,5 +15,8 @@
     "browser": true,
     "jest/globals": true
   },
-  "plugins": ["jest"]
+  "plugins": ["jest"],
+  "settings": {
+    "import/resolver": "webpack"
+  },
 }
