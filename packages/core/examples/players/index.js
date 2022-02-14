@@ -1,5 +1,5 @@
-import BufferPlayer from '../../src/sync-players/buffer-player';
-import DashPlayer from '../../src/sync-players/dash-player';
+import BufferPlayer from '../../src/playback/BufferPlayer';
+import DashPlayer from '../../src/playback/DashPlayer';
 
 const audioContext = new AudioContext();
 
@@ -32,7 +32,7 @@ function initControls(player, playerType) {
 
   document.getElementById('btn-prepare').addEventListener('click', () => {
     player.prepare().then(() => {
-      player.outputs.forEach(output => output.connect(audioContext.destination));
+      player.outputs.forEach((output) => output.connect(audioContext.destination));
     });
   });
 

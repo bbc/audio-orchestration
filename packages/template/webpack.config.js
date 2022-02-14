@@ -15,7 +15,7 @@ module.exports = {
   ],
   output: {
     clean: true,
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
   },
   module: {
@@ -112,4 +112,12 @@ module.exports = {
       banner: fs.readFileSync(path.resolve(__dirname, 'LICENSE'), 'utf-8'),
     }),
   ],
+  target: ['web', 'es5'],
+  devServer: {
+    client: {
+      overlay: {
+        warnings: false,
+      },
+    },
+  },
 };

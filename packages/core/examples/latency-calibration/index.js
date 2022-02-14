@@ -1,18 +1,17 @@
 import {
   rendering,
   synchronisation,
-} from '@bbc/audio-orchestration-core';
+  CloudSyncAdapter,
+} from '@bbc/audio-orchestration-core/dist/full.js';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import sequenceData from './sequence.json';
 
-const { CloudSyncAdapter, Synchroniser, AudioContextClock } = synchronisation;
+const { Synchroniser, AudioContextClock } = synchronisation;
 const { Sequence, SequenceRenderer } = rendering;
 
 window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-// TODO: add the address of your cloud-sync server here, e.g.:
-// const CLOUD_SYNC_ENDPOINT = { hostname: 'localhost', port: 9001 };
-const CLOUD_SYNC_ENDPOINT = { hostname: 'cloudsync.example.com' };
+const CLOUD_SYNC_ENDPOINT = {};
 
 const USE_TONE = true;
 const USE_NOISE = false;
@@ -31,6 +30,9 @@ function initOrchestration() {
   });
 
   const sync = new Synchroniser(adapter);
+
+  CLOUD_SYNC_ENDPOINT.hostname = document.getElementById('input-hostname').value;
+  CLOUD_SYNC_ENDPOINT.port = document.getElementById('input-port').value || undefined;
 
   return sync.connect(
     CLOUD_SYNC_ENDPOINT,
@@ -104,6 +106,7 @@ function initOrchestration() {
 
     return offsetClock;
   }).catch((e) => {
+    document.getElementById('current-offset').innerText = 'Failed to connect!';
     console.error(e);
     throw e;
   });

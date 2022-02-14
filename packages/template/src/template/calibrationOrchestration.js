@@ -17,7 +17,7 @@ import {
   requestPlay,
   requestPause,
   requestSendMessage,
-} from './actions/orchestration';
+} from 'actions/orchestration';
 
 const { OrchestrationClient } = orchestration;
 
@@ -26,6 +26,7 @@ let ensureAudioContext = null;
 let isSafari = false;
 let isMain = false;
 let deviceId = null;
+let syncAdapterClass;
 
 let calibrationOrchestrationClient = null;
 
@@ -63,6 +64,7 @@ export const initialiseCalibrationOrchestration = (options) => {
   isSafari = options.isSafari;
   isMain = options.isMain;
   deviceId = options.deviceId;
+  syncAdapterClass = options.syncAdapterClass;
 };
 
 const updateGlobalCalibrationState = (calibrationState) => {
@@ -109,9 +111,8 @@ export const startCalibrationClient = (sessionId) => {
     syncEndpoint: config.SYNC_ENDPOINT,
     sequenceTransitionDelay: config.CALIBRATION_SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.CALIBRATION_LOADING_TIMEOUT,
-    contentId: config.SYNC_CLOCK_CONTENT_ID,
-    isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
+    syncAdapterClass,
   });
 
   calibrationOrchestrationClient.on('loaded', handleLoaded);

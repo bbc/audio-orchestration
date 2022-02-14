@@ -1,9 +1,9 @@
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import { playback, synchronisation, rendering } from '@bbc/audio-orchestration-core';
+import { playback, synchronisation, rendering, CloudSyncAdapter } from '@bbc/audio-orchestration-core/dist/full.js';
 
 const { BufferPlayer } = playback;
 const { SyncController } = rendering;
-const { AudioContextClock, Synchroniser, CloudSyncAdapter } = synchronisation;
+const { AudioContextClock, Synchroniser } = synchronisation;
 
 const url = 'audio/vostok-intro.m4a';
 const timelineType = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';

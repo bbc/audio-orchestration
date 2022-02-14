@@ -4,15 +4,17 @@
 
 Audio device orchestration is the concept of using multiple connected devices to play back an audio experience. This repository holds an open source template application and libraries that handle the key components of an orchestrated audio system (pairing, synchronisation, and audio playback).
 
+## Status
+
+**This repository is currently a pre-release; an updated version of Audio Orchestrator that can be used with a custom template will be released soon and this notice removed. Keep an eye on the R&D Blog and the MakerBox community.**
+
 ## Components
 
 <img alt="Components of this project: the template, core, bbcat-js, cloud-sync-client code in this repository, the cloud-sync server they use to communicate, and the media and metadata produced with the Audio Orchestrator tool." src="doc/repo-structure.png" width="380" height="158" />
 
 We provide a **template** application which can easily be extended to customise the user interface. It uses our **core** library for managing the connected devices, synchronisation, and audio rendering. This in turn uses our internal helper libraries: **bbcat-js** (audio streaming) and **cloud-sync-client** (connection to the synchronisation server).
 
-The [**Cloud-Sync** server](https://github.com/2-IMMERSE/cloud-sync) source code is published separately on GitHub. To use the template and examples in this repository, you will need to set up a Cloud-Sync server.
-
-More detailed information about each of the packages is available in the respective Readme files.
+The [**Cloud-Sync** server](https://github.com/2-IMMERSE/cloud-sync) source code is published separately on GitHub. You can start working with the template using the experimental peerJS synchronisation adapter, but you may want to set up a Cloud-Sync server for production use. Further information on switching synchronisation backends can be found in the [template Readme](packages/template/Readme.md) file.
 
 * [`@bbc/audio-orchestration-template`](packages/template)
 * [`@bbc/audio-orchestration-core`](packages/core)
@@ -56,11 +58,11 @@ cd packages/template
 npm run dev
 ```
 
-Note that you will have to set up a cloud-sync server and add its address to the template's `index.html` configuration before you can connect devices. See the [template documentation](./packages/template/Readme.md) for more information.
+See the [template documentation](packages/template/Readme.md) for how to configure a Cloud-Sync server, if the experimental peer-to-peer synchronisation adapter does not meet your needs.
 
 # Advanced usage
 
-If needed, you can also install our pre-built packages by specifying the GitHub Package Registry for the `@bbc` scope in an `.npmrc` file for your project.
+If you need to use the core library outside of a custom template based on this repositoy, you may also install our pre-built packages by specifying the GitHub Package Registry for the `@bbc` scope in an `.npmrc` file for your project.
 
 ```sh
 echo "@bbc:registry=https://npm.pkg.github.com" >> .npmrc
@@ -69,7 +71,7 @@ npm add @bbc/audio-orchestration-core
 
 # License
 
-The majority of our components (`template`, `core`, and `bbcat-js`) are licensed under the GPLv3 license. The `cloud-sync-client` is licensed under an Apache 2.0 license. See the LICENSE file in each package directory for the specific licensing terms and copyright information.
+The majority of our components (`template`, `core`, and `bbcat-js`) are licensed under the GPLv3 license. The `cloud-sync-client` is licensed under the Apache 2.0 license. See the LICENSE file in each package directory for the specific licensing terms and copyright information.
 
 If you are modifying the software to create your experience you may have to make your source code modifications available under the terms of the GPL license.
 
@@ -77,4 +79,4 @@ You may [contact BBC R&D](https://www.bbc.co.uk/rd/contacts) to discuss alternat
 
 # Contributing
 
-Please contact the authors by [raising a GitHub issue](https://github.com/bbc/audio-orchestration/issues/new) or pull request if you would like to contribute to this repository. A contributor licence agreement may be applicable.
+Please contact the authors by [raising a GitHub issue](https://github.com/bbc/audio-orchestration/issues/new). A contributor licence agreement may be applicable.

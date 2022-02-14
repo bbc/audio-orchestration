@@ -1,6 +1,6 @@
 {
   "name": "@bbc/audio-orchestration-cloud-sync-client",
-  "version": "0.0.2",
+  "version": "0.1.0-dev.1",
   "description": "Library implementing client code for cloud synchronisation",
   "main": "dist/browser/CloudSyncKit.js",
   "files": [

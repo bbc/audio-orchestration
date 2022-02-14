@@ -26,7 +26,6 @@ import {
   receivedCalibrationMessage,
   setImage,
 } from 'actions/orchestration';
-
 import {
   initialiseCalibrationOrchestration,
 } from './calibrationOrchestration';
@@ -85,7 +84,6 @@ export const initialiseOrchestration = (dispatchFunction) => {
     sequenceTransitionDelay: config.SEQUENCE_TRANSITION_DELAY,
     loadingTimeout: config.LOADING_TIMEOUT,
     controls: config.CONTROLS,
-    isStereo: config.ENABLE_STEREO_ON_AUX_DEVICES,
     isSafari,
     objectFadeOutDuration: config.OBJECT_FADE_OUT_DURATION,
   });
@@ -200,10 +198,6 @@ export const initialiseOrchestration = (dispatchFunction) => {
     dispatch(setDisconnected());
   });
 
-  globalOrchestrationClient.on('unavailable', () => {
-    dispatch(setDisconnected());
-  });
-
   globalOrchestrationClient.on('error', (e) => {
     dispatch(setErrorMessage(e.message));
   });
@@ -274,31 +268,55 @@ export const initialiseOrchestration = (dispatchFunction) => {
   return globalOrchestrationClient.deviceId;
 };
 
-export const connectOrchestration = (isMain, sessionId) => globalOrchestrationClient.start(
-  isMain,
-  sessionId,
-  globalAudioContext,
-)
-  .then(() => {
-    if (!isMain) {
-      globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
-      globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
-    }
+export const connectOrchestration = (isMain, sessionId) => {
+  // On connecting, first decide which SyncAdapter to dynamically import, and set this on the
+  // OrchestrationClient instance.
+  let syncAdapterClass;
+  let syncAdapterImport;
+  switch (config.SYNC_ENDPOINT?.type) {
+    case 'peerjs':
+      syncAdapterImport = import('@bbc/audio-orchestration-core/peerSyncAdapter')
+        .then(({ PeerSyncAdapter }) => {
+          syncAdapterClass = PeerSyncAdapter;
+        });
+      break;
+    case 'cloud-sync':
+    default:
+      syncAdapterImport = import('@bbc/audio-orchestration-core/cloudSyncAdapter')
+        .then(({ CloudSyncAdapter }) => {
+          syncAdapterClass = CloudSyncAdapter;
+        });
+  }
+
+  return syncAdapterImport.then(() => {
+    globalOrchestrationClient.setSyncAdapterClass(syncAdapterClass);
   })
-  .then(() => ({ success: true }))
-  .then(() => {
-    initialiseCalibrationOrchestration({
-      dispatch,
-      ensureAudioContext,
-      isSafari,
-      isMain: globalOrchestrationClient.isMain,
-      deviceId: globalOrchestrationClient.deviceId,
+    .then(() => globalOrchestrationClient.start(
+      isMain,
+      sessionId,
+      globalAudioContext,
+    ))
+    .then(() => {
+      if (!isMain) {
+        globalOrchestrationClient.setCompressorRatio(config.MDO_COMPRESSOR_RATIO);
+        globalOrchestrationClient.setCompressorThreshold(config.MDO_COMPRESSOR_THRESHOLD);
+      }
+    })
+    .then(() => {
+      initialiseCalibrationOrchestration({
+        dispatch,
+        ensureAudioContext,
+        isSafari,
+        isMain: globalOrchestrationClient.isMain,
+        deviceId: globalOrchestrationClient.deviceId,
+        syncAdapterClass,
+      });
+    })
+    .catch((e) => {
+      console.error('connectOrchestration error:', e);
+      throw e || new Error('Unknown error in connectOrchestration');
     });
-  })
-  .catch((e) => {
-    console.error('connectOrchestration error:', e);
-    throw e || new Error('Unknown error in connectOrchestration');
-  });
+};
 
 function* transitionToSequence({ contentId }) {
   if (globalOrchestrationClient.isMain) {

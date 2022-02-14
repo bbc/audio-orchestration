@@ -32,4 +32,5 @@ module.exports = {
       Buffer: require.resolve('buffer'),
     }),
   ],
+  target: ['web', 'es5'],
 };

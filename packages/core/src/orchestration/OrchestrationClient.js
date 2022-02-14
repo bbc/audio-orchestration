@@ -18,7 +18,6 @@ import AuxDeviceHelper from './AuxDeviceHelper';
 import {
   AudioContextClock,
   Synchroniser,
-  CloudSyncAdapter,
 } from '../synchronisation';
 
 const CONTENT_ID = '@bbc/audio-orchestration-core';
@@ -28,6 +27,14 @@ const SEQUENCE_TRANSITION_DELAY = 1.0;
 
 const TIMELINE_TYPE = 'tag:rd.bbc.co.uk,2015-12-08:dvb:css:timeline:simple-elapsed-time:1000';
 const TIMELINE_TYPE_TICK_RATE = 1000;
+
+// The defaultSyncAdapter class is set in the entrypoint, so that it can differ between the full and
+// the light builds of the library.
+let defaultSyncAdapterClass;
+
+export const setDefaultSyncAdapterClass = (syncAdapterClass) => {
+  defaultSyncAdapterClass = syncAdapterClass;
+};
 
 /**
  * @class OrchestrationClient
@@ -63,9 +70,13 @@ class OrchestrationClient extends EventEmitter {
     this._currentContentId = null;
     this._contentId = options.contentId || CONTENT_ID;
     this._syncEndpoint = options.syncEndpoint;
-    this._syncAdapterClass = options.syncAdapterClass || CloudSyncAdapter;
+    this._syncAdapterClass = options.syncAdapterClass || defaultSyncAdapterClass;
+
     this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
-    this._sequenceTransitionDelay = options.sequenceTransitionDelay || SEQUENCE_TRANSITION_DELAY;
+    this._sequenceTransitionDelay = options.sequenceTransitionDelay;
+    if (this._sequenceTransitionDelay === undefined) {
+      this._sequenceTransitionDelay = SEQUENCE_TRANSITION_DELAY;
+    }
     this._lookaheadDuration = options.lookaheadDuration;
     this._sequenceFadeOutDuration = options.sequenceFadeOutDuration;
     this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
@@ -329,7 +340,7 @@ class OrchestrationClient extends EventEmitter {
       this.mute(true);
     });
     return new Promise((resolve, reject) => {
-      this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId)
+      this._sync.connect(this._syncEndpoint, this._sessionId, this._deviceId, this._isMain)
         .then(resolve)
         .catch(reject);
       setTimeout(() => {
@@ -503,6 +514,19 @@ class OrchestrationClient extends EventEmitter {
   }
 
   /**
+   * Overrides the sync adapter class to be used by this instance. Must be called before connecting
+   * to a sync service (i.e., before calling start()).
+   *
+   * @param {SyncAdapter} syncAdapterClass
+   */
+  setSyncAdapterClass(syncAdapterClass) {
+    if (this._initialised) {
+      throw new Error('Must set syncAdapterClass before calling start().');
+    }
+    this._syncAdapterClass = syncAdapterClass;
+  }
+
+  /**
    * Initialises the class and connects to all the required services.
    *
    * @param {boolean} isMain - whether this client acts as a main main, controlling the experience,
@@ -514,6 +538,10 @@ class OrchestrationClient extends EventEmitter {
    * @returns {Promise}
    */
   start(isMain, sessionId, audioContext = null) {
+    if (!this._syncAdapterClass) {
+      throw new Error('No syncAdapterClass set.');
+    }
+
     return new Promise((resolve) => {
       if (this._initialised) {
         throw new Error('Orchestration client is already initialised.');

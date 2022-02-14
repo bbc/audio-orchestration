@@ -60,10 +60,11 @@ class Sync extends EventEmitter {
    * { hostname, port } to connect to.
    * @param {string} sessionId - the session to join
    * @param {string} deviceId - the device-id to register as
+   * @param {bool} [startSession] - create a session (only used if this is distinct from joining)
    *
    * @returns {Promise}
    */
-  connect(endpoint, sessionId, deviceId) {
+  connect(endpoint, sessionId, deviceId, startSession) {
     if (typeof endpoint !== 'string' && typeof endpoint !== 'object') {
       throw new Error('endpoint must be set and must be a string or object.');
     }
@@ -76,7 +77,7 @@ class Sync extends EventEmitter {
       throw new Error('deviceId must be set and must be a string.');
     }
 
-    return this.adapter.connect(endpoint, { sessionId, deviceId });
+    return this.adapter.connect(endpoint, { sessionId, deviceId, startSession });
   }
 
   /**
