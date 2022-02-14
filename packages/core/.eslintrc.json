@@ -18,5 +18,5 @@
   "plugins": ["jest"],
   "settings": {
     "import/resolver": "webpack"
-  },
+  }
 }
