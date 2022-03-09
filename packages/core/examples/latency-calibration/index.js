@@ -2,7 +2,7 @@ import {
   rendering,
   synchronisation,
   CloudSyncAdapter,
-} from '@bbc/audio-orchestration-core/dist/full.js';
+} from '@bbc/audio-orchestration-core/full';
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
 import sequenceData from './sequence.json';
 

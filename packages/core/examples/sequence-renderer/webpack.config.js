@@ -23,9 +23,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, 'index.html'),
     }),
-    new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, '../audio'), to: 'audio', toType: 'dir' },
-      { from: path.resolve(__dirname, 'sequence.json') },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: path.resolve(__dirname, '../audio'), to: 'audio', toType: 'dir' },
+        { from: path.resolve(__dirname, 'sequence.json') },
+      ],
+    }),
   ],
 };

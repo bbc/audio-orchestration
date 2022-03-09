@@ -1,5 +1,10 @@
 import CorrelatedClock from 'dvbcss-clocks/src/CorrelatedClock';
-import { playback, synchronisation, rendering, CloudSyncAdapter } from '@bbc/audio-orchestration-core/dist/full.js';
+import {
+  playback,
+  synchronisation,
+  rendering,
+  CloudSyncAdapter,
+} from '@bbc/audio-orchestration-core/full';
 
 const { BufferPlayer } = playback;
 const { SyncController } = rendering;
