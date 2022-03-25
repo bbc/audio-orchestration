@@ -18,5 +18,10 @@
   "plugins": ["jest"],
   "settings": {
     "import/resolver": "webpack"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "ecmaVersion": 2020
+    }
   }
 }

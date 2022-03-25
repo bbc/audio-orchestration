@@ -63,30 +63,27 @@ class OrchestrationClient extends EventEmitter {
 
     this._initialised = false;
     this._ready = false;
-    this._initialContentId = options.initialContentId || null;
+    this._initialContentId = options.initialContentId ?? null;
     this._audioContext = null;
     this._sequences = {};
     this._contentIds = [];
     this._currentContentId = null;
-    this._contentId = options.contentId || CONTENT_ID;
+    this._contentId = options.contentId ?? CONTENT_ID;
     this._syncEndpoint = options.syncEndpoint;
-    this._syncAdapterClass = options.syncAdapterClass || defaultSyncAdapterClass;
+    this._syncAdapterClass = options.syncAdapterClass ?? defaultSyncAdapterClass;
 
-    this._loadingTimeout = options.loadingTimeout || LOADING_TIMEOUT;
-    this._sequenceTransitionDelay = options.sequenceTransitionDelay;
-    if (this._sequenceTransitionDelay === undefined) {
-      this._sequenceTransitionDelay = SEQUENCE_TRANSITION_DELAY;
-    }
+    this._loadingTimeout = options.loadingTimeout ?? LOADING_TIMEOUT;
+    this._sequenceTransitionDelay = options.sequenceTransitionDelay ?? SEQUENCE_TRANSITION_DELAY;
     this._lookaheadDuration = options.lookaheadDuration;
     this._sequenceFadeOutDuration = options.sequenceFadeOutDuration;
-    this._deviceId = options.deviceId || OrchestrationClient.generateDeviceId();
-    this._isSafari = options.isSafari || false;
-    this._controls = options.controls || [];
+    this._deviceId = options.deviceId ?? OrchestrationClient.generateDeviceId();
+    this._isSafari = options.isSafari ?? false;
+    this._controls = options.controls ?? [];
     this._activeControlIds = {};
-    this._allocationAlgorithm = options.allocationAlgorithm || null;
+    this._allocationAlgorithm = options.allocationAlgorithm ?? null;
     this._gain = 1.0;
     this._playbackOffset = 0;
-    this._objectFadeOutDuration = options.objectFadeOutDuration || 0;
+    this._objectFadeOutDuration = options.objectFadeOutDuration ?? 0;
     this._syncControllerOptions = options.syncControllerOptions;
     this._imageContext = null;
   }
