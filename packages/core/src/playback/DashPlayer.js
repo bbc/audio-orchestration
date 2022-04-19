@@ -170,7 +170,7 @@ class DashPlayer extends Player {
    */
   play(when = null, offset = this.offset) {
     // console.debug(`play when = ${when}, offset = ${offset}`);
-    this.when = when || 0;
+    this.when = when ?? 0;
 
     this.prepare(offset)
       .then(() => this.replaceSource(offset))

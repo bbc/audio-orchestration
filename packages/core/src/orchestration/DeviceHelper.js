@@ -145,8 +145,8 @@ class DeviceHelper extends EventEmitter {
    * returned if the contentId or deviceId does not have any allocations.
    */
   getActiveObjects(contentId = DEFAULT_CONTENT_ID) {
-    const allocations = this._objectAllocations[contentId] || {};
-    const objectsList = allocations[this._deviceId] || [];
+    const allocations = this._objectAllocations[contentId] ?? {};
+    const objectsList = allocations[this._deviceId] ?? [];
     return objectsList.map(({ objectId, objectGain }) => ({
       objectId,
       objectGain,
@@ -162,8 +162,8 @@ class DeviceHelper extends EventEmitter {
    * does not have any allocations.
    */
   getActiveControls(contentId = DEFAULT_CONTENT_ID) {
-    const allocations = this._controlAllocations[contentId] || {};
-    const controlsList = allocations[this._deviceId] || [];
+    const allocations = this._controlAllocations[contentId] ?? {};
+    const controlsList = allocations[this._deviceId] ?? [];
     return controlsList.map(({ controlId }) => controlId);
   }
 

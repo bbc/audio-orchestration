@@ -18,5 +18,8 @@
   "plugins": ["jest"],
   "settings": {
     "import/resolver": "webpack"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2020
   }
 }

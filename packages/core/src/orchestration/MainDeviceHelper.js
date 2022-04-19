@@ -41,7 +41,7 @@ class MainDeviceHelper extends DeviceHelper {
     this._controls = [];
 
     // use either a supplied allocation algorithm or instantiate the default algorithm.
-    this._allocationAlgorithm = options.allocationAlgorithm || new DefaultAllocationAlgorithm();
+    this._allocationAlgorithm = options.allocationAlgorithm ?? new DefaultAllocationAlgorithm();
 
     // create an empty object to hold the previous results from the allocation algorithm, indexed
     // by contentId.

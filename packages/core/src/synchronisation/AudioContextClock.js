@@ -24,10 +24,10 @@ export default class AudioContextClock extends ClockBase {
     super(options);
 
     /** @type {number} */
-    this.freq = options.tickRate || 1000;
+    this.freq = options.tickRate ?? 1000;
 
     /** @type {number} */
-    this.maxFreqErrorPpm = options.maxFreqErrorPpm || 50;
+    this.maxFreqErrorPpm = options.maxFreqErrorPpm ?? 50;
 
     /** @type {number} */
     this.precision = 2 / 1000;
