@@ -108,7 +108,7 @@ The ```options``` parameter is an object specifying preferences such as the sync
 // Require cloud-synchroniser module
 var cloudSyncKit = require("CloudSyncKit");
 
-var syncUrl = "mqttbroker.edge.platform.2immerse.eu"; // a Sync Service MQTT endpoint
+var syncUrl = { hostname: "mqttbroker.edge.platform.2immerse.eu" }; // a Sync Service MQTT endpoint
 var sessionId = "223dsf452asd"; // a globally-unique session identifier
 var deviceId = "chris_iphone"; // a client identifier 
 var options = { syncTimelineElection: cloudSyncKit.SyncTLElection.DYNAMIC }; // options e.g. desired sync mode

@@ -166,7 +166,7 @@ function log() {
  * @constructor
  * @param {object} syncUrl An object specifying connection parameters
  * @param {string} syncUrl.hostname
- * @param {number=} syncUrl.port* Optional port number for a plain ws:// connection, if not given the default HTTPS port and wss:// protocol is used
+ * @param {number=} syncUrl.port Optional port number for a plain ws:// connection, if not given the default HTTPS port and wss:// protocol is used
  * @param {string} sessionId Identifier of the synchronisation session
  * @param {string} contextId Identifier of the synchronisation context
  * @param {string} deviceId Identifier of for this client, i.e. device

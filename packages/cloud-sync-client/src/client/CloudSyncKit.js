@@ -13,7 +13,9 @@ module.exports = {
     /**
      * 
      * Returns an instance of CloudSynchroniser
-     * @param {string} syncUrl
+     * @param {object} syncUrl An object specifying connection parameters
+     * @param {string} syncUrl.hostname
+     * @param {number=} syncUrl.port
      * @param {string} sessionId
      * @param {string} contextId
      * @param {string} deviceId
