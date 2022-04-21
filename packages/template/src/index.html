@@ -25,6 +25,9 @@
           type: 'peerjs',
         },
 
+        // This is the contentId of the first sequence to play.
+        INITIAL_CONTENT_ID: 'loop',
+
         // This object describes the structure of the experience by listing all available content
         // sequences, their descriptions, and links between them.
         SEQUENCE_URLS: [
@@ -85,7 +88,7 @@
             // If they are defined, the image, title, and subtitle will also be shown in the
             // player instead of the default while this sequence is playing.
             sequenceImage: 'images/sequence-example-image.jpg',
-            sequenceImageAlt: 'a randomly selected placeholder kitten',
+            sequenceImageAlt: 'the audio orchestrator default image with a blue colour filter applied',
             sequenceTitle: 'Main sequence',
             sequenceSubtitle: 'More tone and clicks',
             duration: 30.0,
