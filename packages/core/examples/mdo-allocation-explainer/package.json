@@ -7,7 +7,7 @@
     "@bbc/audio-orchestration-core": "file:../..",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
-    "react-hot-loader": "^4.12.15"
+    "react-hot-loader": "^4.13.1"
   },
   "devDependencies": {},
   "scripts": {
