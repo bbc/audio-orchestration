@@ -1,6 +1,6 @@
 {
   "name": "@bbc/audio-orchestration-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Components for synchronised object based audio experiences.",
   "main": "dist/light.js",
   "exports": {
@@ -17,8 +17,8 @@
     "dist"
   ],
   "dependencies": {
-    "@bbc/audio-orchestration-bbcat-js": "^0.1.0",
-    "@bbc/audio-orchestration-cloud-sync-client": "^0.1.0",
+    "@bbc/audio-orchestration-bbcat-js": "^0.1.1",
+    "@bbc/audio-orchestration-cloud-sync-client": "^0.1.1",
     "dvbcss-clocks": "^0.0.4",
     "dvbcss-protocols": "^0.0.4",
     "events": "^3.0.0",
