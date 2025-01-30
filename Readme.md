@@ -65,7 +65,7 @@ echo "@bbc:registry=https://npm.pkg.github.com" >> .npmrc
 npm add @bbc/audio-orchestration-core
 ```
 
-# Licence
+# License
 
 The majority of our components (`template`, `core`, and `bbcat-js`) are licensed under the GPLv3 license. The `cloud-sync-client` is licensed under the Apache 2.0 license. See the LICENSE file in each package directory for the specific licensing terms and copyright information.
 
